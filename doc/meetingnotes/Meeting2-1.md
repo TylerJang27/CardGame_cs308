@@ -1,6 +1,8 @@
 # Meeting #2.1
 Present: Tyler, Andrew (Data/Controller Subteam)
+
 Date: 3/30/20
+
 Team Name: Solitaire Confinement (Team 52 Pickup)
 
 ### Agenda
