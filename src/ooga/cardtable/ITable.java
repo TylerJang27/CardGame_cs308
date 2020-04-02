@@ -12,9 +12,12 @@ public interface ITable {
   /**
    * Updates the table based on the move. Returns true if move was valid, false otherwise
    * @param move the move the was made
-   * @return validity of the move
+   * @return game state as a result of the move
    */
-  public boolean update(IMove move);
+  public String update(IMove move);
+
+  //FIXME
+  public IGameState getGameState();
 
   public Map<String, ICell> getCellData();
 
