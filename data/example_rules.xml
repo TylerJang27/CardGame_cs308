@@ -57,113 +57,132 @@
         <card>QS</card>
         <card>KS</card>
     </deck>
-    <cell>
+    <cell pile_name = "pile_one">
         <!-- pile list syntax: random prefix: Rd
              otherwise use the card value needed
              follow with U or D for face Up or
              face Down-->
-        <name>pile1</name>
         <fan>y</fan>
-        <list>RdU</list>
+        <stack>
+            <card>RdU</card>
+        </stack>
+        <donor>y</donor>
+        <sectionable>y</sectionable>
+        <!-- define syntax for this -->
+        <!-- value(Up/Down, #) color(=/!)
+             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
+        <receiver_rules>D1!*M</receiver_rules>
+        <!-- stack up, stack down, swap, flip, add & shuffle, give points, group and move (destroy), replace & evict -->
+        <!-- two at the end need a destination (cell name)-->
+        <!-- have flexibility to have multiple receiver actions for a cell-->
+        <receiver_action>
+            <action>su</action>
+            <!--action>gp</action>
+            <points>100</points>
+            <action>re</action>
+            <destination>name</destination-->
+        </receiver_action>
     </cell>
-    <cell>
-        <name>pile2</name>
-        <fan>y</fan>
-        <list>RdD</list>
-        <list>RdU</list>
-    </cell>
-    <cell>
-        <name>pile3</name>
-        <fan>y</fan>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdU</list>
-    </cell>
-    <cell>
-        <name>pile4</name>
-        <fan>y</fan>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdU</list>
-    </cell>
-    <cell>
-        <name>pile5</name>
+    <cell pile_name = "pile_two">
         <fan>y</fan>
         <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
         <list>RdU</list>
+        <donor>y</donor>
+        <sectionable>y</sectionable>
+        <receiver_rules>D1!*M</receiver_rules>
     </cell>
-    <cell>
-        <name>pile6</name>
+    <cell pile_name = "pile_three">
         <fan>y</fan>
         <list>RdD</list>
         <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
         <list>RdU</list>
+        <donor>y</donor>
+        <sectionable>y</sectionable>
+        <receiver_rules>D1!*M</receiver_rules>
     </cell>
-    <cell>
-        <name>pile7</name>
+    <cell pile_name = "pile_four">
         <fan>y</fan>
         <list>RdD</list>
         <list>RdD</list>
         <list>RdD</list>
+        <list>RdU</list>
+        <donor>y</donor>
+        <sectionable>y</sectionable>
+        <receiver_rules>D1!*M</receiver_rules>
+    </cell>
+    <cell pile_name = "pile_five">
+        <fan>y</fan>
+        <list>RdD</list>
         <list>RdD</list>
         <list>RdD</list>
         <list>RdD</list>
         <list>RdU</list>
+        <donor>y</donor>
+        <sectionable>y</sectionable>
+        <receiver_rules>D1!*M</receiver_rules>
     </cell>
-    <cell>
-        <name>clubs</name>
+    <cell pile_name = "pile_six">
+        <fan>y</fan>
+        <list>RdD</list>
+        <list>RdD</list>
+        <list>RdD</list>
+        <list>RdD</list>
+        <list>RdD</list>
+        <list>RdU</list>
+        <donor>y</donor>
+        <sectionable>y</sectionable>
+        <receiver_rules>D1!*M</receiver_rules>
+    </cell>
+    <cell pile_name = "pile_seven">
+        <fan>y</fan>
+        <list>RdD</list>
+        <list>RdD</list>
+        <list>RdD</list>
+        <list>RdD</list>
+        <list>RdD</list>
+        <list>RdD</list>
+        <list>RdU</list>
+        <donor>y</donor>
+        <sectionable>y</sectionable>
+        <receiver_rules>D1!*M</receiver_rules>
+    </cell>
+    <cell pile_name = "pile_clubs">
         <fan>n</fan>
+        <donor>n</donor>
+        <sectionable>n</sectionable>
+        <receiver_rules>U1*CO</receiver_rules>
     </cell>
-    <cell>
-        <name>diamonds</name>
+    <cell pile_name = "pile_diamonds">
         <fan>n</fan>
+        <donor>n</donor>
+        <sectionable>n</sectionable>
+        <receiver_rules>U1*DO</receiver_rules>
     </cell>
-    <cell>
-        <name>hearts</name>
+    <cell pile_name = "pile_hearts">
         <fan>n</fan>
+        <donor>n</donor>
+        <sectionable>n</sectionable>
+        <receiver_rules>U1*HO</receiver_rules>
     </cell>
-    <cell>
-        <name>spades</name>
+    <cell pile_name = "pile_spades">
         <fan>n</fan>
+        <donor>n</donor>
+        <sectionable>n</sectionable>
+        <receiver_rules>U1*SO</receiver_rules>
     </cell>
-    <cell>
-        <name>hand</name>
+    <cell pile_name = "pile_hand">
         <fan>n</fan>
+        <donor>y</donor>
+        <sectionable>n</sectionable>
+        <receiver_rules>****M</receiver_rules>
     </cell>
-    <cell>
-        <name>deck</name>
+    <cell pile_name = "pile_deck">
         <fan>n</fan>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
-        <list>RdD</list>
+        <!-- ** = Remainder -->
+        <list>**D</list>
+        <donor>y</donor>
+        <sectionable>n</sectionable>
+        <receiver_rules>****M</receiver_rules>
     </cell>
 
 </data>
