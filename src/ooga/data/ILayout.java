@@ -1,22 +1,24 @@
 package ooga.data;
 
+import java.util.Map;
+
 public interface ILayout {
     /**
      * Gives a map of all the cells in a game
      * with their respective names as their keys
-     * @return
+     * @return a map of of cell names to their coordinates, given as decimals relative to the screen size
      */
     Map<String, ICoordinate> getCellLayout();
 
     /**
      * Gives screen width
-     * @return
+     * @return the double screen width
      */
     double getScreenWidth();
 
     /**
      * Gives screen height
-     * @return
+     * @return the double screen height
      */
     double getScreenHeight();
 }

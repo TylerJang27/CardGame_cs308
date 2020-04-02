@@ -5,5 +5,5 @@ package ooga.data;
  * Gives Table cells with rules implemented
  * Gives Table state machine to process turns/winning/etc.
  */
-public interface IRules {
+public interface IRuleSet {
 }
