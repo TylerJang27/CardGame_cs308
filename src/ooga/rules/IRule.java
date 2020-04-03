@@ -8,6 +8,8 @@ public interface IRule {
 
   boolean checkValidDonor(ICell cell);
 
+  boolean checkValidTransfer(ICell donor, ICell acceptor);
+
   ICellRegex getAcceptorRegex();
 
   ICellRegex getDonorRegex();
