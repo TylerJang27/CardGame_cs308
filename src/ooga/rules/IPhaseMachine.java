@@ -11,19 +11,7 @@ import ooga.cardtable.IMove;
  */
 public interface IPhaseMachine {
 
-  /** Deck Stuff **/ //TODO: GET MAVERICK'S INPUT/HELP
-
-  /**
-   Map of Phase Names to Phase
-   Each Phase has Map of Cell to boolean for donor
-   Each Phase has Map of Cell to Function
-   Each Function takes in 2 Cells(subcells) and computes an operation
-
-   Map of Cell Names to Cells data
-   Cell data with Consumers for drawing initial cards
-   Cell data booleans for fanning and sectionable
-   **/
-
+  //TODO: potentially also add deck stuff here
   /**
    * Gives a map of phase names to phases
    *
