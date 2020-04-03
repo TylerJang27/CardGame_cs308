@@ -21,4 +21,11 @@ public interface ILayout {
      * @return the double screen height
      */
     double getScreenHeight();
+
+    /**
+     * Gives the ratio between the card height and width
+     * ratio = height / width
+     * @return
+     */
+    double getCardRatio();
 }
