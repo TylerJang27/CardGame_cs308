@@ -1,4 +1,4 @@
-package ooga;
+package ooga.apiexamples;
 
 // API Example
 public class GameEnds {
