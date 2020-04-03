@@ -5,7 +5,7 @@ import java.util.Map;
 public interface ICell {
   //deal with unnecessary massive linked lists
 
-  ICard getCard();
+  IDeck getDeck();
 
   String getName();
 
