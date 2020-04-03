@@ -4,6 +4,8 @@ public interface IDeck {
 
   void shuffle();
 
+  int size();
+
   ICard getNextCard();
 
   ICard getRandomCard();
@@ -11,4 +13,6 @@ public interface IDeck {
   ICard getBottomCard();
 
   ICard getCardAtIndex(int index);
+
+  void addCard(ICard card);
 }
