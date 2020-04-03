@@ -44,6 +44,7 @@ public interface IPhase {
    *
    * @return a list of automatic card actions
    */
+
   List<ICardAction> getAutoActions();
 
   /**
