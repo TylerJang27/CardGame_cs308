@@ -3,8 +3,8 @@ package ooga.cardtable;
 public interface ISuit {
   //need a getSymbol?
 
-  public int[] getColor();
+  int[] getColor();
 
-  public String getName();
+  String getName();
 
 }

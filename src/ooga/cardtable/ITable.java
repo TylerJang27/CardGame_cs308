@@ -2,23 +2,25 @@ package ooga.cardtable;
 
 import java.util.List;
 import java.util.Map;
+import ooga.rules.IGameState;
+import ooga.rules.IPhaseMachine;
 
 public interface ITable {
 
-  public void setPhaseMachine(IPhaseMachine machine);
+  void setPhaseMachine(IPhaseMachine machine);
 
-  public void setCellList(List<ICell> cellList);
+  void setCellList(List<ICell> cellList);
 
   /**
    * Updates the table based on the move. Returns true if move was valid, false otherwise
+   *
    * @param move the move the was made
    * @return game state as a result of the move
    */
-  public String update(IMove move);
+  IGameState update(IMove move);
 
-  //FIXME
-  public IGameState getGameState();
+  IGameState getGameState();
 
-  public Map<String, ICell> getCellData();
+  Map<String, ICell> getCellData();
 
 }

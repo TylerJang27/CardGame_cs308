@@ -5,12 +5,12 @@ import java.util.Map;
 public interface ICell {
   //deal with unnecessary massive linked lists
 
-  public ICard getCard();
+  ICard getCard();
 
-  public String getName();
+  String getName();
 
-  public Map<IOffset, ICell> getAllChildren();
+  Map<IOffset, ICell> getAllChildren();
 
-  public Map<IOffset, ICell> getHeldCells();
+  Map<IOffset, ICell> getHeldCells();
 
 }

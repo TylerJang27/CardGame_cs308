@@ -2,12 +2,12 @@ package ooga.cardtable;
 
 public interface IPlayer {
 
-  public ICell getHand();
+  ICell getHand();
 
-  public String getName();
+  String getName();
 
-  public int getID();
+  int getID();
 
-  public double getScore();
+  double getScore();
 
 }
