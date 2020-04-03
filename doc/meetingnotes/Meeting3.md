@@ -1,6 +1,8 @@
 # Meeting #3
 Present: All
+
 Date: 3/31/20
+
 Team Name: Solitaire Confinement (Team 52 Pickup)
 
 ### Agenda

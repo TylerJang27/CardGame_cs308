@@ -1,6 +1,8 @@
 # Meeting #2
 Present: Sarah, Mariusz, Maverick, Andrew
+
 Date: 3/30/20
+
 Team Name: Solitaire Confinement (Team 52 Pickup)
 
 ### Agenda

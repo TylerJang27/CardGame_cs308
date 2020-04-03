@@ -1,6 +1,8 @@
 # Meeting #4
 Present: ALL
+
 Date: 4/1/20
+
 Team Name: Solitaire Confinement (Team 52 Pickup)
 
 ### Agenda
