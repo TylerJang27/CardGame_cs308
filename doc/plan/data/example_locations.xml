@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data game_type = "cards">
+    <game>Solitaire</game>
+    <players>1</players>
+    <cell pile_name = "pile_one">
+        <x_val>1</x_val>
+        <y_val>2</y_val>
+    </cell>
+    <cell pile_name = "pile_two">
+        <x_val>2</x_val>
+        <y_val>2</y_val>
+    </cell>
+    <cell pile_name = "pile_three">
+        <x_val>3</x_val>
+        <y_val>2</y_val>
+    </cell>
+    <cell pile_name = "pile_four">
+        <x_val>4</x_val>
+        <y_val>2</y_val>
+    </cell>
+    <cell pile_name = "pile_five">
+        <x_val>5</x_val>
+        <y_val>2</y_val>
+    </cell>
+    <cell pile_name = "pile_six">
+        <x_val>6</x_val>
+        <y_val>2</y_val>
+    </cell>
+    <cell pile_name = "pile_seven">
+        <x_val>7</x_val>
+        <y_val>2</y_val>
+    </cell>
+    <cell pile_name = "pile_clubs">
+        <x_val>1</x_val>
+        <y_val>1</y_val>
+    </cell>
+    <cell pile_name = "pile_diamonds">
+        <x_val>2</x_val>
+        <y_val>1</y_val>
+    </cell>
+    <cell pile_name = "pile_hearts">
+        <x_val>3</x_val>
+        <y_val>1</y_val>
+    </cell>
+    <cell pile_name = "pile_spades">
+        <x_val>4</x_val>
+        <y_val>1</y_val>
+    </cell>
+    <cell pile_name = "pile_hand">
+        <x_val>6</x_val>
+        <y_val>1</y_val>
+    </cell>
+    <cell pile_name = "pile_deck">
+        <x_val>7</x_val>
+        <y_val>1</y_val>
+    </cell>
+</data>
