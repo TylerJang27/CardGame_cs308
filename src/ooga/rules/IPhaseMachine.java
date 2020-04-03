@@ -59,15 +59,32 @@ public interface IPhaseMachine {
    */
   List<String> getTopLevelCellNames();
 
-  //TODO: methods for more advanced accessing and behavior
-
+  /**
+   * Updates the phase based on a movement of cells
+   *
+   * @param move a movement of card cells
+   * @return the GameState representing messages for the front end
+   */
   IGameState update(IMove move);
 
+  /**
+   * Updates the phase based on an arrow
+   *
+   * @param arrow a transition of states
+   */
   void moveToNextPhase(IPhaseArrow arrow);
 
+  /**
+   * Retrieves the current phase
+   *
+   * @return the current phase
+   */
   IPhase getCurrentPhase();
 
+  /**
+   * Retrieves the history of past history cells
+   *
+   * @return the list of past phase history cells
+   */
   List<IPhaseHistoryCell> getHistory();
-
-
 }
