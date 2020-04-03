@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data game_type = "cards">
+    <game>Solitaire</game>
+    <language>English</language>
+    <dark_mode>y</dark_mode>
+    <difficulty>5</difficulty>
+    <sound>n</sound>
+    <table_skin_path>table.png</table_skin_path>
+    <card_skin_path>card_back.png</card_skin_path>
+</data>
