@@ -2,20 +2,23 @@ package ooga.cardtable;
 
 public interface ICard {
 
-  public String getName();
+  String getName();
 
-  public ISuit getSuit();
+  ISuit getSuit();
 
-  public IValue getValue();
+  IValue getValue();
 
-  public boolean isFaceUp();
+  boolean isFaceUp();
+
+  double getRotate();
 
   /**
-   * Returns an ICard where data that is visible is accessible, and data that is invisible (e.g. facedown)
-   * is null
+   * Returns an ICard where data that is visible is accessible, and data that is invisible (e.g.
+   * facedown) is null
+   *
    * @return
    */
-  public ICard getVisibleData();
+  ICard getVisibleData();
 
 
 }

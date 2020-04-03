@@ -2,9 +2,9 @@ package ooga.cardtable;
 
 public interface IValue {
 
-  public String getName();
+  String getName();
 
-  public char getChar();
+  char getChar();
 
-  public int getNumber();
+  int getNumber();
 }

@@ -2,16 +2,16 @@ package ooga.cardtable;
 
 public interface IMove {
 
-  public ICell getDragged();
+  ICell getDragged();
 
-  public ICell getRecipient();
+  void setDragged(ICell cell);
 
-  public IOffset getResultantOffset();
+  ICell getRecipient();
 
-  public void setDragged(ICell cell);
+  void setRecipient(ICell cell);
 
-  public void setRecipient(ICell cell);
+  IOffset getResultantOffset();
 
-  public void setOffset(IOffset offset);
+  void setOffset(IOffset offset);
 
 }
