@@ -16,7 +16,7 @@ public interface IPhase {
 
   List<IRule> getRuleList();
 
-  Map<IRule, ICardAction> getConditionalActions();
+  Map<IRule, List<ICardAction>> getConditionalActions();
 
   List<ICardAction> getAutoActions();
 

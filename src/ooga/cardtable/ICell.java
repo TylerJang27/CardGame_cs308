@@ -13,4 +13,6 @@ public interface ICell {
 
   Map<IOffset, ICell> getHeldCells();
 
+  void addCard(IOffset offset, ICard card);
+
 }
