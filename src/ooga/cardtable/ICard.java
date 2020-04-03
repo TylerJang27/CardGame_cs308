@@ -10,6 +10,10 @@ public interface ICard {
 
   boolean isFaceUp();
 
+  void flip();
+
+  void rotate(double degrees);
+
   double getRotate();
 
   /**
