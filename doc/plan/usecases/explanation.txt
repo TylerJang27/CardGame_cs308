@@ -1,0 +1,2 @@
+Since .java files are not allowed in directories within this folder, the example api
+use cases are held in the "apiexamples" package, and do not compile.
