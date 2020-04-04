@@ -1,4 +1,6 @@
 
+import ooga.cardtable.ICell;
+
 import java.util.Map;
 
 public interface ExternalAPI {
@@ -10,7 +12,7 @@ public interface ExternalAPI {
      *
      * @param cellData
      */
-    void setCellData(Map<String,ICell> cellData);
+    void setCellData(Map<String, ICell> cellData);
 
     /**
      * Sets score of players to be displayed

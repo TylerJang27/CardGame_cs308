@@ -13,4 +13,6 @@ public interface IDeck {
   ICard getBottomCard();
 
   ICard getCardAtIndex(int index);
+
+  void addCard(ICard card);
 }

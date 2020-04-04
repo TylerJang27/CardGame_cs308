@@ -22,7 +22,7 @@ public interface IRule {
    * @return whether or not the cell is a valid donor
    */
   boolean checkValidDonor(ICell cell);
-  
+
   /**
    * Evaluates whether the cell transfer is valid
    *
