@@ -1,0 +1,1 @@
+4/6/2020 Added the IAttribute class to allow for card suit and value to potentially be on different sides of the card.
