@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -109,8 +110,43 @@ public class XMLHelper {
         return getTextValue(e, tagName, () -> {});
     }
 
-    //doc.getElementsByTagName("blah");
+    /**
+     * Retrieves the node within a list by name. Returns null if not found
+     *
+     * @param n         the NodeList to search through
+     * @param nodeName  the name of the node to be searched for
+     * @return          the Node matching the name or null
+     */
+    public static Node getNodeByName(NodeList n, String nodeName) {
+        for (int k = 0; k < n.getLength(); k++) {
+            if (n.item(k).getNodeName().equals(nodeName)) {
+                return n.item(k);
+            }
+        }
+        return null;
+    }
 
+    /**
+     * Retrieves the root element of a file and checks to make sure it fits the correct type
+     *
+     * @param dataFile  the File from which to read
+     * @param type      the type of XML data to be read
+     * @param error     the error message to be thrown
+     * @return          the Root Element
+     */
+    public static Element getRootAndCheck(File dataFile, String type, String error) {
+        DocumentBuilder documentBuilder = getDocumentBuilder();
+        if (!isXML(dataFile)) {
+            throw new XMLException(error, type);
+        }
+
+        Element root = getRootElement(documentBuilder, dataFile);
+
+        if (!isValidFile(root, type)) {
+            throw new XMLException(error, type);
+        }
+        return root;
+    }
 
     /**
      * Required boilerplate code needed to make a documentBuilder.

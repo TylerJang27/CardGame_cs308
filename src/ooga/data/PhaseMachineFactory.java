@@ -1,5 +1,6 @@
 package ooga.data;
 
+import ooga.cardtable.IDeck;
 import ooga.data.rules.IPhaseMachine;
 import ooga.data.rules.ISettings;
 import ooga.data.rules.PhaseMachine;
@@ -35,20 +36,12 @@ public class PhaseMachineFactory {
     }
 
     public static IPhaseMachine getPhaseMachine(File dataFile) {
-        documentBuilder = XMLHelper.getDocumentBuilder();
-        if (!XMLHelper.isXML(dataFile)) {
-            throw new XMLException(INVALID_ERROR, RULES_TYPE);
-        }
-
-        Element root = XMLHelper.getRootElement(documentBuilder, dataFile);
-
-        if (!XMLHelper.isValidFile(root, RULES_TYPE)) {
-            throw new XMLException(INVALID_ERROR, RULES_TYPE);
-        }
+        Element root = XMLHelper.getRootAndCheck(dataFile, RULES_TYPE, INVALID_ERROR);
 
         ISettings settings = SettingsFactory.getSettings(root);
+        IDeck deck = DeckFactory.getDeck(root);
 
-        //Settings (including layout)
+
         //Deck
         //Cells
         //Phases

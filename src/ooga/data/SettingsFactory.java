@@ -25,7 +25,7 @@ public class SettingsFactory {
     public static ISettings getSettings(Element root) {
         Map<String, String> settings = XMLHelper.readStringSettings(root, resources);
 
-        int numPlayers = Integer.parseInt(settings.getOrDefault(resources.getString(PLAYERS), DEFAULT_PLAYERS);
+        int numPlayers = Integer.parseInt(settings.getOrDefault(resources.getString(PLAYERS), DEFAULT_PLAYERS));
         String layout = settings.getOrDefault(resources.getString(LAYOUT), "");
         return new Settings(numPlayers, layout);
     }
