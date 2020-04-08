@@ -2,7 +2,7 @@ package ooga.view;
 
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
-import ooga.data.style.ILayout;
+import ooga.data.rules.ILayout;
 import ooga.data.style.IStyle;
 
 import java.util.Map;

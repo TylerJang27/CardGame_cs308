@@ -1,4 +1,6 @@
-package ooga.data.style;
+package ooga.data.rules;
+
+import ooga.data.style.ICoordinate;
 
 import java.util.Map;
 

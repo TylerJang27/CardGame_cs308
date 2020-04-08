@@ -40,7 +40,7 @@ public class StyleFactory {
     private static final ResourceBundle numberResources = ResourceBundle.getBundle(RESOURCE_PACKAGE+NUMBER);
     //TODO: IMPLEMENT DEFAULTS
 
-    //TODO: REMOVE HARD CODING
+    //TODO: REMOVE HARD CODING?
 
     private static DocumentBuilder documentBuilder;
 
@@ -91,6 +91,12 @@ public class StyleFactory {
         //TODO: REMOVE DUPLICATED CODE
     }
 
+    /**
+     * Generates a Map of Strings of style settings.
+     *
+     * @param root document root
+     * @return a Map of Integers of style settings
+     */
     private static Map<String, Integer> readNumberSettings(Element root) {
         Map<String, Integer> styles = new HashMap<>();
         Enumeration<String> keys = numberResources.getKeys();
