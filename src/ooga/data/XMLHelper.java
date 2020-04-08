@@ -2,6 +2,10 @@ package ooga.data;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -116,5 +120,37 @@ public class XMLHelper {
         } catch (ParserConfigurationException e) {
             throw new XMLException(e);
         }
+    }
+
+    /**
+     * Generates a Map of Strings of style settings.
+     *
+     * @param root document root
+     * @return a Map of Strings of style settings
+     */
+    public static Map<String, String> readStringSettings(Element root, ResourceBundle resource) {
+        Map<String, String> styles = new HashMap<>();
+        Enumeration<String> keys = resource.getKeys();
+        while (keys.hasMoreElements()) {
+            String key = keys.nextElement();
+            String value = resource.getString(key);
+
+            styles.put(value, XMLHelper.getTextValue(root, value));
+        }
+        return styles;
+    }
+
+    /**
+     * Generates a Map of Integers of style settings.
+     *
+     * @param root document root
+     * @return a Map of Integers of style settings
+     */
+    public static Map<String, Integer> readNumberSettings(Element root, ResourceBundle resource) {
+        Map<String, Integer> styles = new HashMap<>();
+        for (Map.Entry<String, String> e: readStringSettings(root, resource).entrySet()) {
+            styles.put(e.getKey(), Integer.parseInt(e.getValue()));
+        }
+        return styles;
     }
 }

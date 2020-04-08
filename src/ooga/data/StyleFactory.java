@@ -1,8 +1,6 @@
 package ooga.data;
 
 import java.io.File;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -11,7 +9,6 @@ import ooga.data.style.StyleData;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
-
 
 /**
  * Class for parsing XML files to determine Styling information for the view. Creates an IStyle instance from which styling information can be read.
@@ -67,45 +64,8 @@ public class StyleFactory {
             throw new XMLException(INVALID_ERROR, STYLE_TYPE);
         }
 
-        Map<String, String> stringSettings = readStringSettings(root);
-        Map<String, Integer> numberSettings = readNumberSettings(root);
+        Map<String, String> stringSettings = XMLHelper.readStringSettings(root, wordResources);
+        Map<String, Integer> numberSettings = XMLHelper.readNumberSettings(root, numberResources);
         return new StyleData(dataFile.getPath(), stringSettings, numberSettings);
-    }
-
-    /**
-     * Generates a Map of Strings of style settings.
-     *
-     * @param root document root
-     * @return a Map of Strings of style settings
-     */
-    private static Map<String, String> readStringSettings(Element root) {
-        Map<String, String> styles = new HashMap<>();
-        Enumeration<String> keys = wordResources.getKeys();
-        while (keys.hasMoreElements()) {
-            String key = keys.nextElement();
-            String value = wordResources.getString(key);
-
-            styles.put(value, XMLHelper.getTextValue(root, value));
-        }
-        return styles;
-        //TODO: REMOVE DUPLICATED CODE
-    }
-
-    /**
-     * Generates a Map of Strings of style settings.
-     *
-     * @param root document root
-     * @return a Map of Integers of style settings
-     */
-    private static Map<String, Integer> readNumberSettings(Element root) {
-        Map<String, Integer> styles = new HashMap<>();
-        Enumeration<String> keys = numberResources.getKeys();
-        while (keys.hasMoreElements()) {
-            String key = keys.nextElement();
-            String value = numberResources.getString(key);
-
-            styles.put(value, Integer.parseInt(XMLHelper.getTextValue(root, value)));
-        }
-        return styles;
     }
 }
