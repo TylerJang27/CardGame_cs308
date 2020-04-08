@@ -53,7 +53,12 @@ public class Controller extends Application {
 
     }
 
+    private boolean isMove() {
+        return myView.isUserInput();
+    }
+
     private IGameState processMove(IMove move) {
+
         return null;
     }
 
