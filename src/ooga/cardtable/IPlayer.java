@@ -6,6 +6,8 @@ public interface IPlayer {
 
   String getName();
 
+  void setName(String nm);
+
   int getID();
 
   double getScore();
