@@ -21,7 +21,7 @@ public class Main {
     }
 
     private static void testStyleXML() {
-        File f = new File("src/ooga/resources/default_style.xml");
+        File f = new File("data/default_style.xml");
         IStyle myStyle = StyleFactory.getStyle(f);
         System.out.println(myStyle.getCardSkinPath());
         System.out.println(myStyle.getLanguage());
