@@ -22,6 +22,13 @@ public class Settings implements ISettings {
     }
 
     /**
+     * The default constructor for Settings, storing a default of 1 player and no file path
+     */
+    public Settings() {
+        this(1, "");
+    }
+
+    /**
      * Retrieves the number of players for a given game
      *
      * @return the number of players

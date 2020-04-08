@@ -1,6 +1,7 @@
 package ooga.data;
 
 import ooga.data.rules.IPhaseMachine;
+import ooga.data.rules.ISettings;
 import ooga.data.rules.PhaseMachine;
 import org.w3c.dom.Element;
 
@@ -21,7 +22,7 @@ public class PhaseMachineFactory {
 
     private static final String RULES = "rules_tags";
     private static final String RESOURCES = "ooga.resources";
-    public static final String RESOURCE_PACKAGE = RESOURCES + "." + RULES;
+    public static final String RESOURCE_PACKAGE = RESOURCES + "." + RULES + "_";
     //private static final ResourceBundle rulesResources = ResourceBundle.getBundle(RESOURCE_PACKAGE+RULES);
     //TODO: IMPLEMENT DEFAULTS
 
@@ -45,8 +46,7 @@ public class PhaseMachineFactory {
             throw new XMLException(INVALID_ERROR, RULES_TYPE);
         }
 
-
-
+        ISettings settings = SettingsFactory.getSettings(root);
 
         //Settings (including layout)
         //Deck

@@ -12,12 +12,12 @@ public interface ISettings {
      *
      * @return the number of players
      */
-    public int getPlayers();
+    int getPlayers();
 
     /**
      * Retrieves the filepath to the ILayout XML of cells
      *
      * @return String representing a filepath
      */
-    public String getLayout();
+    String getLayout();
 }
