@@ -109,6 +109,9 @@ public class XMLHelper {
         return getTextValue(e, tagName, () -> {});
     }
 
+    //doc.getElementsByTagName("blah");
+
+
     /**
      * Required boilerplate code needed to make a documentBuilder.
      *

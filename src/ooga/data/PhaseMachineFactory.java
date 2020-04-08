@@ -1,21 +1,28 @@
 package ooga.data;
 
 import ooga.data.rules.IPhaseMachine;
-import ooga.data.style.IStyle;
+import ooga.data.rules.PhaseMachine;
+import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ *
+ * @author Tyler Jang, Andrew Krier
+ */
 public class PhaseMachineFactory {
     public static String RULES_TYPE = IPhaseMachine.DATA_TYPE;
     //TODO: INCORPORATE ERROR MESSAGES
     public static String INVALID_ERROR = "INVALID_FILE";
     public static String MISSING_ERROR = "MISSING_ATTRIBUTE";
 
-    private static final String RULES = "rules";
+    private static final String RULES = "rules_tags";
     private static final String RESOURCES = "ooga.resources";
-    private static final String RESOURCE_PACKAGE = RESOURCES + "." + RULES + "_";
-    private static final ResourceBundle rulesResources = ResourceBundle.getBundle(RESOURCE_PACKAGE+RULES);
+    public static final String RESOURCE_PACKAGE = RESOURCES + "." + RULES;
+    //private static final ResourceBundle rulesResources = ResourceBundle.getBundle(RESOURCE_PACKAGE+RULES);
     //TODO: IMPLEMENT DEFAULTS
 
     //TODO: REMOVE HARD CODING?
@@ -24,6 +31,29 @@ public class PhaseMachineFactory {
 
     public PhaseMachineFactory() {
         documentBuilder = XMLHelper.getDocumentBuilder();
+    }
+
+    public static IPhaseMachine getPhaseMachine(File dataFile) {
+        documentBuilder = XMLHelper.getDocumentBuilder();
+        if (!XMLHelper.isXML(dataFile)) {
+            throw new XMLException(INVALID_ERROR, RULES_TYPE);
+        }
+
+        Element root = XMLHelper.getRootElement(documentBuilder, dataFile);
+
+        if (!XMLHelper.isValidFile(root, RULES_TYPE)) {
+            throw new XMLException(INVALID_ERROR, RULES_TYPE);
+        }
+
+
+
+
+        //Settings (including layout)
+        //Deck
+        //Cells
+        //Phases
+        //Build
+        return new PhaseMachine(new ArrayList<>());
     }
 
 }
