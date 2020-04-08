@@ -1,4 +1,4 @@
-package ooga.data;
+package ooga.data.style;
 
 public interface IStyle {
 

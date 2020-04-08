@@ -1,4 +1,6 @@
-package ooga.data;
+package ooga.data.style;
+
+import ooga.data.style.IStyle;
 
 public class StyleData implements IStyle {
 
