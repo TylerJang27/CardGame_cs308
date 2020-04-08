@@ -27,8 +27,18 @@ public class Controller extends Application {
 
     //TODO: REPLACE WITH LOGIC REGARDING METHODS AT THE BOTTOM
     private void initializeHandlers(View v) {
-        v.setHandlers((String game) -> createEngine(game), (String rules) -> setHouseRules(rules),
-        (int diff) -> setDifficulty(diff), (IMove move) -> processMove(move), (String cell) -> getCell(cell));
+        /*v.setHandlers((String game) -> createEngine(game), //Consumer
+                (String rules) -> setHouseRules(rules), //Consumer
+                (int diff) -> setDifficulty(diff), //Consumer
+                (IMove move) -> processMove(move), //Function
+                (String cell) -> getCell(cell)); //Function/Supplier
+                */
+        /*View.setHandlers(Consumer engineStart, Consumer ruleSet,  ....);
+            myFunction = move;
+
+
+        MOUSE.setOnClickAndDrag(event -> move.execute(new Move(event.getX, event.getY)));
+            */
     }
 
     private void createEngine(String gameName) {

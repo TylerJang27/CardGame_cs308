@@ -1,15 +1,36 @@
 package ooga.data.style;
 
-import ooga.data.style.IStyle;
+import java.util.Map;
 
 public class StyleData implements IStyle {
 
+    private String defaultFilePath;
 
     private String myLanguage;
-    private boolean isDark;
+    private String myCards;
+    private String myTable;
 
-    public StyleData(String styleXML) {
-        // TODO: Make this work
+    private boolean myDark;
+    private int myDifficulty;
+    private boolean mySound;
+
+    private static final String LANGUAGE = "language";
+    private static final String CARDS = "cards";
+    private static final String TABLE = "table";
+
+    private static final String DARK = "dark";
+    private static final String DIFFICULTY = "difficulty";
+    private static final String SOUND = "sound";
+
+    public StyleData(String xmlFile, Map<String, String> wordSettings, Map<String, Integer> numberSettings) {
+        defaultFilePath = xmlFile;
+        myLanguage = wordSettings.get(LANGUAGE);
+        myCards = wordSettings.get(CARDS);
+        myTable = wordSettings.get(TABLE);
+
+        myDark = numberSettings.get(DARK) == 1;
+        myDifficulty = numberSettings.get(DIFFICULTY);
+        mySound = numberSettings.get(SOUND) == 1;
     }
 
     /**
@@ -19,7 +40,7 @@ public class StyleData implements IStyle {
      */
     @Override
     public String getLanguage() {
-        return null;
+        return myLanguage;
     }
 
     /**
@@ -29,7 +50,7 @@ public class StyleData implements IStyle {
      */
     @Override
     public void setLanguage(String lang) {
-
+        myLanguage = lang;
     }
 
     /**
@@ -39,7 +60,7 @@ public class StyleData implements IStyle {
      */
     @Override
     public boolean getDarkMode() {
-        return false;
+        return myDark;
     }
 
     /**
@@ -49,7 +70,7 @@ public class StyleData implements IStyle {
      */
     @Override
     public void setDarkMode(boolean dark) {
-
+        myDark = dark;
     }
 
     /**
@@ -59,7 +80,7 @@ public class StyleData implements IStyle {
      */
     @Override
     public int getDifficulty() {
-        return 0;
+        return myDifficulty;
     }
 
     /**
@@ -69,7 +90,7 @@ public class StyleData implements IStyle {
      */
     @Override
     public void setDifficulty(int diff) {
-
+        myDifficulty = diff;
     }
 
     /**
@@ -79,7 +100,7 @@ public class StyleData implements IStyle {
      */
     @Override
     public boolean getSound() {
-        return false;
+        return mySound;
     }
 
     /**
@@ -89,7 +110,7 @@ public class StyleData implements IStyle {
      */
     @Override
     public void setSound(boolean sound) {
-
+        mySound = sound;
     }
 
     /**
@@ -99,7 +120,7 @@ public class StyleData implements IStyle {
      */
     @Override
     public String getCardSkinPath() {
-        return null;
+        return myCards;
     }
 
     /**
@@ -109,7 +130,7 @@ public class StyleData implements IStyle {
      */
     @Override
     public void setCardSkinPath(String path) {
-
+        myCards = path;
     }
 
     /**
@@ -119,7 +140,7 @@ public class StyleData implements IStyle {
      */
     @Override
     public String getTableSkinPath() {
-        return null;
+        return myTable;
     }
 
     /**
@@ -129,10 +150,13 @@ public class StyleData implements IStyle {
      */
     @Override
     public void setTableSkinPath(String path) {
-
+        myTable = path;
     }
 
-    private void updateXML() {
+    /**
+     * Saves the settings to an XML file
+     */
+    public void saveSettings() {
         // TODO: Make a new XML file with all these style preferences
     }
 }

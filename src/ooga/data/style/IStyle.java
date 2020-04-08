@@ -2,7 +2,7 @@ package ooga.data.style;
 
 public interface IStyle {
 
-    public static final String DATA_TYPE = "STYLE";
+    public static final String DATA_TYPE = "style";
 
     /**
      * Gives the active language stored in the style settings
@@ -75,5 +75,11 @@ public interface IStyle {
      * @param path String filepath to skin
      */
     void setTableSkinPath(String path);
+
+    //TODO: ADD TO API CHANGES
+    /**
+     * Saves the settings to an XML file
+     */
+    void saveSettings();
 
 }

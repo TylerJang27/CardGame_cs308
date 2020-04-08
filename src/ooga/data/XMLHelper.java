@@ -83,7 +83,6 @@ public class XMLHelper {
      * @param tagName the tag to search for in the XML file
      * @param missingRunnable a runnable to execute if the element is not present (e.g. throw an exception, do nothing)
      * @return        the text for that tag
-     * @throws XMLException if the field is considered mandatory and missing
      */
     public static String getTextValue(Element e, String tagName, Runnable missingRunnable) {
         NodeList nodeList = e.getElementsByTagName(tagName);
@@ -93,6 +92,17 @@ public class XMLHelper {
             missingRunnable.run();
         }
         return "";
+    }
+
+    /**
+     * Retrieves the text value in the XML file for a given tagName. Mandatory can be defined to determine whether or not an exception is thrown if a tag is not found.
+     *
+     * @param e       the Element from which to retrieve the attribute
+     * @param tagName the tag to search for in the XML file
+     * @return        the text for that tag
+     */
+    public static String getTextValue(Element e, String tagName) {
+        return getTextValue(e, tagName, () -> {});
     }
 
     /**
