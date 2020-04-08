@@ -1,9 +1,16 @@
 package ooga.view;
 
 import ooga.cardtable.ICell;
+import ooga.cardtable.IMove;
+import ooga.data.style.ILayout;
+import ooga.data.style.IStyle;
 
 import java.util.Map;
 
+/**
+ *
+ * @author __, __, Tyler Jang
+ */
 public class View implements ExternalAPI {
 
     /**
@@ -87,7 +94,7 @@ public class View implements ExternalAPI {
      * @param style
      */
     @Override
-    public void setStyle(Style style) {
+    public void setStyle(IStyle style) {
 
     }
 
@@ -97,7 +104,7 @@ public class View implements ExternalAPI {
      * @param layout
      */
     @Override
-    public void setLayout(Layout layout) {
+    public void setLayout(ILayout layout) {
 
     }
 }

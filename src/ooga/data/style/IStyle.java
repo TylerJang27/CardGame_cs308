@@ -2,6 +2,8 @@ package ooga.data.style;
 
 public interface IStyle {
 
+    public static final String DATA_TYPE = "STYLE";
+
     /**
      * Gives the active language stored in the style settings
      * @return String representing language

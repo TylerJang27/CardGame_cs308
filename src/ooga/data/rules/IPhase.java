@@ -2,6 +2,8 @@ package ooga.data.rules;
 
 import java.util.List;
 import java.util.Map;
+
+import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
 
 /**

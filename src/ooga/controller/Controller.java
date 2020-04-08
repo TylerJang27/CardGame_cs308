@@ -9,6 +9,10 @@ import ooga.view.View;
 
 import java.util.Map;
 
+/**
+ *
+ * @author Andrew Krier, Tyler Jang
+ */
 public class Controller extends Application {
 
     private View myView;
@@ -21,6 +25,7 @@ public class Controller extends Application {
         initializeHandlers(myView);
     }
 
+    //TODO: REPLACE WITH LOGIC REGARDING METHODS AT THE BOTTOM
     private void initializeHandlers(View v) {
         v.setHandlers((String game) -> createEngine(game), (String rules) -> setHouseRules(rules),
         (int diff) -> setDifficulty(diff), (IMove move) -> processMove(move), (String cell) -> getCell(cell));
@@ -39,14 +44,14 @@ public class Controller extends Application {
     }
 
     private IGameState processMove(IMove move) {
-
+        return null;
     }
 
     private ICell getCell(String cellName) {
-
+        return null;
     }
 
-    void setCellData(Map<String, ICell> cellData);
+    /**void setCellData(Map<String, ICell> cellData);
     void setScores(Map<Integer, Double> playerScores);
     void endGame(Map<Integer, Boolean> playerOutcomes, Map<Integer, Double> playerScores, Map<Integer, Integer> highScores);
     void playerStatusUpdate(Map<Integer, Boolean> playerOutcomes, Map<Integer, Integer> playerScores);
@@ -54,7 +59,6 @@ public class Controller extends Application {
     IMove getUserInput();
     void setStyle(Style style);
     void setLayout(Layout layout);
-
-
+    **/
 
 }
