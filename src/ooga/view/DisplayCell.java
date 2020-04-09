@@ -65,6 +65,8 @@ public class DisplayCell {
             // TODO: adding groups
             myGroup.getChildren().add(childDisplayCell.getImageView());
         }
+
+
     }
 
     public Group getGroup() {

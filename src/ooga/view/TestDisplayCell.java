@@ -20,10 +20,12 @@ public class TestDisplayCell extends Application {
         primaryStage.show();
 
         Card testCard1 = new Card(); // automatically facedown, unknown card
-        //Card testCard2 = new Card(); // automatically facedown, unknown cord
         List<ICard> testCards = List.of(testCard1);
         Deck testDeck = new Deck("testDeck", testCards);
         Cell testCell = new Cell("testCell", testDeck);
+
+        Card testCard2 = new Card(); // automatically facedown, unknown cord
+        testCell.addCard(Offset.SOUTH, testCard2);
 
         Map<String, String> cardNameToFileName = Map.of("Unknown Card", "acehearts.png", "faceDown", "twohearts.png");
         Point2D location = new Point2D(100,200);
