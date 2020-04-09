@@ -35,7 +35,6 @@ public class DisplayCell {
     private Point2D lastXY = null;
 
     public DisplayCell(Cell cell, Map<String, String> cardNameToFileName, Point2D location, double height, double width, double offset) {
-
         myCell = cell;
         myFaceDown = new Image(cardNameToFileName.get("faceDown"));
         myFaceUp = new Image(cardNameToFileName.get(myCell.getDeck().peek().getName()));
@@ -49,17 +48,23 @@ public class DisplayCell {
         myImageView.setY(location.getY());
         myImageView.setFitWidth(width);
         myImageView.setFitHeight(height);
-        enableDrag(myImageView);
 
         myGroup = new Group();
         myGroup.getChildren().add(myImageView);
 
         Map<Offset, Point2D> offsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -offset), Offset.SOUTH, new Point2D(0,offset), Offset.EAST, new Point2D(offset, 0),Offset.WEST, new Point2D(-offset,0), Offset.NORTHEAST, new Point2D(offset,-offset), Offset.SOUTHEAST, new Point2D(offset,offset), Offset.NORTHWEST, new Point2D(-offset,-offset), Offset.SOUTHWEST, new Point2D(-offset,offset));
 
+        Cell childCellNone = (Cell) myCell.getAllChildren().get(Offset.NONE);
+        if (childCellNone.getDeck().peek()==null) {
+            System.out.println("Card in deck returned null");
+            DisplayCell childDisplayCellNone = new DisplayCell(childCellNone, cardNameToFileName.get(childCellNone.getDeck().peek().getName()), cardNameToFileName.get("faceDown"), location.add(offsetDirToAmount.get(Offset.NONE)), height, width, offset);
+            myDisplayChildren.put(Offset.NONE, childDisplayCellNone);
+            myGroup.getChildren().add(childDisplayCellNone.getImageView());
+        }
 
         for (IOffset dir: myCell.getAllChildren().keySet()) {
             Cell childCell = (Cell) myCell.getAllChildren().get(dir);
-            if (dir == Offset.NONE) {
+            if (dir == Offset.NONE) { // && childCell.getDeck().peek() == null
                 continue;
             }
             DisplayCell childDisplayCell = new DisplayCell(childCell, cardNameToFileName, location.add(offsetDirToAmount.get(dir)), height, width, offset);
@@ -67,9 +72,28 @@ public class DisplayCell {
             // TODO: adding groups
             myGroup.getChildren().add(childDisplayCell.getImageView());
         }
+        enableDrag(myImageView);
+    }
 
-        System.out.println("I dont know!");
+    public DisplayCell(Cell cell, String faceUp, String faceDown, Point2D location, double height, double width, double offset) {
+        myCell = cell;
+        myFaceDown = new Image(faceDown);
+        myFaceUp = new Image(faceUp);
 
+        if (myCell.getDeck().peek().isFaceUp()) {
+            myImageView = new ImageView(myFaceUp);
+        } else {
+            myImageView = new ImageView(myFaceDown);
+        }
+        myImageView.setX(location.getX());
+        myImageView.setY(location.getY());
+        myImageView.setFitWidth(width);
+        myImageView.setFitHeight(height);
+
+        myGroup = new Group();
+        myGroup.getChildren().add(myImageView);
+
+        enableDrag(myImageView);
     }
 
     public Group getGroup() {

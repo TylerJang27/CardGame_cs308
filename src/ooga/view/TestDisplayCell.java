@@ -34,7 +34,6 @@ public class TestDisplayCell extends Application {
         double offset = 20;
 
         DisplayCell testDispCell = new DisplayCell(testCell, cardNameToFileName, location, height, width, offset);
-        System.out.println("Back to test display cell");
 
         mainPane.getChildren().addAll(testDispCell.getGroup().getChildren());
     }
