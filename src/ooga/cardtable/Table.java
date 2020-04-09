@@ -17,7 +17,7 @@ public class Table implements ITable {
 
   public Table(IPhaseMachine mach) {
     this();
-    machine = mach;
+    setPhaseMachine(mach);
   }
 
   @Override

@@ -22,6 +22,8 @@ public interface IPhaseMachine {
    */
   Map<String, IPhase> getPhases();
 
+  void addPhase(IPhase phase);
+
   /**
    * Gives a list of phase names
    *
