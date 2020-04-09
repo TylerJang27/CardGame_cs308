@@ -20,7 +20,7 @@ public class LayoutFactory {
     public static ILayout getLayout(File dataFile) {
         Element root = XMLHelper.getRootAndCheck(dataFile, LAYOUT_TYPE, INVALID_ERROR);
 
-
+        return null;
     }
 
 }
