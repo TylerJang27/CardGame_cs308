@@ -2,6 +2,7 @@ package ooga.data;
 
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
+import ooga.cardtable.IPlayer;
 import ooga.data.rules.*;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -60,7 +61,7 @@ public class MasterRuleFactory implements Factory {
 
     public MasterRuleFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
 
-    public static List<IMasterRule> getRules(Node rules, Map<String, ICellGroup> cellGroupMap, Map<String, ICell> cellMap) {
+    public static List<IMasterRule> getRules(Node rules, Map<String, ICellGroup> cellGroupMap, Map<String, ICell> cellMap, String phaseName) {
         List<String> masterRuleNames = new ArrayList<>();
         Map<String, IMasterRule> ruleMap = new HashMap<>();
         Map<IMasterRule, List<ICardAction>> ruleActionMap = new HashMap<>();
@@ -108,25 +109,32 @@ public class MasterRuleFactory implements Factory {
             //allRules.addAll(autoRules);
             //////////each master rule needs an action
 
+            List<ICardAction> cardActionList = new ArrayList<>();
+            List<IControlAction> controlActionList = new ArrayList<>();
             NodeList actionList = ruleNode.getElementsByTagName(resources.getString(ACTION));               //TODO: REFACTOR FROM HERE TO AN ACTION FACTORY
             for (int j = 0; j < actionList.getLength(); j++) {
                 Element actionHeadNode = (Element) actionList.item(j);
 
                 NodeList allActions = actionHeadNode.getChildNodes();
 
-                Node recAction = XMLHelper.getNodeByName(allActions, resources.getString(RECEIVER_DESTINATION));
+                Element recAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(RECEIVER_DESTINATION));
 
-                Node movAction = XMLHelper.getNodeByName(allActions, resources.getString(MOVER_DESTINATION));
+                Element movAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(MOVER_DESTINATION));
 
-                Node phaseAction = XMLHelper.getNodeByName(allActions, resources.getString(NEXT_PHASE));
+                Element phaseAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(NEXT_PHASE));
                 try {
-                    
+                    String newPhase = XMLHelper.getAttribute(phaseAction, resources.getString(PHASE));
+                    String pointVal = phaseAction.getNodeValue();
+                    Integer points = 0;
+                    if (!pointVal.isEmpty()) {
+                        points = Integer.parseInt(pointVal);
+                    }
+                    IPhaseArrow arrow = new PhaseArrow(phaseName, ruleName, newPhase);
+                    controlActionList.add(new ControlAction(arrow, points));
                 } catch (NullPointerException e) {
                     throw new XMLException(e, MISSING_ERROR + "," + resources.getString(NEXT_PHASE));
                 }
             }
-            List<ICardAction> cardActionList = new ArrayList<>();
-            List<IControlAction> controlActionList = new ArrayList<>();
 
                                                                                                             //TODO: REFACTOR TO HERE TO AN ACTION FACTORY
             IMasterRule masterRule = new MasterRule(receiverRuleList, moverRuleList, donorRuleList);

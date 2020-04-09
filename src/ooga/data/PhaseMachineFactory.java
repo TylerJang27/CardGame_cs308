@@ -8,7 +8,6 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

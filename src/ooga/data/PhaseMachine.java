@@ -1,4 +1,4 @@
-package ooga.data.rules;
+package ooga.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,10 @@ import ooga.cardtable.GameState;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
-import ooga.data.PhaseMachineFactory;
+import ooga.data.rules.IPhase;
+import ooga.data.rules.IPhaseArrow;
+import ooga.data.rules.IPhaseHistoryCell;
+import ooga.data.rules.IPhaseMachine;
 
 public class PhaseMachine implements IPhaseMachine {
 

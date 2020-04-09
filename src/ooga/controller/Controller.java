@@ -6,12 +6,10 @@ import ooga.cardtable.*;
 import ooga.data.PhaseMachineFactory;
 import ooga.data.StyleFactory;
 import ooga.data.rules.IPhaseMachine;
-import ooga.data.rules.PhaseMachine;
 import ooga.data.style.IStyle;
 import ooga.view.View;
 
 import java.io.File;
-import java.util.List;
 import java.util.Map;
 
 /**

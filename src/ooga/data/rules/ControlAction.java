@@ -6,17 +6,15 @@ import ooga.cardtable.IPlayer;
 public class ControlAction implements IControlAction {
 
     IPhaseArrow myArrow;
-    IPlayer myPlayer;
     int myVal;
 
-    public ControlAction(IPhaseArrow arrow, IPlayer player, int pointVal) {
+    public ControlAction(IPhaseArrow arrow, int pointVal) {
         myArrow = arrow;
-        myPlayer = player;
         myVal = pointVal;
     }
 
     @Override
-    public IPhaseArrow execute() {
+    public IPhaseArrow execute(IPlayer player) {
         //TODO: ADJUST POINTS HERE
         return myArrow;
     }
