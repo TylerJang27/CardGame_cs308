@@ -2,9 +2,11 @@ package ooga.cardtable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.function.Function;
 
 public class Cell implements ICell {
+
   private IDeck deck;
   private String name;
   private Function<IDeck, ICell> cellDeckBuilder;
@@ -15,7 +17,7 @@ public class Cell implements ICell {
     deck = new Deck();
   }
 
-  public Cell(String nm, Deck d) {
+  public Cell(String nm, IDeck d) {
     this(nm);
     deck = d;
   }
@@ -27,7 +29,7 @@ public class Cell implements ICell {
 
   @Override
   public void initializeCards(IDeck mainDeck) {
-    if (cellDeckBuilder!= null) {
+    if (cellDeckBuilder != null) {
       //call merge/addcell with cellDeckBuilder.apply(mainDeck);
       //starting deck is empty
       //cellDeckBuilder.apply(mainDeck);
@@ -46,9 +48,24 @@ public class Cell implements ICell {
   }
 
   @Override
-  public Map<IOffset, ICell> getAllChildren() { //fixme do a proper copy
+  public boolean isEmpty() {
+    if (getDeck().size() > 0 ) {
+      return false;
+    }
+    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+      if (!e.getKey().equals(Offset.NONE)) {
+        if (!e.getValue().isEmpty()) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  @Override
+  public Map<IOffset, ICell> getAllChildren() { //fixme do a proper copy?
     Map<IOffset, ICell> ret = new HashMap<>(children);
-    ret.put(Offset.NONE, this);
+    ret.put(Offset.NONE, new Cell(name, deck));
     return ret;
   }
 
@@ -63,7 +80,23 @@ public class Cell implements ICell {
       deck.addCard(card);
       return;
     }
-    children.putIfAbsent(offset, new Cell(getName()+","+offset.getOffset())); //fixme namespace shenanigans
+    children.putIfAbsent(offset,
+        new Cell(getName() + "," + offset.getOffset())); //fixme namespace shenanigans
     children.get(offset).addCard(Offset.NONE, card);
+  }
+
+  @Override
+  public void addCell(IOffset offset, ICell cell) { //fixme 90% this infinite recurses
+    if (cell == null || cell.isEmpty()) {
+      return;
+    }
+    ICell recipient = getAllChildren().get(offset);
+    if (cell.getAllChildren().keySet().size() <= 1) {
+      recipient.getDeck().addDeck(cell.getDeck());
+      return;
+    }
+    for (Entry<IOffset, ICell> e : cell.getAllChildren().entrySet()) {
+      recipient.getAllChildren().get(e.getKey()).addCell(Offset.NONE, e.getValue());
+    }
   }
 }

@@ -72,6 +72,13 @@ public class Deck implements IDeck {
   }
 
   @Override
+  public void addDeck(IDeck deck) { //fixme consider making an iterable?
+    for (int i = 0; i < deck.size(); i++) {
+      addCard(deck.peekCardAtIndex(i));
+    }
+  }
+
+  @Override
   public String getName() { return myName; }
 
   @Override
