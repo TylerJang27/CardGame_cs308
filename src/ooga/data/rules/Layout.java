@@ -51,6 +51,32 @@ public class Layout implements ILayout {
         return Map.copyOf(cellLayout);
     }
 
+    // TODO: Add all of these to the External API and give them documentation
+
+    public int getNumPlayers() {
+        return numPlayers;
+    }
+
+    public double getScreenRatio() {
+        return screenRatio;
+    }
+
+    public double getCardWidthRatio() {
+        return cardWidthRatio;
+    }
+
+    public double getCardHeightRatio() {
+        return cardHeightRatio;
+    }
+
+    public double getDownOffsetRatio() {
+        return downOffsetRatio;
+    }
+
+    public double getUpOffsetRatio() {
+        return upOffsetRatio;
+    }
+
     /**
      * Gives screen width
      *
