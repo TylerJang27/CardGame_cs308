@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data type="rule">
     <settings>
+        <players>1</players>
         <layout>
             <!-- should just be a file name so that we can process it properly and send to the front end -->
         </layout>
@@ -164,6 +165,7 @@
             <color>red</color>
             <suit>d</suit>
         </card>
+
         <card>
             <name>AH</name>
             <value>1</value>
@@ -242,6 +244,7 @@
             <color>red</color>
             <suit>h</suit>
         </card>
+
         <card>
             <name>AS</name>
             <value>1</value>
@@ -646,20 +649,25 @@
                     <option>
                         <condition category="action">
                             <!-- somehow check that all these are empty -->
+                            <num_cards>0</num_cards>
                         </condition>
                         <condition category="hand">
                             <!-- somehow check that all these are empty -->
+                            <num_cards>0</num_cards>
                         </condition>
                         <condition category="deck">
                             <!-- somehow check that all these are empty -->
+                            <num_cards>0</num_cards>
                         </condition>
                         <action>
                             <!-- go to end of game -->
+                            <next_phase>end_of_game</next_phase>
                         </action>
                     </option>
                     <option>
                         <action>
                             <!-- go to player turn -->
+                            <next_phase>play</next_phase>
                         </action>
                     </option>
                 </rule>

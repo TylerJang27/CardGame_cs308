@@ -22,6 +22,8 @@ public interface IDeck {
 
   void addCard(ICard card);
 
+  void addDeck(IDeck deck);
+
   String getName(); //TODO: ADD TO API CHANGES
 
   ICard getCardByName(String name); //TODO: ADD TO API CHANGES

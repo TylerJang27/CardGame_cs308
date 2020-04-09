@@ -18,10 +18,14 @@ public interface ICell extends Cellular {
 
   String getName();
 
+  boolean isEmpty();
+
   Map<IOffset, ICell> getAllChildren();
 
   Map<IOffset, ICell> getHeldCells();
 
   void addCard(IOffset offset, ICard card);
+
+  void addCell(IOffset offset, ICell cell);
 
 }

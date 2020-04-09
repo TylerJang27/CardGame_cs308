@@ -8,6 +8,7 @@ import ooga.cardtable.GameState;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
+import ooga.data.PhaseMachineFactory;
 
 public class PhaseMachine implements IPhaseMachine {
 
@@ -17,9 +18,33 @@ public class PhaseMachine implements IPhaseMachine {
   private List<ICell> cells;
   private List<IPhaseHistoryCell> history;
 
+  public PhaseMachine() {
+    history = new ArrayList<>();
+    phases = new HashMap<>();
+  }
+
+  public PhaseMachine(List<IPhase> ph, String startName) {
+    this();
+    for (IPhase p: ph) {
+      addPhase(p);
+    }
+    startPhase = phases.get(startName); //FIXME add error checking
+    currentPhase = startPhase;
+  }
+
+  public PhaseMachine(Map<String, IPhase> ph, String startName) {
+    this(new ArrayList<>(ph.values()), startName);
+  }
+
   @Override
   public Map<String, IPhase> getPhases() {
     return new HashMap<>(phases);
+  }
+
+  @Override
+  public void addPhase(IPhase phase) {
+    phases.put(phase.getName(), phase);
+    phase.setCellList(cells);
   }
 
   @Override
@@ -42,6 +67,14 @@ public class PhaseMachine implements IPhaseMachine {
   }
 
   @Override
+  public void setCellList(List<ICell> cellList) {
+    cells = new ArrayList<>(cellList);
+    for (IPhase ph: phases.values()) {
+      ph.setCellList(cells);
+    }
+  }
+
+  @Override
   public List<String> getTopLevelCellNames() {
     List<String> ret = new ArrayList<>();
     for (ICell c : cells) {
@@ -52,8 +85,11 @@ public class PhaseMachine implements IPhaseMachine {
 
   @Override
   public IGameState update(IMove move) {
-    IRule rule = getCurrentPhase().identifyMove(move);
-    IPhase nextPhase = phases.get(getCurrentPhase().getNextPhaseName(rule)); //togetherify identifyMove and getNextPhaseName
+    String next = getCurrentPhase().getNextPhaseName(move);
+    if (next == null) {
+      return GameState.INVALID; //FIXME
+    }
+    IPhase nextPhase = phases.get(next);
     IGameState state = nextPhase.executeAutomaticActions();
     while (state != GameState.WAITING) { //FIXME
       nextPhase = phases.get(nextPhase.getNextPhaseName(null));

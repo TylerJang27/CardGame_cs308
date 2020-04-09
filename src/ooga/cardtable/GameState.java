@@ -3,7 +3,8 @@ package ooga.cardtable;
 public enum GameState implements IGameState {
   WIN("win"),
   LOSS("loss"),
-  WAITING("waiting")
+  WAITING("waiting"),
+  INVALID("invalid")
   ;
 
   private String state;

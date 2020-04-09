@@ -22,6 +22,8 @@ public interface IPhaseMachine {
    */
   Map<String, IPhase> getPhases();
 
+  void addPhase(IPhase phase);
+
   /**
    * Gives a list of phase names
    *
@@ -42,6 +44,8 @@ public interface IPhaseMachine {
    * @return map containing cell information
    */
   Map<String, ICell> getTopLevelCells();
+
+  void setCellList(List<ICell> cells);
 
   /**
    * Gives a list of cell names
