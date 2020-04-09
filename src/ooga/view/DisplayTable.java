@@ -59,8 +59,8 @@ public class DisplayTable extends Application {
         source.setOnDragDetected(new EventHandler <MouseEvent>() {
             public void handle(MouseEvent event) {
                 System.out.println("onDragDetected");
-                Dragboard db = source.startDragAndDrop(TransferMode.ANY);
 
+                Dragboard db = source.startDragAndDrop(TransferMode.ANY);
                 ClipboardContent content = new ClipboardContent();
                 content.putImage(ace);
                 System.out.println(content.getImage().getHeight());
@@ -68,7 +68,7 @@ public class DisplayTable extends Application {
                 db.setContent(content);
                 db.setDragView(ace);
                 System.out.println(db.getDragView().getHeight());
-                //db.setDragView(source.getImage());
+                db.setDragView(source.getImage());
 
                 event.consume();
             }
@@ -144,41 +144,10 @@ public class DisplayTable extends Application {
             }
         });
 
-
-
         root.getChildren().add(source);
         root.getChildren().add(target);
         stage.setScene(scene);
         stage.show();
-    }
-
-    public static ClipboardContent makeClipboardContent(MouseEvent event, Node child, String text) {
-        ClipboardContent cb = new ClipboardContent();
-        if (text != null) {
-            cb.put(DataFormat.PLAIN_TEXT, text);
-        }
-        if (!event.isShiftDown()) {
-            SnapshotParameters params = new SnapshotParameters();
-            params.setFill(Color.TRANSPARENT);
-            Bounds b = child.getBoundsInParent();
-            double f = 10;
-            params.setViewport(new Rectangle2D(b.getMinX()-f, b.getMinY()-f, b.getWidth()+f+f, b.getHeight()+f+f));
-
-            WritableImage image = child.snapshot(params, null);
-            cb.put(DataFormat.IMAGE, image);
-
-            try {
-                File tmpFile = File.createTempFile("snapshot", ".png");
-                LinkedList<File> list = new LinkedList<File>();
-                ImageIO.write(SwingFXUtils.fromFXImage(image, null),
-                        "png", tmpFile);
-                list.add(tmpFile);
-                cb.put(DataFormat.FILES, list);
-            } catch (Exception e) {
-
-            }
-        }
-        return cb;
     }
 
     public static void main(String[] args) {
