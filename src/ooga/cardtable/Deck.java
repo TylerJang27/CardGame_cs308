@@ -41,7 +41,7 @@ public class Deck implements IDeck {
     return getCardAtIndex(rand.nextInt(size()));
   }
 
-  //TODO: MAVERICK FIX THIS SIZE?
+  //TODO: MAVERICK FIX THIS SIZE? HULLOO
   @Override
   public ICard getBottomCard() {
     return getCardAtIndex(size());
@@ -76,6 +76,7 @@ public class Deck implements IDeck {
   public String getName() { return myName; }
 
   @Override
+  //TODO: HULLOO
   public ICard getCardByName(String name) { //TODO: MAKE SURE THIS WORKS WITH THE OFFSET AS I WANT IT TO
     for (ICard c: cards) {
       if (c.getName().equals(name)) {

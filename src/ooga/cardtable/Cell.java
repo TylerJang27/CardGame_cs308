@@ -8,7 +8,7 @@ public class Cell implements ICell {
   private IDeck deck;
   private String name;
   private Function<IDeck, IDeck> cellDeckBuilder;
-  //SHOULD CHANGE TO IDECK AND ICELL
+  //TODO: HULLOO SHOULD CHANGE TO IDECK AND ICELL
   private Map<IOffset, ICell> children;
 
   public Cell(String nm) {
@@ -16,6 +16,8 @@ public class Cell implements ICell {
     deck = new Deck();
   }
 
+  //TODO: ASSUMES NONE OFFSET?
+  //TODO: LAMBDA SHOULD CALL THIS'S ADD CARD NOT DECK'S?
   public Cell(String nm, Deck d) {
     this(nm);
     deck = d;
