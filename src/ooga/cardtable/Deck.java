@@ -51,6 +51,21 @@ public class Deck implements IDeck {
   }
 
   @Override
+  public ICard peek() {
+    return peekCardAtIndex(0);
+  }
+
+  @Override
+  public ICard peekBottom() {
+    return peekCardAtIndex(size());
+  }
+
+  @Override
+  public ICard peekCardAtIndex(int index) {
+    return cards.get(index);
+  }
+
+  @Override
   public void addCard(ICard card) { //fixme make package private?
     cards.add(card);
   }

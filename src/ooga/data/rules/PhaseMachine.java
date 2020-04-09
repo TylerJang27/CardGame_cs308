@@ -75,6 +75,7 @@ public class PhaseMachine implements IPhaseMachine {
 
   @Override
   public List<IPhaseHistoryCell> getHistory() {
+    System.out.println("To be implemented later");
     return null; //FIXME
   }
 }

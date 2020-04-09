@@ -4,3 +4,6 @@
 4/7/2020:
 * MC - Added the setName method to IPlayer.
 * MC - Added the getName method to IPhase.
+
+4/8/2020:
+* MC - Added the peek, peekBottom, and peekCardAtIndex methods to IDeck
