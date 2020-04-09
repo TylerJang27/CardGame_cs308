@@ -14,7 +14,7 @@ public class DisplayTable extends Application {
     // TODO: function which calls convertToDisplay(), then adds the imageview object to screen....
     // TODO: problem will be when need to drag a display cell which points to other display cells
     // TODO: ^^ can't assume all children move every time, need to ask back end? Or maybe can assume
-    // TODO: how to guarantee selected card during drag is rendered OVER rather than UNDER other cards
+    // TODO: how to guarantee selected card during drag is rendered OVER rather than UNDER other cards -> add node at specific inddex
 
     private String myGameName;
     private ILayout myLayout;
