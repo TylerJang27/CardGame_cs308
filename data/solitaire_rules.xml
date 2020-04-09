@@ -490,8 +490,8 @@
                             <offset>down</offset>
                             <flip>n</flip>
                         </mover_dest>
-                        <points/>
-                        <next_phase>check_eog</next_phase>
+                        <!-- points included in the tag below-->
+                        <next_phase phase="check_eog">0</next_phase>
                     </action>
                 </rule>
                 <rule category="suits">
@@ -539,8 +539,7 @@
                             <offset>0</offset>
                             <flip>n</flip>
                         </mover_dest>
-                        <points/>
-                        <next_phase>check_eog</next_phase>
+                        <next_phase phase = "check_eog">0</next_phase>
                     </action>
                 </rule>
                 <rule category="deck">
@@ -587,8 +586,7 @@
                             <offset>down</offset>
                             <flip>y</flip>
                         </mover_dest>
-                        <points/>
-                        <next_phase>check_eog</next_phase>
+                        <next_phase phase="check_eog"></next_phase>
                     </action>
                 </rule>
                 <rule category="hand">
@@ -635,8 +633,7 @@
                             <offset>0</offset>
                             <flip>y</flip>
                         </mover_dest>
-                        <points/>
-                        <next_phase>check_eog</next_phase>
+                        <next_phase phase = "check_eog">0</next_phase>
                     </action>
                 </rule>
             </rules>
@@ -662,7 +659,7 @@
                     </receive_rule>
                     <action>
                         <!-- go to end of game -->
-                        <next_phase>end_of_game</next_phase>
+                        <next_phase phase="end_of_game"></next_phase>
                     </action>
                 </rule>
                 <rule category="">
@@ -673,7 +670,7 @@
                     </receive_rule>
                     <action>
                         <!-- go to player turn -->
-                        <next_phase>play</next_phase>
+                        <next_phase phase = "play"></next_phase>
                     </action>
                 </rule>
             </rules>
