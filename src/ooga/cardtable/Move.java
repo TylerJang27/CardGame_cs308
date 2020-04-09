@@ -2,29 +2,41 @@ package ooga.cardtable;
 
 public class Move implements IMove{
 
-  private ICell dragged;
+  private ICell donor;
+  private ICell mover;
   private ICell recipient;
   private IOffset offset;
 
-  public Move(ICell d, ICell r) {
-    dragged = d;
+  public Move(ICell d, ICell m, ICell r) {
+    donor = d;
+    mover = m;
     recipient = r;
     offset = Offset.NONE;
   }
 
-  public Move(ICell d, ICell r, Offset o){
-    this(d,r);
+  public Move(ICell d, ICell m, ICell r, Offset o){
+    this(d,m,r);
     offset = o;
   }
 
   @Override
-  public ICell getDragged() {
-    return dragged;
+  public ICell getMover() {
+    return mover;
   }
 
   @Override
-  public void setDragged(ICell cell) {
-    dragged = cell;
+  public void setMover(ICell cell) {
+    mover = cell;
+  }
+
+  @Override
+  public ICell getDonor() {
+    return donor;
+  }
+
+  @Override
+  public void setDonor(ICell cell) {
+    donor = cell;
   }
 
   @Override

@@ -7,3 +7,4 @@
 
 4/8/2020:
 * MC - Added the peek, peekBottom, and peekCardAtIndex methods to IDeck
+* MC - Added donor methods to IMove, and renamed "dragged" to "mover" to match controller terminology
