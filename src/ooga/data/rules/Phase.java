@@ -13,11 +13,11 @@ public class Phase implements IPhase {
 
   private String name;
   private List<ICell> cellList;
-  private List<IRule> rules;
+  private List<IMasterRule> rules;
   private List<ICardAction> autoActions;
   private List<String> validDonorNames;
-  private Map<IRule, List<ICardAction>> conditionalActions;
-  private Map<IRule, String> phaseUpdate;
+  private Map<IMasterRule, List<ICardAction>> conditionalActions;
+  private Map<IMasterRule, String> phaseUpdate;
 
   public Phase(String nm) {
     name = nm;
@@ -40,8 +40,8 @@ public class Phase implements IPhase {
   }
 
   @Override
-  public IRule identifyMove(IMove move) {
-    for (IRule r : rules) {
+  public IMasterRule identifyMove(IMove move) {
+    for (IMasterRule r : rules) {
       if (r.checkValidMove(move)) {
         return r;
       }
@@ -50,14 +50,14 @@ public class Phase implements IPhase {
   }
 
   @Override
-  public List<IRule> getRuleList() {
+  public List<IMasterRule> getRuleList() {
     return new ArrayList<>(rules);
   }
 
   @Override
-  public Map<IRule, List<ICardAction>> getConditionalActions() {
-    Map<IRule, List<ICardAction>> ret = new HashMap<>();
-    for (Entry<IRule, List<ICardAction>> e : conditionalActions.entrySet()) {
+  public Map<IMasterRule, List<ICardAction>> getConditionalActions() {
+    Map<IMasterRule, List<ICardAction>> ret = new HashMap<>();
+    for (Entry<IMasterRule, List<ICardAction>> e : conditionalActions.entrySet()) {
       ret.put(e.getKey(), new ArrayList<>(e.getValue()));
     }
     return ret;
@@ -84,7 +84,7 @@ public class Phase implements IPhase {
 
   @Override
   public String getNextPhaseName(IMove move) {
-    IRule rule = identifyMove(move);
+    IMasterRule rule = identifyMove(move);
     return phaseUpdate.get(rule); //fixme does null case return null? I sure hope so
   }
 
@@ -94,7 +94,7 @@ public class Phase implements IPhase {
   }
 
   @Override
-  public void addRule(IRule rule, List<ICardAction> actions, String nextPhase) {
+  public void addRule(IMasterRule rule, List<ICardAction> actions, String nextPhase) {
     rules.add(rule);
     conditionalActions.put(rule, new ArrayList<>(actions));
     phaseUpdate.put(rule, nextPhase);

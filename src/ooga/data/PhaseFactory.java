@@ -3,7 +3,7 @@ package ooga.data;
 import ooga.cardtable.ICell;
 import ooga.data.rules.ICellGroup;
 import ooga.data.rules.IPhase;
-import ooga.data.rules.IRule;
+import ooga.data.rules.IMasterRule;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -80,7 +80,7 @@ public class PhaseFactory implements Factory {
 
                 //rules
                 Node rules = XMLHelper.getNodeByName(phaseNodes, resources.getString(RULES));
-                List<IRule> phaseRules = RuleFactory.getRules(rules, cellGroupMap, cellMap);
+                List<IMasterRule> phaseRules = RuleFactory.getRules(rules, cellGroupMap, cellMap);
 
                 //TODO: INSTANTIATE PHASE
 

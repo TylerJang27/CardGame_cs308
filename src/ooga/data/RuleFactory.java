@@ -1,17 +1,15 @@
 package ooga.data;
 
 import ooga.cardtable.ICell;
-import ooga.data.rules.ICellGroup;
-import ooga.data.rules.IRule;
+import ooga.cardtable.IMove;
+import ooga.data.rules.*;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.function.Function;
 
 public class RuleFactory implements Factory {
     private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
@@ -43,30 +41,78 @@ public class RuleFactory implements Factory {
     private static final String POINTS = "Points";
     private static final String NEXT_PHASE = "NextPhase";
 
+    private static final String R = "R";
+    private static final String M = "M";
+    private static final String D = "D";
+
     private static DocumentBuilder documentBuilder;
 
     public RuleFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
 
-    public static List<IRule> getRules(Node rules, Map<String, ICellGroup> cellGroupMap, Map<String, ICell> cellMap) {
-        Map<String, IRule> ruleMap = new HashMap<>();
-        NodeList ruleNodes = ((Element)rules).getElementsByTagName(resources.getString(RULE));
+    public static List<IMasterRule> getRules(Node rules, Map<String, ICellGroup> cellGroupMap, Map<String, ICell> cellMap) {
+        Map<String, IMasterRule> ruleMap = new HashMap<>();
+        Map<IMasterRule, List<ICardAction>> ruleActionMap = new HashMap<>();
 
-        for (int k = 0; k < ruleNodes.getLength(); k++) {
-            Element ruleNode = (Element)ruleNodes.item(k);
+        NodeList ruleNodeList = ((Element)rules).getElementsByTagName(resources.getString(RULE));
+
+        for (int k = 0; k < ruleNodeList.getLength(); k++) {
+            Element ruleNode = (Element)ruleNodeList.item(k);
             String ruleName = XMLHelper.getAttribute(ruleNode, resources.getString(CATEGORY));
 
-            
+            //supports multiple receive rules
+            NodeList receiverRuleNodeList = ruleNode.getElementsByTagName(resources.getString(RECEIVE_RULE));
+            List<IRule> receiverRuleList = new ArrayList<>();
+            List<IRule> moverRuleList = new ArrayList<>();
+            List<IRule> donorRuleList = new ArrayList<>();
 
-            //receive rule
+            for (int j = 0; j < receiverRuleNodeList.getLength(); j++) {
+                Element receiverRuleNode = (Element)receiverRuleNodeList.item(j);
 
-            ///donor rule
+                NodeList allConditions = receiverRuleNode.getChildNodes();
 
-            //receiver action
+                Node recRule = XMLHelper.getNodeByName(allConditions, resources.getString(RECEIVER));
+                if (recRule != null) {
+                    receiverRuleList.add(buildRule((Element)recRule, ruleName + R, (IMove move) -> checkRecipient(move, ruleName)));
+                }
+                Node movRule = (Element)XMLHelper.getNodeByName(allConditions, resources.getString(MOVER));
+                if (movRule != null) {
+                    moverRuleList.add(buildRule((Element) movRule, ruleName + M));
+                }
+                Node donRule = (Element)XMLHelper.getNodeByName(allConditions, resources.getString(DONOR));
+                if (donRule != null) {
+                    donorRuleList.add(buildRule((Element)donRule, ruleName + D));
+                }
+            }
 
+            IMasterRule masterRule = new MasterRule(receiverRuleList, moverRuleList, donorRuleList);
+            ruleMap.put(ruleName, masterRule);
+
+            List<ICardAction> cardActions = new ArrayList<>();
             //donor action
 
             //other actions
+
+            ruleActionMap.put(masterRule, cardActions);
         }
         return null;
     }
+
+    private static IRule buildRule(Element e, String ruleName) {
+        return buildRule(e, ruleName, (IMove move)->true);
+    }
+
+    private static IRule buildRule(Element e, String ruleName, Function<IMove, Boolean> cond) {
+        List<Function<IMove, Boolean>> conditions = new ArrayList<>();
+        conditions.add(cond);
+
+        NodeList conditionNodeList = e.getChildNodes();
+
+
+        return new Rule(ruleName, conditions)
+    }
+
+    private static Boolean checkRecipient(IMove move, String name) {
+        return name.equals(move.getRecipient().getName().split(",")[0]);
+    }
+
 }
