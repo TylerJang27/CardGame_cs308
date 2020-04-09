@@ -56,4 +56,8 @@ public interface IPhase {
    */
   IGameState executeAutomaticActions();
 
+  String getName();
+
+  String getNextPhaseName(IRule rule);
+
 }

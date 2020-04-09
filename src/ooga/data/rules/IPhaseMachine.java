@@ -12,7 +12,7 @@ import ooga.cardtable.IMove;
  */
 public interface IPhaseMachine {
 
-  public static final String DATA_TYPE = "rules";
+  public static final String DATA_TYPE = "rule";
 
   //TODO: potentially also add deck stuff here
   /**
