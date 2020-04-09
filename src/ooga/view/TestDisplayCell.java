@@ -10,12 +10,6 @@ import java.util.List;
 
 public class TestDisplayCell extends Application {
 
-    // TODO: function that takes in one cell and converts to one display cell, for rendering/updates
-    // TODO: function which calls convertToDisplay(), then adds the imageview object to screen....
-    // TODO: problem will be when need to drag a display cell which points to other display cells
-    // TODO: ^^ can't assume all children move every time, need to ask back end? Or maybe can assume
-    // TODO: how to guarantee selected card during drag is rendered OVER rather than UNDER other cards
-
     public void start(Stage primaryStage) {
         Pane mainPane = new Pane();
         Scene scene = new Scene(mainPane, 500, 500, false);
