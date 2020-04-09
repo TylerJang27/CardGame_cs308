@@ -30,13 +30,10 @@ public class DisplayTable extends Application {
     }
 
     @Override public void start(Stage stage) {
-
         stage.setTitle(myGameName);
-
         Group root = new Group();
         Scene scene = new Scene(root, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
         scene.setFill(myTableColor);
-
 
     }
 
