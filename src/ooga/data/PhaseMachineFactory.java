@@ -48,7 +48,7 @@ public class PhaseMachineFactory {
         //Cells
         //Phases
         //Build
-        return new PhaseMachine(new ArrayList<>());
+        return new PhaseMachine();
     }
 
 }

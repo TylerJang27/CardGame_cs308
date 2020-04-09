@@ -1,6 +1,10 @@
 package ooga.data;
 
+import ooga.data.rules.ICellGroup;
+import org.w3c.dom.Element;
+
 import javax.xml.parsers.DocumentBuilder;
+import java.util.List;
 import java.util.ResourceBundle;
 
 //TODO: ADD DOCUMENTATION
@@ -25,7 +29,9 @@ public class CellGroupFactory {
 
     public CellGroupFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
 
+    public static List<ICellGroup> getCellGroups(Element root) {
 
+    }
 
 
 }
