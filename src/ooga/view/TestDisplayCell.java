@@ -13,19 +13,14 @@ import java.util.Map;
 
 public class TestDisplayCell extends Application {
 
+    private Pane myMainPane;
     public void start(Stage primaryStage) {
-        Pane mainPane = new Pane();
-        Scene scene = new Scene(mainPane, 500, 500, false);
+        myMainPane = new Pane();
+        Scene scene = new Scene(myMainPane, 500, 500, false);
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        Card testCard = new Card(); // automatically facedown, unknown card
-        List<ICard> testCards = List.of(testCard);
-        Deck testDeck = new Deck("testDeck", testCards);
-        Cell testCell = new Cell("testCell", testDeck);
-
-        Card testAddCard = new Card(); // automatically facedown, unknown cord
-        testCell.addCard(Offset.SOUTH,testAddCard);
+        Cell testCell = getDummyCell();
 
         Map<String, String> cardNameToFileName = Map.of("Unknown Card", "acehearts.png", "faceDown", "twohearts.png");
         Point2D location = new Point2D(100,200);
@@ -34,8 +29,34 @@ public class TestDisplayCell extends Application {
         double offset = 20;
 
         DisplayCell testDispCell = new DisplayCell(testCell, cardNameToFileName, location, height, width, offset);
+        drawDisplayCells(testDispCell);
 
-        mainPane.getChildren().addAll(testDispCell.getGroup().getChildren());
+    }
+
+    private Cell getDummyCell() {
+        Card testCard = new Card(); // automatically facedown, unknown card
+        List<ICard> testCards = List.of(testCard);
+        Deck testDeck = new Deck("testDeck", testCards);
+        Cell testCell = new Cell("testCell", testDeck);
+
+        Card testAddCard = new Card(); // automatically facedown, unknown cord
+        testCell.addCard(Offset.SOUTH,testAddCard);
+        Card testAddAnotherCard = new Card();
+        testCell.getAllChildren().get(Offset.SOUTH).addCard(Offset.SOUTH,testAddAnotherCard);
+        return testCell;
+    }
+
+    private void drawDisplayCells(DisplayCell rootDispCell) {
+        if (rootDispCell.getGroup().getChildren() == null) {
+            return;
+        }
+        myMainPane.getChildren().addAll(rootDispCell.getGroup().getChildren());
+        for (IOffset dir: rootDispCell.getCell().getAllChildren().keySet()) {
+            if (dir == Offset.NONE) {
+                continue;
+            }
+            drawDisplayCells(rootDispCell.getAllChildren().get((Offset) dir));
+        }
     }
 
     public static void main(String[] args) {
