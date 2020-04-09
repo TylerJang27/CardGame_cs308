@@ -3,7 +3,6 @@ package ooga.data.rules;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IDeck;
 
-import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -18,14 +17,16 @@ public interface ICellGroup {
      *
      * @return the ICellGroup's name
      */
-    public String getName();
+    String getName();
 
     /**
      * Retrieves the cells denoted by this Cell Group
      *
      * @return Collection of ICells
      */
-    public Map<String, ICell> getCellMap();
+    Map<String, ICell> getCellMap();
+
+    boolean isInGroup(String name); //TODO: ADD TO API CHANGES
 
     void initializeAll(IDeck mainDeck); //TODO: ADD TO API CHANGES
 

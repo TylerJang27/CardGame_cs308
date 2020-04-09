@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 import java.util.function.Function;
 
 public class InitializeFactory implements Factory {
-    public static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
+    private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
     private static final String DECK = "deck";
     private static final String INITIALIZE = "initialize";
     private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE+DECK);

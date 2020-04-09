@@ -2,10 +2,7 @@ package ooga.data;
 
 import ooga.cardtable.ICell;
 import ooga.cardtable.IDeck;
-import ooga.data.rules.ICellGroup;
-import ooga.data.rules.IPhaseMachine;
-import ooga.data.rules.ISettings;
-import ooga.data.rules.PhaseMachine;
+import ooga.data.rules.*;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -48,7 +45,8 @@ public class PhaseMachineFactory implements Factory{
         }
         Map<String, ICell> allBaseCells = getAllCells(cellGroups);
 
-        
+        Map<String, IPhase> phases = PhaseFactory.getPhases(root, cellGroups, allBaseCells);
+
         //Phases
         //Build
         return new PhaseMachine();

@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 //TODO: ADD DOCUMENTATION
 public class CellGroupFactory implements Factory{
-    public static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
+    private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
     private static final String CELL_GROUP = "cell_group";
     private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE+CELL_GROUP);
 

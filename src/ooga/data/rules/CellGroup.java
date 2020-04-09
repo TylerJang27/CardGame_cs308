@@ -40,6 +40,11 @@ public class CellGroup implements ICellGroup{
     }
 
     @Override
+    public boolean isInGroup(String name) {
+        return myCells.keySet().contains(name);
+    }
+
+    @Override
     public void initializeAll(IDeck mainDeck) {
         for (Map.Entry<String, ICell> c: myCells.entrySet()) {
             c.getValue().initializeCards(mainDeck);
