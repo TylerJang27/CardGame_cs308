@@ -1,9 +1,6 @@
 package ooga.data;
 
-import ooga.cardtable.Deck;
-import ooga.cardtable.ICard;
-import ooga.cardtable.IDeck;
-import ooga.cardtable.IOffset;
+import ooga.cardtable.*;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -33,7 +30,7 @@ public class InitializeFactory implements Factory {
     public InitializeFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
 
     //TODO: SHORTEN METHOD
-    public static Function<IDeck, IDeck> getInitialization(Node settings, IOffset offset) {
+    public static Function<IDeck, ICell> getInitialization(Node settings, IOffset offset) {
         List<Function<IDeck, ICard>> functionList = new ArrayList<>();
         NodeList cards = ((Element)settings).getElementsByTagName(resources.getString(CARD));
 
@@ -48,8 +45,15 @@ public class InitializeFactory implements Factory {
                     return c;
                 });
             } else if (regexSplit[0].equals(initializeResources.getString(ALL))) {
-                //NOTE: ORDER OF CELL GROUP PARSING MATTERS FOR THIS TO WORK
-                return (IDeck source) -> source;
+                //NOTE: ORDER OF CELL GROUP PARSING MAY MATTER FOR THIS TO WORK
+                //ALSO WHILE THIS TAKES IN OFFSET, IT IS BEST IF IT IS NONE
+                return (IDeck source) -> {
+                    ICell c = new Cell("");
+                    while (source.size() > 0) {
+                        c.addCard(offset, source.getRandomCard());
+                    }
+                    return c;
+                }
             } else {
                 functionList.add((IDeck source) -> {
                     ICard c =  source.getCardByName(regexSplit[0]);
@@ -59,12 +63,11 @@ public class InitializeFactory implements Factory {
             }
         }
         return (IDeck source) -> {
-            //TODO: USE OFFSET HERE
-            IDeck d = new Deck();
+            ICell c = new Cell("");
             for (Function<IDeck, ICard> f: functionList) {
-                d.addCard(f.apply(source));
+                c.addCard(offset, f.apply(source));
             }
-            return d;
+            return c;
         };
     }
 

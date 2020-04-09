@@ -41,10 +41,9 @@ public class Deck implements IDeck {
     return getCardAtIndex(rand.nextInt(size()));
   }
 
-  //TODO: MAVERICK FIX THIS SIZE? HULLOO
   @Override
   public ICard getBottomCard() {
-    return getCardAtIndex(size());
+    return getCardAtIndex(size() - 1);
   }
 
   @Override
@@ -59,7 +58,7 @@ public class Deck implements IDeck {
 
   @Override
   public ICard peekBottom() {
-    return peekCardAtIndex(size());
+    return peekCardAtIndex(size() - 1);
   }
 
   @Override

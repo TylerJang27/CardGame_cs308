@@ -7,8 +7,7 @@ import java.util.function.Function;
 public class Cell implements ICell {
   private IDeck deck;
   private String name;
-  private Function<IDeck, IDeck> cellDeckBuilder;
-  //TODO: HULLOO SHOULD CHANGE TO IDECK AND ICELL
+  private Function<IDeck, ICell> cellDeckBuilder;
   private Map<IOffset, ICell> children;
 
   public Cell(String nm) {
@@ -16,22 +15,22 @@ public class Cell implements ICell {
     deck = new Deck();
   }
 
-  //TODO: ASSUMES NONE OFFSET?
-  //TODO: LAMBDA SHOULD CALL THIS'S ADD CARD NOT DECK'S?
   public Cell(String nm, Deck d) {
     this(nm);
     deck = d;
   }
 
   @Override
-  public void setDraw(Function<IDeck, IDeck> initializer) {
+  public void setDraw(Function<IDeck, ICell> initializer) {
     cellDeckBuilder = initializer;
   }
 
   @Override
   public void initializeCards(IDeck mainDeck) {
     if (cellDeckBuilder!= null) {
-      deck = cellDeckBuilder.apply(mainDeck);
+      //call merge/addcell with cellDeckBuilder.apply(mainDeck);
+      //starting deck is empty
+      //cellDeckBuilder.apply(mainDeck);
     }
     cellDeckBuilder = null;
   }

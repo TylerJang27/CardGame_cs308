@@ -8,7 +8,7 @@ public interface ICell {
 
   //TODO: MAKE TOP CARD THE DEFAULT NAME OF THE CELL
 
-  void setDraw(Function<IDeck, IDeck> initializer); //TODO: ADD TO API CHANGES
+  void setDraw(Function<IDeck, ICell> initializer); //TODO: ADD TO API CHANGES
 
   void initializeCards(IDeck mainDeck); //TODO: ADD TO API CHANGES
 
