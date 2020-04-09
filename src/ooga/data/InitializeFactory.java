@@ -32,7 +32,7 @@ public class InitializeFactory implements Factory {
         for (int k = 0; k < cards.getLength(); k ++) {
             String regex = cards.item(k).getNodeValue();
 
-            
+
 
         }
         return (IDeck source) -> {

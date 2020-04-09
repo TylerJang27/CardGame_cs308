@@ -327,70 +327,70 @@
                 <fan>s</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdU</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
             <cell name="2">
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdD</card>
-                    <card>RdU</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
             <cell name="3">
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdU</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
             <cell name="4">
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdU</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
             <cell name="5">
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdU</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
             <cell name="6">
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdU</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
             <cell name="7">
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdU</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
         </group>
@@ -421,7 +421,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>**D</card>
+                    <card>**,D</card>
                 </init_cards>
             </cell>
         </group>
