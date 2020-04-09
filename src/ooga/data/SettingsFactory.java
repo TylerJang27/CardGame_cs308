@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 //TODO: ADD DOCUMENTATION
-public class SettingsFactory {
+public class SettingsFactory implements Factory {
     public static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
     private static final String SETTINGS = "settings";
     private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE+SETTINGS);
