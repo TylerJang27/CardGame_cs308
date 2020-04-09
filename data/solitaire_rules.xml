@@ -507,7 +507,7 @@
                             <value>1</value>
                             <color>*</color>
                             <suit>=</suit>
-                            <num_cards>o</num_cards>
+                            <num_cards>1</num_cards>
                             <is_faceup>y</is_faceup>
                             <name>!</name>
                         </mover>

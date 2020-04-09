@@ -29,7 +29,7 @@ public class RuleFactory implements Factory {
     private static final String NUMBER_CARDS = "NumberCards";
     private static final String IS_FACEUP = "IsFaceup";
     private static final String DONOR = "Donor";
-    private static final String ALL = "*";
+    private static final String ALL = "All";
     private static final String ACTION = "Action";
     private static final String RECEIVER_DESTINATION = "ReceiverDestination";
     private static final String DESTINATION = "Destination";
@@ -44,6 +44,12 @@ public class RuleFactory implements Factory {
     private static final String R = "R";
     private static final String M = "M";
     private static final String D = "D";
+    private static final String UP = "Up";
+    private static final String DOWN = "Down";
+    private static final String NOT = "Not";
+    private static final String SAME = "Same"
+    private static final String YES = "Yes";
+    private static final String NO = "No";
 
     private static DocumentBuilder documentBuilder;
 
@@ -105,10 +111,39 @@ public class RuleFactory implements Factory {
         List<Function<IMove, Boolean>> conditions = new ArrayList<>();
         conditions.add(cond);
 
+        Function<IMove, ICell> moverCell = (IMove move) -> move.getMover();
+        Function<IMove, ICell> donorCell = (IMove move) -> move.getDonor();
+        Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
+        char currentChar = ruleName.charAt(ruleName.length()-1);
+        Function<IMove, ICell> currCell;
+        if (M.equals("" + currentChar)) {
+            currCell = (IMove move) -> moverCell.apply(move);
+        } else if (D.equals("" + currentChar)) {
+            currCell = (IMove move) -> donorCell.apply(move);
+        } else { //R
+            currCell = (IMove move) -> recipientCell.apply(move);
+        }
+
         NodeList conditionNodeList = e.getChildNodes();
+        List<String> trueChecks = new ArrayList<String>(Arrays.asList(new String[]{"", resources.getString(ALL)}));
+
+        String direction = XMLHelper.getTextValue(e, resources.getString(DIRECTION));
+        String valueText = XMLHelper.getTextValue(e, resources.getString(VALUE));
+        if (!trueChecks.contains(valueText) && !trueChecks.contains(direction)) { //don't forget *
+            Integer value = Integer.parseInt(valueText);
+            value = direction.equals(resources.getString(DOWN)) ? -1 * value : value;
+            Function<IMove, Boolean> valueChecker;
+            valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().getValue().getNumber() - value == recipientCell.apply(move).getDeck().peekBottom().getValue().getNumber());
+            conditions.add(valueChecker);
+        }
+
+        String color = XMLHelper.getTextValue(e, resources.getString(COLOR));
+        if (!trueChecks.contains(color)) {
+            
+        }
 
 
-        return new Rule(ruleName, conditions)
+        return new Rule(ruleName, conditions);
     }
 
     private static Boolean checkRecipient(IMove move, String name) {
