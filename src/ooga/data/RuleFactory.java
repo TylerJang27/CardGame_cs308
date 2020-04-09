@@ -28,6 +28,7 @@ public class RuleFactory implements Factory {
     private static final String SUIT = "Suit";
     private static final String NUMBER_CARDS = "NumberCards";
     private static final String IS_FACEUP = "IsFaceup";
+    private static final String NAME = "Name";
     private static final String DONOR = "Donor";
     private static final String ALL = "All";
     private static final String ACTION = "Action";
@@ -47,7 +48,7 @@ public class RuleFactory implements Factory {
     private static final String UP = "Up";
     private static final String DOWN = "Down";
     private static final String NOT = "Not";
-    private static final String SAME = "Same"
+    private static final String SAME = "Same";
     private static final String YES = "Yes";
     private static final String NO = "No";
 
@@ -78,15 +79,15 @@ public class RuleFactory implements Factory {
 
                 Node recRule = XMLHelper.getNodeByName(allConditions, resources.getString(RECEIVER));
                 if (recRule != null) {
-                    receiverRuleList.add(buildRule((Element)recRule, ruleName + R, (IMove move) -> checkRecipient(move, ruleName)));
+                    receiverRuleList.add(buildRule((Element)recRule, ruleName + R, cellGroupMap, (IMove move) -> checkRecipient(move, ruleName, cellGroupMap)));
                 }
                 Node movRule = (Element)XMLHelper.getNodeByName(allConditions, resources.getString(MOVER));
                 if (movRule != null) {
-                    moverRuleList.add(buildRule((Element) movRule, ruleName + M));
+                    moverRuleList.add(buildRule((Element) movRule, ruleName + M, cellGroupMap));
                 }
                 Node donRule = (Element)XMLHelper.getNodeByName(allConditions, resources.getString(DONOR));
                 if (donRule != null) {
-                    donorRuleList.add(buildRule((Element)donRule, ruleName + D));
+                    donorRuleList.add(buildRule((Element)donRule, ruleName + D, cellGroupMap));
                 }
             }
 
@@ -103,11 +104,11 @@ public class RuleFactory implements Factory {
         return null;
     }
 
-    private static IRule buildRule(Element e, String ruleName) {
-        return buildRule(e, ruleName, (IMove move)->true);
+    private static IRule buildRule(Element e, String ruleName, Map<String, ICellGroup> cellGroupMap) {
+        return buildRule(e, ruleName, cellGroupMap, (IMove move)->true);
     }
 
-    private static IRule buildRule(Element e, String ruleName, Function<IMove, Boolean> cond) {
+    private static IRule buildRule(Element e, String ruleName, Map<String, ICellGroup> cellGroupMap, Function<IMove, Boolean> cond) {
         List<Function<IMove, Boolean>> conditions = new ArrayList<>();
         conditions.add(cond);
 
@@ -126,28 +127,74 @@ public class RuleFactory implements Factory {
 
         NodeList conditionNodeList = e.getChildNodes();
         List<String> trueChecks = new ArrayList<String>(Arrays.asList(new String[]{"", resources.getString(ALL)}));
+        Function<IMove, Boolean> valueChecker;
 
         String direction = XMLHelper.getTextValue(e, resources.getString(DIRECTION));
         String valueText = XMLHelper.getTextValue(e, resources.getString(VALUE));
         if (!trueChecks.contains(valueText) && !trueChecks.contains(direction)) { //don't forget *
-            Integer value = Integer.parseInt(valueText);
-            value = direction.equals(resources.getString(DOWN)) ? -1 * value : value;
-            Function<IMove, Boolean> valueChecker;
+            Integer value;
+            if (direction.equals(resources.getString(DOWN))) {
+                value = -1 * Integer.parseInt(valueText);
+            } else {
+                value = Integer.parseInt(valueText);
+            }
             valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().getValue().getNumber() - value == recipientCell.apply(move).getDeck().peekBottom().getValue().getNumber());
             conditions.add(valueChecker);
         }
 
         String color = XMLHelper.getTextValue(e, resources.getString(COLOR));
         if (!trueChecks.contains(color)) {
-            
+            if (color.equals(resources.getString(SAME))) {
+                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peekBottom().getSuit().getColorName()));
+            } else if (color.equals(resources.getString(NOT))) {
+                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peekBottom().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peekBottom().getSuit().getColorName()));
+            } else {
+                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase()));
+            }
+            conditions.add(valueChecker);
+        }
+
+        String suit = XMLHelper.getTextValue(e, resources.getString(SUIT));
+        if (!trueChecks.contains(suit)) {
+            if (suit.equals(resources.getString(SAME))) {
+                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peekBottom().getSuit().getName()));
+            } else if (suit.equals(resources.getString(NOT))) {
+                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peekBottom().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peekBottom().getSuit().getName()));
+            } else {
+                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().getSuit().getName().equalsIgnoreCase(suit.toUpperCase()));
+            }
+            conditions.add(valueChecker);
+        }
+
+        String numCards = XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS));
+        if (!trueChecks.contains(numCards)) {
+            Integer value = Integer.parseInt(numCards);
+            valueChecker = (IMove move) -> (currCell.apply(move).getTotalSize()==value);
+            conditions.add(valueChecker);
+        }
+
+        String faceUp = XMLHelper.getTextValue(e, resources.getString(IS_FACEUP));
+        if (!trueChecks.contains(faceUp)) {
+            if (faceUp.equals(resources.getString(YES))) {
+                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().isFaceUp());
+            } else {
+                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peekBottom().isFaceUp());
+            }
+            conditions.add(valueChecker);
+        }
+
+        String name = XMLHelper.getTextValue(e, resources.getString(NAME));
+        if (!trueChecks.contains(name)) {
+            valueChecker = (IMove move) -> (cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(currCell.apply(move).getName()))||(currCell.apply(move).getName().split(",")[0].equalsIgnoreCase(name));
+            conditions.add(valueChecker);
         }
 
 
         return new Rule(ruleName, conditions);
     }
 
-    private static Boolean checkRecipient(IMove move, String name) {
-        return name.equals(move.getRecipient().getName().split(",")[0]);
+    private static Boolean checkRecipient(IMove move, String name, Map<String, ICellGroup> cellGroupMap) {
+        return (cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(move.getRecipient().getName()))||name.equals(move.getRecipient().getName().split(",")[0]);
     }
 
 }

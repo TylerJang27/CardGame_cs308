@@ -67,6 +67,16 @@ public class Cell implements ICell {
   }
 
   @Override
+  public int getTotalSize() {
+    int total = 0;
+    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+      total += e.getValue().getDeck().size();
+      total += getTotalSize(); //TODO: MAKE SURE THIS DOESN'T INFINITE RECURSE
+    }
+    return total;
+  }
+
+  @Override
   public boolean isEmpty() {
     if (getDeck().size() > 0 ) {
       return false;

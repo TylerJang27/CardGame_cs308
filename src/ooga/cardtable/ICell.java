@@ -28,4 +28,6 @@ public interface ICell extends Cellular {
 
   void addCell(IOffset offset, ICell cell);
 
+  int getTotalSize(); //TODO: ADD TO API CHANGES
+
 }

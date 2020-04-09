@@ -469,7 +469,7 @@
                             <suit>*</suit>
                             <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
-                            <name>!</name>
+                            <name>*</name>
                         </donor>
                     </receive_rule>
                     <action>
@@ -509,7 +509,7 @@
                             <suit>=</suit>
                             <num_cards>1</num_cards>
                             <is_faceup>y</is_faceup>
-                            <name>!</name>
+                            <name>*</name>
                         </mover>
                         <donor>
                             <direction>*</direction>
@@ -518,7 +518,7 @@
                             <suit>*</suit>
                             <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
-                            <name>!</name>
+                            <name>*</name>
                         </donor>
                     </receive_rule>
                     <action>
@@ -554,7 +554,7 @@
                         <mover>
                             <direction>*</direction>
                             <value>*</value>
-                            <color>!</color>
+                            <color>*</color>
                             <suit>*</suit>
                             <num_cards>m</num_cards>
                             <is_faceup>y</is_faceup>
