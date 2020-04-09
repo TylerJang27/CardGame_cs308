@@ -5,6 +5,13 @@ import java.util.Arrays;
 public class Suit implements ISuit {
   private int[] color;
   private String name;
+  private IColor myColor;
+
+  //TODO: CAN WE CHANGE THIS TO AN ICOLOR
+  public Suit(String nm, IColor color) {
+    this(nm, color.getColors());
+    myColor = color;
+  }
 
   public Suit(String nm, int[] c) {
     if (c.length != 3) {
