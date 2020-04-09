@@ -51,7 +51,7 @@ public class DeckFactory implements Factory {
                 NodeList nodeList = deck.getChildNodes();
                 String pathToDeck = resources.getString(DECK_PATH);
                 String deckPath = XMLHelper.getTextValue((Element)deck, pathToDeck);
-                if (deckPath != "") {
+                if (!deckPath.equals("")) {
                     return findStoredDeck(deckPath);
                 } else {
                     //return buildDeck(nodeList);
