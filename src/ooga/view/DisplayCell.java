@@ -56,8 +56,8 @@ public class DisplayCell {
 
         Map<Offset, Point2D> offsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -offset), Offset.SOUTH, new Point2D(0,offset), Offset.EAST, new Point2D(offset, 0),Offset.WEST, new Point2D(-offset,0), Offset.NORTHEAST, new Point2D(offset,-offset), Offset.SOUTHEAST, new Point2D(offset,offset), Offset.NORTHWEST, new Point2D(-offset,-offset), Offset.SOUTHWEST, new Point2D(-offset,offset));
 
+        /*
         Map<IOffset,ICell> testChildren = myCell.getAllChildren(); // FIXME: NullPointerException?
-
         for (IOffset dir: myCell.getAllChildren().keySet()) {
             Cell childCell = (Cell) myCell.getAllChildren().get(dir);
             DisplayCell childDisplayCell = new DisplayCell(childCell, cardNameToFileName, location.add(offsetDirToAmount.get(dir)), height, width, offset);
@@ -65,7 +65,7 @@ public class DisplayCell {
             // TODO: adding groups
             myGroup.getChildren().add(childDisplayCell.getImageView());
         }
-
+         */
 
     }
 
@@ -84,36 +84,24 @@ public class DisplayCell {
 
     private void enableDrag(ImageView source) {
         source.setOnMouseDragged(event -> {
-            // Every time a drag occurs, move the node accordingly
-            System.out.println("Move");
-            // Allow drag to any position by disabling detect (hover) feature
             event.setDragDetect(false);
-            // getTarget() returns event target (what was clicked on by mouse)
             Node on = (Node)event.getTarget();
+            on.toFront();
             if (lastXY == null) {
-                // getSceneX() returns x position of mouse within the scene where click occurred
                 lastXY = new javafx.geometry.Point2D(event.getSceneX(), event.getSceneY());
             }
-            // Compute change in position since click
             double dx = event.getSceneX() - lastXY.getX();
             double dy = event.getSceneY() - lastXY.getY();
-            // Moves node "on", or what the mouse clicked on, by moving the origin
             on.setTranslateX(on.getTranslateX()+dx);
             on.setTranslateY(on.getTranslateY()+dy);
             // TODO: translate all display children as well (enable drag on myGroup?)
-            // Resets last known XY position
             lastXY = new javafx.geometry.Point2D(event.getSceneX(), event.getSceneY());
             event.consume();
         });
 
         source.setOnDragDetected(event -> {
-            // When a drag is first detected for this object
-            System.out.println("Drag:"+event);
-            // Get node dragged
             Node on = (Node)event.getTarget();
-            // Make dragboard
             Dragboard db = on.startDragAndDrop(TransferMode.COPY);
-            // Add correct image to cliboard content
             ClipboardContent content = new ClipboardContent();
             WritableImage image = on.snapshot(new SnapshotParameters(), null);
             content.put(DataFormat.IMAGE, image);
@@ -121,7 +109,6 @@ public class DisplayCell {
             event.consume();
         });
 
-        // When mouse is released, reset lastXY for next drag event
         source.setOnMouseReleased(d -> {
             lastXY = null;
         });
