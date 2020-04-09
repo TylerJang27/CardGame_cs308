@@ -65,12 +65,13 @@ public class CellGroupFactory implements Factory{
         if (cellMap.keySet().contains(cellName)) {
             return cellMap.get(cellName);
         } else {
+            //TODO: ADD MORE DEFENSIVE CODING AND CHECKS HERE FOR SAFETY
             String offsetName = Factory.getVal(cell, FAN, resources);
             IOffset offset = Offset.valueOf(offsetName);
             Double rotation = Double.parseDouble(Factory.getVal(cell, ROTATION, resources));
 
             Node initializeSettings = XMLHelper.getNodeByName(cell.getChildNodes(), resources.getString(INIT_CARD));
-            Function<IDeck, IDeck> initializer = InitializeFactory.getInitialization(initializeSettings);
+            Function<IDeck, IDeck> initializer = InitializeFactory.getInitialization(initializeSettings, offset);
 
             ///////////////////////
 

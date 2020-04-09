@@ -8,6 +8,7 @@ public class Cell implements ICell {
   private IDeck deck;
   private String name;
   private Function<IDeck, IDeck> cellDeckBuilder;
+  //SHOULD CHANGE TO IDECK AND ICELL
   private Map<IOffset, ICell> children;
 
   public Cell(String nm) {

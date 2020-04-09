@@ -74,4 +74,14 @@ public class Deck implements IDeck {
 
   @Override
   public String getName() { return myName; }
+
+  @Override
+  public ICard getCardByName(String name) { //TODO: MAKE SURE THIS WORKS WITH THE OFFSET AS I WANT IT TO
+    for (ICard c: cards) {
+      if (c.getName().equals(name)) {
+        return c;
+      }
+    }
+    return getNextCard();
+  }
 }

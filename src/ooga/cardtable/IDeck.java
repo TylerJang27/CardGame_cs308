@@ -23,4 +23,6 @@ public interface IDeck {
   void addCard(ICard card);
 
   String getName(); //TODO: ADD TO API CHANGES
+
+  ICard getCardByName(String name); //TODO: ADD TO API CHANGES
 }
