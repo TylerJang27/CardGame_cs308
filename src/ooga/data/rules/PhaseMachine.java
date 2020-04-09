@@ -53,7 +53,7 @@ public class PhaseMachine implements IPhaseMachine {
   @Override
   public IGameState update(IMove move) {
     IRule rule = getCurrentPhase().identifyMove(move);
-    IPhase nextPhase = phases.get(getCurrentPhase().getNextPhaseName(rule));
+    IPhase nextPhase = phases.get(getCurrentPhase().getNextPhaseName(rule)); //togetherify identifyMove and getNextPhaseName
     IGameState state = nextPhase.executeAutomaticActions();
     while (state != GameState.WAITING) { //FIXME
       nextPhase = phases.get(nextPhase.getNextPhaseName(null));

@@ -1,6 +1,7 @@
 package ooga.data;
 
 import ooga.cardtable.IDeck;
+import ooga.data.rules.ICellGroup;
 import ooga.data.rules.IPhaseMachine;
 import ooga.data.rules.ISettings;
 import ooga.data.rules.PhaseMachine;
@@ -9,6 +10,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -40,7 +42,7 @@ public class PhaseMachineFactory {
 
         ISettings settings = SettingsFactory.getSettings(root);
         IDeck deck = DeckFactory.getDeck(root);
-
+        List<ICellGroup> cellGroups = CellGroupFactory.getCellGroups(root);
 
 
         //Cells
