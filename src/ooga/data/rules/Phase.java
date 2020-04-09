@@ -15,6 +15,7 @@ public class Phase implements IPhase {
   private List<ICell> cellList;
   private List<IRule> rules;
   private List<ICardAction> autoActions;
+  private List<String> validDonorNames;
   private Map<IRule, List<ICardAction>> conditionalActions;
   private Map<IRule, String> phaseUpdate;
 
@@ -102,5 +103,10 @@ public class Phase implements IPhase {
   @Override
   public void setAutoActions(List<ICardAction> actions) {
     autoActions = new ArrayList<>(actions);
+  }
+
+  @Override
+  public boolean isValidDonor(ICell cell) {
+    return validDonorNames.contains(cell.getName().split(",")[0]);
   }
 }

@@ -23,7 +23,6 @@ public class RuleFactory implements Factory {
     private static final String RULE = "Rule";
     private static final String RECEIVE_RULE = "ReceiveRule";
     private static final String RECEIVER = "Receiver";
-    private static final String QUANTITY = "Quantity";
     private static final String MOVER = "Mover";
     private static final String DIRECTION = "Direction";
     private static final String VALUE = "Value";
@@ -55,6 +54,8 @@ public class RuleFactory implements Factory {
         for (int k = 0; k < ruleNodes.getLength(); k++) {
             Element ruleNode = (Element)ruleNodes.item(k);
             String ruleName = XMLHelper.getAttribute(ruleNode, resources.getString(CATEGORY));
+
+            
 
             //receive rule
 

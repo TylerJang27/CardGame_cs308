@@ -67,4 +67,5 @@ public interface IPhase {
 
   void setAutoActions(List<ICardAction> actions);
 
+  boolean isValidDonor(ICell cell); //TODO: ADD TO API CHANGES
 }

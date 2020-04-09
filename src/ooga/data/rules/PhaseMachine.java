@@ -114,4 +114,9 @@ public class PhaseMachine implements IPhaseMachine {
     System.out.println("To be implemented later");
     return null; //FIXME
   }
+
+  @Override
+  public boolean isValidDonor(ICell cell) {
+    return currentPhase.isValidDonor(cell);
+  }
 }

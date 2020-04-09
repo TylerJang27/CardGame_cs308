@@ -47,6 +47,8 @@ public class Cell implements ICell {
   @Override
   public void initializeCards(IDeck mainDeck) {
     if (cellDeckBuilder != null) {
+      //TODO: DOUBLE CHECK THIS WORKS
+      addCell(Offset.NONE, cellDeckBuilder.apply(mainDeck));
       //call merge/addcell with cellDeckBuilder.apply(mainDeck);
       //starting deck is empty
       //cellDeckBuilder.apply(mainDeck);
@@ -104,6 +106,7 @@ public class Cell implements ICell {
 
   @Override
   public void addCell(IOffset offset, ICell cell) { //fixme 90% this infinite recurses
+    //TODO: ADD NAMES OR EVERYTHING BREAKS
     if (cell == null || cell.isEmpty()) {
       return;
     }

@@ -452,7 +452,7 @@
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
-                            <quantity/>
+                            <num_cards>*</num_cards>
                         </receiver>
                         <mover>
                             <direction>d</direction>
@@ -467,7 +467,7 @@
                             <value>*</value>
                             <color>*</color>
                             <suit>*</suit>
-                            <num_of_cards>*</num_of_cards>
+                            <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
                             <name>!</name>
                         </donor>
@@ -500,7 +500,7 @@
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
-                            <quantity/>
+                            <num_cards/>
                         </receiver>
                         <mover>
                             <direction>u</direction>
@@ -549,14 +549,14 @@
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
-                            <quantity>0</quantity>
+                            <num_cards>0</num_cards>
                         </receiver>
                         <mover>
                             <direction>*</direction>
                             <value>*</value>
                             <color>!</color>
                             <suit>*</suit>
-                            <num_of_cards>m</num_of_cards>
+                            <num_cards>m</num_cards>
                             <is_faceup>y</is_faceup>
                         </mover>
                         <donor>
@@ -597,7 +597,7 @@
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
-                            <quantity/>
+                            <num_cards/>
                         </receiver>
                         <mover>
                             <direction>*</direction>

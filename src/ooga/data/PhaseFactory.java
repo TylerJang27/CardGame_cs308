@@ -27,7 +27,6 @@ public class PhaseFactory implements Factory {
     private static final String RULE = "Rule";
     private static final String RECEIVE_RULE = "ReceiveRule";
     private static final String RECEIVER = "Receiver";
-    private static final String QUANTITY = "Quantity";
     private static final String MOVER = "Mover";
     private static final String DIRECTION = "Direction";
     private static final String VALUE = "Value";
