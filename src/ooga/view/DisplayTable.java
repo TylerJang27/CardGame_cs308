@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ooga.data.rules.ILayout;
 
-public class PlayScreen extends Application {
+public class DisplayTable extends Application {
 
     private String myGameName;
     private ILayout myLayout;
@@ -21,7 +21,7 @@ public class PlayScreen extends Application {
     private final int DEFAULT_SCENE_WIDTH = 800;
     private final int DEFAULT_SCENE_HEIGHT = 600;
 
-    public PlayScreen() {
+    public DisplayTable() {
         //ILayout inLayout
         //myLayout = inLayout;
         myGameName =  "Practice Game";
