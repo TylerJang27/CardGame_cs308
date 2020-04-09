@@ -324,14 +324,14 @@
     <cell_groups>
         <group category="action">
             <cell name="1">
-                <fan>y</fan>
+                <fan>s</fan>
                 <rotation>0</rotation>
                 <init_cards>
                     <card>RdU</card>
                 </init_cards>
             </cell>
             <cell name="2">
-                <fan>y</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
                     <card>RdD</card>
@@ -339,7 +339,7 @@
                 </init_cards>
             </cell>
             <cell name="3">
-                <fan>y</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
                     <card>RdD</card>
@@ -348,7 +348,7 @@
                 </init_cards>
             </cell>
             <cell name="4">
-                <fan>y</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
                     <card>RdD</card>
@@ -358,7 +358,7 @@
                 </init_cards>
             </cell>
             <cell name="5">
-                <fan>y</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
                     <card>RdD</card>
@@ -369,7 +369,7 @@
                 </init_cards>
             </cell>
             <cell name="6">
-                <fan>y</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
                     <card>RdD</card>
@@ -381,7 +381,7 @@
                 </init_cards>
             </cell>
             <cell name="7">
-                <fan>y</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
                     <card>RdD</card>
@@ -396,29 +396,29 @@
         </group>
         <group category="suits">
             <cell name="club">
-                <fan>n</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards/>
             </cell>
             <cell name="diamond">
-                <fan>n</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards/>
             </cell>
             <cell name="heart">
-                <fan>n</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards/>
             </cell>
             <cell name="spade">
-                <fan>n</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards/>
             </cell>
         </group>
         <group category="deck">
             <cell name="draw">
-                <fan>n</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
                     <card>**D</card>
@@ -427,7 +427,7 @@
         </group>
         <group category="hand">
             <cell name="playable">
-                <fan>n</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards/>
             </cell>

@@ -2,10 +2,12 @@ package ooga.cardtable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public class Cell implements ICell {
-  private Deck deck;
+  private IDeck deck;
   private String name;
+  private Function<IDeck, IDeck> cellDeckBuilder;
   private Map<IOffset, ICell> children;
 
   public Cell(String nm) {
@@ -16,6 +18,19 @@ public class Cell implements ICell {
   public Cell(String nm, Deck d) {
     this(nm);
     deck = d;
+  }
+
+  @Override
+  public void setDraw(Function<IDeck, IDeck> initializer) {
+    cellDeckBuilder = initializer;
+  }
+
+  @Override
+  public void initializeCards(IDeck mainDeck) {
+    if (cellDeckBuilder!= null) {
+      deck = cellDeckBuilder.apply(mainDeck);
+    }
+    cellDeckBuilder = null;
   }
 
   @Override

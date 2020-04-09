@@ -9,19 +9,15 @@ import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  *
  * @author Tyler Jang, Andrew Krier
  */
-public class PhaseMachineFactory {
+public class PhaseMachineFactory implements Factory{
     public static String RULES_TYPE = IPhaseMachine.DATA_TYPE;
     //TODO: INCORPORATE ERROR MESSAGES
-    public static String INVALID_ERROR = "INVALID_FILE";
-    public static String MISSING_ERROR = "MISSING_ATTRIBUTE";
 
     private static final String RULES = "rules_tags";
     private static final String RESOURCES = "ooga.resources";

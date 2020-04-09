@@ -21,12 +21,10 @@ import javax.xml.parsers.DocumentBuilder;
  *
  * @author Tyler Jang
  */
-public class StyleFactory {
+public class StyleFactory implements Factory {
 
     public static String STYLE_TYPE = IStyle.DATA_TYPE;
     //TODO: INCORPORATE ERROR MESSAGES
-    public static String INVALID_ERROR = "INVALID_FILE";
-    public static String MISSING_ERROR = "MISSING_ATTRIBUTE";
 
     private static String WORD = "word";
     private static String NUMBER = "number";

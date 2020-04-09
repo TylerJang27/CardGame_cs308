@@ -17,13 +17,10 @@ import java.util.ResourceBundle;
  *
  * @author Tyler Jang
  */
-public class DeckFactory {
+public class DeckFactory implements Factory {
     public static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
     private static final String DECK = "deck";
     private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE+DECK);
-
-    public static String INVALID_ERROR = "INVALID_FILE";
-    public static String MISSING_ERROR = "MISSING_ATTRIBUTE";
 
     private static final String DECK_PATH = "DeckPath";
     private static final String DECK_NAME = "DeckName";
@@ -114,15 +111,11 @@ public class DeckFactory {
     }
 
     private static ICard buildCard(Node node) {
-        String cardName = getVal(node, NAME);
-        Integer val = Integer.parseInt(getVal(node, VALUE));
-        IColor color = new Color(getVal(node, COLOR));
-        ISuit suit = new Suit(getVal(node, SUIT), color);
+        String cardName = Factory.getVal(node, NAME, resources);
+        Integer val = Integer.parseInt(Factory.getVal(node, VALUE, resources));
+        IColor color = new Color(Factory.getVal(node, COLOR, resources));
+        ISuit suit = new Suit(Factory.getVal(node, SUIT, resources), color);
         IValue value = new Value(val + suit.getName(), val);
         return new Card(suit, value);
-    }
-
-    private static String getVal(Node n, String tagRef) {
-        return XMLHelper.getTextValue((Element)n, resources.getString(tagRef), () -> {throw new XMLException(MISSING_ERROR + "," + tagRef);});
     }
 }
