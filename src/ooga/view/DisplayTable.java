@@ -1,16 +1,25 @@
 package ooga.view;
 
 import javafx.application.Application;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ooga.data.rules.ILayout;
+
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.util.LinkedList;
 
 public class DisplayTable extends Application {
 
@@ -37,17 +46,15 @@ public class DisplayTable extends Application {
         Scene scene = new Scene(root, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
         scene.setFill(myTableColor);
 
-        ImageView source = new ImageView(new Image("acehearts.png"));
+        Image ace = new Image("acehearts.png",80,100,true,true);
+        ImageView source = new ImageView(ace);
         source.setX(50);
         source.setY(200);
-        source.setFitHeight(100);
-        source.setFitWidth(80);
 
-        ImageView target = new ImageView(new Image("twohearts.png"));
+        Image two = new Image("twohearts.png",80,100,true,true);
+        ImageView target = new ImageView(two);
         target.setX(250);
         target.setY(200);
-        target.setFitHeight(100);
-        target.setFitWidth(80);
 
         source.setOnDragDetected(new EventHandler <MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -55,8 +62,13 @@ public class DisplayTable extends Application {
                 Dragboard db = source.startDragAndDrop(TransferMode.ANY);
 
                 ClipboardContent content = new ClipboardContent();
-                content.putImage(source.getImage());
+                content.putImage(ace);
+                System.out.println(content.getImage().getHeight());
+
                 db.setContent(content);
+                db.setDragView(ace);
+                System.out.println(db.getDragView().getHeight());
+                //db.setDragView(source.getImage());
 
                 event.consume();
             }
@@ -132,10 +144,41 @@ public class DisplayTable extends Application {
             }
         });
 
+
+
         root.getChildren().add(source);
         root.getChildren().add(target);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static ClipboardContent makeClipboardContent(MouseEvent event, Node child, String text) {
+        ClipboardContent cb = new ClipboardContent();
+        if (text != null) {
+            cb.put(DataFormat.PLAIN_TEXT, text);
+        }
+        if (!event.isShiftDown()) {
+            SnapshotParameters params = new SnapshotParameters();
+            params.setFill(Color.TRANSPARENT);
+            Bounds b = child.getBoundsInParent();
+            double f = 10;
+            params.setViewport(new Rectangle2D(b.getMinX()-f, b.getMinY()-f, b.getWidth()+f+f, b.getHeight()+f+f));
+
+            WritableImage image = child.snapshot(params, null);
+            cb.put(DataFormat.IMAGE, image);
+
+            try {
+                File tmpFile = File.createTempFile("snapshot", ".png");
+                LinkedList<File> list = new LinkedList<File>();
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null),
+                        "png", tmpFile);
+                list.add(tmpFile);
+                cb.put(DataFormat.FILES, list);
+            } catch (Exception e) {
+
+            }
+        }
+        return cb;
     }
 
     public static void main(String[] args) {
