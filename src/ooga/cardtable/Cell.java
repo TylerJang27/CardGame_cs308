@@ -130,4 +130,25 @@ public class Cell implements ICell {
       recipient.getAllChildren().get(e.getKey()).addCell(Offset.NONE, e.getValue());
     }
   }
+
+  @Override
+  public List<ICell> getAllCells() {
+    List<ICell> total = new ArrayList<>();
+    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+      if (!total.contains(e)) {
+        total.add(e.getValue());
+        total.addAll(e.getValue().getAllCells());
+      }//TODO: MAKE SURE THIS DOESN'T INFINITE RECURSE
+    }
+    return total;
+  }
+
+  @Override
+  public ICell getPeak(IOffset offset) {
+    ICell temp = this;
+    while (temp.getDeck().size() > 0) { //TODO: VERYIFY THIS DOESN'T SKIP EMPTIES
+      temp = getAllChildren().get(offset);
+    }
+    return temp;
+  }
 }

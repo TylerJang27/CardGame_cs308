@@ -2,6 +2,7 @@ package ooga.cardtable;
 
 import ooga.data.rules.Cellular;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -29,5 +30,9 @@ public interface ICell extends Cellular {
   void addCell(IOffset offset, ICell cell);
 
   int getTotalSize(); //TODO: ADD TO API CHANGES
+
+  List<ICell> getAllCells(); //TODO: ADD TO API CHANGES
+
+  ICell getPeak(IOffset offset); //TODO: ADD TO API CHANGES
 
 }

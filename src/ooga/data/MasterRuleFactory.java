@@ -2,7 +2,6 @@ package ooga.data;
 
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
-import ooga.cardtable.IPlayer;
 import ooga.data.rules.*;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -10,7 +9,6 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import java.util.*;
-import java.util.function.Function;
 
 public class MasterRuleFactory implements Factory {
     private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
@@ -89,11 +87,11 @@ public class MasterRuleFactory implements Factory {
                 if (recRule != null) {
                     receiverRuleList.add(RuleFactory.buildRule((Element)recRule, ruleName + R, cellGroupMap, (IMove move) -> checkRecipient(move, ruleName, cellGroupMap)));
                 }
-                Node movRule = (Element)XMLHelper.getNodeByName(allConditions, resources.getString(MOVER));
+                Node movRule = XMLHelper.getNodeByName(allConditions, resources.getString(MOVER));
                 if (movRule != null) {
                     moverRuleList.add(RuleFactory.buildRule((Element) movRule, ruleName + M, cellGroupMap));
                 }
-                Node donRule = (Element)XMLHelper.getNodeByName(allConditions, resources.getString(DONOR));
+                Node donRule = XMLHelper.getNodeByName(allConditions, resources.getString(DONOR));
                 if (donRule != null) {
                     donorRuleList.add(RuleFactory.buildRule((Element)donRule, ruleName + D, cellGroupMap));
                 }
@@ -117,13 +115,19 @@ public class MasterRuleFactory implements Factory {
 
                 NodeList allActions = actionHeadNode.getChildNodes();
 
-                Element recAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(RECEIVER_DESTINATION));
+                Node recAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(RECEIVER_DESTINATION));
+                if (recAction != null) {
+                    cardActionList.add(ActionFactory.getAction((Element)recAction, ruleName + R));
+                    //TODO: FOLLOW CONVENTION WITH FACTORY METHOD NAMES
+                }
+                Node movAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(MOVER_DESTINATION));
+                if (movAction != null) {
+                    cardActionList.add(ActionFactory.getAction((Element)recAction, ruleName + M));
+                }
 
-                Element movAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(MOVER_DESTINATION));
-
-                Element phaseAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(NEXT_PHASE));
+                Node phaseAction = XMLHelper.getNodeByName(allActions, resources.getString(NEXT_PHASE));
                 try {
-                    String newPhase = XMLHelper.getAttribute(phaseAction, resources.getString(PHASE));
+                    String newPhase = XMLHelper.getAttribute((Element)phaseAction, resources.getString(PHASE));
                     String pointVal = phaseAction.getNodeValue();
                     Integer points = 0;
                     if (!pointVal.isEmpty()) {
