@@ -38,12 +38,9 @@ public class CellGroupFactory implements Factory{
             Map<String, ICellGroup> allCellGroups = new HashMap<>();
             for (int k = 0; k < groups.getLength(); k ++) {
                 ICellGroup newGroup = buildGroup((Element)groups.item(k), allCells);//
-                ///
-
+                allCellGroups.put(newGroup.getName(), newGroup);
             }
-            //fjdsahfiehag
-
-
+            return allCellGroups;
         } catch (Exception e) {
             throw new XMLException(e, MISSING_ERROR + "," + CELL_GROUP);
         }
@@ -73,11 +70,10 @@ public class CellGroupFactory implements Factory{
             Node initializeSettings = XMLHelper.getNodeByName(cell.getChildNodes(), resources.getString(INIT_CARD));
             Function<IDeck, IDeck> initializer = InitializeFactory.getInitialization(initializeSettings, offset);
 
-            ///////////////////////
-
-
-            ICell builtCell = new Cell();
+            ICell builtCell = new Cell(cellName);
+            builtCell.setDraw(initializer);
             cellMap.put(cellName, builtCell);
+            return builtCell;
         }
     }
 }

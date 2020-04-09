@@ -39,7 +39,9 @@ public class PhaseMachineFactory implements Factory{
         ISettings settings = SettingsFactory.getSettings(root);
         IDeck deck = DeckFactory.getDeck(root);
         List<ICellGroup> cellGroups = CellGroupFactory.getCellGroups(root);
-
+        for (ICellGroup group: cellGroups) {
+            group.initializeAll(deck);
+        }
 
         //Cells
         //Phases

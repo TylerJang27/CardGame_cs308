@@ -49,7 +49,7 @@ public class InitializeFactory implements Factory {
                 });
             } else if (regexSplit[0].equals(initializeResources.getString(ALL))) {
                 //NOTE: ORDER OF CELL GROUP PARSING MATTERS FOR THIS TO WORK
-                //For now just takes the remainder of the cards
+                return (IDeck source) -> source;
             } else {
                 functionList.add((IDeck source) -> {
                     ICard c =  source.getCardByName(regexSplit[0]);
