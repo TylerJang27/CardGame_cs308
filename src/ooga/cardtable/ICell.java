@@ -5,6 +5,8 @@ import java.util.Map;
 public interface ICell {
   //deal with unnecessary massive linked lists
 
+  //TODO: MAKE TOP CARD THE DEFAULT NAME OF THE CELL
+
   IDeck getDeck();
 
   String getName();

@@ -1,21 +1,23 @@
 package ooga.data;
 
 import ooga.cardtable.*;
-import ooga.data.rules.ISettings;
-import ooga.data.rules.Settings;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
-//TODO: ADD DOCUMENTATION
+/**
+ * Class for parsing XML nodes and files to generate IDeck instances.
+ * Has the option to read in a Deck from a separate file or directly from a rules file.
+ *
+ * @author Tyler Jang
+ */
 public class DeckFactory {
     public static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
     private static final String DECK = "deck";
@@ -29,7 +31,7 @@ public class DeckFactory {
     private static final String CARD = "Card";
     private static final String SHUFFLE = "Shuffle";
     private static final String YES = "yes";
-    private static final String DEFAULT_SHUFFLE = YES;
+    private static final String DEFAULT_SHUFFLE = YES; //TODO: IMPLEMENT
     private static final String NAME = "Name";
     private static final String VALUE = "Value";
     private static final String COLOR = "Color";
@@ -39,6 +41,13 @@ public class DeckFactory {
 
     public DeckFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
 
+    /**
+     * Builds and returns a deck using a document root
+     *
+     * @param root  the root of the document which holds a deck element
+     * @return      a fully constructed IDeck instance
+     * @throws      XMLException if deck is empty or missing
+     */
     public static IDeck getDeck(Element root) {
         try {
             Node deck = root.getElementsByTagName(DECK).item(0);
@@ -61,6 +70,13 @@ public class DeckFactory {
         }
     }
 
+    /**
+     * Builds a deck based on a file path
+     *
+     * @param filePath the path to the XML where the deck is store
+     * @return a fully built IDeck instance
+     * @throws XMLException if deck is missing
+     */
     private static IDeck findStoredDeck(String filePath) {
         try {
             File f = new File(filePath);
@@ -73,6 +89,12 @@ public class DeckFactory {
         }
     }
 
+    /**
+     * Builds a deck based on a node
+     *
+     * @param node
+     * @return
+     */
     //private static IDeck buildDeck(NodeList nodeList) {
     private static IDeck buildDeck(Node node) {
         Element deck = (Element)node;
