@@ -2,9 +2,13 @@ package ooga.cardtable;
 
 public interface IMove {
 
-  ICell getDragged();
+  ICell getMover();
 
-  void setDragged(ICell cell);
+  void setMover(ICell cell);
+
+  ICell getDonor();
+
+  void setDonor(ICell cell);
 
   ICell getRecipient();
 

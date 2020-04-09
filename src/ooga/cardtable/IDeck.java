@@ -14,6 +14,12 @@ public interface IDeck {
 
   ICard getCardAtIndex(int index);
 
+  ICard peek();
+
+  ICard peekBottom();
+
+  ICard peekCardAtIndex(int index);
+
   void addCard(ICard card);
 
   String getName(); //TODO: ADD TO API CHANGES
