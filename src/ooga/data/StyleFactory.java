@@ -53,16 +53,7 @@ public class StyleFactory {
      * @throws XMLException if the file is not considered valid due to its root element or file ending
      */
     public static IStyle getStyle(File dataFile) {
-        documentBuilder = XMLHelper.getDocumentBuilder();
-        if (!XMLHelper.isXML(dataFile)) {
-            throw new XMLException(INVALID_ERROR, STYLE_TYPE);
-        }
-
-        Element root = XMLHelper.getRootElement(documentBuilder, dataFile);
-
-        if (!XMLHelper.isValidFile(root, STYLE_TYPE)) {
-            throw new XMLException(INVALID_ERROR, STYLE_TYPE);
-        }
+        Element root = XMLHelper.getRootAndCheck(dataFile, STYLE_TYPE, INVALID_ERROR);
 
         Map<String, String> stringSettings = XMLHelper.readStringSettings(root, wordResources);
         Map<String, Integer> numberSettings = XMLHelper.readNumberSettings(root, numberResources);

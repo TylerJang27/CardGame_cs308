@@ -6,13 +6,15 @@ import java.util.List;
 import java.util.Random;
 
 public class Deck implements IDeck {
+  private String myName;
   private List<ICard> cards;
 
   public Deck() {
     cards = new ArrayList<>();
   }
 
-  public Deck(List<ICard> d) {
+  public Deck(String name, List<ICard> d) {
+    myName = name;
     cards = d;
   }
 
@@ -37,6 +39,7 @@ public class Deck implements IDeck {
     return getCardAtIndex(rand.nextInt(size()));
   }
 
+  //TODO: MAVERICK FIX THIS SIZE?
   @Override
   public ICard getBottomCard() {
     return getCardAtIndex(size());
@@ -51,4 +54,7 @@ public class Deck implements IDeck {
   public void addCard(ICard card) { //fixme make package private?
     cards.add(card);
   }
+
+  @Override
+  public String getName() { return myName; }
 }
