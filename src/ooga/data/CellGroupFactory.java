@@ -30,7 +30,7 @@ public class CellGroupFactory implements Factory{
 
     public CellGroupFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
 
-    public static List<ICellGroup> getCellGroups(Element root) {
+    public static Map<String, ICellGroup> getCellGroups(Element root) {
         try {
             Node groupHeader = root.getElementsByTagName(CELL_GROUP).item(0);
             NodeList groups = ((Element)groupHeader).getElementsByTagName(resources.getString(GROUP));

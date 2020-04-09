@@ -53,7 +53,7 @@ public class InitializeFactory implements Factory {
                         c.addCard(offset, source.getRandomCard());
                     }
                     return c;
-                }
+                };
             } else {
                 functionList.add((IDeck source) -> {
                     ICard c =  source.getCardByName(regexSplit[0]);

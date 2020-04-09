@@ -10,6 +10,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -38,9 +39,9 @@ public class PhaseMachineFactory implements Factory{
 
         ISettings settings = SettingsFactory.getSettings(root);
         IDeck deck = DeckFactory.getDeck(root);
-        List<ICellGroup> cellGroups = CellGroupFactory.getCellGroups(root);
-        for (ICellGroup group: cellGroups) {
-            group.initializeAll(deck);
+        Map<String, ICellGroup> cellGroups = CellGroupFactory.getCellGroups(root);
+        for (Map.Entry<String, ICellGroup> e: cellGroups.entrySet()) {
+            e.getValue().initializeAll(deck);
         }
 
         //Cells
