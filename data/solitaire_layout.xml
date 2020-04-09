@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data game_type="cards">
+    <game>Solitaire</game>
+    <players>1</players>
+    <!-- all of these values are relative to
+         a screen width of a control 100 -->
+    <screen_height>75</screen_height>
+    <card_width>10</card_width>
+    <card_height>14</card_height>
+    <face_down_offset>2</face_down_offset>
+    <face_up_offset>4</face_up_offset>
+    <!-- cells are indexed by their centers -->
+    <!-- buffer should be ~3 -->
+    <cell name="deck">
+        <x_val>11</x_val>
+        <y_val>10</y_val>
+    </cell>
+    <cell name="hand">
+        <x_val>24</x_val>
+        <y_val>10</y_val>
+    </cell>
+    <cell name="club">
+        <x_val>50</x_val>
+        <y_val>10</y_val>
+    </cell>
+    <cell name="diamond">
+        <x_val>63</x_val>
+        <y_val>10</y_val>
+    </cell>
+    <cell name="heart">
+        <x_val>76</x_val>
+        <y_val>10</y_val>
+    </cell>
+    <cell name="spade">
+        <x_val>89</x_val>
+        <y_val>10</y_val>
+    </cell>
+    <cell name="1">
+        <x_val>11</x_val>
+        <y_val>27</y_val>
+    </cell>
+    <cell name="2">
+        <x_val>24</x_val>
+        <y_val>27</y_val>
+    </cell>
+    <cell name="3">
+        <x_val>37</x_val>
+        <y_val>27</y_val>
+    </cell>
+    <cell name="4">
+        <x_val>50</x_val>
+        <y_val>27</y_val>
+    </cell>
+    <cell name="5">
+        <x_val>63</x_val>
+        <y_val>27</y_val>
+    </cell>
+    <cell name="6">
+        <x_val>76</x_val>
+        <y_val>27</y_val>
+    </cell>
+    <cell name="7">
+        <x_val>89</x_val>
+        <y_val>27</y_val>
+    </cell>
+</data>
