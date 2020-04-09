@@ -43,6 +43,8 @@ public interface IPhaseMachine {
    */
   Map<String, ICell> getTopLevelCells();
 
+  void setCellList(List<ICell> cells);
+
   /**
    * Gives a list of cell names
    *

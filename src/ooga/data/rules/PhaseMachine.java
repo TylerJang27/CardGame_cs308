@@ -42,6 +42,11 @@ public class PhaseMachine implements IPhaseMachine {
   }
 
   @Override
+  public void setCellList(List<ICell> cellList) {
+    cells = new ArrayList<>(cellList);
+  }
+
+  @Override
   public List<String> getTopLevelCellNames() {
     List<String> ret = new ArrayList<>();
     for (ICell c : cells) {

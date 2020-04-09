@@ -10,3 +10,4 @@
 * MC - Added donor methods to IMove, and renamed "dragged" to "mover" to match controller terminology
 * MC - Added addCell and isEmpty method in ICell
 * MC - Added addDeck method in IDeck
+* MC - Added setCellList method in IPhaseMachine
