@@ -13,57 +13,313 @@
             <color>b</color>
             <suit>c</suit>
         </card>
-        <card>2C</card>
-        <card>3C</card>
-        <card>4C</card>
-        <card>5C</card>
-        <card>6C</card>
-        <card>7C</card>
-        <card>8C</card>
-        <card>9C</card>
-        <card>0C</card>
-        <card>JC</card>
-        <card>QC</card>
-        <card>KC</card>
-        <card>AD</card>
-        <card>2D</card>
-        <card>3D</card>
-        <card>4D</card>
-        <card>5D</card>
-        <card>6D</card>
-        <card>7D</card>
-        <card>8D</card>
-        <card>9D</card>
-        <card>0D</card>
-        <card>JD</card>
-        <card>QD</card>
-        <card>KD</card>
-        <card>AH</card>
-        <card>2H</card>
-        <card>3H</card>
-        <card>4H</card>
-        <card>5H</card>
-        <card>6H</card>
-        <card>7H</card>
-        <card>8H</card>
-        <card>9H</card>
-        <card>0H</card>
-        <card>JH</card>
-        <card>QH</card>
-        <card>KH</card>
-        <card>AS</card>
-        <card>2S</card>
-        <card>3S</card>
-        <card>4S</card>
-        <card>5S</card>
-        <card>6S</card>
-        <card>7S</card>
-        <card>8S</card>
-        <card>9S</card>
-        <card>0S</card>
-        <card>JS</card>
-        <card>QS</card>
-        <card>KS</card>
+        <card>
+            <name>2C</name>
+            <value>2</value>
+            <color>b</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>3C</name>
+            <value>3</value>
+            <color>b</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>4C</name>
+            <value>4</value>
+            <color>b</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>5C</name>
+            <value>5</value>
+            <color>b</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>6C</name>
+            <value>6</value>
+            <color>b</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>7C</name>
+            <value>7</value>
+            <color>b</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>8C</name>
+            <value>8</value>
+            <color>b</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>9C</name>
+            <value>9</value>
+            <color>b</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>0C</name>
+            <value>10</value>
+            <color>b</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>JC</name>
+            <value>11</value>
+            <color>b</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>QC</name>
+            <value>12</value>
+            <color>b</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>KC</name>
+            <value>13</value>
+            <color>b</color>
+            <suit>c</suit>
+        </card>
+
+        <card>
+            <name>AD</name>
+            <value>1</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>2D</name>
+            <value>2</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>3D</name>
+            <value>3</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>4D</name>
+            <value>4</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>5D</name>
+            <value>5</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>6D</name>
+            <value>6</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>7D</name>
+            <value>7</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>8D</name>
+            <value>8</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>9D</name>
+            <value>9</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>0D</name>
+            <value>10</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>JD</name>
+            <value>11</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>QD</name>
+            <value>12</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>KD</name>
+            <value>13</value>
+            <color>r</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>AH</name>
+            <value>1</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>2H</name>
+            <value>2</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>3H</name>
+            <value>3</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>4H</name>
+            <value>4</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>5H</name>
+            <value>5</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>6H</name>
+            <value>6</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>7H</name>
+            <value>7</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>8H</name>
+            <value>8</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>9H</name>
+            <value>9</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>0H</name>
+            <value>10</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>JH</name>
+            <value>11</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>QH</name>
+            <value>12</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>KH</name>
+            <value>13</value>
+            <color>r</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>AS</name>
+            <value>1</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>2S</name>
+            <value>2</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>3S</name>
+            <value>3</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>4S</name>
+            <value>4</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>5S</name>
+            <value>5</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>6S</name>
+            <value>6</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>7S</name>
+            <value>7</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>8S</name>
+            <value>8</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>9S</name>
+            <value>9</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>0S</name>
+            <value>10</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>JS</name>
+            <value>11</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>QS</name>
+            <value>12</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>KS</name>
+            <value>13</value>
+            <color>b</color>
+            <suit>s</suit>
+        </card>
     </deck>
     <cell_groups>
         <group category="action">
@@ -191,6 +447,9 @@
                         <!-- put regex here -->
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
+                        <receiver>
+                            <quantity/>
+                        </receiver>
                         <mover>
                             <direction>d</direction>
                             <value>1</value>
@@ -206,6 +465,7 @@
                             <suit>*</suit>
                             <num_of_cards>*</num_of_cards>
                             <is_faceup>*</is_faceup>
+                            <name>!</name>
                         </donor>
                     </receive_rule>
                     <action>
@@ -224,6 +484,7 @@
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>down</offset>
+                            <flip>n</flip>
                         </mover_dest>
                         <points/>
                         <next_phase>check_eog</next_phase>
@@ -234,6 +495,9 @@
                         <!-- put regex here -->
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
+                        <receiver>
+                            <quantity/>
+                        </receiver>
                         <mover>
                             <direction>u</direction>
                             <value>1</value>
@@ -241,6 +505,7 @@
                             <suit>=</suit>
                             <num_of_cards>o</num_of_cards>
                             <is_faceup>y</is_faceup>
+                            <name>!</name>
                         </mover>
                         <donor>
                             <direction>*</direction>
@@ -249,6 +514,7 @@
                             <suit>*</suit>
                             <num_of_cards>*</num_of_cards>
                             <is_faceup>*</is_faceup>
+                            <name>!</name>
                         </donor>
                     </receive_rule>
                     <action>
@@ -267,6 +533,7 @@
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>0</offset>
+                            <flip>n</flip>
                         </mover_dest>
                         <points/>
                         <next_phase>check_eog</next_phase>
@@ -277,9 +544,12 @@
                         <!-- put regex here -->
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
+                        <receiver>
+                            <quantity>0</quantity>
+                        </receiver>
                         <mover>
-                            <direction>u</direction>
-                            <value>1</value>
+                            <direction>*</direction>
+                            <value>*</value>
                             <color>!</color>
                             <suit>*</suit>
                             <num_of_cards>m</num_of_cards>
@@ -292,6 +562,7 @@
                             <suit>*</suit>
                             <num_of_cards>*</num_of_cards>
                             <is_faceup>*</is_faceup>
+                            <category>hand</category>
                         </donor>
                     </receive_rule>
                     <action>
@@ -310,6 +581,7 @@
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>down</offset>
+                            <flip>y</flip>
                         </mover_dest>
                         <points/>
                         <next_phase>check_eog</next_phase>
@@ -320,13 +592,16 @@
                         <!-- put regex here -->
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
+                        <receiver>
+                            <quantity/>
+                        </receiver>
                         <mover>
-                            <direction>u</direction>
-                            <value>1</value>
-                            <color>!</color>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
                             <suit>*</suit>
-                            <num_of_cards>m</num_of_cards>
-                            <is_faceup>y</is_faceup>
+                            <num_of_cards>1</num_of_cards>
+                            <is_faceup>n</is_faceup>
                         </mover>
                         <donor>
                             <direction>*</direction>
@@ -335,6 +610,7 @@
                             <suit>*</suit>
                             <num_of_cards>*</num_of_cards>
                             <is_faceup>*</is_faceup>
+                            <category>deck</category>
                         </donor>
                     </receive_rule>
                     <action>
@@ -344,7 +620,7 @@
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>down</offset>
+                            <offset>0</offset>
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
@@ -352,7 +628,8 @@
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>down</offset>
+                            <offset>0</offset>
+                            <flip>y</flip>
                         </mover_dest>
                         <points/>
                         <next_phase>check_eog</next_phase>
