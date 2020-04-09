@@ -5,6 +5,9 @@ import ooga.data.style.ICoordinate;
 import java.util.Map;
 
 public interface ILayout {
+
+    public static final String DATA_TYPE = "layout";
+
     /**
      * Gives a map of all the cells in a game
      * with their respective names as their keys

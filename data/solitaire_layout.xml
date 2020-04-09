@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<data game_type="cards">
+<data type="layout">
     <game>Solitaire</game>
     <players>1</players>
     <!-- all of these values are relative to
