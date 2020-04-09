@@ -19,7 +19,7 @@ public class TestDisplayCell extends Application {
         Card testCard = new Card(); // automatically facedown
         List<ICard> testCards = List.of(testCard);
         Deck testDeck = new Deck("testDeck", testCards);
-        Cell testCell = new Cell("testCell");
+        Cell testCell = new Cell("testCell", testDeck);
 
         DisplayCell testDispCell = new DisplayCell(testCell, "acehearts.png", "twohearts.png", new Point2D(100,200), 100, 80);
 
