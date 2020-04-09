@@ -80,7 +80,7 @@ public class PhaseFactory implements Factory {
 
                 //rules
                 Node rules = XMLHelper.getNodeByName(phaseNodes, resources.getString(RULES));
-                List<IMasterRule> phaseRules = RuleFactory.getRules(rules, cellGroupMap, cellMap);
+                List<IMasterRule> phaseRules = MasterRuleFactory.getRules(rules, cellGroupMap, cellMap);
 
                 //TODO: INSTANTIATE PHASE
 

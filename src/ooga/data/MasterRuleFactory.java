@@ -11,7 +11,7 @@ import javax.xml.parsers.DocumentBuilder;
 import java.util.*;
 import java.util.function.Function;
 
-public class RuleFactory implements Factory {
+public class MasterRuleFactory implements Factory {
     private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
     private static final String PHASES = "phases";
     private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE+PHASES);
@@ -57,7 +57,7 @@ public class RuleFactory implements Factory {
     private static DocumentBuilder documentBuilder;
     public static final List<String> TRUE_CHECKS = new ArrayList<String>(Arrays.asList(new String[]{"", resources.getString(ALL)}));
 
-    public RuleFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
+    public MasterRuleFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
 
     public static List<IMasterRule> getRules(Node rules, Map<String, ICellGroup> cellGroupMap, Map<String, ICell> cellMap) {
         Map<String, IMasterRule> ruleMap = new HashMap<>();
@@ -93,7 +93,13 @@ public class RuleFactory implements Factory {
                 if (donRule != null) {
                     donorRuleList.add(buildRule((Element)donRule, ruleName + D, cellGroupMap));
                 }
+                NodeList condRuleList = receiverRuleNode.getElementsByTagName(resources.getString(CONDITION));
+                for (int l = 0; l < condRuleList.getLength(); l ++) {
+                    Node condRule = condRuleList.item(l);
+                    autoRules.add(buildRule((Element)condRule, ruleName + C, cellGroupMap));
+                }
 
+                //////////each master rule needs an action
 
             }
 
@@ -130,7 +136,24 @@ public class RuleFactory implements Factory {
         extractFaceUpCondition(e, conditions, currCell);
         extractNameCondition(e, cellGroupMap, conditions, currCell);
 
+        extractConditionCondition(e, cellGroupMap, conditions);
         return new Rule(ruleName, conditions);
+    }
+
+    private static void extractConditionCondition(Element e, Map<String, ICellGroup> cellGroupMap, List<Function<IMove, Boolean>> conditions) {
+        String cellOrGroupName = XMLHelper.getAttribute(e, resources.getString(CATEGORY));
+        if (cellGroupMap != null && !TRUE_CHECKS.contains(cellOrGroupName)) {
+            List<ICell> allMatchingCells = new ArrayList<>();
+            for (Map.Entry<String, ICellGroup> entry: cellGroupMap.entrySet()) {
+                allMatchingCells.addAll(entry.getValue().getCellsbyName(cellOrGroupName));
+            }
+            for (ICell cell: allMatchingCells) {
+                extractFaceUpCondition(e, conditions, (IMove move) -> cell);
+                extractColorCondition(e, conditions, (IMove move) -> cell, (IMove move) -> cell);
+                extractSuitCondition(e, conditions, (IMove move) -> cell, (IMove move) -> cell);
+                extractNumCardsCondition(e, conditions, (IMove move) -> cell);
+            }
+        }
     }
 
     private static Function<IMove, ICell> getCurrentCellFunction(String ruleName, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell) {
