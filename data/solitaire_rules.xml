@@ -435,6 +435,7 @@
     </cell_groups>
     <phases>
         <phase name="play">
+            <phase_type>manual</phase_type>
             <valid_donors>
                 <category>action</category>
                 <category>deck</category>
@@ -638,7 +639,8 @@
             </rules>
         </phase>
         <phase name="check_eog">
-            <valid_donors/>
+            <phase_type>auto</phase_type>
+            <valid_donors></valid_donors>
             <rules>
                 <rule category="check">
                     <option>

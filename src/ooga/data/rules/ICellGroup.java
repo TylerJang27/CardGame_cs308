@@ -10,7 +10,7 @@ import java.util.Map;
  *
  * @author Tyler Jang
  */
-public interface ICellGroup {
+public interface ICellGroup extends Cellular {
 
     /**
      * Retrieves the name of the Cell Group
@@ -25,8 +25,6 @@ public interface ICellGroup {
      * @return Collection of ICells
      */
     Map<String, ICell> getCellMap();
-
-    boolean isInGroup(String name); //TODO: ADD TO API CHANGES
 
     void initializeAll(IDeck mainDeck); //TODO: ADD TO API CHANGES
 

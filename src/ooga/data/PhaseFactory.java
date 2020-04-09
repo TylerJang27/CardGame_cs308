@@ -3,13 +3,13 @@ package ooga.data;
 import ooga.cardtable.ICell;
 import ooga.data.rules.ICellGroup;
 import ooga.data.rules.IPhase;
+import ooga.data.rules.IRule;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PhaseFactory implements Factory {
     private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
@@ -18,6 +18,9 @@ public class PhaseFactory implements Factory {
 
     private static final String PHASE = "Phase";
     private static final String NAME = "Name";
+    private static final String PHASE_TYPE = "PhaseType";
+    private static final String MANUAL = "Manual";
+    private static final String AUTO = "Auto";
     private static final String VALID_DONORS = "ValidDonors";
     private static final String CATEGORY = "Category";
     private static final String RULES = "Rules";
@@ -54,6 +57,35 @@ public class PhaseFactory implements Factory {
             Node phases = root.getElementsByTagName(PHASES).item(0);
 
             NodeList phaseList = ((Element)phases).getElementsByTagName(resources.getString(PHASE));
+
+            Map<String, IPhase> phaseMap = new HashMap<>();
+
+            for (int k = 0; k < phaseList.getLength(); k ++) {
+                Element phase = (Element)phaseList.item(k);
+                NodeList phaseNodes = phase.getChildNodes();
+
+                //phase info and type
+                String phaseName = XMLHelper.getAttribute(phase, resources.getString(NAME));
+                boolean automatic = AUTO.equals(XMLHelper.getTextValue(phase, resources.getString(PHASE_TYPE)));
+
+                //valid donors
+                Element donorHeadNode = (Element)XMLHelper.getNodeByName(phaseNodes, resources.getString(VALID_DONORS));
+                List<String> validDonorNames = new ArrayList<>();
+                if (donorHeadNode.hasChildNodes()) {
+                    NodeList donorNodeList = donorHeadNode.getElementsByTagName(resources.getString(CATEGORY));
+                    for (int j = 0; j < donorNodeList.getLength(); j++) {
+                        Node donor = donorNodeList.item(j);
+                        validDonorNames.add(donor.getNodeValue());
+                    }
+                }
+
+                //rules
+                Node rules = XMLHelper.getNodeByName(phaseNodes, resources.getString(RULES));
+                List<IRule> phaseRules = RuleFactory.getRules(rules, cellGroupMap, cellMap);
+
+                //TODO: INSTANTIATE PHASE
+
+            }
 
             //////////////TODO: TOMORROW MORNING
             return null;

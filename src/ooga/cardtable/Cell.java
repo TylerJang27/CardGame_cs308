@@ -1,6 +1,8 @@
 package ooga.cardtable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -18,6 +20,21 @@ public class Cell implements ICell {
   public Cell(String nm, Deck d) {
     this(nm);
     deck = d;
+  }
+
+  @Override
+  public List<ICell> getCellsbyName(String name) {
+    List<ICell> cellList = new ArrayList<>();
+    if (isInGroup(name)) {
+      cellList.add(this);
+    }
+    return cellList;
+  }
+
+  @Override
+  public boolean isInGroup(String name) {
+    return this.name.equals(name);
+            //TODO: DOUBLE CHECK HAPPY WITH THIS IMPLEMENTATION
   }
 
   @Override
