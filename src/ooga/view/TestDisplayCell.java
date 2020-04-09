@@ -19,28 +19,24 @@ public class TestDisplayCell extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        Card testCard1 = new Card(); // automatically facedown, unknown card
-        List<ICard> testCards1 = List.of(testCard1);
-        Deck testDeck1 = new Deck("testDeck", testCards1);
-        Cell testCell1 = new Cell("testCell", testDeck1);
+        Card testCard = new Card(); // automatically facedown, unknown card
+        List<ICard> testCards = List.of(testCard);
+        Deck testDeck = new Deck("testDeck", testCards);
+        Cell testCell = new Cell("testCell", testDeck);
 
-        Card testCard2 = new Card(); // automatically facedown, unknown cord
-        List<ICard> testCards2 = List.of(testCard2);
-        Deck testDeck2 = new Deck("testDeck", testCards2);
-        Cell testCell2 = new Cell("testCell", testDeck2);
+        Card testAddCard = new Card(); // automatically facedown, unknown cord
+        testCell.addCard(Offset.SOUTH,testAddCard);
 
         Map<String, String> cardNameToFileName = Map.of("Unknown Card", "acehearts.png", "faceDown", "twohearts.png");
         Point2D location = new Point2D(100,200);
         double height = 100;
         double width = 80;
-        double offset = 10;
+        double offset = 20;
 
-        DisplayCell testDispCell1 = new DisplayCell(testCell1, cardNameToFileName, location, height, width, offset);
-        DisplayCell testDispCell2 = new DisplayCell(testCell2, cardNameToFileName, location, height, width, offset);
+        DisplayCell testDispCell = new DisplayCell(testCell, cardNameToFileName, location, height, width, offset);
+        System.out.println("Back to test display cell");
 
-        mainPane.getChildren().addAll(testDispCell1.getGroup().getChildren());
-        mainPane.getChildren().addAll(testDispCell2.getGroup().getChildren());
-
+        mainPane.getChildren().addAll(testDispCell.getGroup().getChildren());
     }
 
     public static void main(String[] args) {

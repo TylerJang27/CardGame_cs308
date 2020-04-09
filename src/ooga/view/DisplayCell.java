@@ -56,16 +56,19 @@ public class DisplayCell {
 
         Map<Offset, Point2D> offsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -offset), Offset.SOUTH, new Point2D(0,offset), Offset.EAST, new Point2D(offset, 0),Offset.WEST, new Point2D(-offset,0), Offset.NORTHEAST, new Point2D(offset,-offset), Offset.SOUTHEAST, new Point2D(offset,offset), Offset.NORTHWEST, new Point2D(-offset,-offset), Offset.SOUTHWEST, new Point2D(-offset,offset));
 
-        /*
-        Map<IOffset,ICell> testChildren = myCell.getAllChildren(); // FIXME: NullPointerException?
+
         for (IOffset dir: myCell.getAllChildren().keySet()) {
             Cell childCell = (Cell) myCell.getAllChildren().get(dir);
+            if (dir == Offset.NONE) {
+                continue;
+            }
             DisplayCell childDisplayCell = new DisplayCell(childCell, cardNameToFileName, location.add(offsetDirToAmount.get(dir)), height, width, offset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
             // TODO: adding groups
             myGroup.getChildren().add(childDisplayCell.getImageView());
         }
-         */
+
+        System.out.println("I dont know!");
 
     }
 
