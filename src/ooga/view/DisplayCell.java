@@ -55,6 +55,9 @@ public class DisplayCell {
         myGroup.getChildren().add(myImageView);
 
         Map<Offset, Point2D> offsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -offset), Offset.SOUTH, new Point2D(0,offset), Offset.EAST, new Point2D(offset, 0),Offset.WEST, new Point2D(-offset,0), Offset.NORTHEAST, new Point2D(offset,-offset), Offset.SOUTHEAST, new Point2D(offset,offset), Offset.NORTHWEST, new Point2D(-offset,-offset), Offset.SOUTHWEST, new Point2D(-offset,offset));
+
+        Map<IOffset,ICell> testChildren = myCell.getAllChildren(); // FIXME: NullPointerException?
+
         for (IOffset dir: myCell.getAllChildren().keySet()) {
             Cell childCell = (Cell) myCell.getAllChildren().get(dir);
             DisplayCell childDisplayCell = new DisplayCell(childCell, cardNameToFileName, location.add(offsetDirToAmount.get(dir)), height, width, offset);
@@ -95,7 +98,7 @@ public class DisplayCell {
             // Moves node "on", or what the mouse clicked on, by moving the origin
             on.setTranslateX(on.getTranslateX()+dx);
             on.setTranslateY(on.getTranslateY()+dy);
-            // TODO: translate all display children as well
+            // TODO: translate all display children as well (enable drag on myGroup?)
             // Resets last known XY position
             lastXY = new javafx.geometry.Point2D(event.getSceneX(), event.getSceneY());
             event.consume();
