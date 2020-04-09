@@ -3,6 +3,7 @@ package ooga.data.rules;
 import java.util.List;
 import java.util.Map;
 
+import ooga.cardtable.ICell;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
 
@@ -58,6 +59,12 @@ public interface IPhase {
 
   String getName();
 
-  String getNextPhaseName(IRule rule);
+  String getNextPhaseName(IMove move);
+
+  void setCellList(List<ICell> cells);
+
+  void addRule(IRule rule, List<ICardAction> actions, String nextPhase);
+
+  void setAutoActions(List<ICardAction> actions);
 
 }

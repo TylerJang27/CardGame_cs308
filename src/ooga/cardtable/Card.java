@@ -1,8 +1,6 @@
 package ooga.cardtable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -19,6 +17,7 @@ public class Card implements ICard {
     orientation = 0;
   }
 
+  //TODO: TO MAVERICK, PLZ EXPLAIN (FROM TYLER AND ANDREW)
   public Card(ISuit s, IValue v) {
     this();
     attributes = new HashMap<>();

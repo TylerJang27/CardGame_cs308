@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data type="rule">
     <settings>
+        <players>1</players>
         <layout>
             <!-- should just be a file name so that we can process it properly and send to the front end -->
         </layout>
@@ -164,6 +165,7 @@
             <color>r</color>
             <suit>d</suit>
         </card>
+
         <card>
             <name>AH</name>
             <value>1</value>
@@ -242,6 +244,7 @@
             <color>r</color>
             <suit>h</suit>
         </card>
+
         <card>
             <name>AS</name>
             <value>1</value>
@@ -324,110 +327,110 @@
     <cell_groups>
         <group category="action">
             <cell name="1">
-                <fan>y</fan>
+                <fan>s</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdU</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
             <cell name="2">
-                <fan>y</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdD</card>
-                    <card>RdU</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
             <cell name="3">
-                <fan>y</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdU</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
             <cell name="4">
-                <fan>y</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdU</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
             <cell name="5">
-                <fan>y</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdU</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
             <cell name="6">
-                <fan>y</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdU</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
             <cell name="7">
-                <fan>y</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdD</card>
-                    <card>RdU</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
                 </init_cards>
             </cell>
         </group>
         <group category="suits">
             <cell name="club">
-                <fan>n</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards/>
             </cell>
             <cell name="diamond">
-                <fan>n</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards/>
             </cell>
             <cell name="heart">
-                <fan>n</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards/>
             </cell>
             <cell name="spade">
-                <fan>n</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards/>
             </cell>
         </group>
         <group category="deck">
             <cell name="draw">
-                <fan>n</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>**D</card>
+                    <card>**,D</card>
                 </init_cards>
             </cell>
         </group>
         <group category="hand">
             <cell name="playable">
-                <fan>n</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards/>
             </cell>
@@ -644,20 +647,25 @@
                     <option>
                         <condition category="action">
                             <!-- somehow check that all these are empty -->
+                            <num_cards>0</num_cards>
                         </condition>
                         <condition category="hand">
                             <!-- somehow check that all these are empty -->
+                            <num_cards>0</num_cards>
                         </condition>
                         <condition category="deck">
                             <!-- somehow check that all these are empty -->
+                            <num_cards>0</num_cards>
                         </condition>
                         <action>
                             <!-- go to end of game -->
+                            <next_phase>end_of_game</next_phase>
                         </action>
                     </option>
                     <option>
                         <action>
                             <!-- go to player turn -->
+                            <next_phase>play</next_phase>
                         </action>
                     </option>
                 </rule>
