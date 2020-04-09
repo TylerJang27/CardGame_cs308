@@ -6,14 +6,13 @@ import java.util.List;
 import java.util.Random;
 
 public class Deck implements IDeck {
+
   private String myName;
   private List<ICard> cards;
 
   public Deck() {
     cards = new ArrayList<>();
   }
-
-
 
   public Deck(String name, List<ICard> d) {
     myName = name;
@@ -31,12 +30,20 @@ public class Deck implements IDeck {
   }
 
   @Override
+  public boolean isEmpty() {
+    return cards.isEmpty();
+  }
+
+  @Override
   public ICard getNextCard() {
     return getCardAtIndex(0);
   }
 
   @Override
   public ICard getRandomCard() {
+    if (isEmpty()) {
+      return null;
+    }
     Random rand = new Random();
     return getCardAtIndex(rand.nextInt(size()));
   }
@@ -48,6 +55,9 @@ public class Deck implements IDeck {
 
   @Override
   public ICard getCardAtIndex(int index) { //removes the card from the deck
+    if (isEmpty()) {
+      return null;
+    }
     return cards.remove(index);
   }
 
@@ -63,12 +73,17 @@ public class Deck implements IDeck {
 
   @Override
   public ICard peekCardAtIndex(int index) {
+    if (isEmpty()) {
+      return null;
+    }
     return cards.get(index);
   }
 
   @Override
   public void addCard(ICard card) { //fixme make package private?
-    cards.add(card);
+    if (card != null) {
+      cards.add(card);
+    }
   }
 
   @Override
@@ -79,12 +94,15 @@ public class Deck implements IDeck {
   }
 
   @Override
-  public String getName() { return myName; }
+  public String getName() {
+    return myName;
+  }
 
   @Override
   //TODO: HULLOO
-  public ICard getCardByName(String name) { //TODO: MAKE SURE THIS WORKS WITH THE OFFSET AS I WANT IT TO
-    for (ICard c: cards) {
+  public ICard getCardByName(
+      String name) { //TODO: MAKE SURE THIS WORKS WITH THE OFFSET AS I WANT IT TO
+    for (ICard c : cards) {
       if (c.getName().equals(name)) {
         return c;
       }

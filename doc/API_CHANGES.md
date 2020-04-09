@@ -14,3 +14,6 @@
 * MC - Added checkValidMove method to IRule
 * MC - Modified execute to take an argument of type List<ICell> in ICardAction
 * MC - Added addRule and setAutoAction to IPhase
+
+4/9/2020:
+* MC - Added isEmpty method to IDeck

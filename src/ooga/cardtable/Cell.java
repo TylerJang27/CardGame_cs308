@@ -17,6 +17,7 @@ public class Cell implements ICell {
   public Cell(String nm) {
     name = nm;
     deck = new Deck();
+    children = new HashMap<>();
   }
 
   public Cell(String nm, IDeck d) {

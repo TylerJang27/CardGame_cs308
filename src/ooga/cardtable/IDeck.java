@@ -6,6 +6,8 @@ public interface IDeck {
 
   int size();
 
+  boolean isEmpty();
+
   ICard getNextCard();
 
   ICard getRandomCard();
