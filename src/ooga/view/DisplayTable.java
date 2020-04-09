@@ -37,7 +37,6 @@ public class DisplayTable extends Application {
         Scene scene = new Scene(root, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
         scene.setFill(myTableColor);
 
-
         ImageView source = new ImageView(new Image("acehearts.png"));
         source.setX(50);
         source.setY(200);
