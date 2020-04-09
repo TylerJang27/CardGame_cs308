@@ -1,6 +1,7 @@
 package ooga.data.rules;
 
 import ooga.cardtable.ICell;
+import ooga.cardtable.IMove;
 
 /**
  * Gets and evaluates rules for a given phase, based on generic and specific rules.
@@ -52,4 +53,7 @@ public interface IRule {
    * @return the transfer regex logic
    */
   ICellRegex getTransferRegex();
+
+  boolean checkValidMove(IMove move);
+
 }

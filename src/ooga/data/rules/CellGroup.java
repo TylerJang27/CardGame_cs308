@@ -1,16 +1,19 @@
 package ooga.data.rules;
 
 import ooga.cardtable.ICell;
+import ooga.cardtable.IDeck;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 //TODO: ADD DOCUMENTATION LATER
 public class CellGroup implements ICellGroup{
 
     String myName;
-    Collection<ICell> myCells;
+    Map<String, ICell> myCells;
 
-    public CellGroup(String name, Collection<ICell> cells) {
+    public CellGroup(String name, Map<String, ICell> cells) {
         myName = name;
         myCells = cells;
     }
@@ -32,7 +35,14 @@ public class CellGroup implements ICellGroup{
      * @return Collection of ICells
      */
     @Override
-    public Collection<ICell> getCells() {
+    public Map<String, ICell> getCellMap() {
         return myCells;
+    }
+
+    @Override
+    public void initializeAll(IDeck mainDeck) {
+        for (Map.Entry<String, ICell> c: myCells.entrySet()) {
+            c.getValue().initializeCards(mainDeck);
+        }
     }
 }
