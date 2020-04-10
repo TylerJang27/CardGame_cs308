@@ -1,6 +1,5 @@
 package ooga.cardtable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -199,6 +198,7 @@ public class Cell implements ICell {
       if (e.getKey() != Offset.NONE && e.getValue() != null) {
         //System.out.println(this.getName());
         Cell c = (Cell) e.getValue();
+        this.setCellAtOffset(e.getKey(), c); //added by Tyler, didn't seem to do much
         c.setParent(this);
         c.updateParentage(); //fixme monster
       }
