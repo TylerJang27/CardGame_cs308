@@ -11,22 +11,22 @@ public class Card implements ICard {
   private Map<IAttribute, Boolean> attributes;
   private double orientation;
 
-  public Card() {
+  public Card(String name) {
     name = "Unknown Card";
     faceup = false;
     orientation = 0;
   }
 
   //TODO: TO MAVERICK, PLZ EXPLAIN (FROM TYLER AND ANDREW)
-  public Card(ISuit s, IValue v) {
-    this();
+  public Card(String name, ISuit s, IValue v) {
+    this(name);
     attributes = new HashMap<>();
     attributes.put(s, true);
     attributes.put(v, true);
   }
 
-  public Card(Map<IAttribute, Boolean> visible) {
-    this();
+  public Card(String name, Map<IAttribute, Boolean> visible) {
+    this(name);
     attributes = visible;
   }
 
