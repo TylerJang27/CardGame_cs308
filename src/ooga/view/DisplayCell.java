@@ -11,12 +11,8 @@ import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import ooga.cardtable.*;
-
 import javafx.geometry.Point2D;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import ooga.cardtable.Offset;
@@ -124,7 +120,8 @@ public class DisplayCell {
             double dy = event.getSceneY() - lastXY.getY();
             on.setTranslateX(on.getTranslateX()+dx);
             on.setTranslateY(on.getTranslateY()+dy);
-            // TODO: translate all display children as well (enable drag on myGroup?)
+            // TODO: translate all display children as well
+            // Need to associate imageview to displaycell, will also need when attempting to report intersections
             lastXY = new javafx.geometry.Point2D(event.getSceneX(), event.getSceneY());
             event.consume();
         });

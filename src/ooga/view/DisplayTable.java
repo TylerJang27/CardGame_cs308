@@ -1,18 +1,15 @@
 package ooga.view;
 
-import javafx.application.Application;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import ooga.cardtable.*;
 import ooga.data.rules.ILayout;
+import ooga.data.rules.Layout;
+import ooga.data.style.ICoordinate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class DisplayTable {
 
@@ -22,25 +19,32 @@ public class DisplayTable {
     private Color myTableColor;
     private String myGameName;
 
+    private double myScreenWidth;
     private double myCardHeight;
     private double myCardWidth;
     private double myCardOffset;
     private Map<String, String> myCardNameToFileName;
-    private Map<String, Point2D> myCardNameToLocation;
+    private Map<String, ICoordinate> myCellNameToLocation;
     private List<Cell> myCellData;
 
-    public DisplayTable() {
+    public DisplayTable(Layout layout, double screenwidth) {
+        myScreenWidth = screenwidth;
         myPane = new Pane();
 
-        myGameName =  "Practice Game";
         String tableColor = "0x0000FF";
         myTableColor = Color.web(tableColor);
 
-        myCardHeight = 100;
-        myCardWidth = 80;
-        myCardOffset = 20;
-        myCardNameToFileName = Map.of("Unknown Card", "acehearts.png", "faceDown", "twohearts.png");
-        myCardNameToLocation = Map.of("Unknown Card", new Point2D(100,200));
+        myCardHeight = layout.getCardHeightRatio()*screenwidth;
+        myCardWidth = layout.getCardWidthRatio()*screenwidth;
+        myCardOffset = layout.getUpOffsetRatio()*screenwidth;
+
+        myCardNameToFileName = new HashMap<>();
+        List<String> cardDeck = Arrays.asList( "AC", "2C", "3C","4C","5C","6C","7C","8C","9C","0C","JC","QC","KC","AD","2D","3D","4D","5D","6D","7D","8D","9D","0D","JD","QD","KD","AH","2H","3H","4H","5H","6H","7H","8H","9H","0H","JH","QH","KH","AS","2S","3S","4S", "5S", "6S", "7S", "8S","9S", "0S", "JS", "QS", "KS");
+        for (String card: cardDeck) {
+            myCardNameToFileName.put(card, card+".png");
+        }
+        myCellNameToLocation = layout.getCellLayout();
+
         myCellData = List.of(getDummyCell());
 
         List<DisplayCell> displayCellData = makeDisplayCells(myCellData);
@@ -49,6 +53,14 @@ public class DisplayTable {
     }
 
     public Pane getPane() {
+        return myPane;
+    }
+
+    public Pane updateCells(List<Cell> cellData) {
+        // TODO: for now, I assume update receives all of the cells, not just ones which needed to be changed
+        myPane = new Pane();
+        List<DisplayCell> displayCellData = makeDisplayCells(cellData);
+        drawDisplayCells(displayCellData);
         return myPane;
     }
 
@@ -61,7 +73,10 @@ public class DisplayTable {
     }
 
     private DisplayCell makeDisplayCell(Cell cell) {
-        return new DisplayCell(cell, myCardNameToFileName, myCardNameToLocation.get(cell.getDeck().peek().getName()), myCardHeight, myCardWidth, myCardOffset);
+        ICoordinate icoord = myCellNameToLocation.get(cell.getName());
+        double x = icoord.getX()*myScreenWidth;
+        double y = icoord.getY()*myScreenWidth;
+        return new DisplayCell(cell, myCardNameToFileName, new Point2D(x,y), myCardHeight, myCardWidth, myCardOffset);
     }
 
     private void drawDisplayCells(List<DisplayCell> DisplayCellData) {
