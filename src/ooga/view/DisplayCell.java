@@ -6,10 +6,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import ooga.cardtable.*;
 import javafx.geometry.Point2D;
 import java.util.HashMap;
@@ -26,6 +23,8 @@ public class DisplayCell {
     private ImageView myImageView;
     private Image myFaceUp;
     private Image myFaceDown;
+
+    private Map<Offset, Point2D> offsetDirToAmount;
 
     private Point2D lastXY = null;
 
@@ -53,7 +52,7 @@ public class DisplayCell {
         }else{
             System.out.println("empty!");
         }
-        Map<Offset, Point2D> offsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -offset), Offset.SOUTH, new Point2D(0,offset), Offset.EAST, new Point2D(offset, 0),Offset.WEST, new Point2D(-offset,0), Offset.NORTHEAST, new Point2D(offset,-offset), Offset.SOUTHEAST, new Point2D(offset,offset), Offset.NORTHWEST, new Point2D(-offset,-offset), Offset.SOUTHWEST, new Point2D(-offset,offset));
+        offsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -offset), Offset.SOUTH, new Point2D(0,offset), Offset.EAST, new Point2D(offset, 0),Offset.WEST, new Point2D(-offset,0), Offset.NORTHEAST, new Point2D(offset,-offset), Offset.SOUTHEAST, new Point2D(offset,offset), Offset.NORTHWEST, new Point2D(-offset,-offset), Offset.SOUTHWEST, new Point2D(-offset,offset));
 
         /*Cell childCellNone = (Cell) myCell.getAllChildren().get(Offset.NONE);
         if (childCellNone.getDeck().peek()==null) {
@@ -71,7 +70,6 @@ public class DisplayCell {
             }
             DisplayCell childDisplayCell = new DisplayCell(childCell, cardNameToFileName, location.add(offsetDirToAmount.get(dir)), height, width, offset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
-            // TODO: adding groups
             myGroup.getChildren().add(childDisplayCell.getImageView());
         }
     }
@@ -113,37 +111,60 @@ public class DisplayCell {
         return myCell;
     }
 
+    public Point2D getLastXY() {
+        return lastXY;
+    }
+
+    public void setLastXY(Point2D newXY) {
+        lastXY = newXY;
+    }
+
     private void enableDrag(ImageView source) {
         source.setOnMouseDragged(event -> {
             event.setDragDetect(false);
             Node on = (Node)event.getTarget();
-            on.toFront();
-            if (lastXY == null) {
-                lastXY = new javafx.geometry.Point2D(event.getSceneX(), event.getSceneY());
-            }
-            double dx = event.getSceneX() - lastXY.getX();
-            double dy = event.getSceneY() - lastXY.getY();
-            on.setTranslateX(on.getTranslateX()+dx);
-            on.setTranslateY(on.getTranslateY()+dy);
-            // TODO: translate all display children as well
-            // Need to associate imageview to displaycell, will also need when attempting to report intersections
-            lastXY = new javafx.geometry.Point2D(event.getSceneX(), event.getSceneY());
-            event.consume();
-        });
+            moveAll(this, new Point2D(event.getSceneX(), event.getSceneY()));
 
-        source.setOnDragDetected(event -> {
-            Node on = (Node)event.getTarget();
-            Dragboard db = on.startDragAndDrop(TransferMode.COPY);
-            ClipboardContent content = new ClipboardContent();
-            WritableImage image = on.snapshot(new SnapshotParameters(), null);
-            content.put(DataFormat.IMAGE, image);
-            db.setContent(content);
             event.consume();
         });
 
         source.setOnMouseReleased(d -> {
-            lastXY = null;
+            resetAll(this);
         });
+    }
+
+    private void resetAll(DisplayCell selectedCell) {
+        selectedCell.setLastXY(null);
+        for (Offset dir: selectedCell.getAllChildren().keySet()) {
+            if (dir == Offset.NONE) {
+                continue;
+            }
+            resetAll(selectedCell.getAllChildren().get(dir));
+        }
+    }
+
+    private void moveAll(DisplayCell selectedCell, Point2D initDragToXY) {
+        moveChildTo(selectedCell,initDragToXY);
+        for (Offset dir: selectedCell.getAllChildren().keySet()) {
+            if (dir == Offset.NONE) {
+                continue;
+            }
+            moveAll(selectedCell.getAllChildren().get(dir), initDragToXY.add(offsetDirToAmount.get(dir)));
+        }
+    }
+
+    private void moveChildTo(DisplayCell childCell, Point2D dragToXY) {
+        Point2D dragFromXY = childCell.getLastXY();
+        if (dragFromXY == null) {
+            dragFromXY = dragToXY;
+            childCell.setLastXY(dragFromXY);
+        }
+        Point2D dxdy = dragToXY.subtract(dragFromXY);
+        Node on = (Node) childCell.getImageView();
+        on.setTranslateX(on.getTranslateX()+dxdy.getX());
+        on.setTranslateY(on.getTranslateY()+dxdy.getY());
+        on.toFront();
+        childCell.setLastXY(dragToXY);
     }
 
 }

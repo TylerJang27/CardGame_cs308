@@ -31,18 +31,15 @@ public class DisplayTable {
 
 
     public DisplayTable(Layout layout, double screenwidth) {
-        System.out.println("layout: "+layout.getCellLayout().keySet());
 
         myScreenWidth = screenwidth;
         myPane = new Pane();
-
-        String tableColor = "0x0000FF";
-        myTableColor = Color.web(tableColor);
 
         myCardHeight = layout.getCardHeightRatio()*screenwidth;
         myCardWidth = layout.getCardWidthRatio()*screenwidth;
         myCardOffset = layout.getUpOffsetRatio()*screenwidth;
 
+        // TODO: get resource file from controller for myCardNameToFileName
         myCardNameToFileName = new HashMap<>();
         List<String> cardDeck = Arrays.asList( "faceDown", "AC", "2C", "3C","4C","5C","6C","7C","8C","9C","0C","JC","QC","KC","AD","2D","3D","4D","5D","6D","7D","8D","9D","0D","JD","QD","KD","AH","2H","3H","4H","5H","6H","7H","8H","9H","0H","JH","QH","KH","AS","2S","3S","4S", "5S", "6S", "7S", "8S","9S", "0S", "JS", "QS", "KS");
         for (String card: cardDeck) {
@@ -65,15 +62,11 @@ public class DisplayTable {
         return myPane;
     }
 
-
     public Pane updateCells(Map<String,ICell> cellData) {
-        // TODO: for now, I assume update receives all of the cells, not just ones which needed to be changed
-        //myPane = new Pane();
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
         return myPane;
     }
-
 
     private List<DisplayCell> makeDisplayCells(Map<String,ICell> cellData) {
         List<DisplayCell> displayCellData = new ArrayList<>();
@@ -93,7 +86,7 @@ public class DisplayTable {
 
     private void drawDisplayCells(List<DisplayCell> DisplayCellData) {
         for (DisplayCell dc: DisplayCellData) {
-                drawDisplayCell(dc);
+            drawDisplayCell(dc);
         }
     }
 
@@ -102,14 +95,6 @@ public class DisplayTable {
             return;
         }
         myPane.getChildren().addAll(rootDispCell.getGroup().getChildren());
-        //System.out.println("Victory Royale");
-        for(Node n : myPane.getChildren()){
-            //System.out.println(n);
-            System.out.println(n.getTranslateX());
-           // System.out.println(n.getLayoutY());
-           // System.out.println(n.getTranslateX());
-           // System.out.println(n.getTranslateY());
-        }
         for (IOffset dir: rootDispCell.getCell().getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;
