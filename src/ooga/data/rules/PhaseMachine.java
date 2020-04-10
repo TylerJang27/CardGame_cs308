@@ -8,11 +8,8 @@ import ooga.cardtable.GameState;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
-import ooga.data.rules.IPhase;
-import ooga.data.rules.IPhaseArrow;
-import ooga.data.rules.ISettings;
+
 import ooga.data.rules.excluded.IPhaseHistoryCell;
-import ooga.data.rules.IPhaseMachine;
 
 public class PhaseMachine implements IPhaseMachine {
 

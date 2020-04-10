@@ -73,66 +73,90 @@ public class ActionFactory implements Factory {
         List<Consumer<IMove>> actions = new ArrayList<>();
 
         Consumer<IMove> cardAction = (IMove move) -> {
-            List < ICell > cellsToMove = new ArrayList<>();
-            String numCards = XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS));
-            //determines number of cards to move
-            if (numCards.equals(resources.getString(ALL))) {
-                cellsToMove.addAll(currCell.apply(move).getAllCells());
-            } else if (Offset.validOffsets.contains(numCards)) {
-                cellsToMove.add(currCell.apply(move).getPeak(Offset.valueOf(numCards.toUpperCase())));
-            }
-            //determines destination of cards
-            String destination = XMLHelper.getTextValue(e, resources.getString(DESTINATION));
-            ICell dest;
-            if (destination.equals(resources.getString(M))) {
-                dest = moverCell.apply(move);
-            } else if (destination.equals(resources.getString(D))) {
-                dest = donorCell.apply(move);
-            } else {
-                recipientCell.apply(move);
-            }
-            //determines offset at destination
-            String offset = XMLHelper.getTextValue(e, resources.getString(OFFSET));
-            IOffset off;
-            if (Offset.validOffsets.contains(offset)) {
-                off = Offset.valueOf(offset.toUpperCase());
-            } else {
-                off = Offset.NONE;
-            }
+            extractCellsToMove(e, currCell, move);
 
-            //determines angle to turn cards
-            String turn = XMLHelper.getTextValue(e, resources.getString(DIRECTION));
-            if (!TRUE_CHECKS.contains(turn)) {
-                Double angle = Double.parseDouble(turn);
-                for (ICell c : currCell.apply(move).getAllCells()) {
-                    for (int k = 0; k < c.getDeck().size(); k++) {
-                        c.getDeck().peekCardAtIndex(k).rotate(angle);
-                    }
-                }
-            }
+            String destination = extractDestinationBehavior(e, moverCell, donorCell, recipientCell, move);
 
-            //determines flip of cards
-            String flip = XMLHelper.getTextValue(e, resources.getString(FLIP));
-            if (Offset.validOffsets.contains(flip)) {
-                currCell.apply(move).getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().flip();
-            } else if (flip.equals(resources.getString(ALL))) {
-                for (ICell c : currCell.apply(move).getAllCells()) {
-                    for (int k = 0; k < c.getDeck().size(); k++) {
-                        c.getDeck().peekCardAtIndex(k).flip();
-                    }
-                }
-            }
+            IOffset off = extractOffsetBehavior(e);
+
+            extractRotationBehavior(e, currCell, move);
+
+            extractFlipBehavior(e, currCell, move);
+
             //TODO: IMPLEMENT SHUFFLE
 
-            //moves cards if they're not already there
-            if (destination.equalsIgnoreCase(curr)) {
-                recipientCell.apply(move).addCell(off, currCell.apply(move));
-                IOffset offsetFromParent = recipientCell.apply(move).getOffsetFromParent();
-                recipientCell.apply(move).getParent().removeCellAtOffset(offsetFromParent);
-            }
+            applyDestinationBehavior(recipientCell, currCell, curr, move, destination, off);
         };
         actions.add(cardAction);
         return new CardAction(actions);
+    }
+
+    private static void extractCellsToMove(Element e, Function<IMove, ICell> currCell, IMove move) {
+        List< ICell > cellsToMove = new ArrayList<>();
+        String numCards = XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS));
+        //determines number of cards to move
+        if (numCards.equals(resources.getString(ALL))) {
+            cellsToMove.addAll(currCell.apply(move).getAllCells());
+        } else if (Offset.validOffsets.contains(numCards)) {
+            cellsToMove.add(currCell.apply(move).getPeak(Offset.valueOf(numCards.toUpperCase())));
+        }
+    }
+
+    private static void applyDestinationBehavior(Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell, String curr, IMove move, String destination, IOffset off) {
+        if (destination.equalsIgnoreCase(curr)) {
+            recipientCell.apply(move).addCell(off, currCell.apply(move));
+            IOffset offsetFromParent = recipientCell.apply(move).getOffsetFromParent();
+            recipientCell.apply(move).getParent().removeCellAtOffset(offsetFromParent);
+        }
+    }
+
+    private static String extractDestinationBehavior(Element e, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell, IMove move) {
+        String destination = XMLHelper.getTextValue(e, resources.getString(DESTINATION));
+        ICell dest;
+        if (destination.equals(resources.getString(M))) {
+            dest = moverCell.apply(move);
+        } else if (destination.equals(resources.getString(D))) {
+            dest = donorCell.apply(move);
+        } else {
+            recipientCell.apply(move);
+        }
+        return destination;
+    }
+
+    private static IOffset extractOffsetBehavior(Element e) {
+        String offset = XMLHelper.getTextValue(e, resources.getString(OFFSET));
+        IOffset off;
+        if (Offset.validOffsets.contains(offset)) {
+            off = Offset.valueOf(offset.toUpperCase());
+        } else {
+            off = Offset.NONE;
+        }
+        return off;
+    }
+
+    private static void extractRotationBehavior(Element e, Function<IMove, ICell> currCell, IMove move) {
+        String turn = XMLHelper.getTextValue(e, resources.getString(DIRECTION));
+        if (!TRUE_CHECKS.contains(turn)) {
+            Double angle = Double.parseDouble(turn);
+            for (ICell c : currCell.apply(move).getAllCells()) {
+                for (int k = 0; k < c.getDeck().size(); k++) {
+                    c.getDeck().peekCardAtIndex(k).rotate(angle);
+                }
+            }
+        }
+    }
+
+    private static void extractFlipBehavior(Element e, Function<IMove, ICell> currCell, IMove move) {
+        String flip = XMLHelper.getTextValue(e, resources.getString(FLIP));
+        if (Offset.validOffsets.contains(flip)) {
+            currCell.apply(move).getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().flip();
+        } else if (flip.equals(resources.getString(ALL))) {
+            for (ICell c : currCell.apply(move).getAllCells()) {
+                for (int k = 0; k < c.getDeck().size(); k++) {
+                    c.getDeck().peekCardAtIndex(k).flip();
+                }
+            }
+        }
     }
 
 
