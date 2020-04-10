@@ -34,4 +34,13 @@ public class Value implements IValue {
   public String getType() {
     return "value";
   }
+
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof Value)) {
+      return false;
+    }
+    Value v = (Value) other;
+    return name.equals(v.name) && number == v.number && symbol == v.symbol;
+  }
 }

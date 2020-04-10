@@ -94,4 +94,14 @@ public class Card implements ICard {
   public ICard getVisibleData() {
     return this;
   }
+
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof Card)) {
+      return false;
+    }
+    Card c = (Card) other;
+    return name.equals(c.name) && faceup == c.faceup && orientation == c.orientation &&
+        attributes.equals(c.attributes);
+  }
 }
