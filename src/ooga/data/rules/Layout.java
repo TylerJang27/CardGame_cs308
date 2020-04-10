@@ -31,8 +31,8 @@ public class Layout implements ILayout {
 
     public Layout () {}
 
-    public Layout(String xmlfile, String game, Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings) {
-        gameName = game;
+    public Layout(Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings) {
+        //gameName = game;
 
         cellLayout = cellCoords;
 
