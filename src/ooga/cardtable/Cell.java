@@ -56,8 +56,10 @@ public class Cell implements ICell {
       System.out.println("a: " + toAdd.getTotalSize());           //7 !!
       System.out.println("b:" + this.getTotalSize());             //0
       System.out.println(mainDeck.size());                        //24
+      //this.getAllChildren().get(Offset.NONE).addCell(Offset.NONE, toAdd);
       addCell(Offset.NONE, toAdd);
-      System.out.println(toAdd);                                  //7,south [same7]
+      //toAdd.addCell(Offset.NONE, this);
+      System.out.println("toadd: " + toAdd);                                  //7,south [same7]
       System.out.println("a: " + toAdd.getTotalSize());           //7 !!!!!!
       System.out.println("b:" + this.getTotalSize());             //0
       System.out.println(mainDeck.size());                        //24
@@ -170,6 +172,7 @@ public class Cell implements ICell {
       return;
     }
     if (cell.getAllChildren().keySet().size() <= 1) {
+    //if (offset.getOffset().equals(Offset.NONE.getOffset())) {
       recipient.getDeck().addDeck(cell.getDeck());
       updateParentage();
       return;
@@ -187,6 +190,21 @@ public class Cell implements ICell {
       }
     }
     updateParentage();
+  }
+
+  public void addCell(IOffset offset, ICell cell, boolean a) {
+    for (int k = 0; k < Offset.values().length; k ++) {
+      IOffset off = Offset.values()[k];
+      if (getAllChildren().get(off) == null && cell.getAllChildren().get(off) == null) {
+
+      } else if (getAllChildren().get(off) == null && cell.getAllChildren().get(off) == null) {
+
+      } else if (getAllChildren().get(off) == null && cell.getAllChildren().get(off) == null) {
+
+      } else if (getAllChildren().get(off) == null && cell.getAllChildren().get(off) == null) {
+        
+      }
+    }
   }
 
   private void updateParentage() {

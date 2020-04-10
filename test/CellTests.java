@@ -4,6 +4,7 @@ import ooga.cardtable.ICell;
 import ooga.cardtable.Offset;
 import ooga.cardtable.Suit;
 import ooga.cardtable.Value;
+import org.junit.Test;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +24,7 @@ public class CellTests {
     a.addCard(Offset.NONE, c1);
     assertNotEquals(a, b);
     b.addCard(Offset.NONE, c2);
-    assertEquals(a,b);
+    zassertEquals(a,b);
     a.addCard(Offset.NONE, c3);
     b.addCard(Offset.NONE, c1);
     assertNotEquals(a,b);
@@ -77,6 +78,8 @@ public class CellTests {
     c.addCard(Offset.SOUTH, c1);
     c.addCard(Offset.NONE, c1);
     c.addCard(Offset.SOUTH, c1);
+    System.out.println(a);
+    System.out.println(b);
     assertEquals(a,b);
   }
 }
