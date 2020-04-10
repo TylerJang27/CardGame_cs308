@@ -16,7 +16,7 @@ import ooga.view.menu.RowMenu;
  * @author __, __, Tyler Jang
  */
 public class View implements ExternalAPI {
-    
+
     private Menu myMenu;
 
     public View(){
