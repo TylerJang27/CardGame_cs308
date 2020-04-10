@@ -92,20 +92,5 @@ public class DisplayTable {
         }
     }
 
-    /*
-    private Cell getDummyCell() {
-        Card testCard = new Card(); // automatically facedown, unknown card
-        List<ICard> testCards = List.of(testCard);
-        Deck testDeck = new Deck("testDeck", testCards);
-        Cell testCell = new Cell("testCell", testDeck);
-
-        Card testAddCard = new Card(); // automatically facedown, unknown cord
-        testCell.addCard(Offset.SOUTH,testAddCard);
-        Card testAddAnotherCard = new Card();
-        testCell.getAllChildren().get(Offset.SOUTH).addCard(Offset.SOUTH,testAddAnotherCard);
-        return testCell;
-    }
-     */
-
 }
 
