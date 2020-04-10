@@ -18,7 +18,7 @@ public interface ExternalAPI {
      *
      * @param cellData
      */
-    void setCellData(List<Cell> cellData);
+    void setCellData(List<ICell> cellData);
 
     /**
      * Sets score of players to be displayed
