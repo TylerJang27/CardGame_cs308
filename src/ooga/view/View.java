@@ -38,7 +38,7 @@ public class View implements ExternalAPI {
      * @param cellData
      */
     @Override
-    public void setCellData(List<Cell> cellData) {
+    public void setCellData(List<ICell> cellData) {
         myDisplayTable.updateCells(cellData);
     }
 

@@ -50,7 +50,7 @@ public class DisplayTable {
         return myPane;
     }
 
-    public Pane updateCells(List<Cell> cellData) {
+    public Pane updateCells(List<ICell> cellData) {
         // TODO: for now, I assume update receives all of the cells, not just ones which needed to be changed
         myPane = new Pane();
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
@@ -58,10 +58,10 @@ public class DisplayTable {
         return myPane;
     }
 
-    private List<DisplayCell> makeDisplayCells(List<Cell> cellData) {
+    private List<DisplayCell> makeDisplayCells(List<ICell> cellData) {
         List<DisplayCell> displayCellData = new ArrayList<>();
-        for (Cell c: cellData) {
-            displayCellData.add(makeDisplayCell(c));
+        for (ICell c: cellData) {
+            displayCellData.add(makeDisplayCell((Cell)c));
         }
         return displayCellData;
     }

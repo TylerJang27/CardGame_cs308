@@ -78,7 +78,7 @@ public class Controller extends Application {
     private void newMove() {
         myCurrentMove = getMove();
         myTable.update(myCurrentMove);
-        myView.setCellData(Map.copyOf(myTable.getCellData()));
+        myView.setCellData(List.copyOf(myTable.getCellData().values()));
     }
 
     private IMove getMove() {
