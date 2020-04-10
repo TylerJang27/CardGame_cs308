@@ -13,7 +13,6 @@ public class Card implements ICard {
 
   public Card(String name) {
     this.name = name;
-    System.out.println(name);
     faceup = false;
     orientation = 0;
   }
