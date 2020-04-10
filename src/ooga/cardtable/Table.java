@@ -1,9 +1,8 @@
 package ooga.cardtable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import ooga.data.rules.IPhase;
+
 import ooga.data.rules.IPhaseMachine;
 
 public class Table implements ITable {
@@ -27,7 +26,8 @@ public class Table implements ITable {
 
   @Override
   public void setCellList(List<ICell> cellList) {
-    machine.setCellList(cellList);
+    //machine.setCellList(cellList);
+    System.out.println("Deprecated");
   }
 
   @Override

@@ -1,15 +1,14 @@
 package ooga.data;
 
+import ooga.cardtable.ICell;
 import ooga.cardtable.IDeck;
-import ooga.data.rules.ICellGroup;
+import ooga.data.rules.*;
 import ooga.data.rules.IPhaseMachine;
-import ooga.data.rules.ISettings;
-import ooga.data.rules.PhaseMachine;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import java.io.File;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,6 +23,9 @@ public class PhaseMachineFactory implements Factory{
     private static final String RESOURCES = "ooga.resources";
     public static final String RESOURCE_PACKAGE = RESOURCES + "." + RULES + "_";
     //private static final ResourceBundle rulesResources = ResourceBundle.getBundle(RESOURCE_PACKAGE+RULES);
+
+    public static final String START="INIT_PHASE";
+
     //TODO: IMPLEMENT DEFAULTS
 
     //TODO: REMOVE HARD CODING?
@@ -39,15 +41,24 @@ public class PhaseMachineFactory implements Factory{
 
         ISettings settings = SettingsFactory.getSettings(root);
         IDeck deck = DeckFactory.getDeck(root);
+
         Map<String, ICellGroup> cellGroups = CellGroupFactory.getCellGroups(root);
         for (Map.Entry<String, ICellGroup> e: cellGroups.entrySet()) {
             e.getValue().initializeAll(deck);
         }
+        Map<String, ICell> allBaseCells = getAllCells(cellGroups);
 
-        //Cells
-        //Phases
-        //Build
-        return new PhaseMachine();
+        Map<String, IPhase> phases = PhaseFactory.getPhases(root, cellGroups, allBaseCells);
+
+        return new PhaseMachine(phases, START, settings);
+    }
+
+    private static Map<String, ICell> getAllCells(Map<String, ICellGroup> cellGroupMap) {
+        Map<String, ICell> allBaseCells = new HashMap<>();
+        for (Map.Entry<String, ICellGroup> e: cellGroupMap.entrySet()) {
+            allBaseCells.putAll(e.getValue().getCellMap());
+        }
+        return allBaseCells;
     }
 
 }

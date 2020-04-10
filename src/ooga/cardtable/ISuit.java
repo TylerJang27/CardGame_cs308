@@ -5,4 +5,6 @@ public interface ISuit extends IAttribute{
 
   int[] getColor();
 
+  String getColorName();
+
 }

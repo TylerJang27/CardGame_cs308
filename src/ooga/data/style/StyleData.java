@@ -158,5 +158,6 @@ public class StyleData implements IStyle {
      */
     public void saveSettings() {
         // TODO: Make a new XML file with all these style preferences
+        //filePath
     }
 }

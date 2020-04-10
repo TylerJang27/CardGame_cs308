@@ -1,5 +1,8 @@
 package ooga.cardtable;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum Offset implements IOffset {
   NONE ("none"),
   NORTH ("north"),
@@ -20,4 +23,14 @@ public enum Offset implements IOffset {
   public String getOffset() {
     return type;
   }
+
+  public static final List<String> validOffsets = Arrays.asList(NONE.getOffset(),
+          NORTH.getOffset(),
+          NORTHEAST.getOffset(),
+          EAST.getOffset(),
+          SOUTHEAST.getOffset(),
+          SOUTH.getOffset(),
+          SOUTHWEST.getOffset(),
+          WEST.getOffset(),
+          NORTH.getOffset());
 }

@@ -1,4 +1,7 @@
-package ooga.data.rules;
+package ooga.data.rules.excluded;
+
+import ooga.data.rules.IPhase;
+import ooga.data.rules.IPhaseArrow;
 
 /**
  * Holds the history of a phase and its previous error for gameplay.

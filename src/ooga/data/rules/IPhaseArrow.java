@@ -25,4 +25,7 @@ public interface IPhaseArrow {
    * @return the move name for the arrow
    */
   String getMoveName();
+
+  @Override
+  String toString();
 }
