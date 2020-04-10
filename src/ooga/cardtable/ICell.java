@@ -29,10 +29,19 @@ public interface ICell extends Cellular {
 
   void addCell(IOffset offset, ICell cell);
 
+  void setCellAtOffset(IOffset offset, ICell cell);
+
   int getTotalSize(); //TODO: ADD TO API CHANGES
 
   List<ICell> getAllCells(); //TODO: ADD TO API CHANGES
 
   ICell getPeak(IOffset offset); //TODO: ADD TO API CHANGES
+  ICell getParent();
+
+  IOffset getOffsetFromParent();
+
+  boolean hasOffsetChildren();
+
+  ICell removeCellAtOffset(IOffset offset);
 
 }
