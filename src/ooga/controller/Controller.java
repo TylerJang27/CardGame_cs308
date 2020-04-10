@@ -39,7 +39,7 @@ public class Controller extends Application {
     @FunctionalInterface
     public
     interface GiveMove {
-        public void sendMove(IMove move);
+        void sendMove(IMove move);
     }
 
     public Controller() { super(); }
@@ -58,6 +58,8 @@ public class Controller extends Application {
             System.out.println(move.getMover().getName());
             System.out.println(move.getRecipient().getName());
             myTable.update(move);
+            System.out.println("yeetyeetyeet");
+            myView.setCellData(Map.copyOf(myTable.getCellData()));
         };
         myView = new View(gm);
         initializeHandlers(myView);
