@@ -1,6 +1,6 @@
 package ooga.cardtable;
 
-import ooga.data.rules.IPhaseMachine;
+import ooga.data.rules.excluded.IPhaseMachine;
 
 import java.util.List;
 import java.util.Map;

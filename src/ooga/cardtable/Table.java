@@ -1,10 +1,9 @@
 package ooga.cardtable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import ooga.data.rules.IPhase;
-import ooga.data.rules.IPhaseMachine;
+
+import ooga.data.rules.excluded.IPhaseMachine;
 
 public class Table implements ITable {
   private IPhaseMachine machine;

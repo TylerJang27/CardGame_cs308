@@ -32,6 +32,8 @@ public interface IMasterRule extends IRule {
 
   boolean checkValidMove(IMove move); //TODO: ADD TO API CHANGES
 
+  boolean checkAutoRules(); //TODO: ADD TO API CHANGES
+
   /**
    * Evaluates whether the cell transfer is valid
    *

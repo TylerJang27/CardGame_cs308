@@ -1,10 +1,12 @@
-package ooga.data.rules;
+package ooga.data.rules.excluded;
 
 import java.util.List;
 import java.util.Map;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
+import ooga.data.rules.IPhase;
+import ooga.data.rules.IPhaseArrow;
 
 /**
  * Gets construction data from XML file Gives Table cells with rules implemented Gives Table state

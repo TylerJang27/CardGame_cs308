@@ -33,11 +33,26 @@ public class MasterRule implements IMasterRule {
 
     @Override
     public IPhaseArrow executeAutoActions(IPlayer player) {
-        IPhaseArrow lastArrow = null;
-        for (IControlAction action: myControlActions) {
-            lastArrow = action.execute(player);
+        //TODO: USE AUTORULES FOR THIS CONDITIONAL
+        if (checkAutoRules()) {
+            IPhaseArrow lastArrow = null;
+            for (IControlAction action : myControlActions) {
+                lastArrow = action.execute(player);
+            }
+            return lastArrow;
         }
-        return lastArrow;
+        return null;
+    }
+    
+    @Override
+    public boolean checkAutoRules() {
+        boolean flag = true;
+        for (IRule rule: myAutoRules) {
+            if (!rule.checkValidMove(null)) { //TODO: VERIFY THIS NULL WORKS
+                return false;
+            }
+        }
+        return flag;
     }
 
     @Override

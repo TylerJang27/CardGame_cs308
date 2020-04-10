@@ -10,8 +10,8 @@ import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
 import ooga.data.rules.IPhase;
 import ooga.data.rules.IPhaseArrow;
-import ooga.data.rules.IPhaseHistoryCell;
-import ooga.data.rules.IPhaseMachine;
+import ooga.data.rules.excluded.IPhaseHistoryCell;
+import ooga.data.rules.excluded.IPhaseMachine;
 
 public class PhaseMachine implements IPhaseMachine {
 
@@ -46,7 +46,7 @@ public class PhaseMachine implements IPhaseMachine {
 
   @Override
   public void addPhase(IPhase phase) {
-    phases.put(phase.getName(), phase);
+    phases.put(phase.getMyName(), phase);
     phase.setCellList(cells);
   }
 
@@ -57,7 +57,7 @@ public class PhaseMachine implements IPhaseMachine {
 
   @Override
   public String getStartingPhaseName() {
-    return startPhase.getName();
+    return startPhase.getMyName();
   }
 
   @Override

@@ -57,7 +57,7 @@ public interface IPhase {
    */
   IGameState executeAutomaticActions();
 
-  String getName();
+  String getMyName();
 
   String getNextPhaseName(IMove move);
 

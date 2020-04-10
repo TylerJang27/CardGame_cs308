@@ -3,6 +3,7 @@ package ooga.data;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IDeck;
 import ooga.data.rules.*;
+import ooga.data.rules.excluded.IPhaseMachine;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
