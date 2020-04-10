@@ -1,146 +1,111 @@
 package ooga.view;
 
-import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
+import javafx.geometry.Point2D;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import ooga.cardtable.*;
 import ooga.data.rules.ILayout;
+import ooga.data.rules.Layout;
+import ooga.data.style.ICoordinate;
 
-public class DisplayTable extends Application {
+import java.lang.reflect.Array;
+import java.util.*;
 
-    private String myGameName;
+public class DisplayTable {
+
+    private Pane myPane;
     private ILayout myLayout;
+
     private Color myTableColor;
+    private String myGameName;
 
-    private final int DEFAULT_SCENE_WIDTH = 800;
-    private final int DEFAULT_SCENE_HEIGHT = 600;
+    private double myScreenWidth;
+    private double myCardHeight;
+    private double myCardWidth;
+    private double myCardOffset;
+    private Map<String, String> myCardNameToFileName;
+    private Map<String, ICoordinate> myCellNameToLocation;
+    private List<Cell> myCellData;
 
-    public DisplayTable() {
-        //ILayout inLayout
-        //myLayout = inLayout;
-        myGameName =  "Practice Game";
+    public DisplayTable(Layout layout, double screenwidth) {
+        myScreenWidth = screenwidth;
+        myPane = new Pane();
+
         String tableColor = "0x0000FF";
         myTableColor = Color.web(tableColor);
+
+        myCardHeight = layout.getCardHeightRatio()*screenwidth;
+        myCardWidth = layout.getCardWidthRatio()*screenwidth;
+        myCardOffset = layout.getUpOffsetRatio()*screenwidth;
+
+        myCardNameToFileName = new HashMap<>();
+        List<String> cardDeck = Arrays.asList( "faceDown", "AC", "2C", "3C","4C","5C","6C","7C","8C","9C","0C","JC","QC","KC","AD","2D","3D","4D","5D","6D","7D","8D","9D","0D","JD","QD","KD","AH","2H","3H","4H","5H","6H","7H","8H","9H","0H","JH","QH","KH","AS","2S","3S","4S", "5S", "6S", "7S", "8S","9S", "0S", "JS", "QS", "KS");
+        for (String card: cardDeck) {
+            myCardNameToFileName.put(card, card+".png");
+        }
+        myCellNameToLocation = layout.getCellLayout();
     }
 
-    @Override public void start(Stage stage) {
-
-        stage.setTitle(myGameName);
-
-        Group root = new Group();
-        Scene scene = new Scene(root, DEFAULT_SCENE_WIDTH, DEFAULT_SCENE_HEIGHT);
-        scene.setFill(myTableColor);
-
-
-        ImageView source = new ImageView(new Image("acehearts.png"));
-        source.setX(50);
-        source.setY(200);
-        source.setFitHeight(100);
-        source.setFitWidth(80);
-
-        ImageView target = new ImageView(new Image("twohearts.png"));
-        target.setX(250);
-        target.setY(200);
-        target.setFitHeight(100);
-        target.setFitWidth(80);
-
-        source.setOnDragDetected(new EventHandler <MouseEvent>() {
-            public void handle(MouseEvent event) {
-                System.out.println("onDragDetected");
-                Dragboard db = source.startDragAndDrop(TransferMode.ANY);
-
-                ClipboardContent content = new ClipboardContent();
-                content.putImage(source.getImage());
-                db.setContent(content);
-
-                event.consume();
-            }
-        });
-
-        target.setOnDragOver(new EventHandler <DragEvent>() {
-            public void handle(DragEvent event) {
-                /* data is dragged over the target */
-                System.out.println("onDragOver");
-
-                /* accept it only if it is  not dragged from the same node
-                 * and if it has a string data */
-                if (event.getGestureSource() != target &&
-                        event.getDragboard().hasImage()) {
-                    /* allow for both copying and moving, whatever user chooses */
-                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-                }
-
-                event.consume();
-            }
-        });
-
-        target.setOnDragEntered(new EventHandler <DragEvent>() {
-            public void handle(DragEvent event) {
-                /* the drag-and-drop gesture entered the target */
-                System.out.println("onDragEntered");
-                /* show to the user that it is an actual gesture target */
-                if (event.getGestureSource() != target &&
-                        event.getDragboard().hasString()) {
-                    //target.setFill(Color.GREEN);
-                }
-                event.consume();
-            }
-        });
-
-        target.setOnDragExited(new EventHandler <DragEvent>() {
-            public void handle(DragEvent event) {
-                /* mouse moved away from area */
-                //target.setFill(Color.BLACK);
-                event.consume();
-            }
-        });
-
-        target.setOnDragDropped(new EventHandler <DragEvent>() {
-            public void handle(DragEvent event) {
-                /* data dropped */
-                System.out.println("onDragDropped");
-                /* if there is a string data on dragboard, read it and use it */
-                Dragboard db = event.getDragboard();
-                boolean success = false;
-                if (db.hasImage()) {
-                    target.setImage(db.getImage());
-                    success = true;
-                }
-                /* let the source know whether the string was successfully
-                 * transferred and used */
-                event.setDropCompleted(success);
-
-                event.consume();
-            }
-        });
-
-        source.setOnDragDone(new EventHandler <DragEvent>() {
-            public void handle(DragEvent event) {
-                /* the drag-and-drop gesture ended */
-                System.out.println("onDragDone");
-                /* if the data was successfully moved, clear it */
-                if (event.getTransferMode() == TransferMode.MOVE) {
-                    root.getChildren().remove(source);
-                }
-
-                event.consume();
-            }
-        });
-
-        root.getChildren().add(source);
-        root.getChildren().add(target);
-        stage.setScene(scene);
-        stage.show();
+    public Pane getPane() {
+        return myPane;
     }
 
-    public static void main(String[] args) {
-        Application.launch(args);
+    public Pane updateCells(List<Cell> cellData) {
+        // TODO: for now, I assume update receives all of the cells, not just ones which needed to be changed
+        myPane = new Pane();
+        List<DisplayCell> displayCellData = makeDisplayCells(cellData);
+        drawDisplayCells(displayCellData);
+        return myPane;
     }
+
+    private List<DisplayCell> makeDisplayCells(List<Cell> cellData) {
+        List<DisplayCell> displayCellData = new ArrayList<>();
+        for (Cell c: cellData) {
+            displayCellData.add(makeDisplayCell(c));
+        }
+        return displayCellData;
+    }
+
+    private DisplayCell makeDisplayCell(Cell cell) {
+        ICoordinate icoord = myCellNameToLocation.get(cell.getName());
+        double x = icoord.getX()*myScreenWidth;
+        double y = icoord.getY()*myScreenWidth;
+        return new DisplayCell(cell, myCardNameToFileName, new Point2D(x,y), myCardHeight, myCardWidth, myCardOffset);
+    }
+
+    private void drawDisplayCells(List<DisplayCell> DisplayCellData) {
+        for (DisplayCell dc: DisplayCellData) {
+            drawDisplayCell(dc);
+        }
+    }
+
+    private void drawDisplayCell(DisplayCell rootDispCell) {
+        if (rootDispCell.getGroup().getChildren() == null) {
+            return;
+        }
+        myPane.getChildren().addAll(rootDispCell.getGroup().getChildren());
+        for (IOffset dir: rootDispCell.getCell().getAllChildren().keySet()) {
+            if (dir == Offset.NONE) {
+                continue;
+            }
+            drawDisplayCell(rootDispCell.getAllChildren().get((Offset) dir));
+        }
+    }
+
+    /*
+    private Cell getDummyCell() {
+        Card testCard = new Card(); // automatically facedown, unknown card
+        List<ICard> testCards = List.of(testCard);
+        Deck testDeck = new Deck("testDeck", testCards);
+        Cell testCell = new Cell("testCell", testDeck);
+
+        Card testAddCard = new Card(); // automatically facedown, unknown cord
+        testCell.addCard(Offset.SOUTH,testAddCard);
+        Card testAddAnotherCard = new Card();
+        testCell.getAllChildren().get(Offset.SOUTH).addCard(Offset.SOUTH,testAddAnotherCard);
+        return testCell;
+    }
+     */
+
 }
 
