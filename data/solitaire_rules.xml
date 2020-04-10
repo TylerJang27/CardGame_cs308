@@ -428,7 +428,7 @@
             </cell>
         </group>
         <group category="hand">
-            <cell name="playable">
+            <cell name="hand">
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards/>
