@@ -1,6 +1,8 @@
-package ooga.data;
+package ooga.data.factories;
 
 import ooga.cardtable.*;
+import ooga.data.XMLException;
+import ooga.data.XMLHelper;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -18,7 +20,7 @@ import java.util.ResourceBundle;
  * @author Tyler Jang
  */
 public class DeckFactory implements Factory {
-    public static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
+    private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
     private static final String DECK = "deck";
     private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE+DECK);
 
@@ -42,7 +44,7 @@ public class DeckFactory implements Factory {
      *
      * @param root  the root of the document which holds a deck element
      * @return      a fully constructed IDeck instance
-     * @throws      XMLException if deck is empty or missing
+     * @throws XMLException if deck is empty or missing
      */
     public static IDeck getDeck(Element root) {
         try {
@@ -51,7 +53,7 @@ public class DeckFactory implements Factory {
                 NodeList nodeList = deck.getChildNodes();
                 String pathToDeck = resources.getString(DECK_PATH);
                 String deckPath = XMLHelper.getTextValue((Element)deck, pathToDeck);
-                if (deckPath != "") {
+                if (!deckPath.equals("")) {
                     return findStoredDeck(deckPath);
                 } else {
                     //return buildDeck(nodeList);
@@ -116,6 +118,6 @@ public class DeckFactory implements Factory {
         IColor color = new Color(Factory.getVal(node, COLOR, resources));
         ISuit suit = new Suit(Factory.getVal(node, SUIT, resources), color);
         IValue value = new Value(val + suit.getName(), val);
-        return new Card(suit, value);
+        return new Card(cardName, suit, value);
     }
 }

@@ -1,333 +1,332 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data type="rule">
     <settings>
+        <!-- should just be a file name so that we can process it properly and send to the front end -->
         <players>1</players>
-        <layout>
-            <!-- should just be a file name so that we can process it properly and send to the front end -->
-        </layout>
+        <layout>data/solitaire_layout.xml</layout>
     </settings>
     <deck>
         <!-- should either be custom held here, or point to a file to retrieve from -->
         <card>
             <name>AC</name>
             <value>1</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
         <card>
             <name>2C</name>
             <value>2</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
         <card>
             <name>3C</name>
             <value>3</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
         <card>
             <name>4C</name>
             <value>4</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
         <card>
             <name>5C</name>
             <value>5</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
         <card>
             <name>6C</name>
             <value>6</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
         <card>
             <name>7C</name>
             <value>7</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
         <card>
             <name>8C</name>
             <value>8</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
         <card>
             <name>9C</name>
             <value>9</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
         <card>
             <name>0C</name>
             <value>10</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
         <card>
             <name>JC</name>
             <value>11</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
         <card>
             <name>QC</name>
             <value>12</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
         <card>
             <name>KC</name>
             <value>13</value>
-            <color>b</color>
+            <color>black</color>
             <suit>c</suit>
         </card>
 
         <card>
             <name>AD</name>
             <value>1</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
         <card>
             <name>2D</name>
             <value>2</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
         <card>
             <name>3D</name>
             <value>3</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
         <card>
             <name>4D</name>
             <value>4</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
         <card>
             <name>5D</name>
             <value>5</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
         <card>
             <name>6D</name>
             <value>6</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
         <card>
             <name>7D</name>
             <value>7</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
         <card>
             <name>8D</name>
             <value>8</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
         <card>
             <name>9D</name>
             <value>9</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
         <card>
             <name>0D</name>
             <value>10</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
         <card>
             <name>JD</name>
             <value>11</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
         <card>
             <name>QD</name>
             <value>12</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
         <card>
             <name>KD</name>
             <value>13</value>
-            <color>r</color>
+            <color>red</color>
             <suit>d</suit>
         </card>
 
         <card>
             <name>AH</name>
             <value>1</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
         <card>
             <name>2H</name>
             <value>2</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
         <card>
             <name>3H</name>
             <value>3</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
         <card>
             <name>4H</name>
             <value>4</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
         <card>
             <name>5H</name>
             <value>5</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
         <card>
             <name>6H</name>
             <value>6</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
         <card>
             <name>7H</name>
             <value>7</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
         <card>
             <name>8H</name>
             <value>8</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
         <card>
             <name>9H</name>
             <value>9</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
         <card>
             <name>0H</name>
             <value>10</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
         <card>
             <name>JH</name>
             <value>11</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
         <card>
             <name>QH</name>
             <value>12</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
         <card>
             <name>KH</name>
             <value>13</value>
-            <color>r</color>
+            <color>red</color>
             <suit>h</suit>
         </card>
 
         <card>
             <name>AS</name>
             <value>1</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
         <card>
             <name>2S</name>
             <value>2</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
         <card>
             <name>3S</name>
             <value>3</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
         <card>
             <name>4S</name>
             <value>4</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
         <card>
             <name>5S</name>
             <value>5</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
         <card>
             <name>6S</name>
             <value>6</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
         <card>
             <name>7S</name>
             <value>7</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
         <card>
             <name>8S</name>
             <value>8</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
         <card>
             <name>9S</name>
             <value>9</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
         <card>
             <name>0S</name>
             <value>10</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
         <card>
             <name>JS</name>
             <value>11</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
         <card>
             <name>QS</name>
             <value>12</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
         <card>
             <name>KS</name>
             <value>13</value>
-            <color>b</color>
+            <color>black</color>
             <suit>s</suit>
         </card>
     </deck>
     <cell_groups>
         <group category="action">
             <cell name="1">
-                <fan>s</fan>
+                <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
                     <card>Rd,U</card>
@@ -420,7 +419,7 @@
             </cell>
         </group>
         <group category="deck">
-            <cell name="draw">
+            <cell name="deck">
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
@@ -429,7 +428,7 @@
             </cell>
         </group>
         <group category="hand">
-            <cell name="playable">
+            <cell name="hand">
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards/>
@@ -438,6 +437,7 @@
     </cell_groups>
     <phases>
         <phase name="play">
+            <phase_type>manual</phase_type>
             <valid_donors>
                 <category>action</category>
                 <category>deck</category>
@@ -451,14 +451,14 @@
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
-                            <quantity/>
+                            <num_cards>*</num_cards>
                         </receiver>
                         <mover>
                             <direction>d</direction>
                             <value>1</value>
                             <color>!</color>
                             <suit>*</suit>
-                            <num_of_cards>m</num_of_cards>
+                            <num_cards>*</num_cards>
                             <is_faceup>y</is_faceup>
                         </mover>
                         <donor>
@@ -466,31 +466,29 @@
                             <value>*</value>
                             <color>*</color>
                             <suit>*</suit>
-                            <num_of_cards>*</num_of_cards>
+                            <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
-                            <name>!</name>
+                            <name>*</name>
                         </donor>
                     </receive_rule>
                     <action>
                         <receiver_dest>
-                            <destination>r</destination>
-                            <stack>u</stack>
-                            <num_cards>*</num_cards>
+                            <destination>r</destination>    #
+                            <num_cards>*</num_cards>        #
                             <shuffle>n</shuffle>
-                            <direction>0</direction>
-                            <offset>down</offset>
+                            <direction>0</direction>        #
+                            <offset>south</offset>          #
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>down</offset>
+                            <offset>south</offset>
                             <flip>n</flip>
                         </mover_dest>
-                        <points/>
-                        <next_phase>check_eog</next_phase>
+                        <!-- points included in the tag below-->
+                        <next_phase phase="check_eog">0</next_phase>
                     </action>
                 </rule>
                 <rule category="suits">
@@ -499,31 +497,30 @@
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
-                            <quantity/>
+                            <num_cards/>
                         </receiver>
                         <mover>
                             <direction>u</direction>
                             <value>1</value>
                             <color>*</color>
                             <suit>=</suit>
-                            <num_of_cards>o</num_of_cards>
+                            <num_cards>1</num_cards>
                             <is_faceup>y</is_faceup>
-                            <name>!</name>
+                            <name>*</name>
                         </mover>
                         <donor>
                             <direction>*</direction>
                             <value>*</value>
                             <color>*</color>
                             <suit>*</suit>
-                            <num_of_cards>*</num_of_cards>
+                            <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
-                            <name>!</name>
+                            <name>*</name>
                         </donor>
                     </receive_rule>
                     <action>
                         <receiver_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
@@ -531,15 +528,13 @@
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>0</offset>
                             <flip>n</flip>
                         </mover_dest>
-                        <points/>
-                        <next_phase>check_eog</next_phase>
+                        <next_phase phase = "check_eog">0</next_phase>
                     </action>
                 </rule>
                 <rule category="deck">
@@ -548,14 +543,14 @@
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
-                            <quantity>0</quantity>
+                            <num_cards>0</num_cards>
                         </receiver>
                         <mover>
                             <direction>*</direction>
                             <value>*</value>
-                            <color>!</color>
+                            <color>*</color>
                             <suit>*</suit>
-                            <num_of_cards>m</num_of_cards>
+                            <num_cards>*</num_cards>
                             <is_faceup>y</is_faceup>
                         </mover>
                         <donor>
@@ -563,7 +558,7 @@
                             <value>*</value>
                             <color>*</color>
                             <suit>*</suit>
-                            <num_of_cards>*</num_of_cards>
+                            <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
                             <category>hand</category>
                         </donor>
@@ -571,23 +566,20 @@
                     <action>
                         <receiver_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>down</offset>
+                            <offset>south</offset>
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>down</offset>
+                            <offset>south</offset>
                             <flip>y</flip>
                         </mover_dest>
-                        <points/>
-                        <next_phase>check_eog</next_phase>
+                        <next_phase phase="check_eog"></next_phase>
                     </action>
                 </rule>
                 <rule category="hand">
@@ -596,14 +588,14 @@
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
-                            <quantity/>
+                            <num_cards/>
                         </receiver>
                         <mover>
                             <direction>*</direction>
                             <value>*</value>
                             <color>*</color>
                             <suit>*</suit>
-                            <num_of_cards>1</num_of_cards>
+                            <num_cards>1</num_cards>
                             <is_faceup>n</is_faceup>
                         </mover>
                         <donor>
@@ -611,7 +603,7 @@
                             <value>*</value>
                             <color>*</color>
                             <suit>*</suit>
-                            <num_of_cards>*</num_of_cards>
+                            <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
                             <category>deck</category>
                         </donor>
@@ -619,7 +611,6 @@
                     <action>
                         <receiver_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
@@ -627,24 +618,23 @@
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>0</offset>
                             <flip>y</flip>
                         </mover_dest>
-                        <points/>
-                        <next_phase>check_eog</next_phase>
+                        <next_phase phase = "check_eog">0</next_phase>
                     </action>
                 </rule>
             </rules>
         </phase>
         <phase name="check_eog">
-            <valid_donors/>
+            <phase_type>auto</phase_type>
+            <valid_donors></valid_donors>
             <rules>
-                <rule category="check">
-                    <option>
+                <rule category="">
+                    <receive_rule>
                         <condition category="action">
                             <!-- somehow check that all these are empty -->
                             <num_cards>0</num_cards>
@@ -657,27 +647,34 @@
                             <!-- somehow check that all these are empty -->
                             <num_cards>0</num_cards>
                         </condition>
-                        <action>
-                            <!-- go to end of game -->
-                            <next_phase>end_of_game</next_phase>
-                        </action>
-                    </option>
-                    <option>
-                        <action>
-                            <!-- go to player turn -->
-                            <next_phase>play</next_phase>
-                        </action>
-                    </option>
+                    </receive_rule>
+                    <action>
+                        <!-- go to end of game -->
+                        <next_phase phase="end_of_game"></next_phase>
+                    </action>
+                </rule>
+                <rule category="">
+                    <receive_rule>
+                        <condition category="action">
+                            <!-- somehow check that all these are empty -->
+                        </condition>
+                    </receive_rule>
+                    <action>
+                        <!-- go to player turn -->
+                        <next_phase phase = "play"></next_phase>
+                    </action>
                 </rule>
             </rules>
         </phase>
         <phase name="end_of_game">
+            <phase_type>manual</phase_type>
             <valid_donors/>
             <rules>
                 <rule category="default">
                     <option>
                         <action>
                             <!-- display end of game screen -->
+                            <next_phase phase = "end_of_game"></next_phase>
                         </action>
                     </option>
                 </rule>

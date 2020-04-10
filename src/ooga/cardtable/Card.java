@@ -11,22 +11,30 @@ public class Card implements ICard {
   private Map<IAttribute, Boolean> attributes;
   private double orientation;
 
-  public Card() {
-    name = "Unknown Card";
+  public Card(String name) {
+    this.name = name;
     faceup = false;
     orientation = 0;
   }
 
   //TODO: TO MAVERICK, PLZ EXPLAIN (FROM TYLER AND ANDREW)
-  public Card(ISuit s, IValue v) {
-    this();
+  public Card(String name, ISuit s, IValue v) {
+    this(name);
+    attributes = new HashMap<>();
+    attributes.put(s, true);
+    attributes.put(v, true);
+    name = s.getName()+""+v.getName();
+  }
+
+  public Card(ISuit s, IValue v) { //fixme remove later? added to make compile
+    this(s.getName()+""+v.getName());
     attributes = new HashMap<>();
     attributes.put(s, true);
     attributes.put(v, true);
   }
 
-  public Card(Map<IAttribute, Boolean> visible) {
-    this();
+  public Card(String name, Map<IAttribute, Boolean> visible) {
+    this(name);
     attributes = visible;
   }
 
@@ -93,5 +101,20 @@ public class Card implements ICard {
   @Override
   public ICard getVisibleData() {
     return this;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof Card)) {
+      return false;
+    }
+    Card c = (Card) other;
+    return name.equals(c.name) && faceup == c.faceup && orientation == c.orientation &&
+        attributes.equals(c.attributes);
+  }
+
+  @Override
+  public String toString() {
+    return name;
   }
 }

@@ -8,7 +8,8 @@ import ooga.cardtable.GameState;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
-import ooga.data.PhaseMachineFactory;
+
+import ooga.data.rules.excluded.IPhaseHistoryCell;
 
 public class PhaseMachine implements IPhaseMachine {
 
@@ -17,8 +18,9 @@ public class PhaseMachine implements IPhaseMachine {
   private IPhase currentPhase;
   private List<ICell> cells;
   private List<IPhaseHistoryCell> history;
+  private ISettings mySettings;
 
-  public PhaseMachine() {
+  /*public PhaseMachine() {
     history = new ArrayList<>();
     phases = new HashMap<>();
   }
@@ -30,10 +32,26 @@ public class PhaseMachine implements IPhaseMachine {
     }
     startPhase = phases.get(startName); //FIXME add error checking
     currentPhase = startPhase;
+  }*/
+
+  public PhaseMachine(Map<String, IPhase> ph, String startName, ISettings settings) {
+    history = new ArrayList<>();
+    phases = ph;
+    startPhase = phases.get(startName);
+    currentPhase = startPhase;
+    cells = new ArrayList<>();
+    for (Map.Entry<String, ICell> e: getTopLevelCells().entrySet()) {
+      cells.add(e.getValue());
+    }
+    mySettings = settings;
+    cycleAutomatic();
   }
 
-  public PhaseMachine(Map<String, IPhase> ph, String startName) {
-    this(new ArrayList<>(ph.values()), startName);
+  private void cycleAutomatic() {
+    if (currentPhase.isAutomatic()) {
+      IPhaseArrow arrow = currentPhase.executeAutomaticActions(null); //TODO: REPLACE WITH PLAYER
+      moveToNextPhase(arrow);
+    }
   }
 
   @Override
@@ -43,8 +61,8 @@ public class PhaseMachine implements IPhaseMachine {
 
   @Override
   public void addPhase(IPhase phase) {
-    phases.put(phase.getName(), phase);
-    phase.setCellList(cells);
+    phases.put(phase.getMyName(), phase);
+    //phase.setCellList(cells);
   }
 
   @Override
@@ -54,25 +72,22 @@ public class PhaseMachine implements IPhaseMachine {
 
   @Override
   public String getStartingPhaseName() {
-    return startPhase.getName();
+    return startPhase.getMyName();
   }
 
   @Override
   public Map<String, ICell> getTopLevelCells() {
-    Map<String, ICell> ret = new HashMap<>();
-    for (ICell c : cells) {
-      ret.put(c.getName(), c);
-    }
-    return ret;
+    return currentPhase.getMyCellMap();
   }
 
-  @Override
+  /*@Override
   public void setCellList(List<ICell> cellList) {
     cells = new ArrayList<>(cellList);
     for (IPhase ph: phases.values()) {
       ph.setCellList(cells);
     }
   }
+   */
 
   @Override
   public List<String> getTopLevelCellNames() {
@@ -85,8 +100,15 @@ public class PhaseMachine implements IPhaseMachine {
 
   @Override
   public IGameState update(IMove move) {
-    String next = getCurrentPhase().getNextPhaseName(move);
-    if (next == null) {
+    //String next = getCurrentPhase().getNextPhaseName(move);
+    IPhaseArrow arrow = currentPhase.executeMove(move);
+    if (arrow != null) {
+      moveToNextPhase(arrow);
+      return GameState.WAITING;
+    }
+    return GameState.INVALID;
+
+    /*if (next == null) {
       return GameState.INVALID; //FIXME
     }
     IPhase nextPhase = phases.get(next);
@@ -96,12 +118,13 @@ public class PhaseMachine implements IPhaseMachine {
       state = nextPhase.executeAutomaticActions();
     }
     currentPhase = nextPhase;
-    return state;
+    return state;*/
   }
 
-  @Override
-  public void moveToNextPhase(IPhaseArrow arrow) { //FIXME this might want to be private
-    //consider removing
+  private void moveToNextPhase(IPhaseArrow arrow) {
+    //TODO: UPDATE HISTORY
+    currentPhase = phases.get(arrow.getEndPhaseName());
+    cycleAutomatic();
   }
 
   @Override
@@ -113,5 +136,15 @@ public class PhaseMachine implements IPhaseMachine {
   public List<IPhaseHistoryCell> getHistory() {
     System.out.println("To be implemented later");
     return null; //FIXME
+  }
+
+  @Override
+  public boolean isValidDonor(ICell cell) {
+    return currentPhase.isValidDonor(cell);
+  }
+
+  @Override
+  public ISettings getSettings() {
+    return mySettings;
   }
 }

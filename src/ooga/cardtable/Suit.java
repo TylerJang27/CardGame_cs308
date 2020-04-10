@@ -6,11 +6,13 @@ public class Suit implements ISuit {
   private int[] color;
   private String name;
   private IColor myColor;
+  private String myColorName;
 
   //TODO: CAN WE CHANGE THIS TO AN ICOLOR
   public Suit(String nm, IColor color) {
     this(nm, color.getColors());
     myColor = color;
+    myColorName = myColor.getName();
   }
 
   public Suit(String nm, int[] c) {
@@ -19,6 +21,7 @@ public class Suit implements ISuit {
     }
     name = nm;
     color = Arrays.copyOf(c, c.length);
+    myColorName = "" + color[0] + "" + color[1] + "" + color[2];
   }
 
   @Override
@@ -34,5 +37,17 @@ public class Suit implements ISuit {
   @Override
   public String getType() {
     return "suit";
+  }
+
+  @Override
+  public String getColorName() { return myColorName; }
+
+  @Override
+  public boolean equals(Object other) { //fixme switch to icolor
+    if (!(other instanceof Suit)) {
+      return false;
+    }
+    Suit s = (Suit) other;
+    return name.equals(s.name) && Arrays.equals(color, ((Suit) other).color);
   }
 }

@@ -17,4 +17,8 @@
 
 4/9/2020:
 * MC - Added isEmpty method to IDeck
-* MC - Added setCellAtOffset method to ICell
+* MC - Added setCellAtOffset, removeCellAtOffset, hasOffsetChildren, getParent, and getOffsetFromParent methods to ICell
+
+4/10/2020:
+* AK - Added accessors to numPlayers, screenRatio, cardWidthRatio, cardHeightRatio, downOffsetRatio, upOffsetRatio to
+better serve the front end's needs for displaying the full game from the layout data class.

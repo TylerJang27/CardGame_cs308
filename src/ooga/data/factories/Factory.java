@@ -1,5 +1,7 @@
-package ooga.data;
+package ooga.data.factories;
 
+import ooga.data.XMLException;
+import ooga.data.XMLHelper;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 

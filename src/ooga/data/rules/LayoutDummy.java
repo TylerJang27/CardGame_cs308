@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LayoutDummy implements ILayout {
+public class LayoutDummy extends Layout {
 
     private static final int SCREEN_WIDTH = 100;
 
@@ -34,10 +34,13 @@ public class LayoutDummy implements ILayout {
     private static final String FACE_UP_OFFSET = "face_up_offset";
 
     public LayoutDummy() {
+        super();
         initializeMap();
     }
 
     public LayoutDummy(String xmlfile, String game, Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings) {
+        super(cellCoords, numberSettings);
+        /*
         gameName = game;
 
         cellLayout = cellCoords;
@@ -49,6 +52,8 @@ public class LayoutDummy implements ILayout {
         cardHeightRatio = numberSettings.get(CARD_HEIGHT) / SCREEN_WIDTH;
         downOffsetRatio = numberSettings.get(FACE_DOWN_OFFSET) / SCREEN_WIDTH;
         upOffsetRatio = numberSettings.get(FACE_UP_OFFSET) / SCREEN_WIDTH;
+
+         */
 
     }
 

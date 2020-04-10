@@ -1,6 +1,9 @@
 package ooga.cardtable;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
@@ -8,6 +11,7 @@ import java.util.function.Function;
 public class Cell implements ICell {
 
   private IDeck deck;
+  private ICell parent;
   private String name;
   private Function<IDeck, ICell> cellDeckBuilder;
   private Map<IOffset, ICell> children;
@@ -24,6 +28,21 @@ public class Cell implements ICell {
   }
 
   @Override
+  public List<ICell> getCellsbyName(String name) {
+    List<ICell> cellList = new ArrayList<>();
+    if (isInGroup(name)) {
+      cellList.add(this);
+    }
+    return cellList;
+  }
+
+  @Override
+  public boolean isInGroup(String name) {
+    return this.name.equals(name);
+    //TODO: DOUBLE CHECK HAPPY WITH THIS IMPLEMENTATION
+  }
+
+  @Override
   public void setDraw(Function<IDeck, ICell> initializer) {
     cellDeckBuilder = initializer;
   }
@@ -31,15 +50,18 @@ public class Cell implements ICell {
   @Override
   public void initializeCards(IDeck mainDeck) {
     if (cellDeckBuilder != null) {
-      //call merge/addcell with cellDeckBuilder.apply(mainDeck);
-      //starting deck is empty
-      //cellDeckBuilder.apply(mainDeck);
+      //TODO: DOUBLE CHECK THIS WORKS
+      ICell toAdd = cellDeckBuilder.apply(mainDeck);
+      addCell(Offset.NONE, toAdd);
     }
     cellDeckBuilder = null;
   }
 
   @Override
   public IDeck getDeck() {
+    for(ICell i : children.values()){
+      //System.out.println("card" + i.getDeck().peek());
+    }
     return deck;
   }
 
@@ -49,11 +71,54 @@ public class Cell implements ICell {
   }
 
   @Override
+  public int getTotalSize() {
+    return getTotalSize(new ArrayList<>());
+  }
+
+  @Override
+  public int getTotalSize(List<ICell> visited) {
+    int total = 0;
+    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+      if (!visited.contains(e.getValue())) {
+        visited.add(e.getValue());
+        total += e.getValue().getDeck().size();
+        total += e.getValue().getTotalSize(visited); //TODO: MAKE SURE THIS DOESN'T INFINITE RECURSE
+      }
+    }
+    return total;
+  }
+
+  @Override
+  public ICell getParent() {
+    return parent;
+  }
+
+  @Override
+  public IOffset getOffsetFromParent() {
+    for (Entry<IOffset, ICell> e : parent.getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE && e.getValue() == this) {
+        return e.getKey();
+      }
+    }
+    throw new RuntimeException("parent doesn't own child, something is terrible"); //fixme
+  }
+
+  @Override
+  public boolean hasOffsetChildren() {
+    return !children.isEmpty();
+  }
+
+  @Override
+  public ICell removeCellAtOffset(IOffset offset) {
+    return children.remove(offset);
+  }
+
+  @Override
   public boolean isEmpty() {
-    if (getDeck().size() > 0 ) {
+    if (getDeck().size() > 0) {
       return false;
     }
-    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (!e.getKey().equals(Offset.NONE)) {
         if (!e.getValue().isEmpty()) {
           return false;
@@ -88,21 +153,143 @@ public class Cell implements ICell {
 
   @Override
   public void addCell(IOffset offset, ICell cell) { //fixme 90% this infinite recurses
+    //TODO: ADD NAMES OR EVERYTHING BREAKS
     if (cell == null || cell.isEmpty()) {
       return;
     }
-    ICell recipient = getAllChildren().get(offset);
+    ICell recipient = null;
+    if (offset != Offset.NONE) {
+      recipient = getAllChildren().get(offset);
+    } else {
+      recipient = this;
+    }
+    if (recipient == null) {
+      setCellAtOffset(offset, cell);
+      updateParentage();
+      return;
+    }
     if (cell.getAllChildren().keySet().size() <= 1) {
       recipient.getDeck().addDeck(cell.getDeck());
+      updateParentage();
       return;
     }
     for (Entry<IOffset, ICell> e : cell.getAllChildren().entrySet()) {
-      recipient.getAllChildren().get(e.getKey()).addCell(Offset.NONE, e.getValue());
+      ICell tempRec = recipient.getAllChildren().get(e.getKey());
+      if (tempRec == null) {
+        recipient.setCellAtOffset(e.getKey(), e.getValue());
+      } else {
+        tempRec.addCell(Offset.NONE, e.getValue());
+      }
     }
+    updateParentage();
+  }
+
+  public void addCell(IOffset offset, ICell cell, boolean a) {
+    for (int k = 0; k < Offset.values().length; k ++) {
+      IOffset off = Offset.values()[k];
+      if (getAllChildren().get(off) == null && cell.getAllChildren().get(off) == null) {
+
+      } else if (getAllChildren().get(off) == null && cell.getAllChildren().get(off) == null) {
+
+      } else if (getAllChildren().get(off) == null && cell.getAllChildren().get(off) == null) {
+
+      } else if (getAllChildren().get(off) == null && cell.getAllChildren().get(off) == null) {
+        
+      }
+    }
+  }
+
+  private void updateParentage() {
+    String masterName = "";
+    if (parent == null) {
+      masterName = getName();
+    } else {
+      masterName = parent.getName() + "," + getOffsetFromParent().getOffset();
+    }
+    name = masterName;
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        Cell c = (Cell) e.getValue();
+        c.setParent(this);
+        c.updateParentage(); //fixme monster
+      }
+    }
+  }
+
+  private void setParent(ICell cell) {
+    parent = cell;
   }
 
   @Override
   public void setCellAtOffset(IOffset offset, ICell cell) {
+    if (cell == null) {
+      children.remove(offset);
+      return;
+    }
     children.put(offset, cell);
+    ((Cell) cell).setParent(this); //fixme you're a monster
+    updateParentage();
+  }
+
+  @Override
+  public List<ICell> getAllCells() {
+    List<ICell> total = new ArrayList<>();
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
+      if (!total.contains(e)) {
+        total.add(e.getValue());
+        total.addAll(e.getValue().getAllCells());
+      }//TODO: MAKE SURE THIS DOESN'T INFINITE RECURSE
+    }
+    return total;
+  }
+
+  @Override
+  public ICell getPeak(IOffset offset) {
+    ICell temp = this;
+    while (temp.getDeck().size() > 0) { //TODO: VERIFY THIS DOESN'T SKIP EMPTIES
+      temp = getAllChildren().get(offset);
+    }
+    return temp;
+  }
+
+  //TODO: MAY EVENTUALLY NEED THE FOLLOWING:
+  //  SHUFFLE A CELL AND ITS COMPATRIOTS
+  //
+
+  @Override
+  public boolean equals(Object other) { //fixme should this check name? not yet for tests for cards
+    if (!(other instanceof Cell)) {
+      return false;
+    }
+    Cell c = (Cell) other;
+    if (!deck.equals(c.deck)) {
+      return false;
+    }
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        if (!e.getValue().equals(c.getAllChildren().get(e.getKey()))) {
+          return false;
+        }
+      }
+    }
+    for (Entry<IOffset, ICell> e : c.getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        if (!e.getValue().equals(getAllChildren().get(e.getKey()))) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder ret = new StringBuilder(name + ": " + deck.toString() + "\n");
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        ret.append(e.getValue().toString());
+      }
+    }
+    return ret.toString();
   }
 }

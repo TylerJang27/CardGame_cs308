@@ -1,4 +1,4 @@
-package ooga.data.rules;
+package ooga.data.rules.excluded;
 
 import ooga.cardtable.ICell;
 

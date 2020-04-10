@@ -39,7 +39,7 @@ public class View implements ExternalAPI {
      * @param cellData
      */
     @Override
-    public void setCellData(List<ICell> cellData) {
+    public void setCellData(Map<String,ICell> cellData) {
         myDisplayTable.updateCells(cellData);
     }
 
@@ -124,7 +124,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setLayout(ILayout layout) {
-        myDisplayTable = new DisplayTable(layout, 500);
+        myDisplayTable = new DisplayTable((Layout) layout, 500);
         BorderPane root = new BorderPane();
         root.setCenter(myDisplayTable.getPane());
         Scene gameScene = new Scene(root,500,500);

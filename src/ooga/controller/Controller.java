@@ -1,20 +1,21 @@
 package ooga.controller;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 import ooga.cardtable.*;
-import ooga.data.PhaseMachineFactory;
-import ooga.data.StyleFactory;
+import ooga.data.factories.PhaseMachineFactory;
+import ooga.data.factories.LayoutFactory;
 import ooga.data.rules.IPhaseMachine;
+<<<<<<< HEAD
 import ooga.data.rules.LayoutDummy;
 import ooga.data.rules.PhaseMachine;
+=======
+>>>>>>> develop
 import ooga.data.style.IStyle;
 import ooga.view.View;
 
 import java.io.File;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -24,8 +25,8 @@ import java.util.Map;
 public class Controller extends Application {
 
     // TODO: Put the file here
-    private static final String DEFAULT_STYLE_FILE = "please put a file navigator here";
-    private static final String DEFAULT_RULE_FILE = "same as above please, should be straightforward";
+    private static final String DEFAULT_STYLE_FILE = "data/default_style.xml";
+    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";
 
     private View myView;
     private IMove myCurrentMove;
@@ -35,6 +36,7 @@ public class Controller extends Application {
     private File myRuleFile;
     private File myLayoutFile;
     private IPhaseMachine myCurrentPhaseMachine;
+    private Map<String, ICell> myCellMap;
 
     public Controller() { super(); }
 
@@ -75,10 +77,22 @@ public class Controller extends Application {
     private void startTable(String gameName) {
         // TODO: process gamename string to a file path
         System.out.println(gameName);
-        myTable = new Table();  // TODO: Give game name somehow, figure out who's building the phase machine
+        // TODO: Give game name somehow, figure out who's building the phase machine
         myRuleFile = new File(DEFAULT_RULE_FILE);
+<<<<<<< HEAD
         myView.setLayout(new LayoutDummy());
         //myCurrentPhaseMachine = PhaseMachineFactory.getPhaseMachine(myRuleFile);
+=======
+        myCurrentPhaseMachine = PhaseMachineFactory.getPhaseMachine(myRuleFile);
+        myTable = new Table(myCurrentPhaseMachine);
+        myCellMap = myTable.getCellData();
+        File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
+
+
+        myView.setLayout(LayoutFactory.getLayout(f));
+        myView.setCellData(myCellMap);
+        //myView.setCellData(Map.copyOf(myTable.getCellData()));
+>>>>>>> develop
     }
 
     private void newMove() {

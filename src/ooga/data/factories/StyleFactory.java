@@ -1,9 +1,11 @@
-package ooga.data;
+package ooga.data.factories;
 
 import java.io.File;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import ooga.data.XMLException;
+import ooga.data.XMLHelper;
 import ooga.data.style.IStyle;
 import ooga.data.style.StyleData;
 import org.w3c.dom.Element;
@@ -51,10 +53,14 @@ public class StyleFactory implements Factory {
      * @throws XMLException if the file is not considered valid due to its root element or file ending
      */
     public static IStyle getStyle(File dataFile) {
-        Element root = XMLHelper.getRootAndCheck(dataFile, STYLE_TYPE, INVALID_ERROR);
+        try {
+            Element root = XMLHelper.getRootAndCheck(dataFile, STYLE_TYPE, INVALID_ERROR);
 
-        Map<String, String> stringSettings = XMLHelper.readStringSettings(root, wordResources);
-        Map<String, Integer> numberSettings = XMLHelper.readNumberSettings(root, numberResources);
-        return new StyleData(dataFile.getPath(), stringSettings, numberSettings);
+            Map<String, String> stringSettings = XMLHelper.readStringSettings(root, wordResources);
+            Map<String, Integer> numberSettings = XMLHelper.readNumberSettings(root, numberResources);
+            return new StyleData(dataFile.getPath(), stringSettings, numberSettings);
+        } catch (Exception e) {
+            throw new XMLException(e, Factory.MISSING_ERROR + "," + STYLE_TYPE);
+        }
     }
 }

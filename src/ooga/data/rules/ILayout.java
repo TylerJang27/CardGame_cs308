@@ -16,6 +16,42 @@ public interface ILayout {
     Map<String, ICoordinate> getCellLayout();
 
     /**
+     * Gives number of players allowed in this game
+     * @return
+     */
+    int getNumPlayers();
+
+    /**
+     * Gives the screen height value relative to screen width
+     * @return
+     */
+    double getScreenRatio();
+
+    /**
+     * Gives the card width value relative to screen width
+     * @return
+     */
+    double getCardWidthRatio();
+
+    /**
+     * Gives the card height value relative to screen width
+     * @return
+     */
+    double getCardHeightRatio();
+
+    /**
+     * Gives the offset for face down cards relative to screen width
+     * @return
+     */
+    double getDownOffsetRatio();
+
+    /**
+     * Gives the offset for face up cards relative to screen width
+     * @return
+     */
+    double getUpOffsetRatio();
+
+    /**
      * Gives screen width
      * @return the double screen width
      */
