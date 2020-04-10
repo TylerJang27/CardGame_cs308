@@ -40,7 +40,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setCellData(List<Cell> cellData) {
-        myDisplayTable.updateCells(cellData);
+        //myDisplayTable.updateCells(cellData);
     }
 
     /**

@@ -27,7 +27,7 @@ public class Color implements IColor {
 
     @Override
     public int[] getColors() {
-        return new int[0];
+        return myColors;
     }
 
     @Override

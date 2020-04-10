@@ -129,7 +129,7 @@ public class MasterRuleFactory implements Factory {
                 Node phaseAction = XMLHelper.getNodeByName(allActions, resources.getString(NEXT_PHASE));
                 try {
                     String newPhase = XMLHelper.getAttribute((Element)phaseAction, resources.getString(PHASE));
-                    String pointVal = phaseAction.getNodeValue();
+                    String pointVal = phaseAction.getTextContent();
                     Integer points = 0;
                     if (!pointVal.isEmpty()) {
                         points = Integer.parseInt(pointVal);

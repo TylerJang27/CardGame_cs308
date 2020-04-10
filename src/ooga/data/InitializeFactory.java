@@ -35,7 +35,7 @@ public class InitializeFactory implements Factory {
         NodeList cards = ((Element)settings).getElementsByTagName(resources.getString(CARD));
 
         for (int k = 0; k < cards.getLength(); k ++) {
-            String regex = cards.item(k).getNodeValue();
+            String regex = cards.item(k).getTextContent();
             String[] regexSplit = regex.split(initializeResources.getString(DELIMITER));
 
             if (regexSplit[0].equals(initializeResources.getString(RANDOM))) {
@@ -48,10 +48,10 @@ public class InitializeFactory implements Factory {
                 //NOTE: ORDER OF CELL GROUP PARSING MAY MATTER FOR THIS TO WORK
                 //ALSO WHILE THIS TAKES IN OFFSET, IT IS BEST IF IT IS NONE
                 return (IDeck source) -> {
-                    ICell c = new Cell("");
-                    while (source.size() > 0) {
+                    ICell c = new Cell("", source);
+                    /*while (source.size() > 0) {
                         c.addCard(offset, source.getRandomCard());
-                    }
+                    }*/
                     return c;
                 };
             } else {
