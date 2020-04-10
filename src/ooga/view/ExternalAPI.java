@@ -19,7 +19,7 @@ public interface ExternalAPI {
      * @param cellData
      */
     void setCellData(Map<String,ICell> cellData);
-    
+
     /**
      * Sets score of players to be displayed
      * @param playerScores maps playerID to total score

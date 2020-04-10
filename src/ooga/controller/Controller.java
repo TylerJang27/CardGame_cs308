@@ -6,11 +6,9 @@ import ooga.cardtable.*;
 import ooga.data.factories.PhaseMachineFactory;
 import ooga.data.factories.LayoutFactory;
 import ooga.data.rules.IPhaseMachine;
-<<<<<<< HEAD
 import ooga.data.rules.LayoutDummy;
 import ooga.data.rules.PhaseMachine;
-=======
->>>>>>> develop
+
 import ooga.data.style.IStyle;
 import ooga.view.View;
 
@@ -79,10 +77,7 @@ public class Controller extends Application {
         System.out.println(gameName);
         // TODO: Give game name somehow, figure out who's building the phase machine
         myRuleFile = new File(DEFAULT_RULE_FILE);
-<<<<<<< HEAD
-        myView.setLayout(new LayoutDummy());
-        //myCurrentPhaseMachine = PhaseMachineFactory.getPhaseMachine(myRuleFile);
-=======
+
         myCurrentPhaseMachine = PhaseMachineFactory.getPhaseMachine(myRuleFile);
         myTable = new Table(myCurrentPhaseMachine);
         myCellMap = myTable.getCellData();
@@ -92,13 +87,12 @@ public class Controller extends Application {
         myView.setLayout(LayoutFactory.getLayout(f));
         myView.setCellData(myCellMap);
         //myView.setCellData(Map.copyOf(myTable.getCellData()));
->>>>>>> develop
     }
 
     private void newMove() {
         myCurrentMove = getMove();
         myTable.update(myCurrentMove);
-        myView.setCellData(List.copyOf(myTable.getCellData().values()));
+        myView.setCellData(Map.copyOf(myTable.getCellData()));
     }
 
     private IMove getMove() {
