@@ -15,6 +15,7 @@ public class Phase implements IPhase {
   private Map<String, ICellGroup> myCellGroupMap;
   private Map<String, ICell> myCellMap;
   private boolean isAuto;
+  private IGameState myGameState;
 
 
   public Phase(String name, List<IMasterRule> ruleList, List<String> validDonors, Map<String, ICellGroup> cellGroupMap, Map<String, ICell> cellMap, boolean automatic) {
@@ -44,8 +45,9 @@ public class Phase implements IPhase {
   public IPhaseArrow executeMove(IMove move) {
     IMasterRule ruleToExecute = identifyMove(move);
     if (ruleToExecute != null) {
-      //return ruleToExecute.executeMove(move);
+      //return
       if (!isAuto) {
+        myGameState = ruleToExecute.executeMove(move); //TODO: ADD GAME STATE FUNCTIONALITY
         return ruleToExecute.executeAutoActions(null); //TODO: ADD PLAYER HERE
       }
     }

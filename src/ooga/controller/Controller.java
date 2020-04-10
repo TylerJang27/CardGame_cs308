@@ -58,7 +58,6 @@ public class Controller extends Application {
             System.out.println(move.getMover().getName());
             System.out.println(move.getRecipient().getName());
             myTable.update(move);
-            System.out.println("yeetyeetyeet");
             myView.setCellData(Map.copyOf(myTable.getCellData()));
         };
         myView = new View(gm);

@@ -164,6 +164,7 @@ public class Cell implements ICell {
       recipient = this;
     }
     if (recipient == null) {
+      System.out.println(this.getName() + "yolo");
       setCellAtOffset(offset, cell);
       updateParentage();
       return;
@@ -178,28 +179,15 @@ public class Cell implements ICell {
       if (tempRec == null) {
         recipient.setCellAtOffset(e.getKey(), e.getValue());
       } else {
+        System.out.println("yeet" + e.getKey() + e.getValue() + "yeet");
         tempRec.addCell(Offset.NONE, e.getValue());
       }
     }
     updateParentage();
   }
 
-  public void addCell(IOffset offset, ICell cell, boolean a) {
-    for (int k = 0; k < Offset.values().length; k ++) {
-      IOffset off = Offset.values()[k];
-      if (getAllChildren().get(off) == null && cell.getAllChildren().get(off) == null) {
-
-      } else if (getAllChildren().get(off) == null && cell.getAllChildren().get(off) == null) {
-
-      } else if (getAllChildren().get(off) == null && cell.getAllChildren().get(off) == null) {
-
-      } else if (getAllChildren().get(off) == null && cell.getAllChildren().get(off) == null) {
-        
-      }
-    }
-  }
-
-  private void updateParentage() {
+  @Override
+  public void updateParentage() {
     String masterName = "";
     if (parent == null) {
       masterName = getName();
@@ -208,7 +196,8 @@ public class Cell implements ICell {
     }
     name = masterName;
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
-      if (e.getKey() != Offset.NONE) {
+      if (e.getKey() != Offset.NONE && e.getValue() != null) {
+        //System.out.println(this.getName());
         Cell c = (Cell) e.getValue();
         c.setParent(this);
         c.updateParentage(); //fixme monster
@@ -227,20 +216,29 @@ public class Cell implements ICell {
       return;
     }
     children.put(offset, cell);
+    System.out.println(offset.getOffset() + "yolo" + cell.getName());
     ((Cell) cell).setParent(this); //fixme you're a monster
-    updateParentage();
+    cell.updateParentage();
   }
 
   @Override
   public List<ICell> getAllCells() {
     List<ICell> total = new ArrayList<>();
+    getAllCellsHelper(total);
+    return total;
+  }
+
+  @Override
+  public void getAllCellsHelper(List<ICell> tracker) {
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
-      if (!total.contains(e)) {
-        total.add(e.getValue());
-        total.addAll(e.getValue().getAllCells());
+      System.out.println("equals?" + !tracker.contains(e.getValue()));
+      System.out.println(e.getValue());
+      if (!tracker.contains(e.getValue())) {
+        tracker.add(e.getValue());
+        System.out.println("recurse");
+        e.getValue().getAllCellsHelper(tracker);
       }//TODO: MAKE SURE THIS DOESN'T INFINITE RECURSE
     }
-    return total;
   }
 
   @Override
@@ -292,4 +290,48 @@ public class Cell implements ICell {
     }
     return ret.toString();
   }
+
+  @Override
+  public ICell findHead() {
+    ICell newHead = this;
+    ICell currentCell = newHead;
+    while(currentCell.getParent() != null) {
+      currentCell = currentCell.getParent();
+    }
+    return currentCell;
+  }
+
+  @Override
+  public ICell findLeaf() {
+    ICell newLeaf = this;
+    Map<Integer, ICell> leafMap = new HashMap<>();
+    findLeafHelper(newLeaf, 0, leafMap);
+    return leafMap.get(findMax(leafMap.keySet()));
+  }
+
+  private Integer findMax(Iterable<Integer> iter) {
+    Integer Max = Integer.MIN_VALUE;
+    for (Integer k: iter) {
+      if (Max.compareTo(k) < 0) {
+        Max = k;
+      }
+    }
+    return Max;
+  }
+
+  private void findLeafHelper(ICell curr, int steps, Map<Integer, ICell> tracker) {
+    if (curr.getAllChildren().size() <= 1) {
+      tracker.put(steps, curr);
+      return;
+    }
+    for (int k = 0; k < Offset.values().length; k ++) {
+      IOffset offset = Offset.values()[k];
+      ICell offsetCell = curr.getAllChildren().get(offset);
+
+      if (offsetCell != null && !offset.getOffset().equals(Offset.NONE.getOffset())) {
+        findLeafHelper(offsetCell, steps + 1, tracker);
+      }
+    }
+  }
+
 }

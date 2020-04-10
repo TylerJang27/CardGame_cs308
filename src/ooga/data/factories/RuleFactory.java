@@ -62,7 +62,10 @@ public class RuleFactory implements Factory {
     public RuleFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
 
     public static IRule buildRule(Element e, String ruleName, Map<String, ICellGroup> cellGroupMap) {
-        return buildRule(e, ruleName, cellGroupMap, (IMove move)->true);
+        return buildRule(e, ruleName, cellGroupMap, (IMove move)->{
+            System.out.println("default true");
+            return true;
+        });
     }
 
     public static IRule buildRule(Element e, String ruleName, Map<String, ICellGroup> cellGroupMap, Function<IMove, Boolean> cond) {
@@ -84,6 +87,7 @@ public class RuleFactory implements Factory {
             extractNameCondition(e, cellGroupMap, conditions, currCell);
 
             extractConditionCondition(e, cellGroupMap, conditions);
+            System.out.println(conditions.size() + " is my condition size");
             return new Rule(ruleName, conditions);
         } catch (Exception ee) {
             throw new XMLException(ee, Factory.MISSING_ERROR + "," + resources.getString(RULES));
@@ -110,7 +114,10 @@ public class RuleFactory implements Factory {
         Function<IMove, Boolean> valueChecker;
         String name = XMLHelper.getTextValue(e, resources.getString(NAME));
         if (!TRUE_CHECKS.contains(name)) {
-            valueChecker = (IMove move) -> (cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(currCell.apply(move).getName()))||(currCell.apply(move).getName().split(",")[0].equalsIgnoreCase(name));
+            valueChecker = (IMove move) -> {
+                System.out.println("name");
+                return (cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(currCell.apply(move).findHead().getName())) || (currCell.apply(move).findHead().getName().equalsIgnoreCase(name));
+            };
             conditions.add(valueChecker);
         }
     }
@@ -119,10 +126,16 @@ public class RuleFactory implements Factory {
         Function<IMove, Boolean> valueChecker;
         String faceUp = XMLHelper.getTextValue(e, resources.getString(IS_FACEUP));
         if (!TRUE_CHECKS.contains(faceUp)) {
-            if (faceUp.equals(resources.getString(YES))) {
-                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().isFaceUp());
+            if (faceUp.equalsIgnoreCase(resources.getString(YES))) {
+                valueChecker = (IMove move) -> {
+                    System.out.println("faceupY");
+                    return (currCell.apply(move).getDeck().peekBottom().isFaceUp());
+                };
             } else {
-                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peekBottom().isFaceUp());
+                valueChecker = (IMove move) -> {
+                    System.out.println("faceupN");
+                    return !(currCell.apply(move).getDeck().peekBottom().isFaceUp());
+                };
             }
             conditions.add(valueChecker);
         }
@@ -133,7 +146,10 @@ public class RuleFactory implements Factory {
         String numCards = XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS));
         if (!TRUE_CHECKS.contains(numCards)) {
             Integer value = Integer.parseInt(numCards);
-            valueChecker = (IMove move) -> (currCell.apply(move).getTotalSize()==value);
+            valueChecker = (IMove move) -> {
+                System.out.println("numcards");
+                return (currCell.apply(move).getTotalSize() == value);
+            };
             conditions.add(valueChecker);
         }
     }
@@ -143,11 +159,20 @@ public class RuleFactory implements Factory {
         String suit = XMLHelper.getTextValue(e, resources.getString(SUIT));
         if (!TRUE_CHECKS.contains(suit)) {
             if (suit.equals(resources.getString(SAME))) {
-                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peekBottom().getSuit().getName()));
+                valueChecker = (IMove move) -> {
+                    System.out.println("suit");
+                    return (currCell.apply(move).getDeck().peekBottom().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peekBottom().getSuit().getName()));
+                };
             } else if (suit.equals(resources.getString(NOT))) {
-                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peekBottom().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peekBottom().getSuit().getName()));
+                valueChecker = (IMove move) -> {
+                    System.out.println("suit");
+                    return !(currCell.apply(move).getDeck().peekBottom().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peekBottom().getSuit().getName()));
+                };
             } else {
-                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().getSuit().getName().equalsIgnoreCase(suit.toUpperCase()));
+                valueChecker = (IMove move) -> {
+                    System.out.println("suit");
+                    return (currCell.apply(move).getDeck().peekBottom().getSuit().getName().equalsIgnoreCase(suit.toUpperCase()));
+                };
             }
             conditions.add(valueChecker);
         }
@@ -158,11 +183,20 @@ public class RuleFactory implements Factory {
         String color = XMLHelper.getTextValue(e, resources.getString(COLOR));
         if (!TRUE_CHECKS.contains(color)) {
             if (color.equals(resources.getString(SAME))) {
-                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peekBottom().getSuit().getColorName()));
+                valueChecker = (IMove move) -> {
+                    System.out.println("color");
+                    return currCell.apply(move).getDeck().peekBottom().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peekBottom().getSuit().getColorName());
+                };
             } else if (color.equals(resources.getString(NOT))) {
-                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peekBottom().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peekBottom().getSuit().getColorName()));
+                valueChecker = (IMove move) -> {
+                    System.out.println("color");
+                    return !(currCell.apply(move).getDeck().peekBottom().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peekBottom().getSuit().getColorName()));
+                };
             } else {
-                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase()));
+                valueChecker = (IMove move) -> {
+                    System.out.println("color");
+                    return (currCell.apply(move).getDeck().peekBottom().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase()));
+                };
             }
             conditions.add(valueChecker);
         }

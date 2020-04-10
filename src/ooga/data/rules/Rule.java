@@ -21,11 +21,20 @@ public class Rule implements IRule { //TODO: ADD DOCUMENTATION
 
     @Override
     public boolean checkValidMove(IMove move) {
+        int counter = 0;
         for (Function<IMove, Boolean> f: myConditions) {
+            System.out.println(counter + "conditioncounter");
+            counter++;
             if (!f.apply(move)) {
+                System.out.println(f.apply(move).toString());
                 return false; //TODO: CHECK FAILURE CONDITION OF cs308
             }
         }
         return true;
+    }
+
+    @Override
+    public String getName() {
+        return myName;
     }
 }
