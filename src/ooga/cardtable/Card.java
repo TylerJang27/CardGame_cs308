@@ -26,6 +26,13 @@ public class Card implements ICard {
     name = s.getName()+""+v.getName();
   }
 
+  public Card(ISuit s, IValue v) { //fixme remove later? added to make compile
+    this(s.getName()+""+v.getName());
+    attributes = new HashMap<>();
+    attributes.put(s, true);
+    attributes.put(v, true);
+  }
+
   public Card(String name, Map<IAttribute, Boolean> visible) {
     this(name);
     attributes = visible;

@@ -39,7 +39,7 @@ public class Cell implements ICell {
   @Override
   public boolean isInGroup(String name) {
     return this.name.equals(name);
-            //TODO: DOUBLE CHECK HAPPY WITH THIS IMPLEMENTATION
+    //TODO: DOUBLE CHECK HAPPY WITH THIS IMPLEMENTATION
   }
 
   @Override
@@ -52,23 +52,16 @@ public class Cell implements ICell {
     if (cellDeckBuilder != null) {
       //TODO: DOUBLE CHECK THIS WORKS
       ICell toAdd = cellDeckBuilder.apply(mainDeck);
-      System.out.println(toAdd);                                  //7,south [7cards]
-      System.out.println("a: " + toAdd.getTotalSize());           //7 !!
-      System.out.println("b:" + this.getTotalSize());             //0
-      System.out.println(mainDeck.size());                        //24
-      //this.getAllChildren().get(Offset.NONE).addCell(Offset.NONE, toAdd);
       addCell(Offset.NONE, toAdd);
-      //toAdd.addCell(Offset.NONE, this);
-      System.out.println("toadd: " + toAdd);                                  //7,south [same7]
-      System.out.println("a: " + toAdd.getTotalSize());           //7 !!!!!!
-      System.out.println("b:" + this.getTotalSize());             //0
-      System.out.println(mainDeck.size());                        //24
     }
     cellDeckBuilder = null;
   }
 
   @Override
   public IDeck getDeck() {
+    for(ICell i : children.values()){
+      //System.out.println("card" + i.getDeck().peek());
+    }
     return deck;
   }
 
@@ -102,8 +95,8 @@ public class Cell implements ICell {
 
   @Override
   public IOffset getOffsetFromParent() {
-    for (Entry<IOffset, ICell> e: parent.getAllChildren().entrySet()) {
-      if (e.getKey()!= Offset.NONE && e.getValue()==this) {
+    for (Entry<IOffset, ICell> e : parent.getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE && e.getValue() == this) {
         return e.getKey();
       }
     }
@@ -122,10 +115,10 @@ public class Cell implements ICell {
 
   @Override
   public boolean isEmpty() {
-    if (getDeck().size() > 0 ) {
+    if (getDeck().size() > 0) {
       return false;
     }
-    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (!e.getKey().equals(Offset.NONE)) {
         if (!e.getValue().isEmpty()) {
           return false;
@@ -164,15 +157,18 @@ public class Cell implements ICell {
     if (cell == null || cell.isEmpty()) {
       return;
     }
-    System.out.println("recurse"); //fixme remove
-    ICell recipient = getAllChildren().get(offset);
+    ICell recipient = null;
+    if (offset != Offset.NONE) {
+      recipient = getAllChildren().get(offset);
+    } else {
+      recipient = this;
+    }
     if (recipient == null) {
       setCellAtOffset(offset, cell);
       updateParentage();
       return;
     }
     if (cell.getAllChildren().keySet().size() <= 1) {
-    //if (offset.getOffset().equals(Offset.NONE.getOffset())) {
       recipient.getDeck().addDeck(cell.getDeck());
       updateParentage();
       return;
@@ -181,12 +177,8 @@ public class Cell implements ICell {
       ICell tempRec = recipient.getAllChildren().get(e.getKey());
       if (tempRec == null) {
         recipient.setCellAtOffset(e.getKey(), e.getValue());
-        //recipient.addCell(e.getKey(), e.getValue());
-        //System.out.println("\t." + e.getValue());
       } else {
         tempRec.addCell(Offset.NONE, e.getValue());
-        //System.out.println("\t\t" + tempRec);
-        //System.out.println("\t\t" + e.getValue());
       }
     }
     updateParentage();
@@ -212,12 +204,12 @@ public class Cell implements ICell {
     if (parent == null) {
       masterName = getName();
     } else {
-      masterName = parent.getName()+","+getOffsetFromParent().getOffset();
+      masterName = parent.getName() + "," + getOffsetFromParent().getOffset();
     }
     name = masterName;
-    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
-      if (e.getKey()!=Offset.NONE) {
-        Cell c = (Cell)e.getValue();
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        Cell c = (Cell) e.getValue();
         c.setParent(this);
         c.updateParentage(); //fixme monster
       }
@@ -235,14 +227,14 @@ public class Cell implements ICell {
       return;
     }
     children.put(offset, cell);
-    ((Cell)cell).setParent(this); //fixme you're a monster
+    ((Cell) cell).setParent(this); //fixme you're a monster
     updateParentage();
   }
 
   @Override
   public List<ICell> getAllCells() {
     List<ICell> total = new ArrayList<>();
-    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (!total.contains(e)) {
         total.add(e.getValue());
         total.addAll(e.getValue().getAllCells());
@@ -266,17 +258,23 @@ public class Cell implements ICell {
 
   @Override
   public boolean equals(Object other) { //fixme should this check name? not yet for tests for cards
-    if (! (other instanceof Cell)) {
+    if (!(other instanceof Cell)) {
       return false;
     }
     Cell c = (Cell) other;
-    if (!deck.equals(c.deck)){
+    if (!deck.equals(c.deck)) {
       return false;
     }
-    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
-      if (e.getKey()!=Offset.NONE){
-        if (!e.getValue().equals(c.getAllChildren().get(e.getKey())))
-        {
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        if (!e.getValue().equals(c.getAllChildren().get(e.getKey()))) {
+          return false;
+        }
+      }
+    }
+    for (Entry<IOffset, ICell> e : c.getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        if (!e.getValue().equals(getAllChildren().get(e.getKey()))) {
           return false;
         }
       }
@@ -287,8 +285,8 @@ public class Cell implements ICell {
   @Override
   public String toString() {
     StringBuilder ret = new StringBuilder(name + ": " + deck.toString() + "\n");
-    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
-      if (e.getKey()!=Offset.NONE){
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
         ret.append(e.getValue().toString());
       }
     }
