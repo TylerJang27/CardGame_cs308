@@ -73,7 +73,8 @@ public class DisplayTable {
         if (intersectedCell != myMovedDisplayCell) {
             myMover = myMovedDisplayCell.getCell();
             myDonor = findHead(myMovedDisplayCell.getCell());
-            myRecipient = findHead(intersectedCell.getCell());
+            myRecipient = findLeaf(intersectedCell.getCell());
+            System.out.println("recipient ahoy:" + myRecipient);
             myMove = new Move(myDonor, myMover, myRecipient);
         }
         return intersectedCell != myMovedDisplayCell;
@@ -85,6 +86,37 @@ public class DisplayTable {
             currentCell = currentCell.getParent();
         }
         return currentCell;
+    }
+
+    private ICell findLeaf(ICell newLeaf) {
+        Map<Integer, ICell> leafMap = new HashMap<>();
+        findLeafHelper(newLeaf, 0, leafMap);
+        return leafMap.get(findMax(leafMap.keySet()));
+    }
+
+    private Integer findMax(Iterable<Integer> iter) {
+        Integer Max = Integer.MIN_VALUE;
+        for (Integer k: iter) {
+            if (Max.compareTo(k) < 0) {
+                Max = k;
+            }
+        }
+        return Max;
+    }
+
+    private void findLeafHelper(ICell curr, int steps, Map<Integer, ICell> tracker) {
+        if (curr.getAllChildren().size() <= 1) {
+            tracker.put(steps, curr);
+            return;
+        }
+        for (int k = 0; k < Offset.values().length; k ++) {
+            IOffset offset = Offset.values()[k];
+            ICell offsetCell = curr.getAllChildren().get(offset);
+
+            if (offsetCell != null && !offset.getOffset().equals(Offset.NONE.getOffset())) {
+                findLeafHelper(offsetCell, steps + 1, tracker);
+            }
+        }
     }
 
     private DisplayCell checkIntersections() {

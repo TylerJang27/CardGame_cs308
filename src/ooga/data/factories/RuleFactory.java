@@ -72,6 +72,7 @@ public class RuleFactory implements Factory {
         try {
             Function<IMove, ICell> moverCell = (IMove move) -> move.getMover();
             Function<IMove, ICell> donorCell = (IMove move) -> move.getDonor();
+            //Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
             Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
             Function<IMove, ICell> currCell = MasterRuleFactory.getCurrentCellFunction(ruleName, moverCell, donorCell, recipientCell);
 
@@ -178,7 +179,16 @@ public class RuleFactory implements Factory {
             } else {
                 value = Integer.parseInt(valueText);
             }
-            valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peekBottom().getValue().getNumber() - value == recipientCell.apply(move).getDeck().peekBottom().getValue().getNumber());
+
+            valueChecker = (IMove move) -> {
+                System.out.println("checking the value of mover:" + currCell.apply(move).getDeck());
+                System.out.println("checking the value of mover:" + currCell.apply(move).getDeck().peekBottom().getValue().getNumber());
+                System.out.println("checking the value of rec:" + recipientCell.apply(move).getDeck());
+                System.out.println("checking the value of rec:" + recipientCell.apply(move).getDeck().peekBottom().getValue().getNumber());
+
+                return (currCell.apply(move).getDeck().peekBottom().getValue().getNumber() - value ==
+                        recipientCell.apply(move).getDeck().peekBottom().getValue().getNumber());
+                };
             conditions.add(valueChecker);
         }
     }
