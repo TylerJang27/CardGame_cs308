@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import ooga.cardtable.ICell;
-import ooga.cardtable.IGameState;
-import ooga.cardtable.IMove;
-import ooga.cardtable.IPlayer;
+import ooga.cardtable.*;
 
 public class Phase implements IPhase {
 
@@ -34,7 +31,6 @@ public class Phase implements IPhase {
     return isAuto;
   }
 
-  @Override
   private IMasterRule identifyMove(IMove move) {
     for (IMasterRule r : myRules) {
       if (r.checkValidMove(move)) {
@@ -45,22 +41,49 @@ public class Phase implements IPhase {
   }
 
   @Override
+  public IPhaseArrow executeMove(IMove move) {
+    IMasterRule ruleToExecute = identifyMove(move);
+    if (ruleToExecute != null) {
+      //return ruleToExecute.executeMove(move);
+      if (!isAuto) {
+        return ruleToExecute.executeAutoActions(null); //TODO: ADD PLAYER HERE
+      }
+    }
+    //return GameState.INVALID;
+    return null;
+  }
+
+  @Override
   public List<IMasterRule> getRuleList() {
     return new ArrayList<>(myRules);
   }
 
+  //call this when it's set if it's automatic
   @Override
-  private IPhaseArrow executeAutomaticActions(IPlayer player) {
+  public IPhaseArrow executeAutomaticActions(IPlayer player) {
+    IPhaseArrow lastArrow = new PhaseArrow(myName, "", myName);
     for (IMasterRule rule: myRules) {
-      rule.executeAutoActions(player);
+      lastArrow = rule.executeAutoActions(player);
     }
+    return lastArrow;
   }
 
+  @Override
+  public Map<String, ICell> getMyCellMap() {
+    return myCellMap;
+  }
+
+  @Override
+  public Map<String, ICellGroup> getMyCellGroupMap() {
+    return myCellGroupMap;
+  }
+
+  /*
   @Override
   private String getNextPhaseName(IMove move) {
     IMasterRule rule = identifyMove(move);
     return phaseUpdate.get(rule); //fixme does null case return null? I sure hope so
-  }
+  }*/
 
 
   /**private List<ICell> cellList;

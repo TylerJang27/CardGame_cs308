@@ -6,6 +6,7 @@ import java.util.Map;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
+import ooga.cardtable.IPlayer;
 
 /**
  * Gets Phase rules for each cell Gives Table cells with rules implemented Gives Table state machine
@@ -26,7 +27,9 @@ public interface IPhase {
    * @param move the user's movement of cards
    * @return the rules associated with the move
    */
-  IMasterRule identifyMove(IMove move);
+  //IMasterRule identifyMove(IMove move);
+
+  IPhaseArrow executeMove(IMove move);
 
   /**
    * Retrieves the list of available rules for a phase
@@ -35,12 +38,18 @@ public interface IPhase {
    */
   List<IMasterRule> getRuleList();
 
+  IPhaseArrow executeAutomaticActions(IPlayer player);
+
+  Map<String, ICell> getMyCellMap();
+
+  Map<String, ICellGroup> getMyCellGroupMap();
+
   /**
    * Retrieves the map of available rules to lists of generic card actions that result
    *
    * @return a map of rules to action lists
    */
-  Map<IMasterRule, List<ICardAction>> getConditionalActions();
+  //Map<IMasterRule, List<ICardAction>> getConditionalActions();
 
   /**
    * Retrieves the card actions that progress automatically at the start of a phase
@@ -48,24 +57,24 @@ public interface IPhase {
    * @return a list of automatic card actions
    */
 
-  List<ICardAction> getAutoActions();
+  //List<ICardAction> getAutoActions();
 
   /**
    * Executes the automatic actions for the phase and returns the GameState
    *
    * @return the updated GameState for the frontend
    */
-  IGameState executeAutomaticActions();
+  //IGameState executeAutomaticActions();
 
   String getMyName();
 
-  String getNextPhaseName(IMove move);
+  //String getNextPhaseName(IMove move);
 
-  void setCellList(List<ICell> cells);
+  //void setCellList(List<ICell> cells);
 
-  void addRule(IMasterRule rule, List<ICardAction> actions, String nextPhase);
+  //void addRule(IMasterRule rule, List<ICardAction> actions, String nextPhase);
 
-  void setAutoActions(List<ICardAction> actions);
+  //void setAutoActions(List<ICardAction> actions);
 
   boolean isValidDonor(ICell cell); //TODO: ADD TO API CHANGES
 }

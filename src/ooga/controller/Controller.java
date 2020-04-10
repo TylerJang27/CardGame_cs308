@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 import ooga.cardtable.*;
 import ooga.data.PhaseMachineFactory;
 import ooga.data.StyleFactory;
-import ooga.data.rules.excluded.IPhaseMachine;
+import ooga.data.rules.IPhaseMachine;
 import ooga.data.style.IStyle;
 import ooga.view.View;
 

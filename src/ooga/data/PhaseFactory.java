@@ -4,6 +4,7 @@ import ooga.cardtable.ICell;
 import ooga.data.rules.ICellGroup;
 import ooga.data.rules.IPhase;
 import ooga.data.rules.IMasterRule;
+import ooga.data.rules.Phase;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -59,6 +60,7 @@ public class PhaseFactory implements Factory {
 
             Map<String, IPhase> phaseMap = new HashMap<>();
 
+
             for (int k = 0; k < phaseList.getLength(); k ++) {
                 Element phase = (Element)phaseList.item(k);
                 NodeList phaseNodes = phase.getChildNodes();
@@ -82,12 +84,15 @@ public class PhaseFactory implements Factory {
                 Node rules = XMLHelper.getNodeByName(phaseNodes, resources.getString(RULES));
                 List<IMasterRule> phaseRules = MasterRuleFactory.getRules(rules, cellGroupMap, cellMap, phaseName);
 
-                //TODO: INSTANTIATE PHASE
+                //phase
+                IPhase newPhase = new Phase(phaseName, phaseRules, validDonorNames, cellGroupMap, cellMap, automatic);
+                if (phaseMap.isEmpty()) {
+                    phaseMap.put(PhaseMachineFactory.START, newPhase);
+                }
+                phaseMap.put(phaseName, newPhase);
 
             }
-
-            //////////////TODO: TOMORROW MORNING
-            return null;
+            return phaseMap;
 
         } catch (Exception e) {
             throw new XMLException(e, MISSING_ERROR + "," + PHASES);

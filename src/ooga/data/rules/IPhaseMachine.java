@@ -1,12 +1,11 @@
-package ooga.data.rules.excluded;
+package ooga.data.rules;
 
 import java.util.List;
 import java.util.Map;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
-import ooga.data.rules.IPhase;
-import ooga.data.rules.IPhaseArrow;
+import ooga.data.rules.excluded.IPhaseHistoryCell;
 
 /**
  * Gets construction data from XML file Gives Table cells with rules implemented Gives Table state
@@ -47,7 +46,7 @@ public interface IPhaseMachine {
    */
   Map<String, ICell> getTopLevelCells();
 
-  void setCellList(List<ICell> cells);
+  //void setCellList(List<ICell> cells);
 
   /**
    * Gives a list of cell names
@@ -69,7 +68,7 @@ public interface IPhaseMachine {
    *
    * @param arrow a transition of states
    */
-  void moveToNextPhase(IPhaseArrow arrow);
+  //void moveToNextPhase(IPhaseArrow arrow);
 
   /**
    * Retrieves the current phase

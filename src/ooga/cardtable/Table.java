@@ -3,7 +3,7 @@ package ooga.cardtable;
 import java.util.List;
 import java.util.Map;
 
-import ooga.data.rules.excluded.IPhaseMachine;
+import ooga.data.rules.IPhaseMachine;
 
 public class Table implements ITable {
   private IPhaseMachine machine;
@@ -26,7 +26,8 @@ public class Table implements ITable {
 
   @Override
   public void setCellList(List<ICell> cellList) {
-    machine.setCellList(cellList);
+    //machine.setCellList(cellList);
+    System.out.println("Deprecated");
   }
 
   @Override

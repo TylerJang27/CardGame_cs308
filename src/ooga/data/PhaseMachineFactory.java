@@ -3,7 +3,7 @@ package ooga.data;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IDeck;
 import ooga.data.rules.*;
-import ooga.data.rules.excluded.IPhaseMachine;
+import ooga.data.rules.IPhaseMachine;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -23,6 +23,9 @@ public class PhaseMachineFactory implements Factory{
     private static final String RESOURCES = "ooga.resources";
     public static final String RESOURCE_PACKAGE = RESOURCES + "." + RULES + "_";
     //private static final ResourceBundle rulesResources = ResourceBundle.getBundle(RESOURCE_PACKAGE+RULES);
+
+    public static final String START="INIT_PHASE";
+
     //TODO: IMPLEMENT DEFAULTS
 
     //TODO: REMOVE HARD CODING?
@@ -47,9 +50,7 @@ public class PhaseMachineFactory implements Factory{
 
         Map<String, IPhase> phases = PhaseFactory.getPhases(root, cellGroups, allBaseCells);
 
-        //Phases
-        //Build
-        return new PhaseMachine();
+        return new PhaseMachine(phases, START);
     }
 
     private static Map<String, ICell> getAllCells(Map<String, ICellGroup> cellGroupMap) {
