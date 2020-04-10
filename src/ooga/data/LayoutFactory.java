@@ -40,7 +40,7 @@ public class LayoutFactory {
         // FIXME!!!!
         Node cells = root.getElementsByTagName(coordResources.getString("Cells")).item(0);
 
-        NodeList cellList = ((Element) cells).getElementsByTagName("Cell");
+        NodeList cellList = ((Element) cells).getElementsByTagName(coordResources.getString("Cell"));
 
         Map<String, ICoordinate> coordMap = new HashMap<>();
         for (int k = 0; k < cellList.getLength(); k ++) {
@@ -54,7 +54,6 @@ public class LayoutFactory {
 
             coordMap.put(cellName, coord);
         }
-
         return new Layout(coordMap, numberSettings);
     }
 }
