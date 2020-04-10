@@ -23,6 +23,7 @@ public class Card implements ICard {
     attributes = new HashMap<>();
     attributes.put(s, true);
     attributes.put(v, true);
+    name = s.getName()+""+v.getName();
   }
 
   public Card(Map<IAttribute, Boolean> visible) {
