@@ -210,7 +210,7 @@ public class Cell implements ICell {
   @Override
   public ICell getPeak(IOffset offset) {
     ICell temp = this;
-    while (temp.getDeck().size() > 0) { //TODO: VERYIFY THIS DOESN'T SKIP EMPTIES
+    while (temp.getDeck().size() > 0) { //TODO: VERIFY THIS DOESN'T SKIP EMPTIES
       temp = getAllChildren().get(offset);
     }
     return temp;

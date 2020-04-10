@@ -126,7 +126,8 @@ public class ActionFactory implements Factory {
             //moves cards if they're not already there
             if (destination.equalsIgnoreCase(curr)) {
                 recipientCell.apply(move).addCell(off, currCell.apply(move));
-                //TODO: REMOVE FROM DONOR
+                IOffset offsetFromParent = recipientCell.apply(move).getOffsetFromParent();
+                recipientCell.apply(move).getParent().removeCellAtOffset(offsetFromParent);
             }
         };
         actions.add(cardAction);
