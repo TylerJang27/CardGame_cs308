@@ -1,11 +1,9 @@
 package ooga.view;
 
-import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import ooga.cardtable.Cell;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
 import ooga.data.rules.ILayout;
@@ -16,19 +14,30 @@ import java.util.Map;
 import ooga.view.menu.Menu;
 import ooga.view.menu.RowMenu;
 
-/**
- *
- * @author __, __, Tyler Jang
- */
+
+
 public class View implements ExternalAPI {
+
+    @FunctionalInterface
+    interface TriggerMove {
+        public void giveIMove(IMove move);
+    }
 
     private Stage gameStage;
     private Menu myMenu;
     private DisplayTable myDisplayTable;
 
+    private IMove myLatestMove;
+    private TriggerMove getMove;
+
     public View(){
         myMenu = new RowMenu();
         myMenu.show();
+
+        getMove = (IMove move) -> {
+            myLatestMove = move;
+            System.out.println("View has the latest move");
+        };
 
     }
     /**
@@ -124,7 +133,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setLayout(ILayout layout) {
-        myDisplayTable = new DisplayTable((Layout) layout, 500);
+        myDisplayTable = new DisplayTable(getMove, (Layout) layout, 500);
         BorderPane root = new BorderPane();
         root.setCenter(myDisplayTable.getPane());
         Scene gameScene = new Scene(root,500,500);
