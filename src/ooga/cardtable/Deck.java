@@ -118,4 +118,9 @@ public class Deck implements IDeck {
     Deck d = (Deck) other;
     return cards.equals(d.cards);
   }
+
+  @Override
+  public String toString() {
+    return cards.toString();
+  }
 }
