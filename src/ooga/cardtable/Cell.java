@@ -52,14 +52,15 @@ public class Cell implements ICell {
     if (cellDeckBuilder != null) {
       //TODO: DOUBLE CHECK THIS WORKS
       ICell toAdd = cellDeckBuilder.apply(mainDeck);
-      System.out.println(toAdd);                                  //non-null
-      System.out.println(toAdd.getTotalSize());                   //7
+      System.out.println(toAdd);                                  //7,south [7cards]
+      System.out.println("a: " + toAdd.getTotalSize());           //7 !!
+      System.out.println("b:" + this.getTotalSize());             //0
       System.out.println(mainDeck.size());                        //24
-      System.out.println(this.getName());                         //correct
       addCell(Offset.NONE, toAdd);
-      System.out.println("a:" + this.getTotalSize());             //0
-      System.out.println("b: " + toAdd.getTotalSize());           //7 !!!!!!
-      System.out.println("size is here:" + getDeck().size());     //0
+      System.out.println(toAdd);                                  //7,south [same7]
+      System.out.println("a: " + toAdd.getTotalSize());           //7 !!!!!!
+      System.out.println("b:" + this.getTotalSize());             //0
+      System.out.println(mainDeck.size());                        //24
     }
     cellDeckBuilder = null;
   }
@@ -177,8 +178,12 @@ public class Cell implements ICell {
       ICell tempRec = recipient.getAllChildren().get(e.getKey());
       if (tempRec == null) {
         recipient.setCellAtOffset(e.getKey(), e.getValue());
+        //recipient.addCell(e.getKey(), e.getValue());
+        //System.out.println("\t." + e.getValue());
       } else {
-      tempRec.addCell(Offset.NONE, e.getValue());
+        tempRec.addCell(Offset.NONE, e.getValue());
+        //System.out.println("\t\t" + tempRec);
+        //System.out.println("\t\t" + e.getValue());
       }
     }
     updateParentage();
