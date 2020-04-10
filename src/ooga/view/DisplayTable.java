@@ -1,6 +1,7 @@
 package ooga.view;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -47,7 +48,7 @@ public class DisplayTable {
             myCardNameToFileName.put(card, card+".png");
         }
         myCellNameToLocation = layout.getCellLayout();
-        System.out.println(myCellNameToLocation.keySet());
+        /*
         for(String key : layout.getCellLayout().keySet()){
             Button b = new Button(key);
             double xVal = 3 * layout.getCellLayout().get(key).getX();
@@ -56,6 +57,7 @@ public class DisplayTable {
             b.setLayoutX(xVal);
             b.setLayoutY(yVal);
         }
+         */
     }
 
     public Pane getPane() {
@@ -79,10 +81,10 @@ public class DisplayTable {
     }
 
     private DisplayCell makeDisplayCell(String key, Cell cell) {
-        System.out.println("name"+cell.getName());
         ICoordinate icoord = myCellNameToLocation.get(key);
-        double x = icoord.getX()*myScreenWidth;
-        double y = icoord.getY()*myScreenWidth;
+        double x = icoord.getX()*myScreenWidth/100.0;
+        double y = icoord.getY()*myScreenWidth/100.0;
+        System.out.println("key: "+key);
         return new DisplayCell(cell, myCardNameToFileName, new Point2D(x,y), myCardHeight, myCardWidth, myCardOffset);
     }
 
@@ -97,6 +99,14 @@ public class DisplayTable {
             return;
         }
         myPane.getChildren().addAll(rootDispCell.getGroup().getChildren());
+        //System.out.println("Victory Royale");
+        for(Node n : myPane.getChildren()){
+            //System.out.println(n);
+            System.out.println(n.getTranslateX());
+           // System.out.println(n.getLayoutY());
+           // System.out.println(n.getTranslateX());
+           // System.out.println(n.getTranslateY());
+        }
         for (IOffset dir: rootDispCell.getCell().getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;

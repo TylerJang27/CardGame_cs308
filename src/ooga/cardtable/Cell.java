@@ -60,6 +60,11 @@ public class Cell implements ICell {
 
   @Override
   public IDeck getDeck() {
+    System.out.println("check");
+    System.out.println(children.keySet().size());
+    for(ICell i : children.values()){
+      System.out.println("card" + i.getDeck().peek());
+    }
     return deck;
   }
 

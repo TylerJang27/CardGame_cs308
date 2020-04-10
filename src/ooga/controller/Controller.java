@@ -79,8 +79,6 @@ public class Controller extends Application {
         myCellMap = myTable.getCellData();
         File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
 
-        System.out.println("cell map: "+myCellMap.keySet());
-        System.out.println("layout factory: " + LayoutFactory.getLayout(f).getCellLayout().keySet());
 
         myView.setLayout(LayoutFactory.getLayout(f));
         myView.setCellData(myCellMap);
