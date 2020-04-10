@@ -1,11 +1,15 @@
 package ooga.view;
 
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
 import ooga.data.rules.ILayout;
 import ooga.data.style.IStyle;
 
 import java.util.Map;
+import ooga.view.menu.Menu;
+import ooga.view.menu.RowMenu;
 
 /**
  *
@@ -13,6 +17,12 @@ import java.util.Map;
  */
 public class View implements ExternalAPI {
 
+    private Menu myMenu;
+
+    public View(){
+        myMenu = new RowMenu();
+        myMenu.show();
+    }
     /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
      * to the front end from the back end. This is done by sending a list of cell objects which
