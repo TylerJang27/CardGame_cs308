@@ -32,10 +32,9 @@ public class Main {
         System.out.println(myStyle.getDifficulty());
         System.out.println(myStyle.getSound());
     }
-
-
     private static void testLayoutXML() {
         File f = new File("data/solitaire_layout.xml");
         ILayout layout = LayoutFactory.getLayout(f);
+
     }
 }

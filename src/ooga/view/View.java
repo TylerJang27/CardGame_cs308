@@ -124,7 +124,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setLayout(ILayout layout) {
-        myDisplayTable = new DisplayTable((Layout)layout, 500);
+        myDisplayTable = new DisplayTable(layout, 500);
         BorderPane root = new BorderPane();
         root.setCenter(myDisplayTable.getPane());
         Scene gameScene = new Scene(root,500,500);

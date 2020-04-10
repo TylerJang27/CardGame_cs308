@@ -27,7 +27,7 @@ public class DisplayTable {
     private Map<String, ICoordinate> myCellNameToLocation;
     private List<Cell> myCellData;
 
-    public DisplayTable(Layout layout, double screenwidth) {
+    public DisplayTable(ILayout layout, double screenwidth) {
         myScreenWidth = screenwidth;
         myPane = new Pane();
 
