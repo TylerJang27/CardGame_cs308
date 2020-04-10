@@ -12,6 +12,8 @@ public class Layout implements ILayout {
 
     private int numPlayers;
 
+    private String gameName;
+
     private double screenRatio;
     private double cardWidthRatio;
     private double cardHeightRatio;
@@ -27,7 +29,9 @@ public class Layout implements ILayout {
     private static final String FACE_DOWN_OFFSET = "face_down_offset";
     private static final String FACE_UP_OFFSET = "face_up_offset";
 
-    public Layout(String xmlfile, Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings) {
+    public Layout(String xmlfile, String game, Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings) {
+        gameName = game;
+
         cellLayout = cellCoords;
 
         numPlayers = numberSettings.get(PLAYERS);

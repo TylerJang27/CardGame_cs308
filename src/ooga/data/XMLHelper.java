@@ -188,7 +188,9 @@ public class XMLHelper {
     public static Map<String, Integer> readNumberSettings(Element root, ResourceBundle resource) {
         Map<String, Integer> styles = new HashMap<>();
         for (Map.Entry<String, String> e: readStringSettings(root, resource).entrySet()) {
-            styles.put(e.getKey(), Integer.parseInt(e.getValue()));
+            try {
+                styles.put(e.getKey(), Integer.parseInt(e.getValue()));
+            } catch (Exception ee){ }
         }
         return styles;
     }
