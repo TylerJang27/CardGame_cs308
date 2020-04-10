@@ -1,6 +1,7 @@
 package ooga.data.factories;
 
 import ooga.cardtable.*;
+import ooga.data.XMLException;
 import ooga.data.XMLHelper;
 import ooga.data.rules.CardAction;
 import ooga.data.rules.ICardAction;
@@ -59,7 +60,7 @@ public class ActionFactory implements Factory {
     private static final String NO = "No";
 
     private static DocumentBuilder documentBuilder;
-    public static final List<String> TRUE_CHECKS = new ArrayList<String>(Arrays.asList(new String[]{"", resources.getString(ALL)}));
+    public static final List<String> TRUE_CHECKS = new ArrayList<>(Arrays.asList(new String[]{"", resources.getString(ALL)}));
 
     public ActionFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
 
@@ -71,23 +72,26 @@ public class ActionFactory implements Factory {
         String curr = ("" + ruleName.charAt(ruleName.length() - 1));
 
         List<Consumer<IMove>> actions = new ArrayList<>();
+        try {
+            Consumer<IMove> cardAction = (IMove move) -> {
+                extractCellsToMove(e, currCell, move);
 
-        Consumer<IMove> cardAction = (IMove move) -> {
-            extractCellsToMove(e, currCell, move);
+                String destination = extractDestinationBehavior(e, moverCell, donorCell, recipientCell, move);
 
-            String destination = extractDestinationBehavior(e, moverCell, donorCell, recipientCell, move);
+                IOffset off = extractOffsetBehavior(e);
 
-            IOffset off = extractOffsetBehavior(e);
+                extractRotationBehavior(e, currCell, move);
 
-            extractRotationBehavior(e, currCell, move);
+                extractFlipBehavior(e, currCell, move);
 
-            extractFlipBehavior(e, currCell, move);
+                //TODO: IMPLEMENT SHUFFLE
 
-            //TODO: IMPLEMENT SHUFFLE
-
-            applyDestinationBehavior(recipientCell, currCell, curr, move, destination, off);
-        };
-        actions.add(cardAction);
+                applyDestinationBehavior(recipientCell, currCell, curr, move, destination, off);
+            };
+            actions.add(cardAction);
+        } catch (Exception ex) {
+            throw new XMLException(ex, Factory.MISSING_ERROR + "," + resources.getString(ACTION));
+        }
         return new CardAction(actions);
     }
 

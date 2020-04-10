@@ -1,5 +1,6 @@
 package ooga.data.factories;
 
+import ooga.data.XMLException;
 import ooga.data.XMLHelper;
 import ooga.data.rules.ILayout;
 import ooga.data.rules.Layout;
@@ -11,7 +12,9 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 public class LayoutFactory {
 
@@ -31,31 +34,37 @@ public class LayoutFactory {
     }
 
     public static ILayout getLayout(File dataFile) {
-        Element root = XMLHelper.getRootAndCheck(dataFile, LAYOUT_TYPE, INVALID_ERROR);
+        try {
+            Element root = XMLHelper.getRootAndCheck(dataFile, LAYOUT_TYPE, INVALID_ERROR);
 
-        if(!root.hasChildNodes()) return null; // Very bad
+            if (!root.hasChildNodes()) {
+                throw new XMLException(Factory.MISSING_ERROR + "," + LAYOUT_TYPE); // Very bad
+            }
 
-        Map<String, Integer> numberSettings = XMLHelper.readNumberSettings(root, layoutResources);
-        //System.out.println(numberSettings.toString());
+            Map<String, Integer> numberSettings = XMLHelper.readNumberSettings(root, layoutResources);
+            //System.out.println(numberSettings.toString());
 
-        // FIXME!!!!
-        Node cells = root.getElementsByTagName(coordResources.getString("Cells")).item(0);
+            // FIXME!!!!
+            Node cells = root.getElementsByTagName(coordResources.getString("Cells")).item(0);
 
-        NodeList cellList = cells.getChildNodes();
+            NodeList cellList = cells.getChildNodes();
 
-        Map<String, ICoordinate> coordMap = new HashMap<>();
-        for (int k = 0; k < cellList.getLength(); k ++) {
-            Element n = (Element) cellList.item(k); // FIXME
-            String cellName = XMLHelper.getAttribute(n, coordResources.getString("Name"));
-            NodeList coordinate = n.getChildNodes();
-            Node x = XMLHelper.getNodeByName(coordinate, coordResources.getString("X"));
-            Node y = XMLHelper.getNodeByName(coordinate, coordResources.getString("Y"));
+            Map<String, ICoordinate> coordMap = new HashMap<>();
+            for (int k = 0; k < cellList.getLength(); k++) {
+                Element n = (Element) cellList.item(k); // FIXME
+                String cellName = XMLHelper.getAttribute(n, coordResources.getString("Name"));
+                NodeList coordinate = n.getChildNodes();
+                Node x = XMLHelper.getNodeByName(coordinate, coordResources.getString("X"));
+                Node y = XMLHelper.getNodeByName(coordinate, coordResources.getString("Y"));
 
-            ICoordinate coord = new Coordinate(Double.parseDouble(x.getTextContent()), Double.parseDouble(y.getTextContent()));
+                ICoordinate coord = new Coordinate(Double.parseDouble(x.getTextContent()), Double.parseDouble(y.getTextContent()));
 
-            coordMap.put(cellName, coord);
+                coordMap.put(cellName, coord);
+            }
+
+            return new Layout(coordMap, numberSettings);
+        } catch (Exception e) {
+            throw new XMLException(e, Factory.MISSING_ERROR + "," + LAYOUT_TYPE);
         }
-
-        return new Layout(coordMap, numberSettings);
     }
 }
