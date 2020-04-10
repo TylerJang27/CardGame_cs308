@@ -1,21 +1,13 @@
 package ooga.view.menu;
 
-import java.awt.Color;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -26,6 +18,7 @@ public class RowMenu implements Menu {
   private static final double DEFAULT_SIZE= 500;
   private static final Insets MARGINS = new Insets(20,20,20,20);
   private static final double SPACING = 10;
+  private static final ResourceBundle LANGUAGES = ResourceBundle.getBundle("ooga.resources.languages.supportedlanguages");
   private static final String CHOICES = "ooga.resources.languages.menu";
   private static final ResourceBundle GAMES = ResourceBundle.getBundle("ooga.resources.languages.menu.English");
 
@@ -50,7 +43,7 @@ public class RowMenu implements Menu {
 
     Pane dashboard = new Pane();
     ComboBox<String> languages = new ComboBox<>();
-    languages.getItems().addAll("English","Español");
+    languages.getItems().addAll(LANGUAGES.getString("supported").split(","));
     languages.valueProperty().addListener(new ChangeListener<String>() {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue,

@@ -46,7 +46,7 @@ public class Controller extends Application {
         myView = new View();
         initializeHandlers(myView);
         myStyleFile = new File(DEFAULT_STYLE_FILE);
-        myStyle = StyleFactory.getStyle(myStyleFile);
+        //myStyle = StyleFactory.getStyle(myStyleFile);
         myView.setStyle(myStyle);
     }
 

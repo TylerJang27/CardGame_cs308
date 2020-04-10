@@ -14,9 +14,9 @@ public class TestDisplayTable extends Application {
 
     @Override public void start(Stage primaryStage) {
 
-        DisplayTable gameTable = new DisplayTable(layout,500);
-        gameTable.updateCells(cellData);
-        myCenterPane = gameTable.getPane();
+        //DisplayTable gameTable = new DisplayTable(layout,500);
+        //gameTable.updateCells(cellData);
+        //myCenterPane = gameTable.getPane();
 
         Scene scene = new Scene(myCenterPane, 500, 500, false);
         primaryStage.setScene(scene);
