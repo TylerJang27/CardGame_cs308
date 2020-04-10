@@ -6,6 +6,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
+import ooga.controller.Controller;
 import ooga.data.rules.ILayout;
 import ooga.data.rules.Layout;
 import ooga.data.style.IStyle;
@@ -30,12 +31,13 @@ public class View implements ExternalAPI {
     private IMove myLatestMove;
     private TriggerMove getMove;
 
-    public View(){
+    public View(Controller.GiveMove giveMove){
         myMenu = new RowMenu();
         myMenu.show();
 
         getMove = (IMove move) -> {
             myLatestMove = move;
+            giveMove.sendMove(move);
             System.out.println("View has the latest move");
         };
 

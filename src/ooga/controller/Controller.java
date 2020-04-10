@@ -36,6 +36,12 @@ public class Controller extends Application {
     private IPhaseMachine myCurrentPhaseMachine;
     private Map<String, ICell> myCellMap;
 
+    @FunctionalInterface
+    public
+    interface GiveMove {
+        public void sendMove(IMove move);
+    }
+
     public Controller() { super(); }
 
     /**
@@ -46,7 +52,14 @@ public class Controller extends Application {
      */
     @Override
     public void start(Stage mainStage) {
-        myView = new View();
+        GiveMove gm = (IMove move) -> {
+            System.out.println("Controller has move");
+            System.out.println(move.getDonor().getName());
+            System.out.println(move.getMover().getName());
+            System.out.println(move.getRecipient().getName());
+            myTable.update(move);
+        };
+        myView = new View(gm);
         initializeHandlers(myView);
         myStyleFile = new File(DEFAULT_STYLE_FILE);
         //myStyle = StyleFactory.getStyle(myStyleFile);

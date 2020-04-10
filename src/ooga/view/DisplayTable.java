@@ -52,9 +52,6 @@ public class DisplayTable {
         getSelectedCell = (DisplayCell selectedCell) -> {
             myMovedDisplayCell = selectedCell;
             if(checkMove()) {
-                System.out.println(myMove.getDonor().getName());
-                System.out.println(myMove.getMover().getName());
-                System.out.println(myMove.getRecipient().getName());
                 moveLambda.giveIMove(myMove);
                 // call lambda function given by view, which is given by controller
             }
