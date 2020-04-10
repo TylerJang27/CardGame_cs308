@@ -34,7 +34,7 @@ public class Main {
 
     private static void testLayoutXML() {
         File f = new File("data/solitaire_layout.xml");
-        ILayout layout = LayoutFactory.getLayout(f);
+        //ILayout layout = LayoutFactory.getLayout(f);
 
     }
 }
