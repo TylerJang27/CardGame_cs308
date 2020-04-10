@@ -17,4 +17,4 @@
 
 4/9/2020:
 * MC - Added isEmpty method to IDeck
-* MC - Added setCellAtOffset method to ICell
+* MC - Added setCellAtOffset, hasOffsetChildren, getParent, and getOffsetFromParent methods to ICell

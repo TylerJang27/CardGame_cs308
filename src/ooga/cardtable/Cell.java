@@ -10,6 +10,7 @@ import java.util.function.Function;
 public class Cell implements ICell {
 
   private IDeck deck;
+  private ICell parent;
   private String name;
   private Function<IDeck, ICell> cellDeckBuilder;
   private Map<IOffset, ICell> children;
@@ -78,6 +79,26 @@ public class Cell implements ICell {
   }
 
   @Override
+  public ICell getParent() {
+    return parent;
+  }
+
+  @Override
+  public IOffset getOffsetFromParent() {
+    for (Entry<IOffset, ICell> e: parent.getAllChildren().entrySet()) {
+      if (e.getKey()!= Offset.NONE && e.getValue()==this) {
+        return e.getKey();
+      }
+    }
+    throw new RuntimeException("parent doesn't own child, something is terrible"); //fixme
+  }
+
+  @Override
+  public boolean hasOffsetChildren() {
+    return !children.isEmpty();
+  }
+
+  @Override
   public boolean isEmpty() {
     if (getDeck().size() > 0 ) {
       return false;
@@ -127,12 +148,45 @@ public class Cell implements ICell {
       return;
     }
     for (Entry<IOffset, ICell> e : cell.getAllChildren().entrySet()) {
-      recipient.getAllChildren().get(e.getKey()).addCell(Offset.NONE, e.getValue());
+      ICell tempRec = recipient.getAllChildren().get(e.getKey());
+      if (tempRec == null) {
+        recipient.setCellAtOffset(e.getKey(), e.getValue());
+      } else {
+      tempRec.addCell(Offset.NONE, e.getValue());
+      }
     }
+    updateParentage();
+  }
+
+  private void updateParentage() {
+    String masterName = "";
+    if (parent == null) {
+      masterName = getName();
+    } else {
+      masterName = parent.getName()+","+getOffsetFromParent().getOffset();
+    }
+    name = masterName;
+    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+      if (e.getKey()!=Offset.NONE) {
+        Cell c = (Cell)e.getValue();
+        c.setParent(this);
+        c.updateParentage(); //fixme monster
+      }
+    }
+  }
+
+  private void setParent(ICell cell) {
+    parent = cell;
   }
 
   @Override
   public void setCellAtOffset(IOffset offset, ICell cell) {
+    if (cell == null) {
+      children.remove(offset);
+      return;
+    }
     children.put(offset, cell);
+    ((Cell)cell).setParent(this); //fixme you're a monster
+    updateParentage();
   }
 }

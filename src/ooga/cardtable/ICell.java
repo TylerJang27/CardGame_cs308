@@ -32,4 +32,10 @@ public interface ICell extends Cellular {
 
   int getTotalSize(); //TODO: ADD TO API CHANGES
 
+  ICell getParent();
+
+  IOffset getOffsetFromParent();
+
+  boolean hasOffsetChildren();
+
 }
