@@ -1,26 +1,16 @@
 package ooga.view;
 
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import ooga.cardtable.*;
-import ooga.data.rules.ILayout;
 import ooga.data.rules.Layout;
 import ooga.data.style.ICoordinate;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class DisplayTable {
 
     private Pane myPane;
-    private ILayout myLayout;
-
-    private Color myTableColor;
-    private String myGameName;
 
     private double myScreenWidth;
     private double myCardHeight;
@@ -28,7 +18,6 @@ public class DisplayTable {
     private double myCardOffset;
     private Map<String, String> myCardNameToFileName;
     private Map<String, ICoordinate> myCellNameToLocation;
-    private List<Cell> myCellData;
 
     @FunctionalInterface
     interface MyFunctionalInterface {
@@ -39,9 +28,9 @@ public class DisplayTable {
 
     MyFunctionalInterface getSelectedCell;
     DisplayCell myMovedDisplayCell;
-    Cell myMover;
-    Cell myDonor;
-    Cell myRecipient;
+    ICell myMover;
+    ICell myDonor;
+    ICell myRecipient;
     IMove myMove;
 
     public DisplayTable(Layout layout, double screenwidth) {
@@ -62,9 +51,13 @@ public class DisplayTable {
 
         getSelectedCell = (DisplayCell selectedCell) -> {
             myMovedDisplayCell = selectedCell;
-            checkIntersections(); // could have map head cell to cell... oh nvrmind we kind of already have that
+            if(checkMove()) {
+                System.out.println(myMove.getDonor().getName());
+                System.out.println(myMove.getMover().getName());
+                System.out.println(myMove.getRecipient().getName());
+                // call lambda function given by view, which is given by controller
+            }
         };
-
         /*
         for(String key : layout.getCellLayout().keySet()){
             Button b = new Button(key);
@@ -81,23 +74,27 @@ public class DisplayTable {
         DisplayCell intersectedCell = checkIntersections();
         if (intersectedCell != myMovedDisplayCell) {
             myMover = myMovedDisplayCell.getCell();
-            myDonor = findHead(myMovedDisplayCell, true);
-            myRecipient = findHead(intersectedCell, false);
+            myDonor = findHead(myMovedDisplayCell.getCell());
+            myRecipient = findHead(intersectedCell.getCell());
             myMove = new Move(myDonor, myMover, myRecipient);
         }
         return intersectedCell != myMovedDisplayCell;
     }
 
-    private Cell findHead(DisplayCell newDisplayHead, boolean donor) {
-        //for ()
+    private ICell findHead(Cell newHead) {
+        ICell currentCell = newHead;
+        while(currentCell.getParent() != null) {
+            currentCell = currentCell.getParent();
+        }
+        return currentCell;
     }
 
-    private DisplayCell checkIntersections() { // for now only check head after move made, eventually must check children of head (save head when do this)
+    private DisplayCell checkIntersections() {
         boolean isIntersection = false;
         ImageView movedImage = myMovedDisplayCell.getImageView();
         for (DisplayCell dc: myDisplayCellData) {
             ImageView otherImage = dc.getImageView();
-            if (!myMovedDisplayCell.getCell().getName().equals(dc.getCell().getName())) { // dont check intersection of object with self
+            if (!myMovedDisplayCell.getCell().getName().equals(dc.getCell().getName())) {
                 isIntersection = checkIntersection(movedImage, otherImage);
             }
             if (isIntersection) {
