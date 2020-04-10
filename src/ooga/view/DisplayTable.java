@@ -142,11 +142,10 @@ public class DisplayTable {
         return myPane;
     }
 
-    public Pane updateCells(Map<String,ICell> cellData) {
-        myPane = new Pane();
+    public void updateCells(Map<String,ICell> cellData) {
+        myPane.getChildren().clear();
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
-        return myPane;
     }
 
     private List<DisplayCell> makeDisplayCells(Map<String,ICell> cellData) {

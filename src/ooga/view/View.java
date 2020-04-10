@@ -53,7 +53,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setCellData(Map<String,ICell> cellData) {
-        myRoot.setCenter(myDisplayTable.updateCells(cellData));
+        myDisplayTable.updateCells(cellData);
     }
 
     /**
