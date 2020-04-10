@@ -3,6 +3,7 @@ package ooga.data.rules;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IDeck;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +38,22 @@ public class CellGroup implements ICellGroup{
     @Override
     public Map<String, ICell> getCellMap() {
         return myCells;
+    }
+
+    @Override
+    public List<ICell> getCellsbyName(String name) {
+        List<ICell> cellList = new ArrayList<>();
+        if (name.equals(myName)) {
+            cellList.addAll(myCells.values());
+        } else if (isInGroup(name)){
+            cellList.add(myCells.get(name));
+        }
+        return cellList;
+    }
+
+    @Override
+    public boolean isInGroup(String name) {
+        return myCells.containsKey(name);
     }
 
     @Override

@@ -82,4 +82,6 @@ public interface IPhaseMachine {
    * @return the list of past phase history cells
    */
   List<IPhaseHistoryCell> getHistory();
+
+  boolean isValidDonor(ICell cell); //TODO: ADD TO API CHANGES
 }

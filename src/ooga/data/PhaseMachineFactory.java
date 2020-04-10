@@ -1,14 +1,13 @@
 package ooga.data;
 
+import ooga.cardtable.ICell;
 import ooga.cardtable.IDeck;
-import ooga.data.rules.ICellGroup;
-import ooga.data.rules.IPhaseMachine;
-import ooga.data.rules.ISettings;
-import ooga.data.rules.PhaseMachine;
+import ooga.data.rules.*;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,15 +38,26 @@ public class PhaseMachineFactory implements Factory{
 
         ISettings settings = SettingsFactory.getSettings(root);
         IDeck deck = DeckFactory.getDeck(root);
+
         Map<String, ICellGroup> cellGroups = CellGroupFactory.getCellGroups(root);
         for (Map.Entry<String, ICellGroup> e: cellGroups.entrySet()) {
             e.getValue().initializeAll(deck);
         }
+        Map<String, ICell> allBaseCells = getAllCells(cellGroups);
 
-        //Cells
+        Map<String, IPhase> phases = PhaseFactory.getPhases(root, cellGroups, allBaseCells);
+
         //Phases
         //Build
         return new PhaseMachine();
+    }
+
+    private static Map<String, ICell> getAllCells(Map<String, ICellGroup> cellGroupMap) {
+        Map<String, ICell> allBaseCells = new HashMap<>();
+        for (Map.Entry<String, ICellGroup> e: cellGroupMap.entrySet()) {
+            allBaseCells.putAll(e.getValue().getCellMap());
+        }
+        return allBaseCells;
     }
 
 }

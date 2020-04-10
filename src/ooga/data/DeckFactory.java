@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * @author Tyler Jang
  */
 public class DeckFactory implements Factory {
-    public static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
+    private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
     private static final String DECK = "deck";
     private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE+DECK);
 
@@ -51,7 +51,7 @@ public class DeckFactory implements Factory {
                 NodeList nodeList = deck.getChildNodes();
                 String pathToDeck = resources.getString(DECK_PATH);
                 String deckPath = XMLHelper.getTextValue((Element)deck, pathToDeck);
-                if (deckPath != "") {
+                if (!deckPath.equals("")) {
                     return findStoredDeck(deckPath);
                 } else {
                     //return buildDeck(nodeList);

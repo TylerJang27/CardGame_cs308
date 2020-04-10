@@ -1,6 +1,8 @@
 package ooga.cardtable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
@@ -24,6 +26,21 @@ public class Cell implements ICell {
   }
 
   @Override
+  public List<ICell> getCellsbyName(String name) {
+    List<ICell> cellList = new ArrayList<>();
+    if (isInGroup(name)) {
+      cellList.add(this);
+    }
+    return cellList;
+  }
+
+  @Override
+  public boolean isInGroup(String name) {
+    return this.name.equals(name);
+            //TODO: DOUBLE CHECK HAPPY WITH THIS IMPLEMENTATION
+  }
+
+  @Override
   public void setDraw(Function<IDeck, ICell> initializer) {
     cellDeckBuilder = initializer;
   }
@@ -31,6 +48,8 @@ public class Cell implements ICell {
   @Override
   public void initializeCards(IDeck mainDeck) {
     if (cellDeckBuilder != null) {
+      //TODO: DOUBLE CHECK THIS WORKS
+      addCell(Offset.NONE, cellDeckBuilder.apply(mainDeck));
       //call merge/addcell with cellDeckBuilder.apply(mainDeck);
       //starting deck is empty
       //cellDeckBuilder.apply(mainDeck);
@@ -46,6 +65,16 @@ public class Cell implements ICell {
   @Override
   public String getName() {
     return name;
+  }
+
+  @Override
+  public int getTotalSize() {
+    int total = 0;
+    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+      total += e.getValue().getDeck().size();
+      total += getTotalSize(); //TODO: MAKE SURE THIS DOESN'T INFINITE RECURSE
+    }
+    return total;
   }
 
   @Override
@@ -88,6 +117,7 @@ public class Cell implements ICell {
 
   @Override
   public void addCell(IOffset offset, ICell cell) { //fixme 90% this infinite recurses
+    //TODO: ADD NAMES OR EVERYTHING BREAKS
     if (cell == null || cell.isEmpty()) {
       return;
     }
