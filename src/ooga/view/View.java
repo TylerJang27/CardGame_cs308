@@ -31,6 +31,8 @@ public class View implements ExternalAPI {
     private IMove myLatestMove;
     private TriggerMove getMove;
 
+    private BorderPane myRoot;
+
     public View(Controller.GiveMove giveMove){
         myMenu = new RowMenu();
         myMenu.show();
@@ -51,7 +53,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setCellData(Map<String,ICell> cellData) {
-        myDisplayTable.updateCells(cellData);
+        myRoot.setCenter(myDisplayTable.updateCells(cellData));
     }
 
     /**
@@ -136,9 +138,9 @@ public class View implements ExternalAPI {
     @Override
     public void setLayout(ILayout layout) {
         myDisplayTable = new DisplayTable(getMove, (Layout) layout, 500);
-        BorderPane root = new BorderPane();
-        root.setCenter(myDisplayTable.getPane());
-        Scene gameScene = new Scene(root,500,500);
+        myRoot = new BorderPane();
+        myRoot.setCenter(myDisplayTable.getPane());
+        Scene gameScene = new Scene(myRoot,500,500);
         gameStage = new Stage();
         gameStage.setScene(gameScene);
         gameStage.show();
