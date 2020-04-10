@@ -60,6 +60,7 @@ public class CellGroup implements ICellGroup{
     public void initializeAll(IDeck mainDeck) {
         for (Map.Entry<String, ICell> c: myCells.entrySet()) {
             c.getValue().initializeCards(mainDeck);
+            //System.out.println(c.getValue().getTotalSize());
         }
     }
 }

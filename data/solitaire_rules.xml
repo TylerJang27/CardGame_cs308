@@ -62,7 +62,7 @@
             <suit>c</suit>
         </card>
         <card>
-            <name>10C</name>
+            <name>0C</name>
             <value>10</value>
             <color>black</color>
             <suit>c</suit>
@@ -141,7 +141,7 @@
             <suit>d</suit>
         </card>
         <card>
-            <name>10D</name>
+            <name>0D</name>
             <value>10</value>
             <color>red</color>
             <suit>d</suit>
@@ -220,7 +220,7 @@
             <suit>h</suit>
         </card>
         <card>
-            <name>10H</name>
+            <name>0H</name>
             <value>10</value>
             <color>red</color>
             <suit>h</suit>
@@ -299,7 +299,7 @@
             <suit>s</suit>
         </card>
         <card>
-            <name>10S</name>
+            <name>0S</name>
             <value>10</value>
             <color>black</color>
             <suit>s</suit>

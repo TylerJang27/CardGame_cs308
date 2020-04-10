@@ -1,6 +1,8 @@
 package ooga.view;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import ooga.cardtable.*;
@@ -28,6 +30,8 @@ public class DisplayTable {
     private List<Cell> myCellData;
 
     public DisplayTable(Layout layout, double screenwidth) {
+        System.out.println("layout: "+layout.getCellLayout().keySet());
+
         myScreenWidth = screenwidth;
         myPane = new Pane();
 
@@ -44,38 +48,49 @@ public class DisplayTable {
             myCardNameToFileName.put(card, card+".png");
         }
         myCellNameToLocation = layout.getCellLayout();
+        /*
+        for(String key : layout.getCellLayout().keySet()){
+            Button b = new Button(key);
+            double xVal = 3 * layout.getCellLayout().get(key).getX();
+            double yVal = 3 * layout.getCellLayout().get(key).getY();
+            myPane.getChildren().add(b);
+            b.setLayoutX(xVal);
+            b.setLayoutY(yVal);
+        }
+         */
     }
 
     public Pane getPane() {
         return myPane;
     }
 
-    public Pane updateCells(List<Cell> cellData) {
+    public Pane updateCells(Map<String,ICell> cellData) {
         // TODO: for now, I assume update receives all of the cells, not just ones which needed to be changed
-        myPane = new Pane();
+        //myPane = new Pane();
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
         return myPane;
     }
 
-    private List<DisplayCell> makeDisplayCells(List<Cell> cellData) {
+    private List<DisplayCell> makeDisplayCells(Map<String,ICell> cellData) {
         List<DisplayCell> displayCellData = new ArrayList<>();
-        for (Cell c: cellData) {
-            displayCellData.add(makeDisplayCell(c));
+        for (String c: cellData.keySet()) {
+            displayCellData.add(makeDisplayCell(c,(Cell)cellData.get(c)));
         }
         return displayCellData;
     }
 
-    private DisplayCell makeDisplayCell(Cell cell) {
-        ICoordinate icoord = myCellNameToLocation.get(cell.getName());
-        double x = icoord.getX()*myScreenWidth;
-        double y = icoord.getY()*myScreenWidth;
+    private DisplayCell makeDisplayCell(String key, Cell cell) {
+        ICoordinate icoord = myCellNameToLocation.get(key);
+        double x = icoord.getX()*myScreenWidth/100.0;
+        double y = icoord.getY()*myScreenWidth/100.0;
+        System.out.println("key: "+key);
         return new DisplayCell(cell, myCardNameToFileName, new Point2D(x,y), myCardHeight, myCardWidth, myCardOffset);
     }
 
     private void drawDisplayCells(List<DisplayCell> DisplayCellData) {
         for (DisplayCell dc: DisplayCellData) {
-            drawDisplayCell(dc);
+                drawDisplayCell(dc);
         }
     }
 
@@ -84,6 +99,14 @@ public class DisplayTable {
             return;
         }
         myPane.getChildren().addAll(rootDispCell.getGroup().getChildren());
+        //System.out.println("Victory Royale");
+        for(Node n : myPane.getChildren()){
+            //System.out.println(n);
+            System.out.println(n.getTranslateX());
+           // System.out.println(n.getLayoutY());
+           // System.out.println(n.getTranslateX());
+           // System.out.println(n.getTranslateY());
+        }
         for (IOffset dir: rootDispCell.getCell().getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;
@@ -93,4 +116,6 @@ public class DisplayTable {
     }
 
 }
+
+
 

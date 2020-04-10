@@ -57,10 +57,12 @@ public class InitializeFactory implements Factory {
     private static Function<IDeck, ICell> getDeckBuilderFunction(IOffset offset, List<Function<IDeck, ICard>> functionList) {
         return (IDeck source) -> {
             ICell c = new Cell("");
+            ICell root = c;
             for (Function<IDeck, ICard> f: functionList) {
                 c.addCard(offset, f.apply(source));
+                c=c.getHeldCells().get(offset);
             }
-            return c;
+            return root;
         };
     }
 
