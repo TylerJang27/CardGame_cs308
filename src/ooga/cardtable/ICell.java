@@ -26,4 +26,6 @@ public interface ICell {
 
   void addCell(IOffset offset, ICell cell);
 
+  void setCellAtOffset(IOffset offset, ICell cell);
+
 }

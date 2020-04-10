@@ -100,4 +100,9 @@ public class Cell implements ICell {
       recipient.getAllChildren().get(e.getKey()).addCell(Offset.NONE, e.getValue());
     }
   }
+
+  @Override
+  public void setCellAtOffset(IOffset offset, ICell cell) {
+    children.put(offset, cell);
+  }
 }
