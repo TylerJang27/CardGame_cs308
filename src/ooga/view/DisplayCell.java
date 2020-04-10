@@ -124,7 +124,6 @@ public class DisplayCell {
             event.setDragDetect(false);
             Node on = (Node)event.getTarget();
             moveAll(this, new Point2D(event.getSceneX(), event.getSceneY()));
-
             event.consume();
         });
 
