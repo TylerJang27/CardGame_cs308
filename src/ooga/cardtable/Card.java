@@ -105,4 +105,9 @@ public class Card implements ICard {
     return name.equals(c.name) && faceup == c.faceup && orientation == c.orientation &&
         attributes.equals(c.attributes);
   }
+
+  @Override
+  public String toString() {
+    return name;
+  }
 }
