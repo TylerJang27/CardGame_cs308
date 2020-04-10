@@ -1,12 +1,16 @@
 package ooga.view.menu;
 
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -24,8 +28,10 @@ public class RowMenu implements Menu {
 
   private BorderPane myPane;
   private Stage myStage;
+  private StringProperty myGameProperty;
 
   public RowMenu(){
+    myGameProperty = new SimpleStringProperty();
     Dictionary.getInstance().addReference(CHOICES);
 
     HBox options = new HBox(SPACING);
@@ -66,7 +72,8 @@ public class RowMenu implements Menu {
 
   @Override
   public void addChosenHandler(ChangeListener<String> listener) {
-    //TODO
+    System.out.println("test");
+    myGameProperty.addListener(listener);
   }
 
   private void addOption(String key, HBox hbox){
@@ -75,6 +82,12 @@ public class RowMenu implements Menu {
     option.setMaxWidth(Double.MAX_VALUE);
     HBox.setHgrow(option, Priority.ALWAYS);
     option.prefHeightProperty().bind(hbox.heightProperty());
+    option.setOnMouseClicked(new EventHandler<MouseEvent>() {
+      @Override
+      public void handle(MouseEvent event) {
+        myGameProperty.setValue(key);
+      }
+    });
     hbox.getChildren().add(option);
   }
 }
