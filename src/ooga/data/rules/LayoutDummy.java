@@ -39,7 +39,7 @@ public class LayoutDummy extends Layout {
     }
 
     public LayoutDummy(String xmlfile, String game, Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings) {
-        super(xmlfile, game, cellCoords, numberSettings);
+        super(cellCoords, numberSettings);
         /*
         gameName = game;
 

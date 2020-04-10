@@ -22,8 +22,8 @@ import java.util.Map;
 public class Controller extends Application {
 
     // TODO: Put the file here
-    private static final String DEFAULT_STYLE_FILE = "ooga.data.default_style.xml";
-    private static final String DEFAULT_RULE_FILE = "ooga.data.solitaire_rules.xml";
+    private static final String DEFAULT_STYLE_FILE = "data/default_style.xml";
+    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";
 
     private View myView;
     private IMove myCurrentMove;
