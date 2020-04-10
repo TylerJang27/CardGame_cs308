@@ -109,4 +109,13 @@ public class Deck implements IDeck {
     }
     return getNextCard();
   }
+
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof  Deck)) {
+      return false;
+    }
+    Deck d = (Deck) other;
+    return cards.equals(d.cards);
+  }
 }
