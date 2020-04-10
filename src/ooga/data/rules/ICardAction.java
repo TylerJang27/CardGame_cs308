@@ -1,14 +1,10 @@
 package ooga.data.rules;
 
-import java.util.List;
-import ooga.cardtable.ICell;
+
 import ooga.cardtable.IGameState;
+import ooga.cardtable.IMove;
 
-public interface ICardAction {
+public interface ICardAction { //TODO: UPDATE API CHANGES
 
-  ICell getStartCell();
-
-  ICell getEndCell();
-
-  IGameState execute(List<ICell> cells);
+  void execute(IMove move);
 }

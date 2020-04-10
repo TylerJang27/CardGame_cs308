@@ -70,7 +70,7 @@ public class RuleFactory implements Factory {
         Function<IMove, ICell> moverCell = (IMove move) -> move.getMover();
         Function<IMove, ICell> donorCell = (IMove move) -> move.getDonor();
         Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
-        Function<IMove, ICell> currCell = getCurrentCellFunction(ruleName, moverCell, donorCell, recipientCell);
+        Function<IMove, ICell> currCell = MasterRuleFactory.getCurrentCellFunction(ruleName, moverCell, donorCell, recipientCell);
 
         extractValueCondition(e, conditions, recipientCell, currCell);
         extractColorCondition(e, conditions, recipientCell, currCell);
@@ -97,19 +97,6 @@ public class RuleFactory implements Factory {
                 extractNumCardsCondition(e, conditions, (IMove move) -> cell);
             }
         }
-    }
-
-    private static Function<IMove, ICell> getCurrentCellFunction(String ruleName, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell) {
-        Function<IMove, ICell> currCell;
-        char currentChar = ruleName.charAt(ruleName.length()-1);
-        if (M.equals("" + currentChar)) {
-            currCell = (IMove move) -> moverCell.apply(move);
-        } else if (D.equals("" + currentChar)) {
-            currCell = (IMove move) -> donorCell.apply(move);
-        } else { //R
-            currCell = (IMove move) -> recipientCell.apply(move);
-        }
-        return currCell;
     }
 
     private static void extractNameCondition(Element e, Map<String, ICellGroup> cellGroupMap, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> currCell) {

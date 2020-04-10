@@ -23,7 +23,7 @@ public class Rule implements IRule { //TODO: ADD DOCUMENTATION
     public boolean checkValidMove(IMove move) {
         for (Function<IMove, Boolean> f: myConditions) {
             if (!f.apply(move)) {
-                return false; //TODO: CHECK FAILURE CONDITION
+                return false; //TODO: CHECK FAILURE CONDITION OF cs308
             }
         }
         return true;

@@ -9,6 +9,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import java.util.*;
+import java.util.function.Function;
 
 public class MasterRuleFactory implements Factory {
     private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
@@ -139,7 +140,6 @@ public class MasterRuleFactory implements Factory {
                     throw new XMLException(e, MISSING_ERROR + "," + resources.getString(NEXT_PHASE));
                 }
             }
-
                                                                                                             //TODO: REFACTOR TO HERE TO AN ACTION FACTORY
             IMasterRule masterRule = new MasterRule(receiverRuleList, moverRuleList, donorRuleList);
             //entire rule list, auto rules, card actions, other actions
@@ -156,10 +156,20 @@ public class MasterRuleFactory implements Factory {
         return null;
     }
 
-
+    protected static Function<IMove, ICell> getCurrentCellFunction(String ruleName, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell) {
+        Function<IMove, ICell> currCell;
+        char currentChar = ruleName.charAt(ruleName.length()-1);
+        if (M.equals("" + currentChar)) {
+            currCell = (IMove move) -> moverCell.apply(move);
+        } else if (D.equals("" + currentChar)) {
+            currCell = (IMove move) -> donorCell.apply(move);
+        } else { //R
+            currCell = (IMove move) -> recipientCell.apply(move);
+        }
+        return currCell;
+    }
 
     private static Boolean checkRecipient(IMove move, String name, Map<String, ICellGroup> cellGroupMap) {
         return name.isEmpty()||(cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(move.getRecipient().getName()))||name.equals(move.getRecipient().getName().split(",")[0]);
     }
-
 }

@@ -474,20 +474,18 @@
                     </receive_rule>
                     <action>
                         <receiver_dest>
-                            <destination>r</destination>
-                            <stack>u</stack>
-                            <num_cards>*</num_cards>
+                            <destination>r</destination>    #
+                            <num_cards>*</num_cards>        #
                             <shuffle>n</shuffle>
-                            <direction>0</direction>
-                            <offset>down</offset>
+                            <direction>0</direction>        #
+                            <offset>south</offset>          #
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>down</offset>
+                            <offset>south</offset>
                             <flip>n</flip>
                         </mover_dest>
                         <!-- points included in the tag below-->
@@ -524,7 +522,6 @@
                     <action>
                         <receiver_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
@@ -532,7 +529,6 @@
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
@@ -571,19 +567,17 @@
                     <action>
                         <receiver_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>down</offset>
+                            <offset>south</offset>
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>down</offset>
+                            <offset>south</offset>
                             <flip>y</flip>
                         </mover_dest>
                         <next_phase phase="check_eog"></next_phase>
@@ -618,7 +612,6 @@
                     <action>
                         <receiver_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
@@ -626,7 +619,6 @@
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <stack>u</stack>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>

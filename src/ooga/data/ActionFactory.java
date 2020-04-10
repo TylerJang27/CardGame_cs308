@@ -1,5 +1,7 @@
 package ooga.data;
 
+import ooga.cardtable.*;
+import ooga.data.rules.CardAction;
 import ooga.data.rules.ICardAction;
 import org.w3c.dom.Element;
 
@@ -8,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ActionFactory implements Factory {
     private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
@@ -58,8 +62,75 @@ public class ActionFactory implements Factory {
 
     public ActionFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
 
-    ICardAction getAction(Element e, String ruleName) {
+    public static ICardAction getAction(Element e, String ruleName) {
+        Function<IMove, ICell> moverCell = (IMove move) -> move.getMover();
+        Function<IMove, ICell> donorCell = (IMove move) -> move.getDonor();
+        Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
+        Function<IMove, ICell> currCell = MasterRuleFactory.getCurrentCellFunction(ruleName, moverCell, donorCell, recipientCell);
+        String curr = ("" + ruleName.charAt(ruleName.length() - 1));
 
+        List<Consumer<IMove>> actions = new ArrayList<>();
+
+        Consumer<IMove> cardAction = (IMove move) -> {
+            List < ICell > cellsToMove = new ArrayList<>();
+            String numCards = XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS));
+            //determines number of cards to move
+            if (numCards.equals(resources.getString(ALL))) {
+                cellsToMove.addAll(currCell.apply(move).getAllCells());
+            } else if (Offset.validOffsets.contains(numCards)) {
+                cellsToMove.add(currCell.apply(move).getPeak(Offset.valueOf(numCards)));
+            }
+            //determines destination of cards
+            String destination = XMLHelper.getTextValue(e, resources.getString(DESTINATION));
+            ICell dest;
+            if (destination.equals(resources.getString(M))) {
+                dest = moverCell.apply(move);
+            } else if (destination.equals(resources.getString(D))) {
+                dest = donorCell.apply(move);
+            } else {
+                recipientCell.apply(move);
+            }
+            //determines offset at destination
+            String offset = XMLHelper.getTextValue(e, resources.getString(OFFSET));
+            IOffset off;
+            if (Offset.validOffsets.contains(offset)) {
+                off = Offset.valueOf(offset);
+            } else {
+                off = Offset.NONE;
+            }
+
+            //determines angle to turn cards
+            String turn = XMLHelper.getTextValue(e, resources.getString(DIRECTION));
+            if (!TRUE_CHECKS.contains(turn)) {
+                Double angle = Double.parseDouble(turn);
+                for (ICell c : currCell.apply(move).getAllCells()) {
+                    for (int k = 0; k < c.getDeck().size(); k++) {
+                        c.getDeck().peekCardAtIndex(k).rotate(angle);
+                    }
+                }
+            }
+
+            //determines flip of cards
+            String flip = XMLHelper.getTextValue(e, resources.getString(FLIP));
+            if (Offset.validOffsets.contains(flip)) {
+                currCell.apply(move).getPeak(Offset.valueOf(flip)).getDeck().peek().flip();
+            } else if (flip.equals(resources.getString(ALL))) {
+                for (ICell c : currCell.apply(move).getAllCells()) {
+                    for (int k = 0; k < c.getDeck().size(); k++) {
+                        c.getDeck().peekCardAtIndex(k).flip();
+                    }
+                }
+            }
+            //TODO: IMPLEMENT SHUFFLE
+
+            //moves cards if they're not already there
+            if (destination.equalsIgnoreCase(curr)) {
+                recipientCell.apply(move).addCell(off, currCell.apply(move));
+                //TODO: REMOVE FROM DONOR
+            }
+        };
+        actions.add(cardAction);
+        return new CardAction(actions);
     }
 
 
