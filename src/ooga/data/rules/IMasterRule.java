@@ -3,6 +3,7 @@ package ooga.data.rules;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
+import ooga.cardtable.IPlayer;
 
 /**
  * Gets and evaluates rules for a given phase, based on generic and specific rules.
@@ -23,9 +24,13 @@ public interface IMasterRule extends IRule {
    * @param cell the cell to be receiving a cell
    * @return whether or not the cell is a valid donor
    */
-  boolean checkValidDonor(ICell cell);
+  //boolean checkValidDonor(ICell cell);
 
   IGameState executeMove(IMove move); //TODO: ADD TO API CHANGES
+
+  IPhaseArrow executeAutoActions(IPlayer player); //TODO: ADD TO API CHANGES
+
+  boolean checkValidMove(IMove move); //TODO: ADD TO API CHANGES
 
   /**
    * Evaluates whether the cell transfer is valid

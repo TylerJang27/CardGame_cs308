@@ -62,6 +62,7 @@ public class MasterRuleFactory implements Factory {
 
     public static List<IMasterRule> getRules(Node rules, Map<String, ICellGroup> cellGroupMap, Map<String, ICell> cellMap, String phaseName) {
         List<String> masterRuleNames = new ArrayList<>();
+        List<IMasterRule> masterRuleList = new ArrayList<>();
         Map<String, IMasterRule> ruleMap = new HashMap<>();
         Map<IMasterRule, List<ICardAction>> ruleActionMap = new HashMap<>();
 
@@ -106,7 +107,6 @@ public class MasterRuleFactory implements Factory {
             allRules.addAll(moverRuleList);
             allRules.addAll(donorRuleList);
             //allRules.addAll(autoRules);
-            //////////each master rule needs an action
 
             List<ICardAction> cardActionList = new ArrayList<>();
             List<IControlAction> controlActionList = new ArrayList<>();
@@ -141,19 +141,14 @@ public class MasterRuleFactory implements Factory {
                 }
             }
                                                                                                             //TODO: REFACTOR TO HERE TO AN ACTION FACTORY
-            IMasterRule masterRule = new MasterRule(receiverRuleList, moverRuleList, donorRuleList);
-            //entire rule list, auto rules, card actions, other actions
+            IMasterRule masterRule = new MasterRule(allRules, autoRules, cardActionList, controlActionList);
             masterRuleNames.add(ruleName);
+            masterRuleList.add(masterRule);
             ruleMap.put(ruleName, masterRule);
 
-            List<ICardAction> cardActions = new ArrayList<>();
-            //donor action
-
-            //other actions
-
-            ruleActionMap.put(masterRule, cardActions);
+            ruleActionMap.put(masterRule, cardActionList);
         }
-        return null;
+        return masterRuleList;
     }
 
     protected static Function<IMove, ICell> getCurrentCellFunction(String ruleName, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell) {
