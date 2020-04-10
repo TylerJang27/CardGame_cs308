@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data type="rule">
+    <settings>
+        <!-- should just be a file name so that we can process it properly and send to the front end -->
+        <players>1</players>
+        <layout>data/solitaire_layout.xml</layout>
+    </settings>
+    <deck>
+        <!-- should either be custom held here, or point to a file to retrieve from -->
+        <card>
+            <name>AC</name>
+            <value>1</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>2C</name>
+            <value>2</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>3C</name>
+            <value>3</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>4C</name>
+            <value>4</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>5C</name>
+            <value>5</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>6C</name>
+            <value>6</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>7C</name>
+            <value>7</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>8C</name>
+            <value>8</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>9C</name>
+            <value>9</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>10C</name>
+            <value>10</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>JC</name>
+            <value>11</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>QC</name>
+            <value>12</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>KC</name>
+            <value>13</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+
+        <card>
+            <name>AD</name>
+            <value>1</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>2D</name>
+            <value>2</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>3D</name>
+            <value>3</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>4D</name>
+            <value>4</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>5D</name>
+            <value>5</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>6D</name>
+            <value>6</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>7D</name>
+            <value>7</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>8D</name>
+            <value>8</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>9D</name>
+            <value>9</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>10D</name>
+            <value>10</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>JD</name>
+            <value>11</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>QD</name>
+            <value>12</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>KD</name>
+            <value>13</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+
+        <card>
+            <name>AH</name>
+            <value>1</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>2H</name>
+            <value>2</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>3H</name>
+            <value>3</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>4H</name>
+            <value>4</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>5H</name>
+            <value>5</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>6H</name>
+            <value>6</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>7H</name>
+            <value>7</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>8H</name>
+            <value>8</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>9H</name>
+            <value>9</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>10H</name>
+            <value>10</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>JH</name>
+            <value>11</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>QH</name>
+            <value>12</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>KH</name>
+            <value>13</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+
+        <card>
+            <name>AS</name>
+            <value>1</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>2S</name>
+            <value>2</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>3S</name>
+            <value>3</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>4S</name>
+            <value>4</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>5S</name>
+            <value>5</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>6S</name>
+            <value>6</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>7S</name>
+            <value>7</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>8S</name>
+            <value>8</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>9S</name>
+            <value>9</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>10S</name>
+            <value>10</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>JS</name>
+            <value>11</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>QS</name>
+            <value>12</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>KS</name>
+            <value>13</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+    </deck>
+    <cell_groups>
+        <group category="action">
+            <cell name="1">
+                <fan>south</fan>
+                <rotation>0</rotation>
+                <init_cards>
+                    <card>Rd,U</card>
+                </init_cards>
+            </cell>
+            <cell name="2">
+                <fan>south</fan>
+                <rotation>0</rotation>
+                <init_cards>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
+                </init_cards>
+            </cell>
+            <cell name="3">
+                <fan>south</fan>
+                <rotation>0</rotation>
+                <init_cards>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
+                </init_cards>
+            </cell>
+            <cell name="4">
+                <fan>south</fan>
+                <rotation>0</rotation>
+                <init_cards>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
+                </init_cards>
+            </cell>
+            <cell name="5">
+                <fan>south</fan>
+                <rotation>0</rotation>
+                <init_cards>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
+                </init_cards>
+            </cell>
+            <cell name="6">
+                <fan>south</fan>
+                <rotation>0</rotation>
+                <init_cards>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
+                </init_cards>
+            </cell>
+            <cell name="7">
+                <fan>south</fan>
+                <rotation>0</rotation>
+                <init_cards>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,D</card>
+                    <card>Rd,U</card>
+                </init_cards>
+            </cell>
+        </group>
+        <group category="suits">
+            <cell name="club">
+                <fan>none</fan>
+                <rotation>0</rotation>
+                <init_cards/>
+            </cell>
+            <cell name="diamond">
+                <fan>none</fan>
+                <rotation>0</rotation>
+                <init_cards/>
+            </cell>
+            <cell name="heart">
+                <fan>none</fan>
+                <rotation>0</rotation>
+                <init_cards/>
+            </cell>
+            <cell name="spade">
+                <fan>none</fan>
+                <rotation>0</rotation>
+                <init_cards/>
+            </cell>
+        </group>
+        <group category="deck">
+            <cell name="deck">
+                <fan>none</fan>
+                <rotation>0</rotation>
+                <init_cards>
+                    <card>**,D</card>
+                </init_cards>
+            </cell>
+        </group>
+        <group category="hand">
+            <cell name="hand">
+                <fan>none</fan>
+                <rotation>0</rotation>
+                <init_cards/>
+            </cell>
+        </group>
+    </cell_groups>
+    <phases>
+        <phase name="play">
+            <phase_type>manual</phase_type>
+            <valid_donors>
+                <category>action</category>
+                <category>deck</category>
+                <category>hand</category>
+                <category>suits</category>
+            </valid_donors>
+            <rules>
+                <rule category="action">
+                    <receive_rule>
+                        <!-- put regex here -->
+                        <!-- value(Up/Down, #) color(=/!)
+                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
+                        <receiver>
+                            <num_cards>*</num_cards>
+                        </receiver>
+                        <mover>
+                            <direction>d</direction>
+                            <value>1</value>
+                            <color>!</color>
+                            <suit>*</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>y</is_faceup>
+                        </mover>
+                        <donor>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
+                            <suit>*</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>*</is_faceup>
+                            <name>*</name>
+                        </donor>
+                    </receive_rule>
+                    <action>
+                        <receiver_dest>
+                            <destination>r</destination>    #
+                            <num_cards>*</num_cards>        #
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>        #
+                            <offset>south</offset>          #
+                        </receiver_dest>
+                        <mover_dest>
+                            <destination>r</destination>
+                            <num_cards>*</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>south</offset>
+                            <flip>n</flip>
+                        </mover_dest>
+                        <!-- points included in the tag below-->
+                        <next_phase phase="check_eog">0</next_phase>
+                    </action>
+                </rule>
+                <rule category="suits">
+                    <receive_rule>
+                        <!-- put regex here -->
+                        <!-- value(Up/Down, #) color(=/!)
+                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
+                        <receiver>
+                            <num_cards/>
+                        </receiver>
+                        <mover>
+                            <direction>u</direction>
+                            <value>1</value>
+                            <color>*</color>
+                            <suit>=</suit>
+                            <num_cards>1</num_cards>
+                            <is_faceup>y</is_faceup>
+                            <name>*</name>
+                        </mover>
+                        <donor>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
+                            <suit>*</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>*</is_faceup>
+                            <name>*</name>
+                        </donor>
+                    </receive_rule>
+                    <action>
+                        <receiver_dest>
+                            <destination>r</destination>
+                            <num_cards>*</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>0</offset>
+                        </receiver_dest>
+                        <mover_dest>
+                            <destination>r</destination>
+                            <num_cards>*</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>0</offset>
+                            <flip>n</flip>
+                        </mover_dest>
+                        <next_phase phase = "check_eog">0</next_phase>
+                    </action>
+                </rule>
+                <rule category="deck">
+                    <receive_rule>
+                        <!-- put regex here -->
+                        <!-- value(Up/Down, #) color(=/!)
+                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
+                        <receiver>
+                            <num_cards>0</num_cards>
+                        </receiver>
+                        <mover>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
+                            <suit>*</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>y</is_faceup>
+                        </mover>
+                        <donor>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
+                            <suit>*</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>*</is_faceup>
+                            <category>hand</category>
+                        </donor>
+                    </receive_rule>
+                    <action>
+                        <receiver_dest>
+                            <destination>r</destination>
+                            <num_cards>*</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>south</offset>
+                        </receiver_dest>
+                        <mover_dest>
+                            <destination>r</destination>
+                            <num_cards>*</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>south</offset>
+                            <flip>y</flip>
+                        </mover_dest>
+                        <next_phase phase="check_eog"></next_phase>
+                    </action>
+                </rule>
+                <rule category="hand">
+                    <receive_rule>
+                        <!-- put regex here -->
+                        <!-- value(Up/Down, #) color(=/!)
+                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
+                        <receiver>
+                            <num_cards/>
+                        </receiver>
+                        <mover>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
+                            <suit>*</suit>
+                            <num_cards>1</num_cards>
+                            <is_faceup>n</is_faceup>
+                        </mover>
+                        <donor>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
+                            <suit>*</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>*</is_faceup>
+                            <category>deck</category>
+                        </donor>
+                    </receive_rule>
+                    <action>
+                        <receiver_dest>
+                            <destination>r</destination>
+                            <num_cards>*</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>0</offset>
+                        </receiver_dest>
+                        <mover_dest>
+                            <destination>r</destination>
+                            <num_cards>*</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>0</offset>
+                            <flip>y</flip>
+                        </mover_dest>
+                        <next_phase phase = "check_eog">0</next_phase>
+                    </action>
+                </rule>
+            </rules>
+        </phase>
+        <phase name="check_eog">
+            <phase_type>auto</phase_type>
+            <valid_donors></valid_donors>
+            <rules>
+                <rule category="">
+                    <receive_rule>
+                        <condition category="action">
+                            <!-- somehow check that all these are empty -->
+                            <num_cards>0</num_cards>
+                        </condition>
+                        <condition category="hand">
+                            <!-- somehow check that all these are empty -->
+                            <num_cards>0</num_cards>
+                        </condition>
+                        <condition category="deck">
+                            <!-- somehow check that all these are empty -->
+                            <num_cards>0</num_cards>
+                        </condition>
+                    </receive_rule>
+                    <action>
+                        <!-- go to end of game -->
+                        <next_phase phase="end_of_game"></next_phase>
+                    </action>
+                </rule>
+                <rule category="">
+                    <receive_rule>
+                        <condition category="action">
+                            <!-- somehow check that all these are empty -->
+                        </condition>
+                    </receive_rule>
+                    <action>
+                        <!-- go to player turn -->
+                        <next_phase phase = "play"></next_phase>
+                    </action>
+                </rule>
+            </rules>
+        </phase>
+        <phase name="end_of_game">
+            <phase_type>manual</phase_type>
+            <valid_donors/>
+            <rules>
+                <rule category="default">
+                    <option>
+                        <action>
+                            <!-- display end of game screen -->
+                            <next_phase phase = "end_of_game"></next_phase>
+                        </action>
+                    </option>
+                </rule>
+            </rules>
+        </phase>
+    </phases>
+</data>

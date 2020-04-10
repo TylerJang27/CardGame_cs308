@@ -1,4 +1,4 @@
-package ooga.rules;
+package ooga.cardtable;
 
 public interface IGameState {
   //may be an enum
