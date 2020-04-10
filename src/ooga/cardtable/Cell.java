@@ -219,4 +219,24 @@ public class Cell implements ICell {
   //TODO: MAY EVENTUALLY NEED THE FOLLOWING:
   //  SHUFFLE A CELL AND ITS COMPATRIOTS
   //
+
+  @Override
+  public boolean equals(Object other) {
+    if (! (other instanceof Cell)) {
+      return false;
+    }
+    Cell c = (Cell) other;
+    if (!deck.equals(c.deck)){
+      return false;
+    }
+    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+      if (e.getKey()!=Offset.NONE){
+        if (!e.getValue().equals(c.getAllChildren().get(e.getKey())))
+        {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 }

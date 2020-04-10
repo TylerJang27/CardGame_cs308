@@ -41,4 +41,13 @@ public class Suit implements ISuit {
 
   @Override
   public String getColorName() { return myColorName; }
+
+  @Override
+  public boolean equals(Object other) { //fixme switch to icolor
+    if (!(other instanceof Suit)) {
+      return false;
+    }
+    Suit s = (Suit) other;
+    return name.equals(s.name) && Arrays.equals(color, ((Suit) other).color);
+  }
 }
