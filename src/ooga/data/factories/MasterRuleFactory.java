@@ -68,89 +68,97 @@ public class MasterRuleFactory implements Factory {
         Map<String, IMasterRule> ruleMap = new HashMap<>();
         Map<IMasterRule, List<ICardAction>> ruleActionMap = new HashMap<>();
 
-        NodeList ruleNodeList = ((Element)rules).getElementsByTagName(resources.getString(RULE));
+        try {
+            NodeList ruleNodeList = ((Element) rules).getElementsByTagName(resources.getString(RULE));
 
-        for (int k = 0; k < ruleNodeList.getLength(); k++) {
-            Element ruleNode = (Element)ruleNodeList.item(k);
-            String ruleName = XMLHelper.getAttribute(ruleNode, resources.getString(CATEGORY));
+            for (int k = 0; k < ruleNodeList.getLength(); k++) {
+                Element ruleNode = (Element) ruleNodeList.item(k);
+                String ruleName = XMLHelper.getAttribute(ruleNode, resources.getString(CATEGORY));
 
-            //supports multiple receive rules
-            NodeList receiverRuleNodeList = ruleNode.getElementsByTagName(resources.getString(RECEIVE_RULE));
-            List<IRule> allRules = new ArrayList<>();
-            List<IRule> receiverRuleList = new ArrayList<>();
-            List<IRule> moverRuleList = new ArrayList<>();
-            List<IRule> donorRuleList = new ArrayList<>();
-            List<IRule> autoRules = new ArrayList<>();
+                //supports multiple receive rules
+                List<IRule> autoRules = new ArrayList<>();
+                List<IRule> allRules = getAllRules(cellGroupMap, ruleName, ruleNode, autoRules);
+                //allRules.addAll(autoRules);
 
-            for (int j = 0; j < receiverRuleNodeList.getLength(); j++) {
-                Element receiverRuleNode = (Element)receiverRuleNodeList.item(j);
+                List<IControlAction> controlActionList = new ArrayList<>();
+                List<ICardAction> cardActionList = getCardandControlActions(phaseName, ruleNode, ruleName, controlActionList);
 
-                NodeList allConditions = receiverRuleNode.getChildNodes();
+                //TODO: REFACTOR TO HERE TO AN ACTION FACTORY
+                IMasterRule masterRule = new MasterRule(allRules, autoRules, cardActionList, controlActionList);
+                masterRuleNames.add(ruleName);
+                masterRuleList.add(masterRule);
+                ruleMap.put(ruleName, masterRule);
 
-                Node recRule = XMLHelper.getNodeByName(allConditions, resources.getString(RECEIVER));
-                if (recRule != null) {
-                    receiverRuleList.add(RuleFactory.buildRule((Element)recRule, ruleName + R, cellGroupMap, (IMove move) -> checkRecipient(move, ruleName, cellGroupMap)));
-                }
-                Node movRule = XMLHelper.getNodeByName(allConditions, resources.getString(MOVER));
-                if (movRule != null) {
-                    moverRuleList.add(RuleFactory.buildRule((Element) movRule, ruleName + M, cellGroupMap));
-                }
-                Node donRule = XMLHelper.getNodeByName(allConditions, resources.getString(DONOR));
-                if (donRule != null) {
-                    donorRuleList.add(RuleFactory.buildRule((Element)donRule, ruleName + D, cellGroupMap));
-                }
-                NodeList condRuleList = receiverRuleNode.getElementsByTagName(resources.getString(CONDITION));
-                for (int l = 0; l < condRuleList.getLength(); l ++) {
-                    Node condRule = condRuleList.item(l);
-                    autoRules.add(RuleFactory.buildRule((Element)condRule, ruleName + C, cellGroupMap));
-                }
+                ruleActionMap.put(masterRule, cardActionList);
             }
-            allRules.addAll(receiverRuleList);
-            allRules.addAll(moverRuleList);
-            allRules.addAll(donorRuleList);
-            //allRules.addAll(autoRules);
-
-            List<ICardAction> cardActionList = new ArrayList<>();
-            List<IControlAction> controlActionList = new ArrayList<>();
-            NodeList actionList = ruleNode.getElementsByTagName(resources.getString(ACTION));               //TODO: REFACTOR FROM HERE TO AN ACTION FACTORY
-            for (int j = 0; j < actionList.getLength(); j++) {
-                Element actionHeadNode = (Element) actionList.item(j);
-
-                NodeList allActions = actionHeadNode.getChildNodes();
-
-                Node recAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(RECEIVER_DESTINATION));
-                if (recAction != null) {
-                    cardActionList.add(ActionFactory.getAction((Element)recAction, ruleName + R));
-                    //TODO: FOLLOW CONVENTION WITH FACTORY METHOD NAMES
-                }
-                Node movAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(MOVER_DESTINATION));
-                if (movAction != null) {
-                    cardActionList.add(ActionFactory.getAction((Element)recAction, ruleName + M));
-                }
-
-                Node phaseAction = XMLHelper.getNodeByName(allActions, resources.getString(NEXT_PHASE));
-                try {
-                    String newPhase = XMLHelper.getAttribute((Element)phaseAction, resources.getString(PHASE));
-                    String pointVal = phaseAction.getTextContent();
-                    Integer points = 0;
-                    if (!pointVal.isEmpty()) {
-                        points = Integer.parseInt(pointVal);
-                    }
-                    IPhaseArrow arrow = new PhaseArrow(phaseName, ruleName, newPhase);
-                    controlActionList.add(new ControlAction(arrow, points));
-                } catch (NullPointerException e) {
-                    throw new XMLException(e, MISSING_ERROR + "," + resources.getString(NEXT_PHASE));
-                }
-            }
-                                                                                                            //TODO: REFACTOR TO HERE TO AN ACTION FACTORY
-            IMasterRule masterRule = new MasterRule(allRules, autoRules, cardActionList, controlActionList);
-            masterRuleNames.add(ruleName);
-            masterRuleList.add(masterRule);
-            ruleMap.put(ruleName, masterRule);
-
-            ruleActionMap.put(masterRule, cardActionList);
+        } catch (Exception e) {
+            throw new XMLException(e, Factory.MISSING_ERROR + "," + resources.getString(RULE));
         }
         return masterRuleList;
+    }
+
+    private static List<ICardAction> getCardandControlActions(String phaseName, Element ruleNode, String ruleName, List<IControlAction> controlActionList) {
+        List<ICardAction> cardActionList = new ArrayList<>();
+        NodeList actionList = ruleNode.getElementsByTagName(resources.getString(ACTION));               //TODO: REFACTOR FROM HERE TO AN ACTION FACTORY
+        for (int j = 0; j < actionList.getLength(); j++) {
+            Element actionHeadNode = (Element) actionList.item(j);
+
+            NodeList allActions = actionHeadNode.getChildNodes();
+
+            Node recAction = (Element) XMLHelper.getNodeByName(allActions, resources.getString(RECEIVER_DESTINATION));
+            if (recAction != null) {
+                cardActionList.add(ActionFactory.getAction((Element)recAction, ruleName + R));
+                //TODO: FOLLOW CONVENTION WITH FACTORY METHOD NAMES
+            }
+            Node movAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(MOVER_DESTINATION));
+            if (movAction != null) {
+                cardActionList.add(ActionFactory.getAction((Element)recAction, ruleName + M));
+            }
+
+            Node phaseAction = XMLHelper.getNodeByName(allActions, resources.getString(NEXT_PHASE));
+            try {
+                String newPhase = XMLHelper.getAttribute((Element)phaseAction, resources.getString(PHASE));
+                String pointVal = phaseAction.getTextContent();
+                Integer points = 0;
+                if (!pointVal.isEmpty()) {
+                    points = Integer.parseInt(pointVal);
+                }
+                IPhaseArrow arrow = new PhaseArrow(phaseName, ruleName, newPhase);
+                controlActionList.add(new ControlAction(arrow, points));
+            } catch (NullPointerException e) {
+                throw new XMLException(e, MISSING_ERROR + "," + resources.getString(NEXT_PHASE));
+            }
+        }
+        return cardActionList;
+    }
+
+    private static List<IRule> getAllRules(Map<String, ICellGroup> cellGroupMap, String ruleName, Element ruleNode, List<IRule> autoRules) {
+        NodeList receiverRuleNodeList = ruleNode.getElementsByTagName(resources.getString(RECEIVE_RULE));
+        List<IRule> allRules = new ArrayList<>();
+        for (int j = 0; j < receiverRuleNodeList.getLength(); j++) {
+            Element receiverRuleNode = (Element)receiverRuleNodeList.item(j);
+
+            NodeList allConditions = receiverRuleNode.getChildNodes();
+
+            Node recRule = XMLHelper.getNodeByName(allConditions, resources.getString(RECEIVER));
+            if (recRule != null) {
+                allRules.add(RuleFactory.buildRule((Element)recRule, ruleName + R, cellGroupMap, (IMove move) -> checkRecipient(move, ruleName, cellGroupMap)));
+            }
+            Node movRule = XMLHelper.getNodeByName(allConditions, resources.getString(MOVER));
+            if (movRule != null) {
+                allRules.add(RuleFactory.buildRule((Element) movRule, ruleName + M, cellGroupMap));
+            }
+            Node donRule = XMLHelper.getNodeByName(allConditions, resources.getString(DONOR));
+            if (donRule != null) {
+                allRules.add(RuleFactory.buildRule((Element)donRule, ruleName + D, cellGroupMap));
+            }
+            NodeList condRuleList = receiverRuleNode.getElementsByTagName(resources.getString(CONDITION));
+            for (int l = 0; l < condRuleList.getLength(); l ++) {
+                Node condRule = condRuleList.item(l);
+                autoRules.add(RuleFactory.buildRule((Element)condRule, ruleName + C, cellGroupMap));
+            }
+        }
+        return allRules;
     }
 
     protected static Function<IMove, ICell> getCurrentCellFunction(String ruleName, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell) {
