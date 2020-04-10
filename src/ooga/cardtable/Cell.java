@@ -231,7 +231,7 @@ public class Cell implements ICell {
     }
     for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
       if (e.getKey()!=Offset.NONE){
-        if (!e.getValue().getAllChildren().get(e.getKey()).equals(c.getAllChildren().get(e.getKey())))
+        if (!e.getValue().equals(c.getAllChildren().get(e.getKey())))
         {
           return false;
         }
