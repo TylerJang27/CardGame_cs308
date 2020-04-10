@@ -419,7 +419,7 @@
             </cell>
         </group>
         <group category="deck">
-            <cell name="draw">
+            <cell name="deck">
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
