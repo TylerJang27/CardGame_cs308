@@ -12,7 +12,8 @@ public class Card implements ICard {
   private double orientation;
 
   public Card(String name) {
-    name = "Unknown Card";
+    this.name = name;
+    System.out.println(name);
     faceup = false;
     orientation = 0;
   }
