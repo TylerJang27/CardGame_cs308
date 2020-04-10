@@ -152,9 +152,16 @@ public class Cell implements ICell {
     if (cell == null || cell.isEmpty()) {
       return;
     }
+    System.out.println("recurse"); //fixme remove
     ICell recipient = getAllChildren().get(offset);
+    if (recipient == null) {
+      setCellAtOffset(offset, cell);
+      updateParentage();
+      return;
+    }
     if (cell.getAllChildren().keySet().size() <= 1) {
       recipient.getDeck().addDeck(cell.getDeck());
+      updateParentage();
       return;
     }
     for (Entry<IOffset, ICell> e : cell.getAllChildren().entrySet()) {
@@ -226,7 +233,7 @@ public class Cell implements ICell {
   //
 
   @Override
-  public boolean equals(Object other) {
+  public boolean equals(Object other) { //fixme should this check name? not yet for tests for cards
     if (! (other instanceof Cell)) {
       return false;
     }
@@ -243,5 +250,16 @@ public class Cell implements ICell {
       }
     }
     return true;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder ret = new StringBuilder(name + ": " + deck.toString() + "\n");
+    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+      if (e.getKey()!=Offset.NONE){
+        ret.append(e.getValue().toString());
+      }
+    }
+    return ret.toString();
   }
 }
