@@ -1,24 +1,28 @@
 package ooga.data.rules;
 
+import ooga.data.style.Coordinate;
 import ooga.data.style.ICoordinate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
-public class Layout implements ILayout {
+public class LayoutDummy implements ILayout {
 
     private static final int SCREEN_WIDTH = 100;
 
     private Map<String, ICoordinate> cellLayout;
 
-    private int numPlayers;
+    private int numPlayers = 1;
 
-    private String gameName;
+    private String gameName = "Solitaire";
 
-    private double screenRatio;
-    private double cardWidthRatio;
-    private double cardHeightRatio;
-    private double downOffsetRatio;
-    private double upOffsetRatio;
+    private double screenRatio = 0.75;
+    private double cardWidthRatio = 0.1;
+    private double cardHeightRatio = 0.14;
+    private double downOffsetRatio = 0.02;
+    private double upOffsetRatio = 0.04;
 
     // TODO: Check if frontend wants card height relative to screen or card width
 
@@ -29,7 +33,11 @@ public class Layout implements ILayout {
     private static final String FACE_DOWN_OFFSET = "face_down_offset";
     private static final String FACE_UP_OFFSET = "face_up_offset";
 
-    public Layout(String xmlfile, String game, Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings) {
+    public LayoutDummy() {
+        initializeMap();
+    }
+
+    public LayoutDummy(String xmlfile, String game, Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings) {
         gameName = game;
 
         cellLayout = cellCoords;
@@ -110,5 +118,33 @@ public class Layout implements ILayout {
     @Override
     public double getCardRatio() {
         return 0;
+    }
+
+    private Map<String, ICoordinate> initializeMap() {
+
+        Map<String, ICoordinate> ret = new HashMap<>();
+
+        int[][] coords = {
+                {11, 10},
+                {24, 10},
+                {50, 10},
+                {63, 10},
+                {76, 10},
+                {89, 10},
+                {11, 27},
+                {24, 27},
+                {37, 27},
+                {50, 27},
+                {63, 27},
+                {76, 27},
+                {89, 27},
+        };
+        ArrayList<String> names = new ArrayList(Arrays.asList("deck", "hand", "club", "diamond", "heart", "spade", "1", "2", "3", "4", "5", "6", "7"));
+
+        for(int i = 0; i < names.size(); i++) {
+            ret.put(names.get(i), new Coordinate(coords[i][0], coords[i][1]));
+        }
+
+        return ret;
     }
 }
