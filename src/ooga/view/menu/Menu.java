@@ -11,8 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public interface Menu {
+
   void show();
 
   void addChosenHandler(ChangeListener<String> listener);
-
 }

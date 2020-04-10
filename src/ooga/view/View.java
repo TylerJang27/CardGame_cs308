@@ -1,6 +1,7 @@
 package ooga.view;
 
 import java.util.List;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -130,5 +131,9 @@ public class View implements ExternalAPI {
         gameStage = new Stage();
         gameStage.setScene(gameScene);
         gameStage.show();
+    }
+
+    public void listenForGameChoice(ChangeListener<String> listener){
+        myMenu.addChosenHandler(listener);
     }
 }
