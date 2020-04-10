@@ -1,13 +1,10 @@
 package ooga.controller;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 import ooga.cardtable.*;
+import ooga.data.factories.PhaseMachineFactory;
 import ooga.data.LayoutFactory;
-import ooga.data.PhaseMachineFactory;
-import ooga.data.StyleFactory;
 import ooga.data.rules.IPhaseMachine;
 import ooga.data.style.IStyle;
 import ooga.view.View;

@@ -1,7 +1,9 @@
-package ooga.data;
+package ooga.data.factories;
 
 import ooga.cardtable.ICell;
 import ooga.cardtable.IDeck;
+import ooga.data.rules.PhaseMachine;
+import ooga.data.XMLHelper;
 import ooga.data.rules.*;
 import ooga.data.rules.IPhaseMachine;
 import org.w3c.dom.Element;
