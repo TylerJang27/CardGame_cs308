@@ -2,6 +2,7 @@ package ooga.data.factories;
 
 import ooga.data.XMLException;
 import ooga.data.XMLHelper;
+import ooga.data.factories.Factory;
 import ooga.data.rules.ILayout;
 import ooga.data.rules.Layout;
 import ooga.data.style.Coordinate;
@@ -12,9 +13,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class LayoutFactory {
 
@@ -47,10 +46,10 @@ public class LayoutFactory {
             // FIXME!!!!
             Node cells = root.getElementsByTagName(coordResources.getString("Cells")).item(0);
 
-            NodeList cellList = cells.getChildNodes();
+            NodeList cellList = ((Element) cells).getElementsByTagName(coordResources.getString("Cell"));
 
             Map<String, ICoordinate> coordMap = new HashMap<>();
-            for (int k = 0; k < cellList.getLength(); k++) {
+            for (int k = 0; k < cellList.getLength(); k ++) {
                 Element n = (Element) cellList.item(k); // FIXME
                 String cellName = XMLHelper.getAttribute(n, coordResources.getString("Name"));
                 NodeList coordinate = n.getChildNodes();
@@ -61,7 +60,6 @@ public class LayoutFactory {
 
                 coordMap.put(cellName, coord);
             }
-            System.out.println(coordMap);
             return new Layout(coordMap, numberSettings);
         } catch (Exception e) {
             throw new XMLException(e, Factory.MISSING_ERROR + "," + LAYOUT_TYPE);
