@@ -29,6 +29,8 @@ public class Layout implements ILayout {
     private static final String FACE_DOWN_OFFSET = "face_down_offset";
     private static final String FACE_UP_OFFSET = "face_up_offset";
 
+    public Layout () {}
+
     public Layout(String xmlfile, String game, Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings) {
         gameName = game;
 
