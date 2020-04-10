@@ -5,6 +5,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 import ooga.cardtable.*;
+import ooga.data.LayoutFactory;
 import ooga.data.PhaseMachineFactory;
 import ooga.data.StyleFactory;
 import ooga.data.rules.IPhaseMachine;
@@ -80,6 +81,8 @@ public class Controller extends Application {
         myTable = new Table(myCurrentPhaseMachine);
         myCellMap = myTable.getCellData();
         myView.setCellData(new ArrayList(myCellMap.values()));
+        File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
+        myView.setLayout(LayoutFactory.getLayout(f));
     }
 
     private void newMove() {
