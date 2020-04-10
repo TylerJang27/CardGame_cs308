@@ -13,6 +13,8 @@ import ooga.data.style.IStyle;
 import ooga.view.View;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +25,8 @@ import java.util.Map;
 public class Controller extends Application {
 
     // TODO: Put the file here
-    private static final String DEFAULT_STYLE_FILE = "please put a file navigator here";
-    private static final String DEFAULT_RULE_FILE = "same as above please, should be straightforward";
+    private static final String DEFAULT_STYLE_FILE = "ooga.data.default_style.xml";
+    private static final String DEFAULT_RULE_FILE = "ooga.data.solitaire_rules.xml";
 
     private View myView;
     private IMove myCurrentMove;
@@ -34,6 +36,7 @@ public class Controller extends Application {
     private File myRuleFile;
     private File myLayoutFile;
     private IPhaseMachine myCurrentPhaseMachine;
+    private Map<String, ICell> myCellMap;
 
     public Controller() { super(); }
 
@@ -74,9 +77,12 @@ public class Controller extends Application {
     private void startTable(String gameName) {
         // TODO: process gamename string to a file path
         System.out.println(gameName);
-        myTable = new Table();  // TODO: Give game name somehow, figure out who's building the phase machine
+        // TODO: Give game name somehow, figure out who's building the phase machine
         myRuleFile = new File(DEFAULT_RULE_FILE);
         myCurrentPhaseMachine = PhaseMachineFactory.getPhaseMachine(myRuleFile);
+        myTable = new Table(myCurrentPhaseMachine);
+        myCellMap = myTable.getCellData();
+        myView.setCellData(new ArrayList(myCellMap.values()));
     }
 
     private void newMove() {
