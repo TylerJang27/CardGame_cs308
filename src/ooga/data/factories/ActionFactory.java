@@ -1,6 +1,7 @@
-package ooga.data;
+package ooga.data.factories;
 
 import ooga.cardtable.*;
+import ooga.data.XMLHelper;
 import ooga.data.rules.CardAction;
 import ooga.data.rules.ICardAction;
 import org.w3c.dom.Element;

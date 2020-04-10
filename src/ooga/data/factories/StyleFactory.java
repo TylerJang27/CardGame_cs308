@@ -1,9 +1,11 @@
-package ooga.data;
+package ooga.data.factories;
 
 import java.io.File;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import ooga.data.XMLException;
+import ooga.data.XMLHelper;
 import ooga.data.style.IStyle;
 import ooga.data.style.StyleData;
 import org.w3c.dom.Element;

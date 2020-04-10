@@ -1,7 +1,9 @@
-package ooga.data;
+package ooga.data.factories;
 
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
+import ooga.data.XMLException;
+import ooga.data.XMLHelper;
 import ooga.data.rules.*;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

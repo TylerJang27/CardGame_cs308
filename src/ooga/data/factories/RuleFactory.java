@@ -1,7 +1,8 @@
-package ooga.data;
+package ooga.data.factories;
 
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
+import ooga.data.XMLHelper;
 import ooga.data.rules.ICellGroup;
 import ooga.data.rules.IRule;
 import ooga.data.rules.Rule;

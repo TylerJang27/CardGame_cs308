@@ -1,5 +1,6 @@
-package ooga.data;
+package ooga.data.factories;
 
+import ooga.data.XMLHelper;
 import ooga.data.rules.ISettings;
 import ooga.data.rules.Settings;
 import org.w3c.dom.Element;

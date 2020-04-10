@@ -1,5 +1,6 @@
-package ooga.data;
+package ooga.data.factories;
 
+import ooga.data.XMLHelper;
 import ooga.data.rules.ILayout;
 import ooga.data.rules.Layout;
 import ooga.data.style.Coordinate;

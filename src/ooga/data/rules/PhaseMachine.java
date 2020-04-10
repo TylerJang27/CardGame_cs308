@@ -1,4 +1,4 @@
-package ooga.data;
+package ooga.data.rules;
 
 import java.util.ArrayList;
 import java.util.HashMap;

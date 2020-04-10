@@ -1,6 +1,8 @@
-package ooga.data;
+package ooga.data.factories;
 
 import ooga.cardtable.*;
+import ooga.data.XMLException;
+import ooga.data.XMLHelper;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -42,7 +44,7 @@ public class DeckFactory implements Factory {
      *
      * @param root  the root of the document which holds a deck element
      * @return      a fully constructed IDeck instance
-     * @throws      XMLException if deck is empty or missing
+     * @throws XMLException if deck is empty or missing
      */
     public static IDeck getDeck(Element root) {
         try {
