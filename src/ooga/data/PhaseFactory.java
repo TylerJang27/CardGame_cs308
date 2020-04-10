@@ -76,7 +76,7 @@ public class PhaseFactory implements Factory {
                     NodeList donorNodeList = donorHeadNode.getElementsByTagName(resources.getString(CATEGORY));
                     for (int j = 0; j < donorNodeList.getLength(); j++) {
                         Node donor = donorNodeList.item(j);
-                        validDonorNames.add(donor.getNodeValue());
+                        validDonorNames.add(donor.getTextContent());
                     }
                 }
 

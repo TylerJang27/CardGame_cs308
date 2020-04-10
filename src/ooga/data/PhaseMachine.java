@@ -23,7 +23,7 @@ public class PhaseMachine implements IPhaseMachine {
   private List<IPhaseHistoryCell> history;
   private ISettings mySettings;
 
-  public PhaseMachine() {
+  /*public PhaseMachine() {
     history = new ArrayList<>();
     phases = new HashMap<>();
   }
@@ -35,14 +35,17 @@ public class PhaseMachine implements IPhaseMachine {
     }
     startPhase = phases.get(startName); //FIXME add error checking
     currentPhase = startPhase;
+  }*/
+
+  public PhaseMachine(Map<String, IPhase> ph, String startName, ISettings settings) {
+    history = new ArrayList<>();
+    phases = ph;
+    startPhase = phases.get(startName);
+    currentPhase = startPhase;
+    cells = new ArrayList<>();
     for (Map.Entry<String, ICell> e: getTopLevelCells().entrySet()) {
       cells.add(e.getValue());
     }
-  }
-
-  public PhaseMachine(Map<String, IPhase> ph, String startName, ISettings settings) {
-    this(new ArrayList<>(ph.values()), startName);
-    phases = ph;
     mySettings = settings;
     cycleAutomatic();
   }

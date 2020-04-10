@@ -50,7 +50,7 @@ public class LayoutFactory {
             Node x = XMLHelper.getNodeByName(coordinate, coordResources.getString("X"));
             Node y = XMLHelper.getNodeByName(coordinate, coordResources.getString("Y"));
 
-            ICoordinate coord = new Coordinate(Double.parseDouble(x.getNodeValue()), Double.parseDouble(y.getNodeValue()));
+            ICoordinate coord = new Coordinate(Double.parseDouble(x.getTextContent()), Double.parseDouble(y.getTextContent()));
 
             coordMap.put(cellName, coord);
         }

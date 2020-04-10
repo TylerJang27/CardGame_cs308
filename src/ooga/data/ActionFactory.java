@@ -78,7 +78,7 @@ public class ActionFactory implements Factory {
             if (numCards.equals(resources.getString(ALL))) {
                 cellsToMove.addAll(currCell.apply(move).getAllCells());
             } else if (Offset.validOffsets.contains(numCards)) {
-                cellsToMove.add(currCell.apply(move).getPeak(Offset.valueOf(numCards)));
+                cellsToMove.add(currCell.apply(move).getPeak(Offset.valueOf(numCards.toUpperCase())));
             }
             //determines destination of cards
             String destination = XMLHelper.getTextValue(e, resources.getString(DESTINATION));
@@ -94,7 +94,7 @@ public class ActionFactory implements Factory {
             String offset = XMLHelper.getTextValue(e, resources.getString(OFFSET));
             IOffset off;
             if (Offset.validOffsets.contains(offset)) {
-                off = Offset.valueOf(offset);
+                off = Offset.valueOf(offset.toUpperCase());
             } else {
                 off = Offset.NONE;
             }
@@ -113,7 +113,7 @@ public class ActionFactory implements Factory {
             //determines flip of cards
             String flip = XMLHelper.getTextValue(e, resources.getString(FLIP));
             if (Offset.validOffsets.contains(flip)) {
-                currCell.apply(move).getPeak(Offset.valueOf(flip)).getDeck().peek().flip();
+                currCell.apply(move).getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().flip();
             } else if (flip.equals(resources.getString(ALL))) {
                 for (ICell c : currCell.apply(move).getAllCells()) {
                     for (int k = 0; k < c.getDeck().size(); k++) {

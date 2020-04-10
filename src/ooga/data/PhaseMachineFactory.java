@@ -19,7 +19,7 @@ public class PhaseMachineFactory implements Factory{
     public static String RULES_TYPE = IPhaseMachine.DATA_TYPE;
     //TODO: INCORPORATE ERROR MESSAGES
 
-    private static final String RULES = "rules_tags";
+    private static final String RULES = "rules";
     private static final String RESOURCES = "ooga.resources";
     public static final String RESOURCE_PACKAGE = RESOURCES + "." + RULES + "_";
     //private static final ResourceBundle rulesResources = ResourceBundle.getBundle(RESOURCE_PACKAGE+RULES);
