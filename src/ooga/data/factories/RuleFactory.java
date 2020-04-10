@@ -2,6 +2,7 @@ package ooga.data.factories;
 
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
+import ooga.data.XMLException;
 import ooga.data.XMLHelper;
 import ooga.data.rules.ICellGroup;
 import ooga.data.rules.IRule;
@@ -68,20 +69,24 @@ public class RuleFactory implements Factory {
         List<Function<IMove, Boolean>> conditions = new ArrayList<>();
         conditions.add(cond);
 
-        Function<IMove, ICell> moverCell = (IMove move) -> move.getMover();
-        Function<IMove, ICell> donorCell = (IMove move) -> move.getDonor();
-        Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
-        Function<IMove, ICell> currCell = MasterRuleFactory.getCurrentCellFunction(ruleName, moverCell, donorCell, recipientCell);
+        try {
+            Function<IMove, ICell> moverCell = (IMove move) -> move.getMover();
+            Function<IMove, ICell> donorCell = (IMove move) -> move.getDonor();
+            Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
+            Function<IMove, ICell> currCell = MasterRuleFactory.getCurrentCellFunction(ruleName, moverCell, donorCell, recipientCell);
 
-        extractValueCondition(e, conditions, recipientCell, currCell);
-        extractColorCondition(e, conditions, recipientCell, currCell);
-        extractSuitCondition(e, conditions, recipientCell, currCell);
-        extractNumCardsCondition(e, conditions, currCell);
-        extractFaceUpCondition(e, conditions, currCell);
-        extractNameCondition(e, cellGroupMap, conditions, currCell);
+            extractValueCondition(e, conditions, recipientCell, currCell);
+            extractColorCondition(e, conditions, recipientCell, currCell);
+            extractSuitCondition(e, conditions, recipientCell, currCell);
+            extractNumCardsCondition(e, conditions, currCell);
+            extractFaceUpCondition(e, conditions, currCell);
+            extractNameCondition(e, cellGroupMap, conditions, currCell);
 
-        extractConditionCondition(e, cellGroupMap, conditions);
-        return new Rule(ruleName, conditions);
+            extractConditionCondition(e, cellGroupMap, conditions);
+            return new Rule(ruleName, conditions);
+        } catch (Exception ee) {
+            throw new XMLException(ee, Factory.MISSING_ERROR + "," + resources.getString(RULES));
+        }
     }
 
     private static void extractConditionCondition(Element e, Map<String, ICellGroup> cellGroupMap, List<Function<IMove, Boolean>> conditions) {
