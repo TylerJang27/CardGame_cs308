@@ -1,5 +1,6 @@
 package ooga.cardtable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,10 +51,15 @@ public class Cell implements ICell {
   public void initializeCards(IDeck mainDeck) {
     if (cellDeckBuilder != null) {
       //TODO: DOUBLE CHECK THIS WORKS
-      addCell(Offset.NONE, cellDeckBuilder.apply(mainDeck));
-      //call merge/addcell with cellDeckBuilder.apply(mainDeck);
-      //starting deck is empty
-      //cellDeckBuilder.apply(mainDeck);
+      ICell toAdd = cellDeckBuilder.apply(mainDeck);
+      System.out.println(toAdd);                                  //non-null
+      System.out.println(toAdd.getTotalSize());                   //7
+      System.out.println(mainDeck.size());                        //24
+      System.out.println(this.getName());                         //correct
+      addCell(Offset.NONE, toAdd);
+      System.out.println("a:" + this.getTotalSize());             //0
+      System.out.println("b: " + toAdd.getTotalSize());           //7 !!!!!!
+      System.out.println("size is here:" + getDeck().size());     //0
     }
     cellDeckBuilder = null;
   }
@@ -70,10 +76,18 @@ public class Cell implements ICell {
 
   @Override
   public int getTotalSize() {
+    return getTotalSize(new ArrayList<>());
+  }
+
+  @Override
+  public int getTotalSize(List<ICell> visited) {
     int total = 0;
     for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
-      total += e.getValue().getDeck().size();
-      total += getTotalSize(); //TODO: MAKE SURE THIS DOESN'T INFINITE RECURSE
+      if (!visited.contains(e.getValue())) {
+        visited.add(e.getValue());
+        total += e.getValue().getDeck().size();
+        total += e.getValue().getTotalSize(visited); //TODO: MAKE SURE THIS DOESN'T INFINITE RECURSE
+      }
     }
     return total;
   }

@@ -33,6 +33,8 @@ public interface ICell extends Cellular {
 
   int getTotalSize(); //TODO: ADD TO API CHANGES
 
+  int getTotalSize(List<ICell> visited); //TODO: ADD TO API CHANGES
+
   List<ICell> getAllCells(); //TODO: ADD TO API CHANGES
 
   ICell getPeak(IOffset offset); //TODO: ADD TO API CHANGES
