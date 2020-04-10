@@ -118,6 +118,6 @@ public class DeckFactory implements Factory {
         IColor color = new Color(Factory.getVal(node, COLOR, resources));
         ISuit suit = new Suit(Factory.getVal(node, SUIT, resources), color);
         IValue value = new Value(val + suit.getName(), val);
-        return new Card(suit, value);
+        return new Card(cardName, suit, value);
     }
 }
