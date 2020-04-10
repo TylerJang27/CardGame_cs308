@@ -1,5 +1,6 @@
 package ooga.data.rules;
 
+import ooga.cardtable.GameState;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
 import ooga.cardtable.IPlayer;
@@ -27,13 +28,16 @@ public class MasterRule implements IMasterRule {
                 action.execute(move);
             }
         }
+        return GameState.WAITING;
     }
 
     @Override
     public IPhaseArrow executeAutoActions(IPlayer player) {
+        IPhaseArrow lastArrow = null;
         for (IControlAction action: myControlActions) {
-            action.execute(player);
+            lastArrow = action.execute(player);
         }
+        return lastArrow;
     }
 
     @Override
