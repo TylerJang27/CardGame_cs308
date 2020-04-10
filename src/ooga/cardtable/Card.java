@@ -23,6 +23,7 @@ public class Card implements ICard {
     attributes = new HashMap<>();
     attributes.put(s, true);
     attributes.put(v, true);
+    name = s.getName()+""+v.getName();
   }
 
   public Card(String name, Map<IAttribute, Boolean> visible) {
@@ -93,5 +94,15 @@ public class Card implements ICard {
   @Override
   public ICard getVisibleData() {
     return this;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (!(other instanceof Card)) {
+      return false;
+    }
+    Card c = (Card) other;
+    return name.equals(c.name) && faceup == c.faceup && orientation == c.orientation &&
+        attributes.equals(c.attributes);
   }
 }
