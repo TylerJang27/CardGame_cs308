@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data type="rule">
     <settings>
+        <!-- should just be a file name so that we can process it properly and send to the front end -->
         <players>1</players>
-        <layout>
-            <!-- should just be a file name so that we can process it properly and send to the front end -->
-        </layout>
+        <layout>data/solitaire_layout.xml</layout>
     </settings>
     <deck>
         <!-- should either be custom held here, or point to a file to retrieve from -->

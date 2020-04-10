@@ -61,7 +61,7 @@ public class LayoutFactory {
 
                 coordMap.put(cellName, coord);
             }
-
+            System.out.println(coordMap);
             return new Layout(coordMap, numberSettings);
         } catch (Exception e) {
             throw new XMLException(e, Factory.MISSING_ERROR + "," + LAYOUT_TYPE);
