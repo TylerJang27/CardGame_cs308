@@ -1,11 +1,20 @@
 package ooga.view;
 
+import java.util.List;
+import javafx.beans.value.ChangeListener;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import ooga.cardtable.Cell;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
 import ooga.data.rules.ILayout;
+import ooga.data.rules.Layout;
 import ooga.data.style.IStyle;
 
 import java.util.Map;
+import ooga.view.menu.Menu;
+import ooga.view.menu.RowMenu;
 
 /**
  *
@@ -13,6 +22,15 @@ import java.util.Map;
  */
 public class View implements ExternalAPI {
 
+    private Stage gameStage;
+    private Menu myMenu;
+    private DisplayTable myDisplayTable;
+
+    public View(){
+        myMenu = new RowMenu();
+        myMenu.show();
+
+    }
     /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
      * to the front end from the back end. This is done by sending a list of cell objects which
@@ -21,8 +39,8 @@ public class View implements ExternalAPI {
      * @param cellData
      */
     @Override
-    public void setCellData(Map<String, ICell> cellData) {
-
+    public void setCellData(List<Cell> cellData) {
+        myDisplayTable.updateCells(cellData);
     }
 
     /**
@@ -46,6 +64,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void endGame(Map<Integer, Boolean> playerOutcomes, Map<Integer, Double> playerScores, Map<Integer, Integer> highScores) {
+        myMenu.show();
 
     }
 
@@ -95,7 +114,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setStyle(IStyle style) {
-
+        //TODO: find out style formatting
     }
 
     /**
@@ -105,6 +124,16 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setLayout(ILayout layout) {
+        myDisplayTable = new DisplayTable((Layout)layout, 500);
+        BorderPane root = new BorderPane();
+        root.setCenter(myDisplayTable.getPane());
+        Scene gameScene = new Scene(root,500,500);
+        gameStage = new Stage();
+        gameStage.setScene(gameScene);
+        gameStage.show();
+    }
 
+    public void listenForGameChoice(ChangeListener<String> listener){
+        myMenu.addChosenHandler(listener);
     }
 }

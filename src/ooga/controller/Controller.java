@@ -1,6 +1,8 @@
 package ooga.controller;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 import ooga.cardtable.*;
 import ooga.data.PhaseMachineFactory;
@@ -44,13 +46,15 @@ public class Controller extends Application {
         myView = new View();
         initializeHandlers(myView);
         myStyleFile = new File(DEFAULT_STYLE_FILE);
-        myStyle = StyleFactory.getStyle(myStyleFile);
+        //myStyle = StyleFactory.getStyle(myStyleFile);
         myView.setStyle(myStyle);
     }
 
     //TODO: REPLACE WITH LOGIC REGARDING METHODS AT THE BOTTOM
     private void initializeHandlers(View v) {
-        //v.setHandlers((String gameName) -> startTable(gameName), () -> newMove());
+        //input is string gamename
+        v.listenForGameChoice((a,b,gameName) -> startTable(gameName));
+    //() -> newMove());
         /*v.setHandlers((String game) -> createEngine(game), //Consumer
                 (String rules) -> setHouseRules(rules), //Consumer
                 (int diff) -> setDifficulty(diff), //Consumer
@@ -67,7 +71,7 @@ public class Controller extends Application {
 
     private void startTable(String gameName) {
         // TODO: process gamename string to a file path
-
+        System.out.println(gameName);
         myTable = new Table();  // TODO: Give game name somehow, figure out who's building the phase machine
         myRuleFile = new File(DEFAULT_RULE_FILE);
         myCurrentPhaseMachine = PhaseMachineFactory.getPhaseMachine(myRuleFile);
@@ -76,7 +80,7 @@ public class Controller extends Application {
     private void newMove() {
         myCurrentMove = getMove();
         myTable.update(myCurrentMove);
-        myView.setCellData(Map.copyOf(myTable.getCellData()));
+        //myView.setCellData(Map.copyOf(myTable.getCellData()));
     }
 
     private IMove getMove() {

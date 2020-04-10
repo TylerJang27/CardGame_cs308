@@ -1,5 +1,7 @@
 package ooga.view;
 
+import java.util.List;
+import ooga.cardtable.Cell;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
 import ooga.data.rules.ILayout;
@@ -16,7 +18,7 @@ public interface ExternalAPI {
      *
      * @param cellData
      */
-    void setCellData(Map<String, ICell> cellData);
+    void setCellData(List<Cell> cellData);
 
     /**
      * Sets score of players to be displayed
