@@ -143,6 +143,7 @@ public class DisplayTable {
     }
 
     public Pane updateCells(Map<String,ICell> cellData) {
+        myPane = new Pane();
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
         return myPane;
