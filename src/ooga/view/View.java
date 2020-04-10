@@ -53,10 +53,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setCellData(Map<String,ICell> cellData) {
-        System.out.println("IM HERE");
         myRoot.setCenter(myDisplayTable.updateCells(cellData));
-        Scene gameScene = new Scene(myRoot,500,500);
-        gameStage.setScene(gameScene);
     }
 
     /**
