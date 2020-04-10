@@ -99,6 +99,11 @@ public class Cell implements ICell {
   }
 
   @Override
+  public ICell removeCellAtOffset(IOffset offset) {
+    return children.remove(offset);
+  }
+
+  @Override
   public boolean isEmpty() {
     if (getDeck().size() > 0 ) {
       return false;

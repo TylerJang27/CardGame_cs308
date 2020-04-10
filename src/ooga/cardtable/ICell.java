@@ -38,4 +38,6 @@ public interface ICell extends Cellular {
 
   boolean hasOffsetChildren();
 
+  ICell removeCellAtOffset(IOffset offset);
+
 }
