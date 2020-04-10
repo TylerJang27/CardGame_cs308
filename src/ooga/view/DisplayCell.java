@@ -28,7 +28,10 @@ public class DisplayCell {
 
     private Point2D lastXY = null;
 
-    public DisplayCell(Cell cell, Map<String, String> cardNameToFileName, Point2D location, double height, double width, double offset) {
+    private DisplayTable.MyFunctionalInterface myLambda;
+
+    public DisplayCell(DisplayTable.MyFunctionalInterface lambda, Cell cell, Map<String, String> cardNameToFileName, Point2D location, double height, double width, double offset) {
+        myLambda = lambda;
 
         myCell = cell;
         myFaceDown = new Image(cardNameToFileName.get("faceDown"));
@@ -68,13 +71,13 @@ public class DisplayCell {
             if (dir == Offset.NONE) { // && childCell.getDeck().peek() == null
                 continue;
             }
-            DisplayCell childDisplayCell = new DisplayCell(childCell, cardNameToFileName, location.add(offsetDirToAmount.get(dir)), height, width, offset);
+            DisplayCell childDisplayCell = new DisplayCell(myLambda, childCell, cardNameToFileName, location.add(offsetDirToAmount.get(dir)), height, width, offset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
             myGroup.getChildren().add(childDisplayCell.getImageView());
         }
     }
 
-    /*public DisplayCell(Cell cell, String faceUp, String faceDown, Point2D location, double height, double width, double offset) {
+    public DisplayCell(Cell cell, String faceUp, String faceDown, Point2D location, double height, double width, double offset) {
         myCell = cell;
         myFaceDown = new Image(faceDown);
         myFaceUp = new Image(faceUp);
@@ -93,7 +96,7 @@ public class DisplayCell {
         myGroup.getChildren().add(myImageView);
 
         enableDrag(myImageView);
-    }*/
+    }
 
     public Map<Offset,DisplayCell> getAllChildren() {
         return myDisplayChildren;
@@ -129,6 +132,7 @@ public class DisplayCell {
 
         source.setOnMouseReleased(d -> {
             resetAll(this);
+            myLambda.returnSelectedDisplayCell(this);
         });
     }
 
