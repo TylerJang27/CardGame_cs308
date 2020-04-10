@@ -59,26 +59,50 @@ public class Layout implements ILayout {
 
     // TODO: Add all of these to the External API and give them documentation
 
+    /**
+     * Gives number of players allowed in this game
+     * @return
+     */
     public int getNumPlayers() {
         return numPlayers;
     }
 
+    /**
+     * Gives the screen height value relative to screen width
+     * @return
+     */
     public double getScreenRatio() {
         return screenRatio;
     }
 
+    /**
+     * Gives the card width value relative to screen width
+     * @return
+     */
     public double getCardWidthRatio() {
         return cardWidthRatio;
     }
 
+    /**
+     * Gives the card height value relative to screen width
+     * @return
+     */
     public double getCardHeightRatio() {
         return cardHeightRatio;
     }
 
+    /**
+     * Gives the offset for face down cards relative to screen width
+     * @return
+     */
     public double getDownOffsetRatio() {
         return downOffsetRatio;
     }
 
+    /**
+     * Gives the offset for face up cards relative to screen width
+     * @return
+     */
     public double getUpOffsetRatio() {
         return upOffsetRatio;
     }
