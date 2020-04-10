@@ -77,9 +77,14 @@ public class Controller extends Application {
         myCurrentPhaseMachine = PhaseMachineFactory.getPhaseMachine(myRuleFile);
         myTable = new Table(myCurrentPhaseMachine);
         myCellMap = myTable.getCellData();
-        myView.setCellData(new ArrayList(myCellMap.values()));
         File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
+
+        System.out.println("cell map: "+myCellMap.keySet());
+        System.out.println("layout factory: " + LayoutFactory.getLayout(f).getCellLayout().keySet());
+
         myView.setLayout(LayoutFactory.getLayout(f));
+        myView.setCellData(myCellMap);
+        //myView.setCellData(Map.copyOf(myTable.getCellData()));
     }
 
     private void newMove() {
