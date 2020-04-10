@@ -50,7 +50,7 @@ public class PhaseMachineFactory implements Factory{
 
         Map<String, IPhase> phases = PhaseFactory.getPhases(root, cellGroups, allBaseCells);
 
-        return new PhaseMachine(phases, START);
+        return new PhaseMachine(phases, START, settings);
     }
 
     private static Map<String, ICell> getAllCells(Map<String, ICellGroup> cellGroupMap) {

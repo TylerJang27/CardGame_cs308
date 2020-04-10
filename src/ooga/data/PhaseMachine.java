@@ -10,6 +10,7 @@ import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
 import ooga.data.rules.IPhase;
 import ooga.data.rules.IPhaseArrow;
+import ooga.data.rules.ISettings;
 import ooga.data.rules.excluded.IPhaseHistoryCell;
 import ooga.data.rules.IPhaseMachine;
 
@@ -20,6 +21,7 @@ public class PhaseMachine implements IPhaseMachine {
   private IPhase currentPhase;
   private List<ICell> cells;
   private List<IPhaseHistoryCell> history;
+  private ISettings mySettings;
 
   public PhaseMachine() {
     history = new ArrayList<>();
@@ -38,9 +40,10 @@ public class PhaseMachine implements IPhaseMachine {
     }
   }
 
-  public PhaseMachine(Map<String, IPhase> ph, String startName) {
+  public PhaseMachine(Map<String, IPhase> ph, String startName, ISettings settings) {
     this(new ArrayList<>(ph.values()), startName);
     phases = ph;
+    mySettings = settings;
     cycleAutomatic();
   }
 
@@ -138,5 +141,10 @@ public class PhaseMachine implements IPhaseMachine {
   @Override
   public boolean isValidDonor(ICell cell) {
     return currentPhase.isValidDonor(cell);
+  }
+
+  @Override
+  public ISettings getSettings() {
+    return mySettings;
   }
 }

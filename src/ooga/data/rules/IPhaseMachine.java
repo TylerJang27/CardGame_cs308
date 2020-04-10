@@ -85,4 +85,6 @@ public interface IPhaseMachine {
   List<IPhaseHistoryCell> getHistory();
 
   boolean isValidDonor(ICell cell); //TODO: ADD TO API CHANGES
+
+  ISettings getSettings(); //TODO: ADD TO API CHANGES
 }
