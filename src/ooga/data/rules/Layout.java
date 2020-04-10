@@ -38,11 +38,11 @@ public class Layout implements ILayout {
 
         numPlayers = numberSettings.get(PLAYERS);
 
-        screenRatio = numberSettings.get(SCREEN_HEIGHT) / SCREEN_WIDTH;
-        cardWidthRatio = numberSettings.get(CARD_WIDTH) / SCREEN_WIDTH;
-        cardHeightRatio = numberSettings.get(CARD_HEIGHT) / SCREEN_WIDTH;
-        downOffsetRatio = numberSettings.get(FACE_DOWN_OFFSET) / SCREEN_WIDTH;
-        upOffsetRatio = numberSettings.get(FACE_UP_OFFSET) / SCREEN_WIDTH;
+        screenRatio = numberSettings.get(SCREEN_HEIGHT) * 1.0 / SCREEN_WIDTH;
+        cardWidthRatio = numberSettings.get(CARD_WIDTH) * 1.0 / SCREEN_WIDTH;
+        cardHeightRatio = numberSettings.get(CARD_HEIGHT) * 1.0 / SCREEN_WIDTH;
+        downOffsetRatio = numberSettings.get(FACE_DOWN_OFFSET) * 1.0 / SCREEN_WIDTH;
+        upOffsetRatio = numberSettings.get(FACE_UP_OFFSET) * 1.0 / SCREEN_WIDTH;
 
     }
 
