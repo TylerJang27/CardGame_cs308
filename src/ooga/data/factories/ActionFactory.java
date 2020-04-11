@@ -76,7 +76,7 @@ public class ActionFactory implements Factory {
             Consumer<IMove> cardAction = (IMove move) -> {
                 extractCellsToMove(e, currCell, move);
 
-                String destination = extractDestinationBehavior(e, moverCell, donorCell, recipientCell, move);
+                ICell destination = extractDestinationBehavior(e, moverCell, donorCell, recipientCell, move);
 
                 IOffset off = extractOffsetBehavior(e);
 
@@ -86,12 +86,15 @@ public class ActionFactory implements Factory {
 
                 //TODO: IMPLEMENT SHUFFLE
 
+                System.out.println("Time to move");
+
                 applyDestinationBehavior(recipientCell, currCell, curr, move, destination, off);
             };
             actions.add(cardAction);
         } catch (Exception ex) {
             throw new XMLException(ex, Factory.MISSING_ERROR + "," + resources.getString(ACTION));
         }
+        System.out.println("ACTINO" + actions.size());
         return new CardAction(actions);
     }
 
@@ -106,15 +109,17 @@ public class ActionFactory implements Factory {
         }
     }
 
-    private static void applyDestinationBehavior(Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell, String curr, IMove move, String destination, IOffset off) {
-        if (destination.equalsIgnoreCase(curr)) {
-            recipientCell.apply(move).addCell(off, currCell.apply(move));
+    private static void applyDestinationBehavior(Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell, String curr, IMove move, ICell destination, IOffset off) {
+        System.out.println("destination: fun!" + destination.findHead().getName() + "\n\t" + currCell.apply(move).findHead().getName());
+        if (!destination.findHead().getName().equalsIgnoreCase(currCell.apply(move).findHead().getName())) {
             IOffset offsetFromParent = recipientCell.apply(move).getOffsetFromParent();
             recipientCell.apply(move).getParent().removeCellAtOffset(offsetFromParent);
+            destination.addCell(off, currCell.apply(move));
+            System.out.println(destination.getName());
         }
     }
 
-    private static String extractDestinationBehavior(Element e, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell, IMove move) {
+    private static ICell extractDestinationBehavior(Element e, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell, IMove move) {
         String destination = XMLHelper.getTextValue(e, resources.getString(DESTINATION));
         ICell dest;
         if (destination.equals(resources.getString(M))) {
@@ -122,9 +127,9 @@ public class ActionFactory implements Factory {
         } else if (destination.equals(resources.getString(D))) {
             dest = donorCell.apply(move);
         } else {
-            recipientCell.apply(move);
+            dest = recipientCell.apply(move);
         }
-        return destination;
+        return dest;
     }
 
     private static IOffset extractOffsetBehavior(Element e) {

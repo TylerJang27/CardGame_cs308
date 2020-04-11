@@ -4,4 +4,6 @@ import ooga.cardtable.IMove;
 
 public interface IRule {
     boolean checkValidMove(IMove move); //TODO: ADD TO API CHANGES
+
+    String getName(); //TODO: ADD TO API CHANGES
 }

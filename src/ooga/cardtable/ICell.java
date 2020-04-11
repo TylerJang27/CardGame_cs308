@@ -37,13 +37,21 @@ public interface ICell extends Cellular {
 
   List<ICell> getAllCells(); //TODO: ADD TO API CHANGES
 
+  public void getAllCellsHelper(List<ICell> tracker); //TODO: ADD TO API CHANGES
+
   ICell getPeak(IOffset offset); //TODO: ADD TO API CHANGES
   ICell getParent();
 
   IOffset getOffsetFromParent();
 
+  void updateParentage(); //TODO: ADD TO API CHANGES
+
   boolean hasOffsetChildren();
 
   ICell removeCellAtOffset(IOffset offset);
+
+  public ICell findHead();
+
+  public ICell findLeaf();
 
 }

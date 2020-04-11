@@ -13,6 +13,7 @@ public class MasterRule implements IMasterRule {
     private List<IRule> myAutoRules;
     private List<ICardAction> myCardActions;
     private List<IControlAction> myControlActions;
+    private String MASTER_RULE = "This is a Master Rule";
 
     public MasterRule(List<IRule> rules, List<IRule> autoRules, List<ICardAction> cardActions, List<IControlAction> controlActions) {
         myRules = rules;
@@ -24,7 +25,9 @@ public class MasterRule implements IMasterRule {
     @Override
     public IGameState executeMove(IMove move) {
         if (checkValidMove(move)) {
+            System.out.println("time to act");
             for (ICardAction action: myCardActions) {
+                System.out.println("\t let's do it");
                 action.execute(move);
             }
         }
@@ -60,9 +63,17 @@ public class MasterRule implements IMasterRule {
         boolean flag = true;
         for (IRule rule: myRules) {
             if (!rule.checkValidMove(move)) {
+                System.out.println(rule.getName());
+                System.out.println("I hereby declare this move:" + false);
                 return false;
             }
         }
+        System.out.println("I hereby declare this move:" + true);
         return flag;
+    }
+
+    @Override
+    public String getName() {
+        return MASTER_RULE;
     }
 }
