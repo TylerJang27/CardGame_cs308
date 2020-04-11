@@ -80,10 +80,6 @@ public class DisplayTable {
         return intersectedCell != myMovedDisplayCell;
     }
 
-
-
-
-
     private DisplayCell checkIntersections() {
         boolean isIntersection = false;
         ImageView movedImage = myMovedDisplayCell.getImageView();
@@ -139,7 +135,7 @@ public class DisplayTable {
             return;
         }
         myDisplayCellData.add(rootDispCell);
-        myPane.getChildren().addAll(rootDispCell.getGroup().getChildren());
+        myPane.getChildren().add(rootDispCell.getImageView());
         for (IOffset dir: rootDispCell.getCell().getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;
