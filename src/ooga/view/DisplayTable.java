@@ -20,13 +20,20 @@ public class DisplayTable {
     private Map<String, ICoordinate> myCellNameToLocation;
 
     @FunctionalInterface
-    interface MyFunctionalInterface {
+    interface MyDragInterface {
+        public void returnSelectedDisplayCell(DisplayCell selectedCell);
+    }
+
+    @FunctionalInterface
+    interface MyClickInterface {
         public void returnSelectedDisplayCell(DisplayCell selectedCell);
     }
 
     List<DisplayCell> myDisplayCellData = new ArrayList<>();
 
-    MyFunctionalInterface getSelectedCell;
+    MyDragInterface getDraggedCell;
+    MyClickInterface getClickedCell;
+
     DisplayCell myMovedDisplayCell;
     ICell myMover;
     ICell myDonor;
@@ -49,13 +56,18 @@ public class DisplayTable {
         }
         myCellNameToLocation = layout.getCellLayout();
 
-        getSelectedCell = (DisplayCell selectedCell) -> {
+        getDraggedCell = (DisplayCell selectedCell) -> {
             myMovedDisplayCell = selectedCell;
             if(checkMove()) {
                 moveLambda.giveIMove(myMove);
-                // call lambda function given by view, which is given by controller
             }
         };
+
+        getClickedCell = (DisplayCell selectedCell) -> {
+            IMove clickMove = new Move(selectedCell.getCell(), selectedCell.getCell(), selectedCell.getCell());
+            moveLambda.giveIMove(clickMove);
+        };
+
         /*
         for(String key : layout.getCellLayout().keySet()){
             Button b = new Button(key);
@@ -121,7 +133,7 @@ public class DisplayTable {
         ICoordinate icoord = myCellNameToLocation.get(key);
         double x = icoord.getX()*myScreenWidth/100.0;
         double y = icoord.getY()*myScreenWidth/100.0;
-        return new DisplayCell(getSelectedCell, cell, myCardNameToFileName, new Point2D(x,y), myCardHeight, myCardWidth, myCardOffset);
+        return new DisplayCell(getDraggedCell, getClickedCell, cell, myCardNameToFileName, new Point2D(x,y), myCardHeight, myCardWidth, myCardOffset);
     }
 
     private void drawDisplayCells(List<DisplayCell> DisplayCellData) {
