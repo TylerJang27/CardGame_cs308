@@ -6,6 +6,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
@@ -20,8 +21,8 @@ public class DisplayTable {
     private Pane myPane;
 
     private double myScreenWidth;
-    private double myCardHeight;
-    private double myCardWidth;
+    private NumberBinding myCardHeight;
+    private NumberBinding myCardWidth;
     private double myCardOffset;
     private Map<String, String> myCardNameToFileName;
     private Map<String, Pair<NumberBinding, NumberBinding>> myCellNameToLocation;
@@ -48,12 +49,13 @@ public class DisplayTable {
     IMove myMove;
 
     public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenwidth) {
+        System.out.println(layout.getScreenRatio());
 
         myScreenWidth = screenwidth;
         myPane = new Pane();
 
-        myCardHeight = layout.getCardHeightRatio()*screenwidth;
-        myCardWidth = layout.getCardWidthRatio()*screenwidth;
+        myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
+        myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
         myCardOffset = layout.getUpOffsetRatio()*screenwidth;
         // TODO: get resource file from controller for myCardNameToFileName
         myCardNameToFileName = new HashMap<>();
@@ -136,9 +138,12 @@ public class DisplayTable {
     }
 
     public Pane updateCells(Map<String,ICell> cellData) {
-        myPane = new Pane();
+        //myPane = new Pane();
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
+        for(Node node : myPane.getChildren()){
+            System.out.println("" + node + node.getTranslateX() + node.getTranslateY());
+        }
         return myPane;
     }
 

@@ -1,5 +1,6 @@
 package ooga.view;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -146,6 +147,8 @@ public class View implements ExternalAPI {
         gameStage = new Stage();
         gameStage.setScene(gameScene);
         gameStage.show();
+        gameStage.minHeightProperty().bind(Bindings.multiply(myDisplayTable.getPane().widthProperty(),layout.getScreenRatio()));
+        gameStage.minWidthProperty().bind(Bindings.divide(myDisplayTable.getPane().heightProperty(),layout.getScreenRatio()));
     }
 
     public void listenForGameChoice(ChangeListener<String> listener){

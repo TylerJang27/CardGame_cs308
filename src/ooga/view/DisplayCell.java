@@ -1,5 +1,6 @@
 package ooga.view;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -36,7 +37,7 @@ public class DisplayCell {
     private DisplayTable.MyDragInterface myDragLambda;
     private DisplayTable.MyClickInterface myClickLambda;
 
-    public DisplayCell(DisplayTable.MyDragInterface dragLambda, DisplayTable.MyClickInterface clickLambda, Cell cell, Map<String, String> cardNameToFileName, Pair<NumberBinding, NumberBinding>location, double height, double width, double offset) {
+    public DisplayCell(DisplayTable.MyDragInterface dragLambda, DisplayTable.MyClickInterface clickLambda, Cell cell, Map<String, String> cardNameToFileName, Pair<NumberBinding, NumberBinding>location, NumberBinding height, NumberBinding width, double offset) {
         myDragLambda = dragLambda;
         myClickLambda = clickLambda;
 
@@ -55,17 +56,12 @@ public class DisplayCell {
             myImageView = new ImageView(myFaceUp);
         }
 
+        myImageView.layoutXProperty().bind(Bindings.divide(myImageView.fitWidthProperty(),-2));
+        myImageView.layoutYProperty().bind(Bindings.divide(myImageView.fitHeightProperty(),-2));
         myImageView.translateXProperty().bind(location.getKey());
-        myImageView.translateXProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue,
-                Number newValue) {
-                System.out.println(newValue);
-            }
-        });
         myImageView.translateYProperty().bind(location.getValue());
-        myImageView.setFitWidth(width);
-        myImageView.setFitHeight(height);
+        myImageView.fitWidthProperty().bind(width);
+        myImageView.fitHeightProperty().bind(height);
 
         enableDrag(myImageView);
         myGroup.getChildren().add(myImageView);
