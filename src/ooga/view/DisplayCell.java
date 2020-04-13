@@ -33,10 +33,12 @@ public class DisplayCell {
 
     private Point2D lastXY = null;
 
-    private DisplayTable.MyFunctionalInterface myLambda;
+    private DisplayTable.MyDragInterface myDragLambda;
+    private DisplayTable.MyClickInterface myClickLambda;
 
-    public DisplayCell(DisplayTable.MyFunctionalInterface lambda, Cell cell, Map<String, String> cardNameToFileName, Pair<NumberBinding, NumberBinding>location, double height, double width, double offset) {
-        myLambda = lambda;
+    public DisplayCell(DisplayTable.MyDragInterface dragLambda, DisplayTable.MyClickInterface clickLambda, Cell cell, Map<String, String> cardNameToFileName, Pair<NumberBinding, NumberBinding>location, double height, double width, double offset) {
+        myDragLambda = dragLambda;
+        myClickLambda = clickLambda;
 
         myCell = cell;
         myFaceDown = new Image(cardNameToFileName.get("faceDown"));
@@ -86,7 +88,7 @@ public class DisplayCell {
             }
             Point2D offsetAmount = offsetDirToAmount.get(dir);
             Pair<NumberBinding, NumberBinding> childOffset = new Pair<>(location.getKey().add(offsetAmount.getX()),location.getValue().add(offsetAmount.getY()));
-            DisplayCell childDisplayCell = new DisplayCell(myLambda, childCell, cardNameToFileName, childOffset, height, width, offset);
+            DisplayCell childDisplayCell = new DisplayCell(myDragLambda, myClickLambda, childCell, cardNameToFileName, childOffset, height, width, offset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
             myGroup.getChildren().add(childDisplayCell.getImageView());
         }
@@ -148,7 +150,11 @@ public class DisplayCell {
 
         source.setOnMouseReleased(d -> {
             resetAll(this);
-            myLambda.returnSelectedDisplayCell(this);
+            myDragLambda.returnSelectedDisplayCell(this);
+        });
+
+        source.setOnMouseClicked( click -> {
+            myClickLambda.returnSelectedDisplayCell(this);
         });
     }
 
