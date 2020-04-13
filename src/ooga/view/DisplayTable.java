@@ -138,7 +138,7 @@ public class DisplayTable {
     }
 
     public Pane updateCells(Map<String,ICell> cellData) {
-        //myPane = new Pane();
+        myPane.getChildren().clear();
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
         for(Node node : myPane.getChildren()){

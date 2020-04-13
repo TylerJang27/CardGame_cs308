@@ -83,7 +83,7 @@ public class DisplayCell {
                 continue;
             }
             Point2D offsetAmount = offsetDirToAmount.get(dir);
-            Pair<NumberBinding, NumberBinding> childOffset = new Pair<>(location.getKey().add(offsetAmount.getX()),location.getValue().add(offsetAmount.getY()));
+            Pair<NumberBinding, NumberBinding> childOffset = new Pair<>(myImageView.translateXProperty().add(offsetAmount.getX()),myImageView.translateYProperty().add(offsetAmount.getY()));
             DisplayCell childDisplayCell = new DisplayCell(myDragLambda, myClickLambda, childCell, cardNameToFileName, childOffset, height, width, offset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
             myGroup.getChildren().add(childDisplayCell.getImageView());
@@ -140,6 +140,8 @@ public class DisplayCell {
         source.setOnMouseDragged(event -> {
             event.setDragDetect(false);
             Node on = (Node)event.getTarget();
+            source.translateXProperty().unbind();
+            source.translateYProperty().unbind();
             moveAll(this, new Point2D(event.getSceneX(), event.getSceneY()));
             event.consume();
         });
@@ -182,6 +184,8 @@ public class DisplayCell {
         }
         Point2D dxdy = dragToXY.subtract(dragFromXY);
         Node on = (Node) childCell.getImageView();
+        on.translateXProperty().unbind();
+        on.translateYProperty().unbind();
         on.setTranslateX(on.getTranslateX()+dxdy.getX());
         on.setTranslateY(on.getTranslateY()+dxdy.getY());
         on.toFront();
