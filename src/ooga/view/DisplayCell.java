@@ -1,5 +1,8 @@
 package ooga.view;
 
+import javafx.beans.binding.NumberBinding;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
@@ -8,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Pair;
 import ooga.cardtable.*;
 import javafx.geometry.Point2D;
 import java.util.HashMap;
@@ -31,7 +35,7 @@ public class DisplayCell {
 
     private DisplayTable.MyFunctionalInterface myLambda;
 
-    public DisplayCell(DisplayTable.MyFunctionalInterface lambda, Cell cell, Map<String, String> cardNameToFileName, Point2D location, double height, double width, double offset) {
+    public DisplayCell(DisplayTable.MyFunctionalInterface lambda, Cell cell, Map<String, String> cardNameToFileName, Pair<NumberBinding, NumberBinding>location, double height, double width, double offset) {
         myLambda = lambda;
 
         myCell = cell;
@@ -49,9 +53,15 @@ public class DisplayCell {
             myImageView = new ImageView(myFaceUp);
         }
 
-        System.out.println("tester"+location.getX());
-        myImageView.setTranslateX(location.getX());
-        myImageView.setTranslateY(location.getY());
+        myImageView.translateXProperty().bind(location.getKey());
+        myImageView.translateXProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue,
+                Number newValue) {
+                System.out.println(newValue);
+            }
+        });
+        myImageView.translateYProperty().bind(location.getValue());
         myImageView.setFitWidth(width);
         myImageView.setFitHeight(height);
 
@@ -74,7 +84,9 @@ public class DisplayCell {
             if (dir == Offset.NONE) { // && childCell.getDeck().peek() == null
                 continue;
             }
-            DisplayCell childDisplayCell = new DisplayCell(myLambda, childCell, cardNameToFileName, location.add(offsetDirToAmount.get(dir)), height, width, offset);
+            Point2D offsetAmount = offsetDirToAmount.get(dir);
+            Pair<NumberBinding, NumberBinding> childOffset = new Pair<>(location.getKey().add(offsetAmount.getX()),location.getValue().add(offsetAmount.getY()));
+            DisplayCell childDisplayCell = new DisplayCell(myLambda, childCell, cardNameToFileName, childOffset, height, width, offset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
             myGroup.getChildren().add(childDisplayCell.getImageView());
         }

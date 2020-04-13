@@ -1,9 +1,16 @@
 package ooga.view;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.NumberBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 import ooga.cardtable.*;
+import ooga.data.rules.ILayout;
 import ooga.data.rules.Layout;
 import ooga.data.style.ICoordinate;
 import java.util.*;
@@ -17,7 +24,7 @@ public class DisplayTable {
     private double myCardWidth;
     private double myCardOffset;
     private Map<String, String> myCardNameToFileName;
-    private Map<String, ICoordinate> myCellNameToLocation;
+    private Map<String, Pair<NumberBinding, NumberBinding>> myCellNameToLocation;
 
     @FunctionalInterface
     interface MyFunctionalInterface {
@@ -47,7 +54,15 @@ public class DisplayTable {
         for (String card: cardDeck) {
             myCardNameToFileName.put(card, card+".png");
         }
-        myCellNameToLocation = layout.getCellLayout();
+        //myCellNameToLocation = layout.getCellLayout();
+        myCellNameToLocation = new HashMap<>();
+        Map<String, ICoordinate> locations = layout.getCellLayout();
+        for(String key : locations.keySet()){
+            NumberBinding x = Bindings.divide(Bindings.multiply(myPane.widthProperty(),locations.get(key).getX()),100);
+            NumberBinding y = Bindings.divide(Bindings.multiply(myPane.heightProperty(),locations.get(key).getY()),100);
+
+            myCellNameToLocation.put(key,new Pair<>(x,y));
+        }
 
         getSelectedCell = (DisplayCell selectedCell) -> {
             myMovedDisplayCell = selectedCell;
@@ -80,6 +95,10 @@ public class DisplayTable {
         return intersectedCell != myMovedDisplayCell;
     }
 
+
+
+
+
     private DisplayCell checkIntersections() {
         boolean isIntersection = false;
         ImageView movedImage = myMovedDisplayCell.getImageView();
@@ -103,10 +122,11 @@ public class DisplayTable {
         return myPane;
     }
 
-    public void updateCells(Map<String,ICell> cellData) {
-        myPane.getChildren().clear();
+    public Pane updateCells(Map<String,ICell> cellData) {
+        myPane = new Pane();
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
+        return myPane;
     }
 
     private List<DisplayCell> makeDisplayCells(Map<String,ICell> cellData) {
@@ -118,10 +138,8 @@ public class DisplayTable {
     }
 
     private DisplayCell makeDisplayCell(String key, Cell cell) {
-        ICoordinate icoord = myCellNameToLocation.get(key);
-        double x = icoord.getX()*myScreenWidth/100.0;
-        double y = icoord.getY()*myScreenWidth/100.0;
-        return new DisplayCell(getSelectedCell, cell, myCardNameToFileName, new Point2D(x,y), myCardHeight, myCardWidth, myCardOffset);
+        Pair<NumberBinding, NumberBinding> location = myCellNameToLocation.get(key);
+        return new DisplayCell(getSelectedCell, cell, myCardNameToFileName, location, myCardHeight, myCardWidth, myCardOffset);
     }
 
     private void drawDisplayCells(List<DisplayCell> DisplayCellData) {
@@ -135,7 +153,7 @@ public class DisplayTable {
             return;
         }
         myDisplayCellData.add(rootDispCell);
-        myPane.getChildren().add(rootDispCell.getImageView());
+        myPane.getChildren().addAll(rootDispCell.getGroup().getChildren());
         for (IOffset dir: rootDispCell.getCell().getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;
