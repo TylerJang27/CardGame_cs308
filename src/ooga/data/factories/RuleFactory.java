@@ -147,7 +147,7 @@ public class RuleFactory implements Factory {
         if (!TRUE_CHECKS.contains(numCards)) {
             Integer value = Integer.parseInt(numCards);
             valueChecker = (IMove move) -> {
-                System.out.println("numcards");
+                System.out.println("numcards"); //FIXME: BREAKS HERE
                 return (currCell.apply(move).getTotalSize() == value);
             };
             conditions.add(valueChecker);

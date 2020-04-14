@@ -113,10 +113,10 @@ public class ActionFactory implements Factory {
         System.out.println("destination: fun!" + destination.findHead().getName() + "\n\t" + currCell.apply(move).findHead().getName());
         if (!destination.findHead().getName().equalsIgnoreCase(currCell.apply(move).findHead().getName())) {
             //IOffset offsetFromParent = recipientCell.apply(move).getOffsetFromParent();
-            //recipientCell.apply(move).getParent().removeCellAtOffset(offsetFromParent); //fixme commentted by maverick
+            //recipientCell.apply(move).getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
             //destination.addCell(off, currCell.apply(move));
             IOffset offsetFromParent = currCell.apply(move).getOffsetFromParent();
-            currCell.apply(move).getParent().removeCellAtOffset(offsetFromParent); //fixme commentted by maverick
+            currCell.apply(move).getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
             recipientCell.apply(move).addCell(off, currCell.apply(move));
             System.out.println(destination.getName());
         }
