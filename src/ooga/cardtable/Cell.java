@@ -94,6 +94,7 @@ public class Cell implements ICell {
 
   @Override
   public IOffset getOffsetFromParent() {
+    System.out.println(parent.getAllChildren());
     for (Entry<IOffset, ICell> e : parent.getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE && e.getValue().equals(this)) {
         return e.getKey();
@@ -170,14 +171,14 @@ public class Cell implements ICell {
     }
     if (cell.getAllChildren().keySet().size() <= 1) {
       recipient.getDeck().addDeck(cell.getDeck());
-      recipient.updateParentage();
+      updateParentage();
       return;
     }
     for (Entry<IOffset, ICell> e : cell.getAllChildren().entrySet()) {
       ICell tempRec = recipient.getAllChildren().get(e.getKey());
       if (tempRec == null) {
         recipient.setCellAtOffset(e.getKey(), e.getValue());
-        recipient.updateParentage();
+        updateParentage();
       } else {
         System.out.println("yeet" + e.getKey() + e.getValue() + "yeet");
         tempRec.addCell(Offset.NONE, e.getValue());
@@ -189,19 +190,20 @@ public class Cell implements ICell {
   @Override
   public void updateParentage() {
     String masterName = "";
+    System.out.println("parent: "+parent);
+    System.out.println("this: "+this);
     if (parent == null) {
       masterName = getName();
     } else {
       masterName = parent.getName() + "," + getOffsetFromParent().getOffset();
     }
     name = masterName;
-    System.out.println("parent: "+parent);
-    System.out.println("this: "+this);
+
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE && e.getValue() != null) {
         //System.out.println(this.getName());
         Cell c = (Cell) e.getValue();
-        this.setCellAtOffset(e.getKey(), c); //added by Tyler, didn't seem to do much
+        //this.setCellAtOffset(e.getKey(), c); //added by Tyler, didn't seem to do much
         c.setParent(this);
         c.updateParentage(); //fixme monster
       }
@@ -259,9 +261,9 @@ public class Cell implements ICell {
 
   @Override
   public boolean equals(Object other) { //fixme should this check name? not yet for tests for cards
-    if (!(other instanceof Cell)) {
+    /*if (!(other instanceof Cell)) {
       return false;
-    }
+    }*/
     Cell c = (Cell) other;
     if (!deck.equals(c.deck)) {
       return false;
