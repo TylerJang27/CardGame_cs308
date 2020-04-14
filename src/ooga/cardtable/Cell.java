@@ -95,7 +95,7 @@ public class Cell implements ICell {
   @Override
   public IOffset getOffsetFromParent() {
     for (Entry<IOffset, ICell> e : parent.getAllChildren().entrySet()) {
-      if (e.getKey() != Offset.NONE && e.getValue() == this) {
+      if (e.getKey() != Offset.NONE && e.getValue().equals(this)) {
         return e.getKey();
       }
     }
@@ -170,13 +170,14 @@ public class Cell implements ICell {
     }
     if (cell.getAllChildren().keySet().size() <= 1) {
       recipient.getDeck().addDeck(cell.getDeck());
-      updateParentage();
+      recipient.updateParentage();
       return;
     }
     for (Entry<IOffset, ICell> e : cell.getAllChildren().entrySet()) {
       ICell tempRec = recipient.getAllChildren().get(e.getKey());
       if (tempRec == null) {
         recipient.setCellAtOffset(e.getKey(), e.getValue());
+        recipient.updateParentage();
       } else {
         System.out.println("yeet" + e.getKey() + e.getValue() + "yeet");
         tempRec.addCell(Offset.NONE, e.getValue());
@@ -194,6 +195,8 @@ public class Cell implements ICell {
       masterName = parent.getName() + "," + getOffsetFromParent().getOffset();
     }
     name = masterName;
+    System.out.println("parent: "+parent);
+    System.out.println("this: "+this);
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE && e.getValue() != null) {
         //System.out.println(this.getName());
