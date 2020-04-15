@@ -150,12 +150,12 @@ public class DisplayTable {
     private List<DisplayCell> makeDisplayCells(Map<String,ICell> cellData) {
         List<DisplayCell> displayCellData = new ArrayList<>();
         for (String c: cellData.keySet()) {
-            displayCellData.add(makeDisplayCell(c,(Cell)cellData.get(c)));
+            displayCellData.add(makeDisplayCell(c,cellData.get(c))); // TODO
         }
         return displayCellData;
     }
 
-    private DisplayCell makeDisplayCell(String key, Cell cell) {
+    private DisplayCell makeDisplayCell(String key, ICell cell) {
         Pair<NumberBinding, NumberBinding> location = myCellNameToLocation.get(key);
 
         return new DisplayCell(getDraggedCell, getClickedCell, cell, myCardNameToFileName, location, myCardHeight, myCardWidth, myCardOffset);

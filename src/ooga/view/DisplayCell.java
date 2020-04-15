@@ -23,7 +23,7 @@ import ooga.cardtable.Offset;
 public class DisplayCell {
 
     private Map<Offset, DisplayCell> myDisplayChildren = new HashMap<>();
-    private Cell myCell;
+    private ICell myCell;
     private Group myGroup = new Group();
 
     private ImageView myImageView;
@@ -37,7 +37,7 @@ public class DisplayCell {
     private DisplayTable.MyDragInterface myDragLambda;
     private DisplayTable.MyClickInterface myClickLambda;
 
-    public DisplayCell(DisplayTable.MyDragInterface dragLambda, DisplayTable.MyClickInterface clickLambda, Cell cell, Map<String, String> cardNameToFileName, Pair<NumberBinding, NumberBinding>location, NumberBinding height, NumberBinding width, double offset) {
+    public DisplayCell(DisplayTable.MyDragInterface dragLambda, DisplayTable.MyClickInterface clickLambda, ICell cell, Map<String, String> cardNameToFileName, Pair<NumberBinding, NumberBinding>location, NumberBinding height, NumberBinding width, double offset) {
         myDragLambda = dragLambda;
         myClickLambda = clickLambda;
 
@@ -124,7 +124,7 @@ public class DisplayCell {
         return myImageView;
     }
 
-    public Cell getCell() {
+    public ICell getCell() {
         return myCell;
     }
 
