@@ -48,7 +48,13 @@ public class Phase implements IPhase {
       //return
       if (!isAuto) {
         myGameState = ruleToExecute.executeMove(move); //TODO: ADD GAME STATE FUNCTIONALITY
-        return ruleToExecute.executeAutoActions(null); //TODO: ADD PLAYER HERE
+        System.out.println("MasterRule executed manual moves");
+        System.out.println(move.getDonor().getName());
+        System.out.println(move.getMover().getName());
+        System.out.println(move.getRecipient().getName());
+        IPhaseArrow ab = ruleToExecute.executeAutoActions(null, move);
+        System.out.println("hfaehfheawfewafeaw");
+        return ab; //TODO: ADD PLAYER HERE
       }
     }
     //return GameState.INVALID;
@@ -62,10 +68,10 @@ public class Phase implements IPhase {
 
   //call this when it's set if it's automatic
   @Override
-  public IPhaseArrow executeAutomaticActions(IPlayer player) {
+  public IPhaseArrow executeAutomaticActions(IPlayer player, IMove move) {
     IPhaseArrow lastArrow = new PhaseArrow(myName, "", myName);
     for (IMasterRule rule: myRules) {
-      lastArrow = rule.executeAutoActions(player);
+      lastArrow = rule.executeAutoActions(player, move);
     }
     return lastArrow;
   }

@@ -114,6 +114,7 @@ public class MasterRuleFactory implements Factory {
             if (movAction != null) {
                 cardActionList.add(ActionFactory.getAction((Element)recAction, ruleName + M));
             }
+            //FIXME: ADDED BY TYLER TO CORRECT
 
             Node phaseAction = XMLHelper.getNodeByName(allActions, resources.getString(NEXT_PHASE));
             try {
