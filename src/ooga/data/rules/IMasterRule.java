@@ -1,6 +1,5 @@
 package ooga.data.rules;
 
-import ooga.cardtable.ICell;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
 import ooga.cardtable.IPlayer;
@@ -28,11 +27,11 @@ public interface IMasterRule extends IRule {
 
   IGameState executeMove(IMove move); //TODO: ADD TO API CHANGES
 
-  IPhaseArrow executeAutoActions(IPlayer player); //TODO: ADD TO API CHANGES
+  IPhaseArrow executeAutoActions(IPlayer player, IMove move); //TODO: ADD TO API CHANGES
 
   boolean checkValidMove(IMove move); //TODO: ADD TO API CHANGES
 
-  boolean checkAutoRules(); //TODO: ADD TO API CHANGES
+  boolean checkAutoRules(IMove move); //TODO: ADD TO API CHANGES
 
   /**
    * Evaluates whether the cell transfer is valid
