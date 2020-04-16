@@ -1,10 +1,9 @@
 package ooga.cardtable;
 
-import ooga.data.rules.Cellular;
-
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import ooga.data.rules.Cellular;
 
 public interface ICell extends Cellular {
   //deal with unnecessary massive linked lists
@@ -37,9 +36,10 @@ public interface ICell extends Cellular {
 
   List<ICell> getAllCells(); //TODO: ADD TO API CHANGES
 
-  public void getAllCellsHelper(List<ICell> tracker); //TODO: ADD TO API CHANGES
+  void getAllCellsHelper(List<ICell> tracker); //TODO: ADD TO API CHANGES
 
   ICell getPeak(IOffset offset); //TODO: ADD TO API CHANGES
+
   ICell getParent();
 
   IOffset getOffsetFromParent();
@@ -50,8 +50,14 @@ public interface ICell extends Cellular {
 
   ICell removeCellAtOffset(IOffset offset);
 
-  public ICell findHead();
+  ICell findHead();
 
-  public ICell findLeaf();
+  ICell findLeaf();
+
+  ICell copy();
+
+  ICell findNamedCell(String nm);
+
+  ICell followNamespace(String nm);
 
 }

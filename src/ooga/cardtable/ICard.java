@@ -24,5 +24,7 @@ public interface ICard {
    */
   ICard getVisibleData();
 
+  ICard copy();
+
 
 }

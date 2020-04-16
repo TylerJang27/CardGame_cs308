@@ -22,3 +22,7 @@
 4/10/2020:
 * AK - Added accessors to numPlayers, screenRatio, cardWidthRatio, cardHeightRatio, downOffsetRatio, upOffsetRatio to
 better serve the front end's needs for displaying the full game from the layout data class.
+
+4/15/2020:
+* MC - Added the copy method to ICell, IDeck, ICard
+* MC - Added the findNamedCell and followNamespace methods to ICell

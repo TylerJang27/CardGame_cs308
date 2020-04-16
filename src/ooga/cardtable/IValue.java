@@ -1,6 +1,6 @@
 package ooga.cardtable;
 
-public interface IValue extends IAttribute{
+public interface IValue extends IAttribute {
 
   char getChar();
 

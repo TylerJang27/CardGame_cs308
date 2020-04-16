@@ -1,6 +1,7 @@
 package ooga.cardtable;
 
 public class Value implements IValue {
+
   private char symbol;
   private int number;
   private String name;
@@ -42,5 +43,10 @@ public class Value implements IValue {
     }
     Value v = (Value) other;
     return name.equals(v.name) && number == v.number && symbol == v.symbol;
+  }
+
+  @Override
+  public String toString(){
+    return name;
   }
 }

@@ -29,4 +29,6 @@ public interface IDeck {
   String getName(); //TODO: ADD TO API CHANGES
 
   ICard getCardByName(String name); //TODO: ADD TO API CHANGES
+
+  IDeck copy();
 }

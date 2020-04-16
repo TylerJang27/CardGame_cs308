@@ -116,7 +116,10 @@ public class ActionFactory implements Factory {
             //recipientCell.apply(move).getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
             //destination.addCell(off, currCell.apply(move));
             IOffset offsetFromParent = currCell.apply(move).getOffsetFromParent();
+            ICell currParent = currCell.apply(move).getParent();
+            System.out.println("current cell parent: "+currParent);
             currCell.apply(move).getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
+            System.out.println("current cell: "+currParent);
             recipientCell.apply(move).addCell(off, currCell.apply(move));
             System.out.println(destination.getName());
         }
