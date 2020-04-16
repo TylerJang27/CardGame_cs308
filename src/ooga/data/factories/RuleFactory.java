@@ -217,7 +217,7 @@ public class RuleFactory implements Factory {
             valueChecker = (IMove move) -> {
                 System.out.println("checking the value of mover:" + currCell.apply(move).getDeck());
                 System.out.println("checking the value of mover:" + currCell.apply(move).getDeck().peekBottom().getValue().getNumber());
-                System.out.println("checking the value of rec:" + recipientCell.apply(move).getDeck());
+                System.out.println("checking the value of rec:" + recipientCell.apply(move).getDeck().peekBottom().getValue());
                 System.out.println("checking the value of rec:" + recipientCell.apply(move).getDeck().peekBottom().getValue().getNumber());
 
                 return (currCell.apply(move).getDeck().peekBottom().getValue().getNumber() - value ==

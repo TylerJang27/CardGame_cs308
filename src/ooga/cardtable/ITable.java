@@ -1,9 +1,8 @@
 package ooga.cardtable;
 
-import ooga.data.rules.IPhaseMachine;
-
 import java.util.List;
 import java.util.Map;
+import ooga.data.rules.IPhaseMachine;
 
 public interface ITable {
 

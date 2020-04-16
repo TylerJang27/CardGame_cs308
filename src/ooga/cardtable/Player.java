@@ -1,20 +1,20 @@
 package ooga.cardtable;
 
-public class Player implements IPlayer{
+public class Player implements IPlayer {
 
   private String name;
   private int ID;
   private double score;
   private ICell hand;
 
-  public Player(ICell cell, int id){
+  public Player(ICell cell, int id) {
     hand = cell;
     ID = id;
-    name = ""+id;
+    name = "" + id;
     score = 0;
   }
 
-  public Player(ICell cell,int id, String nm) {
+  public Player(ICell cell, int id, String nm) {
     this(cell, id);
     name = nm;
   }
