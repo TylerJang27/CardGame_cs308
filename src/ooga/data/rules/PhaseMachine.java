@@ -100,9 +100,48 @@ public class PhaseMachine implements IPhaseMachine {
     return ret;
   }
 
+  private IMove replaceMoveCells(IMove move) {
+    ICell d = findNamedCell(move.getDonor().getName());
+    if (d != null) {
+      move.setDonor(d);
+    }
+    ICell r = findNamedCell(move.getRecipient().getName());
+    if (r != null) {
+      move.setRecipient(r);
+    }
+    ICell m = findNamedCell(move.getMover().getName());
+    if (m != null) {
+      move.setDonor(m);
+    }
+    return move;
+  }
+
+  private ICell findNamedCell(String nm) {
+    System.out.println("findname: "+nm);
+    String[] names = nm.split(",");
+    String firstName = names[0];
+    String[] restNames = new String[names.length-1];
+    for (int i = 1; i < names.length; i++) {
+      restNames[i-1] = names[i];
+    }
+    String restName = String.join(",", restNames);
+    ICell ret = null;
+    for (ICell cell: cells) {
+      if (cell.getName().toLowerCase().equals(firstName)) {
+        ret = cell.followNamespace(restName);
+        if (ret != null) {
+          return ret;
+        }
+      }
+    }
+    System.out.println("a named cell was asked for and not found, and that (might be) terrible.");
+    return ret;
+  }
+
   @Override
   public IGameState update(IMove move) {
     //String next = getCurrentPhase().getNextPhaseName(move);
+    move = replaceMoveCells(move);
     System.out.println("phasemachine got move");
     System.out.println(move.getDonor().getName());
     System.out.println(move.getMover().getName());

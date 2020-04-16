@@ -1,6 +1,6 @@
 package ooga.cardtable;
 
-public class Move implements IMove{
+public class Move implements IMove {
 
   private ICell donor;
   private ICell mover;
@@ -14,8 +14,8 @@ public class Move implements IMove{
     offset = Offset.NONE;
   }
 
-  public Move(ICell d, ICell m, ICell r, Offset o){
-    this(d,m,r);
+  public Move(ICell d, ICell m, ICell r, Offset o) {
+    this(d, m, r);
     offset = o;
   }
 

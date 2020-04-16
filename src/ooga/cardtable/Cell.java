@@ -1,6 +1,7 @@
 package ooga.cardtable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +59,7 @@ public class Cell implements ICell {
 
   @Override
   public IDeck getDeck() {
-    for(ICell i : children.values()){
+    for (ICell i : children.values()) {
       //System.out.println("card" + i.getDeck().peek());
     }
     return deck;
@@ -77,7 +78,7 @@ public class Cell implements ICell {
   @Override
   public int getTotalSize(List<ICell> visited) {
     int total = 0;
-    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (!visited.contains(e.getValue())) {
         visited.add(e.getValue());
         total += e.getValue().getDeck().size();
@@ -92,9 +93,13 @@ public class Cell implements ICell {
     return parent;
   }
 
+  private void setParent(ICell cell) {
+    parent = cell;
+  }
+
   @Override
   public IOffset getOffsetFromParent() {
-    System.out.println(parent.getAllChildren());
+    //System.out.println(parent.getAllChildren());
     for (Entry<IOffset, ICell> e : parent.getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE && e.getValue().equals(this)) {
         return e.getKey();
@@ -110,7 +115,8 @@ public class Cell implements ICell {
 
   @Override
   public ICell removeCellAtOffset(IOffset offset) {
-    return children.remove(offset);
+    Cell ret = (Cell) children.remove(offset); //fixme monster
+    ret.parent = null;
   }
 
   @Override
@@ -164,7 +170,7 @@ public class Cell implements ICell {
       recipient = this;
     }
     if (recipient == null) {
-      System.out.println(this.getName() + "yolo");
+      //System.out.println(this.getName() + "yolo");
       setCellAtOffset(offset, cell);
       updateParentage();
       return;
@@ -180,7 +186,7 @@ public class Cell implements ICell {
         recipient.setCellAtOffset(e.getKey(), e.getValue());
         updateParentage();
       } else {
-        System.out.println("yeet" + e.getKey() + e.getValue() + "yeet");
+        //System.out.println("yeet" + e.getKey() + e.getValue() + "yeet");
         tempRec.addCell(Offset.NONE, e.getValue());
       }
     }
@@ -190,8 +196,8 @@ public class Cell implements ICell {
   @Override
   public void updateParentage() {
     String masterName = "";
-    System.out.println("parent: "+parent);
-    System.out.println("this: "+this);
+    //System.out.println("parent: " + parent);
+    //System.out.println("this: " + this);
     if (parent == null) {
       masterName = getName();
     } else {
@@ -210,14 +216,10 @@ public class Cell implements ICell {
     }
   }
 
-  private void setParent(ICell cell) {
-    parent = cell;
-  }
-
   @Override
   public void setCellAtOffset(IOffset offset, ICell cell) {
     if (cell == null) {
-      children.remove(offset);
+      removeCellAtOffset(offset);
       return;
     }
     children.put(offset, cell);
@@ -236,11 +238,11 @@ public class Cell implements ICell {
   @Override
   public void getAllCellsHelper(List<ICell> tracker) {
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
-      System.out.println("equals?" + !tracker.contains(e.getValue()));
-      System.out.println(e.getValue());
+      //System.out.println("equals?" + !tracker.contains(e.getValue()));
+      //System.out.println(e.getValue());
       if (!tracker.contains(e.getValue())) {
         tracker.add(e.getValue());
-        System.out.println("recurse");
+        //System.out.println("recurse");
         e.getValue().getAllCellsHelper(tracker);
       }//TODO: MAKE SURE THIS DOESN'T INFINITE RECURSE
     }
@@ -300,7 +302,7 @@ public class Cell implements ICell {
   public ICell findHead() {
     ICell newHead = this;
     ICell currentCell = newHead;
-    while(currentCell.getParent() != null) {
+    while (currentCell.getParent() != null) {
       currentCell = currentCell.getParent();
     }
     return currentCell;
@@ -314,9 +316,65 @@ public class Cell implements ICell {
     return leafMap.get(findMax(leafMap.keySet()));
   }
 
+  @Override
+  public ICell copy() {
+    ICell ret = new Cell(name);
+    ret.getDeck().addDeck(getDeck().copy());
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        ret.setCellAtOffset(e.getKey(), e.getValue().copy());
+      }
+    }
+    //System.out.println("copy orig: "+this);
+    //System.out.println("copy ret: "+ret);
+    return ret;
+  }
+
+  @Override
+  public ICell findNamedCell(String nm) {
+    if (name.equals(nm)) {
+      return this;
+    }
+    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        if (e.getValue().getName().toLowerCase().contains(nm)) {
+          ICell ret = e.getValue().findNamedCell(nm);
+          if (ret != null) {
+            return ret;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  @Override
+  public ICell followNamespace(String nm) {
+    String[] names = nm.split(",");
+    System.out.println("namespace: "+ Arrays.toString(names));
+    if (names.length == 0 || names[0].equals("")) {
+      System.out.println("it's empty");
+      return this;
+    }
+    ICell next = getAllChildren().get(Offset.valueOf(names[0].toUpperCase()));
+    if (next == null) {
+      ICell ret = this;
+      for (int i = 1; i < names.length; i++) {
+        setCellAtOffset(Offset.valueOf(names[i]), new Cell(getName()+","+names[i]));
+        ret = ret.getAllChildren().get(Offset.valueOf(names[i]));
+      }
+      return ret;
+    }
+    String[] restNames = new String[names.length-1];
+    for (int i = 1; i < names.length; i++) {
+      restNames[i-1] = names[i];
+    }
+    return next.followNamespace(String.join(",", restNames));
+  }
+
   private Integer findMax(Iterable<Integer> iter) {
     Integer Max = Integer.MIN_VALUE;
-    for (Integer k: iter) {
+    for (Integer k : iter) {
       if (Max.compareTo(k) < 0) {
         Max = k;
       }
@@ -329,7 +387,7 @@ public class Cell implements ICell {
       tracker.put(steps, curr);
       return;
     }
-    for (int k = 0; k < Offset.values().length; k ++) {
+    for (int k = 0; k < Offset.values().length; k++) {
       IOffset offset = Offset.values()[k];
       ICell offsetCell = curr.getAllChildren().get(offset);
 

@@ -5,9 +5,9 @@ import javafx.scene.paint.Color;
 //TODO: DOCUMENTATION AND ADD TO API CHANGES
 public interface IColor {
 
-    public String getName();
+  String getName();
 
-    public int[] getColors();
+  int[] getColors();
 
-    public Color getColor();
+  Color getColor();
 }
