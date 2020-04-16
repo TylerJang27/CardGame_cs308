@@ -3,6 +3,7 @@ package ooga.cardtable;
 import java.util.Arrays;
 
 public class Suit implements ISuit {
+
   private int[] color;
   private String name;
   private IColor myColor;
@@ -40,7 +41,9 @@ public class Suit implements ISuit {
   }
 
   @Override
-  public String getColorName() { return myColorName; }
+  public String getColorName() {
+    return myColorName;
+  }
 
   @Override
   public boolean equals(Object other) { //fixme switch to icolor
@@ -49,5 +52,10 @@ public class Suit implements ISuit {
     }
     Suit s = (Suit) other;
     return name.equals(s.name) && Arrays.equals(color, ((Suit) other).color);
+  }
+
+  @Override
+  public String toString(){
+    return name;
   }
 }

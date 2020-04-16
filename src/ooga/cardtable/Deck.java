@@ -111,8 +111,17 @@ public class Deck implements IDeck {
   }
 
   @Override
+  public IDeck copy() {
+    List<ICard> c = new ArrayList<>();
+    for (ICard card: cards) {
+      c.add(card.copy());
+    }
+    return new Deck(myName, c);
+  }
+
+  @Override
   public boolean equals(Object other) {
-    if (!(other instanceof  Deck)) {
+    if (!(other instanceof Deck)) {
       return false;
     }
     Deck d = (Deck) other;
