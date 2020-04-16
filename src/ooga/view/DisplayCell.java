@@ -1,5 +1,9 @@
 package ooga.view;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.NumberBinding;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
@@ -7,6 +11,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Pair;
 import ooga.cardtable.*;
 import javafx.geometry.Point2D;
 import java.util.HashMap;
@@ -28,33 +34,38 @@ public class DisplayCell {
 
     private Point2D lastXY = null;
 
-    private DisplayTable.MyFunctionalInterface myLambda;
+    private DisplayTable.MyDragInterface myDragLambda;
+    private DisplayTable.MyClickInterface myClickLambda;
 
-    public DisplayCell(DisplayTable.MyFunctionalInterface lambda, Cell cell, Map<String, String> cardNameToFileName, Point2D location, double height, double width, double offset) {
-        myLambda = lambda;
+    public DisplayCell(DisplayTable.MyDragInterface dragLambda, DisplayTable.MyClickInterface clickLambda, Cell cell, Map<String, String> cardNameToFileName, Pair<NumberBinding, NumberBinding>location, NumberBinding height, NumberBinding width, double offset) {
+        myDragLambda = dragLambda;
+        myClickLambda = clickLambda;
 
         myCell = cell;
         myFaceDown = new Image(cardNameToFileName.get("faceDown"));
         if(myCell.getDeck().peek() != null) {
             String cardName = myCell.getDeck().peek().getName(); //TODO: ADD TRY CATCH FOR GETTING IMAGE
-            myFaceUp = new Image(
-                cardName + ".png");//cardNameToFileName.get(myCell.getDeck().peek().getName()));
+            myFaceUp = new Image(cardName + ".png");//cardNameToFileName.get(myCell.getDeck().peek().getName()));
             if (myCell.getDeck().peek().isFaceUp()) {
                 myImageView = new ImageView(myFaceUp);
             } else {
                 myImageView = new ImageView(myFaceDown);
             }
-            System.out.println("tester"+location.getX());
-            myImageView.setTranslateX(location.getX());
-            myImageView.setTranslateY(location.getY());
-            myImageView.setFitWidth(width);
-            myImageView.setFitHeight(height);
-
-            enableDrag(myImageView);
-            myGroup.getChildren().add(myImageView);
-        }else{
-            System.out.println("empty!");
+        } else {
+            myFaceUp = new Image("celloutline.png");
+            myImageView = new ImageView(myFaceUp);
         }
+
+        myImageView.layoutXProperty().bind(Bindings.divide(myImageView.fitWidthProperty(),-2));
+        myImageView.layoutYProperty().bind(Bindings.divide(myImageView.fitHeightProperty(),-2));
+        myImageView.translateXProperty().bind(location.getKey());
+        myImageView.translateYProperty().bind(location.getValue());
+        myImageView.fitWidthProperty().bind(width);
+        myImageView.fitHeightProperty().bind(height);
+
+        enableDrag(myImageView);
+        myGroup.getChildren().add(myImageView);
+
         offsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -offset), Offset.SOUTH, new Point2D(0,offset), Offset.EAST, new Point2D(offset, 0),Offset.WEST, new Point2D(-offset,0), Offset.NORTHEAST, new Point2D(offset,-offset), Offset.SOUTHEAST, new Point2D(offset,offset), Offset.NORTHWEST, new Point2D(-offset,-offset), Offset.SOUTHWEST, new Point2D(-offset,offset));
 
         /*Cell childCellNone = (Cell) myCell.getAllChildren().get(Offset.NONE);
@@ -71,13 +82,15 @@ public class DisplayCell {
             if (dir == Offset.NONE) { // && childCell.getDeck().peek() == null
                 continue;
             }
-            DisplayCell childDisplayCell = new DisplayCell(myLambda, childCell, cardNameToFileName, location.add(offsetDirToAmount.get(dir)), height, width, offset);
+            Point2D offsetAmount = offsetDirToAmount.get(dir);
+            Pair<NumberBinding, NumberBinding> childOffset = new Pair<>(myImageView.translateXProperty().add(offsetAmount.getX()),myImageView.translateYProperty().add(offsetAmount.getY()));
+            DisplayCell childDisplayCell = new DisplayCell(myDragLambda, myClickLambda, childCell, cardNameToFileName, childOffset, height, width, offset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
             myGroup.getChildren().add(childDisplayCell.getImageView());
         }
     }
 
-    public DisplayCell(Cell cell, String faceUp, String faceDown, Point2D location, double height, double width, double offset) {
+    /*public DisplayCell(Cell cell, String faceUp, String faceDown, Point2D location, double height, double width, double offset) {
         myCell = cell;
         myFaceDown = new Image(faceDown);
         myFaceUp = new Image(faceUp);
@@ -97,6 +110,7 @@ public class DisplayCell {
 
         enableDrag(myImageView);
     }
+     */
 
     public Map<Offset,DisplayCell> getAllChildren() {
         return myDisplayChildren;
@@ -126,13 +140,19 @@ public class DisplayCell {
         source.setOnMouseDragged(event -> {
             event.setDragDetect(false);
             Node on = (Node)event.getTarget();
+            source.translateXProperty().unbind();
+            source.translateYProperty().unbind();
             moveAll(this, new Point2D(event.getSceneX(), event.getSceneY()));
             event.consume();
         });
 
         source.setOnMouseReleased(d -> {
             resetAll(this);
-            myLambda.returnSelectedDisplayCell(this);
+            myDragLambda.returnSelectedDisplayCell(this);
+        });
+
+        source.setOnMouseClicked( click -> {
+            myClickLambda.returnSelectedDisplayCell(this);
         });
     }
 
@@ -164,6 +184,8 @@ public class DisplayCell {
         }
         Point2D dxdy = dragToXY.subtract(dragFromXY);
         Node on = (Node) childCell.getImageView();
+        on.translateXProperty().unbind();
+        on.translateYProperty().unbind();
         on.setTranslateX(on.getTranslateX()+dxdy.getX());
         on.setTranslateY(on.getTranslateY()+dxdy.getY());
         on.toFront();

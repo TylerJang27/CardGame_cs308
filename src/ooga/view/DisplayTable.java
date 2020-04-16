@@ -1,9 +1,17 @@
 package ooga.view;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.NumberBinding;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 import ooga.cardtable.*;
+import ooga.data.rules.ILayout;
 import ooga.data.rules.Layout;
 import ooga.data.style.ICoordinate;
 import java.util.*;
@@ -13,20 +21,27 @@ public class DisplayTable {
     private Pane myPane;
 
     private double myScreenWidth;
-    private double myCardHeight;
-    private double myCardWidth;
+    private NumberBinding myCardHeight;
+    private NumberBinding myCardWidth;
     private double myCardOffset;
     private Map<String, String> myCardNameToFileName;
-    private Map<String, ICoordinate> myCellNameToLocation;
+    private Map<String, Pair<NumberBinding, NumberBinding>> myCellNameToLocation;
 
     @FunctionalInterface
-    interface MyFunctionalInterface {
+    interface MyDragInterface {
+        public void returnSelectedDisplayCell(DisplayCell selectedCell);
+    }
+
+    @FunctionalInterface
+    interface MyClickInterface {
         public void returnSelectedDisplayCell(DisplayCell selectedCell);
     }
 
     List<DisplayCell> myDisplayCellData = new ArrayList<>();
 
-    MyFunctionalInterface getSelectedCell;
+    MyDragInterface getDraggedCell;
+    MyClickInterface getClickedCell;
+
     DisplayCell myMovedDisplayCell;
     ICell myMover;
     ICell myDonor;
@@ -34,12 +49,13 @@ public class DisplayTable {
     IMove myMove;
 
     public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenwidth) {
+        System.out.println(layout.getScreenRatio());
 
         myScreenWidth = screenwidth;
         myPane = new Pane();
 
-        myCardHeight = layout.getCardHeightRatio()*screenwidth;
-        myCardWidth = layout.getCardWidthRatio()*screenwidth;
+        myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
+        myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
         myCardOffset = layout.getUpOffsetRatio()*screenwidth;
         // TODO: get resource file from controller for myCardNameToFileName
         myCardNameToFileName = new HashMap<>();
@@ -47,15 +63,29 @@ public class DisplayTable {
         for (String card: cardDeck) {
             myCardNameToFileName.put(card, card+".png");
         }
-        myCellNameToLocation = layout.getCellLayout();
+        //myCellNameToLocation = layout.getCellLayout();
+        myCellNameToLocation = new HashMap<>();
+        Map<String, ICoordinate> locations = layout.getCellLayout();
+        for(String key : locations.keySet()){
+            System.out.println("key is: " + key);
+            NumberBinding x = Bindings.divide(Bindings.multiply(myPane.widthProperty(),locations.get(key).getX()),100);
+            NumberBinding y = Bindings.divide(Bindings.multiply(myPane.heightProperty(),locations.get(key).getY()),100);
 
-        getSelectedCell = (DisplayCell selectedCell) -> {
+            myCellNameToLocation.put(key,new Pair<>(x,y));
+        }
+
+        getDraggedCell = (DisplayCell selectedCell) -> {
             myMovedDisplayCell = selectedCell;
             if(checkMove()) {
                 moveLambda.giveIMove(myMove);
-                // call lambda function given by view, which is given by controller
             }
         };
+
+        getClickedCell = (DisplayCell selectedCell) -> {
+            IMove clickMove = new Move(selectedCell.getCell(), selectedCell.getCell(), selectedCell.getCell());
+            moveLambda.giveIMove(clickMove);
+        };
+
         /*
         for(String key : layout.getCellLayout().keySet()){
             Button b = new Button(key);
@@ -108,9 +138,12 @@ public class DisplayTable {
     }
 
     public Pane updateCells(Map<String,ICell> cellData) {
-        myPane = new Pane();
+        myPane.getChildren().clear();
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
+        for(Node node : myPane.getChildren()){
+            System.out.println("" + node + node.getTranslateX() + node.getTranslateY());
+        }
         return myPane;
     }
 
@@ -123,10 +156,9 @@ public class DisplayTable {
     }
 
     private DisplayCell makeDisplayCell(String key, Cell cell) {
-        ICoordinate icoord = myCellNameToLocation.get(key);
-        double x = icoord.getX()*myScreenWidth/100.0;
-        double y = icoord.getY()*myScreenWidth/100.0;
-        return new DisplayCell(getSelectedCell, cell, myCardNameToFileName, new Point2D(x,y), myCardHeight, myCardWidth, myCardOffset);
+        Pair<NumberBinding, NumberBinding> location = myCellNameToLocation.get(key);
+
+        return new DisplayCell(getDraggedCell, getClickedCell, cell, myCardNameToFileName, location, myCardHeight, myCardWidth, myCardOffset);
     }
 
     private void drawDisplayCells(List<DisplayCell> DisplayCellData) {
