@@ -111,7 +111,7 @@ public class PhaseMachine implements IPhaseMachine {
     }
     ICell m = findNamedCell(move.getMover().getName());
     if (m != null) {
-      move.setDonor(m);
+      move.setMover(m);
     }
     return move;
   }

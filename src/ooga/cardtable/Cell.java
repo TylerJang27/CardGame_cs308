@@ -117,6 +117,7 @@ public class Cell implements ICell {
   public ICell removeCellAtOffset(IOffset offset) {
     Cell ret = (Cell) children.remove(offset); //fixme monster
     ret.parent = null;
+    return ret;
   }
 
   @Override
@@ -358,6 +359,7 @@ public class Cell implements ICell {
     }
     ICell next = getAllChildren().get(Offset.valueOf(names[0].toUpperCase()));
     if (next == null) {
+      System.out.println("filling in the rest");
       ICell ret = this;
       for (int i = 1; i < names.length; i++) {
         setCellAtOffset(Offset.valueOf(names[i]), new Cell(getName()+","+names[i]));
