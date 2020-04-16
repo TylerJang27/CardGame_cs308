@@ -48,7 +48,7 @@ public class PhaseMachineFactory implements Factory{
             Map<String, ICellGroup> cellGroups = CellGroupFactory.getCellGroups(root);
             for (Map.Entry<String, ICellGroup> e : cellGroups.entrySet()) {
                 e.getValue().initializeAll(deck);
-            }
+            } //TODO: FUTURE RESTART?
             System.out.println("C");
             Map<String, ICell> allBaseCells = getAllCells(cellGroups);
             Map<String, IPhase> phases = PhaseFactory.getPhases(root, cellGroups, allBaseCells);
