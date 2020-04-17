@@ -44,12 +44,12 @@ public class PhaseMachineFactory implements Factory{
             Element root = XMLHelper.getRootAndCheck(dataFile, RULES_TYPE, INVALID_ERROR);
             ISettings settings = SettingsFactory.getSettings(root);
             IDeck deck = DeckFactory.getDeck(root);
-            System.out.println("B");
+            //System.out.println("B");
             Map<String, ICellGroup> cellGroups = CellGroupFactory.getCellGroups(root);
             for (Map.Entry<String, ICellGroup> e : cellGroups.entrySet()) {
                 e.getValue().initializeAll(deck);
             } //TODO: FUTURE RESTART?
-            System.out.println("C");
+            //System.out.println("C");
             Map<String, ICell> allBaseCells = getAllCells(cellGroups);
             Map<String, IPhase> phases = PhaseFactory.getPhases(root, cellGroups, allBaseCells);
 
