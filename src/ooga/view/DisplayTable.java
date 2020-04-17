@@ -126,6 +126,8 @@ public class DisplayTable {
         clearTheseCells(cellData); // removes given cells + all children from pane and active list of display cells
         List<DisplayCell> displayCellData = makeDisplayCells(cellData); // converts cells to display cells
         drawDisplayCells(displayCellData); // draws display cells just created by adding them to pane and list of active cells
+        System.out.println(myDisplayCellData.size());
+        System.out.println(myPane.getChildren().size());
         return myPane;
     }
 
@@ -143,7 +145,7 @@ public class DisplayTable {
 
     private void clearDisplayCell(DisplayCell dc) {
         myDisplayCellData.remove(dc);  // remove the display cell + all its children from the list of active display cells
-        myPane.getChildren().remove(dc); // remove the display cell +  all its children from the screen
+        myPane.getChildren().remove(dc.getImageView()); // remove the display cell +  all its children from the screen
         for (IOffset dir: dc.getCell().getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;
