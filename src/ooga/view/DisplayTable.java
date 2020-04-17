@@ -108,9 +108,6 @@ public class DisplayTable {
     }
 
 
-
-
-
     private DisplayCell checkIntersections() {
         boolean isIntersection = false;
         ImageView movedImage = myMovedDisplayCell.getImageView();

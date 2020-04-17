@@ -40,14 +40,11 @@ public class DisplayCell {
     public DisplayCell(DisplayTable.MyDragInterface dragLambda, DisplayTable.MyClickInterface clickLambda, ICell cell, Map<String, String> cardNameToFileName, Pair<NumberBinding, NumberBinding>location, NumberBinding height, NumberBinding width, double offset) {
         myDragLambda = dragLambda;
         myClickLambda = clickLambda;
-
         myCell = cell;
         myFaceDown = new Image(cardNameToFileName.get("faceDown"));
-        //System.out.println("A: " + cardNameToFileName.toString());
+
         if(myCell.getDeck().peek() != null) {
             String cardName = myCell.getDeck().peek().getName(); //TODO: ADD TRY CATCH FOR GETTING IMAGE
-            System.out.println("A: Cardname: " + cardName);
-            //ardName = "solitaire/DS.png";
             myFaceUp = new Image(cardNameToFileName.get(cardName));
 /*
             try {
@@ -61,7 +58,8 @@ public class DisplayCell {
             } else {
                 myImageView = new ImageView(myFaceDown);
             }
-        } else {
+        }
+        else {
             String cellName = myCell.getName();
             //myFaceUp = new Image(cardNameToFileName.get(cellName));
             myFaceUp = new Image(cardNameToFileName.get("celloutline"));
@@ -77,6 +75,9 @@ public class DisplayCell {
 
         if (!myCell.isFixed()) { //TODO: TYLER DID THIS SARAH/MARIUSZ/SOMEONE ON FRONT END PLEASE HELP ME MAKE THIS NOT DRAGGABLE
             enableDrag(myImageView);
+            enableClick(myImageView);
+        } else {
+            System.out.println("I'm not draggable or clickable");
         }
 
         myGroup.getChildren().add(myImageView);
@@ -134,7 +135,9 @@ public class DisplayCell {
             resetAll(this);
             myDragLambda.returnSelectedDisplayCell(this);
         });
+    }
 
+    private void enableClick(ImageView source) {
         source.setOnMouseClicked( click -> {
             myClickLambda.returnSelectedDisplayCell(this);
         });
