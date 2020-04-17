@@ -110,7 +110,6 @@ public class DisplayTable {
         ImageView movedImage = myMovedDisplayCell.getImageView();
         for (DisplayCell dc: myDisplayCellData) {
             ImageView otherImage = dc.getImageView();
-            //if (!myMovedDisplayCell.getCell().getName().equals(dc.getCell().getName())) {
             if (!myMovedDisplayCell.getCell().findHead().getName().equals(dc.getCell().findHead().getName())) {
                 isIntersection = checkIntersection(movedImage, otherImage);
             }
@@ -134,23 +133,19 @@ public class DisplayTable {
         myDisplayCellData.clear(); //fixme added by Maverick
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
-        /*for(Node node : myPane.getChildren()){
-            System.out.println("" + node + node.getTranslateX() + node.getTranslateY());
-        }*/
         return myPane;
     }
 
     private List<DisplayCell> makeDisplayCells(Map<String,ICell> cellData) {
         List<DisplayCell> displayCellData = new ArrayList<>();
         for (String c: cellData.keySet()) {
-            displayCellData.add(makeDisplayCell(c,cellData.get(c))); // TODO
+            displayCellData.add(makeDisplayCell(c,cellData.get(c)));
         }
         return displayCellData;
     }
 
     private DisplayCell makeDisplayCell(String key, ICell cell) {
         Pair<NumberBinding, NumberBinding> location = myCellNameToLocation.get(key);
-
         return new DisplayCell(getDraggedCell, getClickedCell, cell, myCardNameToFileName, location, myCardHeight, myCardWidth, myCardOffset);
     }
 

@@ -27,8 +27,6 @@ public class DisplayCell {
     private Group myGroup = new Group();
 
     private ImageView myImageView;
-    private Image myFaceUp;
-    private Image myFaceDown;
 
     private Map<Offset, Point2D> offsetDirToAmount;
 
@@ -41,29 +39,27 @@ public class DisplayCell {
         myDragLambda = dragLambda;
         myClickLambda = clickLambda;
         myCell = cell;
-        myFaceDown = new Image(cardNameToFileName.get("faceDown"));
 
         if(myCell.getDeck().peek() != null) {
-            String cardName = myCell.getDeck().peek().getName(); //TODO: ADD TRY CATCH FOR GETTING IMAGE
-            myFaceUp = new Image(cardNameToFileName.get(cardName));
+            if (myCell.getDeck().peek().isFaceUp()) {
+                myImageView = new ImageView(new Image(cardNameToFileName.get(myCell.getDeck().peek().getName())));
+            } else {
+                myImageView = new ImageView(new Image(cardNameToFileName.get("faceDown")));
+            }
+
 /*
             try {
-                myFaceUp = new Image(cardName + ".png");//cardNameToFileName.get(myCell.getDeck().peek().getName()));
+                Image faceUp = new Image(cardName + ".png");//cardNameToFileName.get(myCell.getDeck().peek().getName()));
             } catch (IllegalArgumentException e) {
-                myFaceUp = new Image("0C" + ".png"); //TODO: REPLACE WITH A DEFAULT CARD SKIN
+                Image faceUp = new Image("0C" + ".png"); //TODO: REPLACE WITH A DEFAULT CARD SKIN
             }
 */
-            if (myCell.getDeck().peek().isFaceUp()) {
-                myImageView = new ImageView(myFaceUp);
-            } else {
-                myImageView = new ImageView(myFaceDown);
-            }
-        }
-        else {
-            String cellName = myCell.getName();
-            //myFaceUp = new Image(cardNameToFileName.get(cellName));
-            myFaceUp = new Image(cardNameToFileName.get("celloutline"));
-            myImageView = new ImageView(myFaceUp);
+        } else {
+            /*String cellName = myCell.getName();
+                myFaceUp = new Image(cardNameToFileName.get(cellName));
+
+             */
+            myImageView = new ImageView(new Image(cardNameToFileName.get("celloutline")));
         }
 
         myImageView.layoutXProperty().bind(Bindings.divide(myImageView.fitWidthProperty(),-2));
@@ -73,7 +69,7 @@ public class DisplayCell {
         myImageView.fitWidthProperty().bind(width);
         myImageView.fitHeightProperty().bind(height);
 
-        if (!myCell.isFixed()) { //TODO: TYLER DID THIS SARAH/MARIUSZ/SOMEONE ON FRONT END PLEASE HELP ME MAKE THIS NOT DRAGGABLE
+        if (!myCell.isFixed()) { //TODO: Hi Tyler, definitely the right way to do it (I tested it by making only faceUp cards movable, np), looks like isFixed() always false
             enableDrag(myImageView);
             enableClick(myImageView);
         } else {
