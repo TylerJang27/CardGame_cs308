@@ -77,7 +77,7 @@ public class DisplayCell {
             enableDrag(myImageView);
             enableClick(myImageView);
         } else {
-            System.out.println("I'm not draggable or clickable");
+            //System.out.println("I'm not draggable or clickable");
         }
 
         myGroup.getChildren().add(myImageView);
@@ -154,7 +154,9 @@ public class DisplayCell {
     }
 
     private void moveAll(DisplayCell selectedCell, Point2D initDragToXY) {
-        moveChildTo(selectedCell,initDragToXY);
+        if (!selectedCell.getCell().isFixed()) {
+            moveChildTo(selectedCell,initDragToXY);
+        }
         for (Offset dir: selectedCell.getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;

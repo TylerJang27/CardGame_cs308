@@ -49,7 +49,6 @@ public class DisplayTable {
     IMove myMove;
 
     public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenwidth) {
-        System.out.println(layout.getScreenRatio());
 
         myScreenWidth = screenwidth;
         myPane = new Pane();
@@ -64,7 +63,6 @@ public class DisplayTable {
         myCellNameToLocation = new HashMap<>();
         Map<String, ICoordinate> locations = layout.getCellLayout();
         for(String key : locations.keySet()){
-            System.out.println("key is: " + key);
             NumberBinding x = Bindings.divide(Bindings.multiply(myPane.widthProperty(),locations.get(key).getX()),100);
             NumberBinding y = Bindings.divide(Bindings.multiply(myPane.heightProperty(),locations.get(key).getY()),100);
 
@@ -101,7 +99,6 @@ public class DisplayTable {
             myMover = myMovedDisplayCell.getCell();
             myDonor = myMovedDisplayCell.getCell().findHead();
             myRecipient = intersectedCell.getCell().findLeaf();
-            System.out.println("recipient ahoy:" + myRecipient);
             myMove = new Move(myDonor, myMover, myRecipient);
         }
         return intersectedCell != myMovedDisplayCell;
@@ -137,9 +134,9 @@ public class DisplayTable {
         myDisplayCellData.clear(); //fixme added by Maverick
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
-        for(Node node : myPane.getChildren()){
+        /*for(Node node : myPane.getChildren()){
             System.out.println("" + node + node.getTranslateX() + node.getTranslateY());
-        }
+        }*/
         return myPane;
     }
 
