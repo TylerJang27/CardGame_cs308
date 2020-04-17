@@ -136,6 +136,7 @@ public class DisplayTable {
 
     public Pane updateCells(Map<String,ICell> cellData) {
         myPane.getChildren().clear();
+        myDisplayCellData.clear(); //fixme added by Maverick
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
         for(Node node : myPane.getChildren()){

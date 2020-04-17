@@ -18,6 +18,14 @@ public class Deck implements IDeck {
     myName = name;
     cards = d;
   }
+  @Override
+  public boolean isFixed() {
+    if (cards.size() > 0) {
+      return cards.get(0).isFixed();
+    } else {
+      return false;
+    }
+  }
 
   @Override
   public void shuffle() {
@@ -57,6 +65,9 @@ public class Deck implements IDeck {
   public ICard getCardAtIndex(int index) { //removes the card from the deck
     if (isEmpty()) {
       return null;
+    }
+    if (cards.get(index).isFixed()) {
+      return getRandomCard();
     }
     return cards.remove(index);
   }
@@ -104,6 +115,7 @@ public class Deck implements IDeck {
       String name) { //TODO: MAKE SURE THIS WORKS WITH THE OFFSET AS I WANT IT TO
     for (ICard c : cards) {
       if (c.getName().equals(name)) {
+        System.out.println("searched name: " + c.getName());
         return c;
       }
     }

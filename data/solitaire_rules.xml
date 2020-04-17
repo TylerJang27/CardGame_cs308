@@ -14,66 +14,77 @@
             <value>0</value>
             <color>black</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>DD</name>
             <value>0</value>
             <color>red</color>
             <suit>d</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>DH</name>
             <value>0</value>
             <color>red</color>
             <suit>h</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>DS</name>
             <value>0</value>
             <color>black</color>
             <suit>s</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D1</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D2</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D3</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D4</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D5</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D6</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D7</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>AC</name>
@@ -570,6 +581,14 @@
                             <offset>south</offset>
                             <flip>n</flip>
                         </mover_dest>
+                        <donor_dest>
+                            <destination>d</destination>
+                            <num_cards>south</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>preserve</offset>
+                            <flip>south</flip>
+                        </donor_dest>
                         <!-- points included in the tag below-->
                         <next_phase phase="check_eog">0</next_phase>
                     </action>

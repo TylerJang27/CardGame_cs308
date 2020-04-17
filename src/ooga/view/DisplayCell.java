@@ -49,6 +49,13 @@ public class DisplayCell {
             System.out.println("A: Cardname: " + cardName);
             //ardName = "solitaire/DS.png";
             myFaceUp = new Image(cardNameToFileName.get(cardName));
+/*
+            try {
+                myFaceUp = new Image(cardName + ".png");//cardNameToFileName.get(myCell.getDeck().peek().getName()));
+            } catch (IllegalArgumentException e) {
+                myFaceUp = new Image("0C" + ".png"); //TODO: REPLACE WITH A DEFAULT CARD SKIN
+            }
+*/
             if (myCell.getDeck().peek().isFaceUp()) {
                 myImageView = new ImageView(myFaceUp);
             } else {
