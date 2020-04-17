@@ -45,15 +45,16 @@ public class DisplayCell {
         myFaceDown = new Image(cardNameToFileName.get("faceDown"));
         if(myCell.getDeck().peek() != null) {
             String cardName = myCell.getDeck().peek().getName(); //TODO: ADD TRY CATCH FOR GETTING IMAGE
-            myFaceUp = new Image(cardNameToFileName.get(cardName) + ".png");//cardNameToFileName.get(myCell.getDeck().peek().getName()));
+            myFaceUp = new Image(cardNameToFileName.get(cardName));
             if (myCell.getDeck().peek().isFaceUp()) {
                 myImageView = new ImageView(myFaceUp);
             } else {
                 myImageView = new ImageView(myFaceDown);
             }
         } else {
-            // TODO: make same as above but use cell name as key! :)
-            myFaceUp = new Image("celloutline.png");
+            String cellName = myCell.getName();
+            //myFaceUp = new Image(cardNameToFileName.get(cellName));
+            myFaceUp = new Image(cardNameToFileName.get("celloutline"));
             myImageView = new ImageView(myFaceUp);
         }
 
