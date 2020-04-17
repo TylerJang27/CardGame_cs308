@@ -43,9 +43,12 @@ public class DisplayCell {
 
         myCell = cell;
         myFaceDown = new Image(cardNameToFileName.get("faceDown"));
+        System.out.println("A: " + cardNameToFileName.toString());
         if(myCell.getDeck().peek() != null) {
             String cardName = myCell.getDeck().peek().getName(); //TODO: ADD TRY CATCH FOR GETTING IMAGE
-            myFaceUp = new Image(cardNameToFileName.get(cardName));
+            System.out.println("A: Cardname: " + cardName);
+            cardName = "solitaire/DS.png";
+            myFaceUp = new Image(cardName);//ToFileName.get(cardName));
             if (myCell.getDeck().peek().isFaceUp()) {
                 myImageView = new ImageView(myFaceUp);
             } else {
