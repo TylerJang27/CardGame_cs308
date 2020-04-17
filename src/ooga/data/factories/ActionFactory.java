@@ -161,6 +161,7 @@ public class ActionFactory implements Factory {
         } else {
             off = Offset.NONE;
         }
+        System.out.println(off.getOffset() + "is my offset!"); //TODO: DEBUG OFFSET
         return off;
     }
 

@@ -636,6 +636,14 @@
                             <offset>0</offset>
                             <flip>n</flip>
                         </mover_dest>
+                        <donor_dest>
+                            <destination>d</destination>
+                            <num_cards>south</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>preserve</offset>
+                            <flip>south</flip>
+                        </donor_dest>
                         <next_phase phase = "check_eog">0</next_phase>
                     </action>
                 </rule>
