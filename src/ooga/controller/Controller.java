@@ -14,6 +14,7 @@ import ooga.view.View;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -35,6 +36,9 @@ public class Controller extends Application {
     private File myLayoutFile;
     private IPhaseMachine myCurrentPhaseMachine;
     private Map<String, ICell> myCellMap;
+    private Map<String, ICell> myCurrentCells;
+    private Map<String, ICell> myPreviousCells;
+    private Map<String, ICell> myChangedCells = new HashMap<>();
 
     @FunctionalInterface
     public
@@ -58,7 +62,16 @@ public class Controller extends Application {
             System.out.println(move.getMover().getName());
             System.out.println(move.getRecipient().getName());
             myTable.update(move);
-            myView.setCellData(Map.copyOf(myTable.getCellData()));
+            myCurrentCells = myTable.getCellData();
+            for (String i : myCurrentCells.keySet()) {
+                if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
+                    myChangedCells.put(i, myCurrentCells.get(i));
+                }
+            }
+            myView.setUpdatesToCellData(myChangedCells);
+            myPreviousCells = myCurrentCells;
+            myChangedCells.clear();
+            //myView.setCellData(Map.copyOf(myTable.getCellData()));
         };
         myView = new View(gm);
         initializeHandlers(myView);
@@ -71,7 +84,7 @@ public class Controller extends Application {
     private void initializeHandlers(View v) {
         //input is string gamename
         v.listenForGameChoice((a,b,gameName) -> startTable(gameName));
-    //() -> newMove());
+        //() -> newMove());
         /*v.setHandlers((String game) -> createEngine(game), //Consumer
                 (String rules) -> setHouseRules(rules), //Consumer
                 (int diff) -> setDifficulty(diff), //Consumer
@@ -100,6 +113,7 @@ public class Controller extends Application {
 
         myView.setLayout(LayoutFactory.getLayout(f));
         myView.setCellData(myCellMap);
+        myPreviousCells = myCellMap;
         //myView.setCellData(Map.copyOf(myTable.getCellData()));
     }
 
@@ -139,13 +153,14 @@ public class Controller extends Application {
     }
 
     /**void setCellData(Map<String, ICell> cellData);
-    void setScores(Map<Integer, Double> playerScores);
-    void endGame(Map<Integer, Boolean> playerOutcomes, Map<Integer, Double> playerScores, Map<Integer, Integer> highScores);
-    void playerStatusUpdate(Map<Integer, Boolean> playerOutcomes, Map<Integer, Integer> playerScores);
-    boolean isUserInput();
-    IMove getUserInput();
-    void setStyle(Style style);
-    void setLayout(Layout layout);
-    **/
+     void setScores(Map<Integer, Double> playerScores);
+     void endGame(Map<Integer, Boolean> playerOutcomes, Map<Integer, Double> playerScores, Map<Integer, Integer> highScores);
+     void playerStatusUpdate(Map<Integer, Boolean> playerOutcomes, Map<Integer, Integer> playerScores);
+     boolean isUserInput();
+     IMove getUserInput();
+     void setStyle(Style style);
+     void setLayout(Layout layout);
+     **/
 
 }
+

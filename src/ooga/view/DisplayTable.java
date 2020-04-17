@@ -130,8 +130,10 @@ public class DisplayTable {
     }
 
     private void clearTheseCells(Map<String,ICell> cellData) {
+        List<DisplayCell> copyDisplayCellData = new ArrayList<>();
+        copyDisplayCellData.addAll(myDisplayCellData);
         for (ICell c : cellData.values()) { // for every cell that needs to change
-            for (DisplayCell dc : myDisplayCellData) { // find its current display cell
+            for (DisplayCell dc : copyDisplayCellData) { // find its current display cell
                 if (c.getName().equals(dc.getCell().getName())) {
                     clearDisplayCell(dc);
                 }
@@ -146,8 +148,9 @@ public class DisplayTable {
             if (dir == Offset.NONE) {
                 continue;
             }
-            clearDisplayCell(dc.getAllChildren().get((Offset) dir));
+            clearDisplayCell(dc.getAllChildren().get(dir));
         }
+        //System.out.println("Removed "+dc.getCell().getName());, correctly removes everybody
     }
 
     private List<DisplayCell> makeDisplayCells(Map<String,ICell> cellData) {
