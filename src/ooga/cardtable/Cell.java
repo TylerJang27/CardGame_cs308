@@ -127,9 +127,12 @@ public class Cell implements ICell {
 
   @Override
   public ICell removeCellAtOffset(IOffset offset) {
-    Cell ret = (Cell) children.remove(offset); //fixme monster
-    ret.parent = null;
-    return ret;
+    if (children.containsKey(offset)) {
+      Cell ret = (Cell) children.remove(offset); //fixme monster
+      ret.parent = null;
+      return ret;
+    }
+    return null;
   }
 
   @Override
@@ -170,6 +173,43 @@ public class Cell implements ICell {
     children.get(offset).addCard(Offset.NONE, card);
   }
 
+  /*@Override
+  public void addCell(IOffset offset, ICell addition) {
+    ICell recipient = this;
+    Map<IOffset, ICell> recChildren = recipient.getAllChildren();
+    if (recChildren.containsKey(offset)) {
+
+    } else {
+      recipient.setCellAtOffset(offset, addition);
+    }
+
+
+
+    for (int k = 0; k < Offset.values().length; k ++) {
+      IOffset off = Offset.values()[k];
+      Map<IOffset, ICell> recChildren = recipient.getAllChildren();
+      Map<IOffset, ICell> addChildren = addition.getAllChildren();
+      if (off.equals(Offset.NONE)) {
+        recipient.getDeck().addDeck(addition.getDeck());
+        continue;
+      }
+      if (recChildren.containsKey(off)) {
+        if (addChildren.containsKey(off)) {
+          recChildren.get(off).addCell(Offset.NONE, addChildren.get(off));
+          continue;
+        }
+
+        continue;
+      }
+
+      if (addition.getAllChildren().keySet().size() <= 1) {
+        recipient.getDeck().addDeck(addition.getDeck());
+        updateParentage();
+        return;
+      }
+    }
+    updateParentage();
+  }*/
   @Override
   public void addCell(IOffset offset, ICell cell) { //fixme 90% this infinite recurses
     //TODO: ADD NAMES OR EVERYTHING BREAKS
@@ -229,16 +269,30 @@ public class Cell implements ICell {
     }
   }
 
+  private ICell extractCell(ICell cell) {
+    ICell duplicate = new Cell("");
+    for (int k = 0; k < Offset.values().length; k++) {
+      IOffset off = Offset.values()[k];
+      if (off.equals(Offset.NONE)) {
+        duplicate.getDeck().addDeck(cell.getDeck());
+        continue;
+      }
+      duplicate.setCellAtOffset(off, cell.getAllChildren().get(off));
+    }
+    return duplicate;
+  }
+
   @Override
   public void setCellAtOffset(IOffset offset, ICell cell) {
     if (cell == null) {
       removeCellAtOffset(offset);
       return;
     }
-    children.put(offset, cell);
-    System.out.println(offset.getOffset() + "yolo" + cell.getName());
-    ((Cell) cell).setParent(this); //fixme you're a monster
-    cell.updateParentage();
+    ICell extracted = extractCell(cell);
+    children.put(offset, extracted);
+    System.out.println(offset.getOffset() + "yolo" + extracted.getName());
+    ((Cell) extracted).setParent(this); //fixme you're a monster
+    extracted.updateParentage();
   }
 
   @Override
