@@ -23,8 +23,10 @@ public class LayoutFactory {
     private static final String RESOURCES = "ooga.resources";
     private static final String RESOURCE_PACKAGE = RESOURCES + "." + "layout_word";
     private static final String RESOURCE_COORD_PACKAGE = RESOURCES + "." + "layout_coord";
+    private static final String RESOURCE_MAP_PACKAGE = RESOURCES + "." + "layout_deck";
     private static final ResourceBundle layoutResources = ResourceBundle.getBundle(RESOURCE_PACKAGE);
     private static final ResourceBundle coordResources = ResourceBundle.getBundle(RESOURCE_COORD_PACKAGE);
+    private static final ResourceBundle mapResources = ResourceBundle.getBundle(RESOURCE_MAP_PACKAGE);
 
     private static DocumentBuilder documentBuilder;
 
@@ -60,6 +62,9 @@ public class LayoutFactory {
 
                 coordMap.put(cellName, coord);
             }
+
+            Node deck = 
+
             return new Layout(coordMap, numberSettings);
         } catch (Exception e) {
             throw new XMLException(e, Factory.MISSING_ERROR + "," + LAYOUT_TYPE);
