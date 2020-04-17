@@ -46,7 +46,7 @@ public class DisplayCell {
         //System.out.println("A: " + cardNameToFileName.toString());
         if(myCell.getDeck().peek() != null) {
             String cardName = myCell.getDeck().peek().getName(); //TODO: ADD TRY CATCH FOR GETTING IMAGE
-            System.out.println("A: Cardname: " + cardName);
+            //System.out.println("A: Cardname: " + cardName);
             //ardName = "solitaire/DS.png";
             myFaceUp = new Image(cardNameToFileName.get(cardName));
 /*
