@@ -57,7 +57,7 @@ public class RuleFactory implements Factory {
     private static final String NO = "No";
 
     private static DocumentBuilder documentBuilder;
-    public static final List<String> TRUE_CHECKS = new ArrayList<String>(Arrays.asList(new String[]{"", resources.getString(ALL)}));
+    public static final List<String> TRUE_CHECKS = List.of("", resources.getString(ALL).strip());
 
     public RuleFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
 
@@ -150,13 +150,16 @@ public class RuleFactory implements Factory {
 
     private static void extractNumCardsCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
-        String numCards = XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS));
+        //System.out.println("yolofdsafdsafdsafdasfsdaffs");
+        //System.out.println(resources.getString(ALL).strip());
+        //System.out.println(XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS)));
+        String numCards = XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS)).strip();
         if (!TRUE_CHECKS.contains(numCards)) {
             Integer value = Integer.parseInt(numCards);
             valueChecker = (IMove move) -> {
                 System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
                 System.out.println("\tcurr: " + currCell.apply(move).getName());
-                System.out.println("\texpected value: " + value);
+                System.out.println("\texpected numcards value: " + value);
                 System.out.println("\t\tnumcards: " + (currCell.apply(move).getTotalSize() == value)); //FIXME: BREAKS HERE
                 return (currCell.apply(move).getTotalSize() == value);
             };
