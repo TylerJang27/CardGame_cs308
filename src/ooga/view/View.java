@@ -65,7 +65,7 @@ public class View implements ExternalAPI {
     }
 
 
-    @Override 
+    @Override
     public void setUpdatesToCellData(Map<String,ICell> cellData) {
         myDisplayTable.updateTheseCells(cellData);
     }
