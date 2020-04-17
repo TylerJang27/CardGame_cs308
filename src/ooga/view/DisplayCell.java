@@ -24,7 +24,6 @@ public class DisplayCell {
 
     private Map<Offset, DisplayCell> myDisplayChildren = new HashMap<>();
     private ICell myCell;
-    private Group myGroup = new Group();
 
     private ImageView myImageView;
 
@@ -72,33 +71,24 @@ public class DisplayCell {
         if (!myCell.isFixed()) { //TODO: Hi Tyler, definitely the right way to do it (I tested it by making only faceUp cards movable, np), looks like isFixed() always false
             enableDrag(myImageView);
             enableClick(myImageView);
-        } else {
-            //System.out.println("I'm not draggable or clickable");
         }
-
-        myGroup.getChildren().add(myImageView);
 
         offsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -offset), Offset.SOUTH, new Point2D(0,offset), Offset.EAST, new Point2D(offset, 0),Offset.WEST, new Point2D(-offset,0), Offset.NORTHEAST, new Point2D(offset,-offset), Offset.SOUTHEAST, new Point2D(offset,offset), Offset.NORTHWEST, new Point2D(-offset,-offset), Offset.SOUTHWEST, new Point2D(-offset,offset));
 
         for (IOffset dir: myCell.getAllChildren().keySet()) {
             Cell childCell = (Cell) myCell.getAllChildren().get(dir);
-            if (dir == Offset.NONE) { // && childCell.getDeck().peek() == null
+            if (dir == Offset.NONE) {
                 continue;
             }
             Point2D offsetAmount = offsetDirToAmount.get(dir);
             Pair<NumberBinding, NumberBinding> childOffset = new Pair<>(myImageView.translateXProperty().add(offsetAmount.getX()),myImageView.translateYProperty().add(offsetAmount.getY()));
             DisplayCell childDisplayCell = new DisplayCell(myDragLambda, myClickLambda, childCell, cardNameToFileName, childOffset, height, width, offset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
-            myGroup.getChildren().add(childDisplayCell.getImageView());
         }
     }
 
     public Map<Offset,DisplayCell> getAllChildren() {
         return myDisplayChildren;
-    }
-
-    public Group getGroup() {
-        return myGroup;
     }
 
     public ImageView getImageView() {

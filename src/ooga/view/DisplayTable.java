@@ -20,7 +20,6 @@ public class DisplayTable {
 
     private Pane myPane;
 
-    private double myScreenWidth;
     private NumberBinding myCardHeight;
     private NumberBinding myCardWidth;
     private double myCardOffset;
@@ -48,14 +47,13 @@ public class DisplayTable {
     ICell myRecipient;
     IMove myMove;
 
-    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenwidth) {
+    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenWidth) {
 
-        myScreenWidth = screenwidth;
         myPane = new Pane();
 
         myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
         myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
-        myCardOffset = layout.getUpOffsetRatio()*screenwidth;
+        myCardOffset = layout.getUpOffsetRatio()*screenWidth;
 
         myCardNameToFileName = layout.getCardImagePaths();
 
@@ -95,7 +93,7 @@ public class DisplayTable {
 
     private boolean checkMove() {
         DisplayCell intersectedCell = checkIntersections();
-        if (intersectedCell != myMovedDisplayCell && !myMovedDisplayCell.getCell().isFixed()) { //TODO: TYLER FUDGED WITH THIS
+        if (intersectedCell != myMovedDisplayCell && !myMovedDisplayCell.getCell().isFixed()) { //TODO: Hi Tyler, do you not want a fixed cell to be intersectable?
             myMover = myMovedDisplayCell.getCell();
             myDonor = myMovedDisplayCell.getCell().findHead();
             myRecipient = intersectedCell.getCell().findLeaf();
@@ -130,7 +128,7 @@ public class DisplayTable {
 
     public Pane updateCells(Map<String,ICell> cellData) {
         myPane.getChildren().clear();
-        myDisplayCellData.clear(); //fixme added by Maverick
+        myDisplayCellData.clear();
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
         return myPane;
@@ -156,11 +154,11 @@ public class DisplayTable {
     }
 
     private void drawDisplayCell(DisplayCell rootDispCell) {
-        if (rootDispCell.getGroup().getChildren() == null) {
+        if (rootDispCell == null) {
             return;
         }
         myDisplayCellData.add(rootDispCell);
-        myPane.getChildren().addAll(rootDispCell.getGroup().getChildren());
+        myPane.getChildren().add(rootDispCell.getImageView());
         for (IOffset dir: rootDispCell.getCell().getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;
