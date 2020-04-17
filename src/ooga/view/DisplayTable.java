@@ -20,7 +20,6 @@ public class DisplayTable {
 
     private Pane myPane;
 
-    private double myScreenWidth;
     private NumberBinding myCardHeight;
     private NumberBinding myCardWidth;
     private double myCardOffset;
@@ -48,15 +47,13 @@ public class DisplayTable {
     ICell myRecipient;
     IMove myMove;
 
-    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenwidth) {
-        System.out.println(layout.getScreenRatio());
+    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenWidth) {
 
-        myScreenWidth = screenwidth;
         myPane = new Pane();
 
         myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
         myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
-        myCardOffset = layout.getUpOffsetRatio()*screenwidth;
+        myCardOffset = layout.getUpOffsetRatio()*screenWidth;
 
         myCardNameToFileName = layout.getCardImagePaths();
 
@@ -64,7 +61,6 @@ public class DisplayTable {
         myCellNameToLocation = new HashMap<>();
         Map<String, ICoordinate> locations = layout.getCellLayout();
         for(String key : locations.keySet()){
-            System.out.println("key is: " + key);
             NumberBinding x = Bindings.divide(Bindings.multiply(myPane.widthProperty(),locations.get(key).getX()),100);
             NumberBinding y = Bindings.divide(Bindings.multiply(myPane.heightProperty(),locations.get(key).getY()),100);
 
@@ -97,18 +93,14 @@ public class DisplayTable {
 
     private boolean checkMove() {
         DisplayCell intersectedCell = checkIntersections();
-        if (intersectedCell != myMovedDisplayCell && !myMovedDisplayCell.getCell().isFixed()) { //TODO: TYLER FUDGED WITH THIS
+        if (intersectedCell != myMovedDisplayCell && !myMovedDisplayCell.getCell().isFixed()) { //TODO: Hi Tyler, do you not want a fixed cell to be intersectable?
             myMover = myMovedDisplayCell.getCell();
             myDonor = myMovedDisplayCell.getCell().findHead();
             myRecipient = intersectedCell.getCell().findLeaf();
-            System.out.println("recipient ahoy:" + myRecipient);
             myMove = new Move(myDonor, myMover, myRecipient);
         }
         return intersectedCell != myMovedDisplayCell;
     }
-
-
-
 
 
     private DisplayCell checkIntersections() {
@@ -116,7 +108,6 @@ public class DisplayTable {
         ImageView movedImage = myMovedDisplayCell.getImageView();
         for (DisplayCell dc: myDisplayCellData) {
             ImageView otherImage = dc.getImageView();
-            //if (!myMovedDisplayCell.getCell().getName().equals(dc.getCell().getName())) {
             if (!myMovedDisplayCell.getCell().findHead().getName().equals(dc.getCell().findHead().getName())) {
                 isIntersection = checkIntersection(movedImage, otherImage);
             }
@@ -137,26 +128,22 @@ public class DisplayTable {
 
     public Pane updateCells(Map<String,ICell> cellData) {
         myPane.getChildren().clear();
-        myDisplayCellData.clear(); //fixme added by Maverick
+        myDisplayCellData.clear();
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
-        for(Node node : myPane.getChildren()){
-            System.out.println("" + node + node.getTranslateX() + node.getTranslateY());
-        }
         return myPane;
     }
 
     private List<DisplayCell> makeDisplayCells(Map<String,ICell> cellData) {
         List<DisplayCell> displayCellData = new ArrayList<>();
         for (String c: cellData.keySet()) {
-            displayCellData.add(makeDisplayCell(c,cellData.get(c))); // TODO
+            displayCellData.add(makeDisplayCell(c,cellData.get(c)));
         }
         return displayCellData;
     }
 
     private DisplayCell makeDisplayCell(String key, ICell cell) {
         Pair<NumberBinding, NumberBinding> location = myCellNameToLocation.get(key);
-
         return new DisplayCell(getDraggedCell, getClickedCell, cell, myCardNameToFileName, location, myCardHeight, myCardWidth, myCardOffset);
     }
 
@@ -167,11 +154,11 @@ public class DisplayTable {
     }
 
     private void drawDisplayCell(DisplayCell rootDispCell) {
-        if (rootDispCell.getGroup().getChildren() == null) {
+        if (rootDispCell == null) {
             return;
         }
         myDisplayCellData.add(rootDispCell);
-        myPane.getChildren().addAll(rootDispCell.getGroup().getChildren());
+        myPane.getChildren().add(rootDispCell.getImageView());
         for (IOffset dir: rootDispCell.getCell().getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;
