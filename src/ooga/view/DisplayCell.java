@@ -67,11 +67,7 @@ public class DisplayCell {
         myImageView.fitWidthProperty().bind(width);
         myImageView.fitHeightProperty().bind(height);
 
-        /*if (!myCell.isFixed()) { //TODO: Hi Tyler, definitely the right way to do it (I tested it by making only faceUp cards movable, np), looks like isFixed() always false
-
-        }*/
-
-        if(myCell.getDeck().peek() != null) {
+        if(myCell.getDeck().peek() != null || !myCell.isFixed()) {
             enableDrag(myImageView);
             enableClick(myImageView);
         }
