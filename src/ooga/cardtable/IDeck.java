@@ -31,4 +31,6 @@ public interface IDeck {
   ICard getCardByName(String name); //TODO: ADD TO API CHANGES
 
   IDeck copy();
+
+  boolean isFixed(); //TODO: ADD TO API CHANGES
 }

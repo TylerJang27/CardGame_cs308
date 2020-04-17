@@ -11,6 +11,7 @@ public class Card implements ICard {
   private boolean faceup;
   private Map<IAttribute, Boolean> attributes;
   private double orientation;
+  private boolean isFixed;
 
   public Card(String name) {
     this.name = name;
@@ -38,6 +39,16 @@ public class Card implements ICard {
   public Card(String name, Map<IAttribute, Boolean> visible) {
     this(name);
     attributes = visible;
+  }
+
+  @Override
+  public void setFixed(boolean fixed) {
+    isFixed = fixed;
+  }
+
+  @Override
+  public boolean isFixed() {
+    return isFixed;
   }
 
   private void setAttributes(Map<IAttribute, Boolean> attr) {

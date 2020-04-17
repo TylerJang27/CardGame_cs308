@@ -14,66 +14,77 @@
             <value>0</value>
             <color>black</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>DD</name>
             <value>0</value>
             <color>red</color>
             <suit>d</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>DH</name>
             <value>0</value>
             <color>red</color>
             <suit>h</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>DS</name>
             <value>0</value>
             <color>black</color>
             <suit>s</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D1</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D2</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D3</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D4</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D5</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D6</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>D7</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
+            <fixed>true</fixed>
         </card>
         <card>
             <name>AC</name>

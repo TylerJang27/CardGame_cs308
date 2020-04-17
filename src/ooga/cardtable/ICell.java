@@ -60,4 +60,6 @@ public interface ICell extends Cellular {
 
   ICell followNamespace(String nm);
 
+  boolean isFixed(); //TODO: ADD TO API CHANGES
+
 }

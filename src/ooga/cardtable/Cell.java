@@ -29,6 +29,11 @@ public class Cell implements ICell {
   }
 
   @Override
+  public boolean isFixed() {
+    return deck.isFixed();
+  }
+
+  @Override
   public List<ICell> getCellsbyName(String name) {
     List<ICell> cellList = new ArrayList<>();
     if (isInGroup(name)) {
