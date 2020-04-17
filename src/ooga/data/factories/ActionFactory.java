@@ -181,20 +181,19 @@ public class ActionFactory implements Factory {
         String flip = XMLHelper.getTextValue(e, resources.getString(FLIP));
         System.out.println("flippy: " + flip);
         if (Offset.validOffsets.contains(flip.toLowerCase())) {
-            System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-            System.out.println("\tcurr: " + currCell.apply(move).getName());
-            System.out.println("flippy offset");
-            System.out.println(currCell.apply(move).getPeak(Offset.valueOf(flip.toUpperCase())).getName());
-
-
-        //TODO: tyler needs help
             System.out.println("my flippy cell: " + currCell.apply(move).getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().getName());
-            currCell.apply(move).getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().flip();
+            ICard cardToFlip = currCell.apply(move).getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek();
+            if (!cardToFlip.isFaceUp()) {
+                cardToFlip.flip();
+            }
         } else if (flip.equals(resources.getString(ALL))) {
             System.out.println("flippy all");
             for (ICell c : currCell.apply(move).getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
-                    c.getDeck().peekCardAtIndex(k).flip();
+                    ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
+                    if (!cardToFlip.isFaceUp()) {
+                        cardToFlip.flip();
+                    }
                 }
             }
         }
