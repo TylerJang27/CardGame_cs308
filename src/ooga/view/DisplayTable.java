@@ -57,13 +57,11 @@ public class DisplayTable {
 
         myCardNameToFileName = layout.getCardImagePaths();
 
-        //myCellNameToLocation = layout.getCellLayout();
         myCellNameToLocation = new HashMap<>();
         Map<String, ICoordinate> locations = layout.getCellLayout();
         for(String key : locations.keySet()){
             NumberBinding x = Bindings.divide(Bindings.multiply(myPane.widthProperty(),locations.get(key).getX()),100);
             NumberBinding y = Bindings.divide(Bindings.multiply(myPane.heightProperty(),locations.get(key).getY()),100);
-
             myCellNameToLocation.put(key,new Pair<>(x,y));
         }
 
@@ -79,16 +77,6 @@ public class DisplayTable {
             moveLambda.giveIMove(clickMove);
         };
 
-        /*
-        for(String key : layout.getCellLayout().keySet()){
-            Button b = new Button(key);
-            double xVal = 3 * layout.getCellLayout().get(key).getX();
-            double yVal = 3 * layout.getCellLayout().get(key).getY();
-            myPane.getChildren().add(b);
-            b.setLayoutX(xVal);
-            b.setLayoutY(yVal);
-        }
-         */
     }
 
     private boolean checkMove() {
@@ -132,6 +120,34 @@ public class DisplayTable {
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
         return myPane;
+    }
+
+    public Pane updateTheseCells(Map<String,ICell> cellData) {
+        clearTheseCells(cellData); // removes given cells + all children from pane and active list of display cells
+        List<DisplayCell> displayCellData = makeDisplayCells(cellData); // converts cells to display cells
+        drawDisplayCells(displayCellData); // draws display cells just created by adding them to pane and list of active cells
+        return myPane;
+    }
+
+    private void clearTheseCells(Map<String,ICell> cellData) {
+        for (ICell c : cellData.values()) { // for every cell that needs to change
+            for (DisplayCell dc : myDisplayCellData) { // find its current display cell
+                if (c.getName().equals(dc.getCell().getName())) {
+                    clearDisplayCell(dc);
+                }
+            }
+        }
+    }
+
+    private void clearDisplayCell(DisplayCell dc) {
+        myDisplayCellData.remove(dc);  // remove the display cell + all its children from the list of active display cells
+        myPane.getChildren().remove(dc); // remove the display cell +  all its children from the screen
+        for (IOffset dir: dc.getCell().getAllChildren().keySet()) {
+            if (dir == Offset.NONE) {
+                continue;
+            }
+            clearDisplayCell(dc.getAllChildren().get((Offset) dir));
+        }
     }
 
     private List<DisplayCell> makeDisplayCells(Map<String,ICell> cellData) {
