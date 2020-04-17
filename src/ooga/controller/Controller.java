@@ -53,10 +53,10 @@ public class Controller extends Application {
     @Override
     public void start(Stage mainStage) {
         GiveMove gm = (IMove move) -> {
-            System.out.println("Controller has move");
-            System.out.println(move.getDonor().getName());
-            System.out.println(move.getMover().getName());
-            System.out.println(move.getRecipient().getName());
+            //System.out.println("Controller has move");
+            //System.out.println(move.getDonor().getName());
+            //System.out.println(move.getMover().getName());
+            //System.out.println(move.getRecipient().getName());
             myTable.update(move);
             myView.setCellData(Map.copyOf(myTable.getCellData()));
         };
@@ -88,7 +88,7 @@ public class Controller extends Application {
 
     private void startTable(String gameName) {
         // TODO: process gamename string to a file path
-        System.out.println(gameName);
+        //System.out.println(gameName);
         // TODO: Give game name somehow, figure out who's building the phase machine
         myRuleFile = new File(DEFAULT_RULE_FILE);
 

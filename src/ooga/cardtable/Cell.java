@@ -290,7 +290,7 @@ public class Cell implements ICell {
     }
     ICell extracted = extractCell(cell);
     children.put(offset, extracted);
-    System.out.println(offset.getOffset() + "yolo" + extracted.getName());
+    //System.out.println(offset.getOffset() + "yolo" + extracted.getName());
     ((Cell) extracted).setParent(this); //fixme you're a monster
     extracted.updateParentage();
   }
@@ -404,6 +404,19 @@ public class Cell implements ICell {
   }
 
   @Override
+  public ICell copy(Function<ICell, ICard> cardGetter) {
+    ICell ret = new Cell(name);
+    ret.getDeck().addDeck(new Deck());
+    ret.getDeck().addCard(cardGetter.apply(this));
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        ret.setCellAtOffset(e.getKey(), e.getValue().copy(cardGetter));
+      }
+    }
+    return ret;
+  }
+
+  @Override
   public ICell findNamedCell(String nm) {
     if (name.equals(nm)) {
       return this;
@@ -424,14 +437,14 @@ public class Cell implements ICell {
   @Override
   public ICell followNamespace(String nm) {
     String[] names = nm.split(",");
-    System.out.println("namespace: "+ Arrays.toString(names));
+    //System.out.println("namespace: "+ Arrays.toString(names));
     if (names.length == 0 || names[0].equals("")) {
-      System.out.println("it's empty");
+      //System.out.println("it's empty");
       return this;
     }
     ICell next = getAllChildren().get(Offset.valueOf(names[0].toUpperCase()));
     if (next == null) {
-      System.out.println("filling in the rest");
+      //System.out.println("filling in the rest");
       ICell ret = this;
       for (int i = 1; i < names.length; i++) {
         setCellAtOffset(Offset.valueOf(names[i].toUpperCase()), new Cell(getName()+","+names[i]));
