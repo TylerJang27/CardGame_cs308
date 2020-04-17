@@ -7,6 +7,8 @@
     </settings>
     <deck>
         <!-- should either be custom held here, or point to a file to retrieve from -->
+        <deck_name>pack52</deck_name>
+        <shuffle>yes</shuffle>
         <card>
             <name>AC</name>
             <value>1</value>
@@ -588,14 +590,14 @@
                         <!-- value(Up/Down, #) color(=/!)
                              suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
-                            <num_cards/>
+                            <num_cards></num_cards>
                         </receiver>
                         <mover>
                             <direction>*</direction>
                             <value>*</value>
                             <color>*</color>
                             <suit>*</suit>
-                            <num_cards>1</num_cards>
+                            <num_cards>*</num_cards>
                             <is_faceup>n</is_faceup>
                         </mover>
                         <donor>
@@ -622,7 +624,7 @@
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>0</offset>
-                            <flip>y</flip>
+                            <flip>none</flip>
                         </mover_dest>
                         <next_phase phase = "check_eog">0</next_phase>
                     </action>

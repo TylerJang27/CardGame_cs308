@@ -115,10 +115,21 @@ public class ActionFactory implements Factory {
             //IOffset offsetFromParent = recipientCell.apply(move).getOffsetFromParent();
             //recipientCell.apply(move).getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
             //destination.addCell(off, currCell.apply(move));
-            IOffset offsetFromParent = currCell.apply(move).getOffsetFromParent();
+            System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+            System.out.println("is this null: " + currCell.apply(move));
+            IOffset offsetFromParent = null;
+            if (currCell.apply(move).getParent() != null) {
+                offsetFromParent = currCell.apply(move).getOffsetFromParent();
+            }
+            //TODO: WRITING BAD CODE
+            System.out.println("hello");
+
+
             ICell currParent = currCell.apply(move).getParent();
             System.out.println("current cell parent: "+currParent);
-            currCell.apply(move).getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
+            if (offsetFromParent != null) {
+                currCell.apply(move).getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
+            }
             System.out.println("current cell: "+currParent);
             recipientCell.apply(move).addCell(off, currCell.apply(move));
             System.out.println(destination.getName());
@@ -162,16 +173,22 @@ public class ActionFactory implements Factory {
     }
 
     private static void extractFlipBehavior(Element e, Function<IMove, ICell> currCell, IMove move) {
+        System.out.println("nodeheaderflippy" + e.getNodeName() + ":" + e.getTextContent());
         String flip = XMLHelper.getTextValue(e, resources.getString(FLIP));
-        if (Offset.validOffsets.contains(flip)) {
+        System.out.println("flippy: " + flip);
+        if (Offset.validOffsets.contains(flip.toLowerCase())) {
+            System.out.println("flippy offset");
+            System.out.println("my flippy cell: " + currCell.apply(move).getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().getName());
             currCell.apply(move).getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().flip();
         } else if (flip.equals(resources.getString(ALL))) {
+            System.out.println("flippy all");
             for (ICell c : currCell.apply(move).getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
                     c.getDeck().peekCardAtIndex(k).flip();
                 }
             }
         }
+        System.out.println("sad flippy");
     }
 
 

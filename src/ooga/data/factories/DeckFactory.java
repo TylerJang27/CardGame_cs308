@@ -108,6 +108,7 @@ public class DeckFactory implements Factory {
         IDeck myDeck = new Deck(deckName, cardList);
         if (shuffle.equals(YES)) {
             myDeck.shuffle();
+            System.out.println("I CAN SHUFFLEE");
         }
         return myDeck;
     }
