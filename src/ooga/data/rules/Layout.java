@@ -137,4 +137,14 @@ public class Layout implements ILayout {
     public double getCardRatio() {
         return 0;
     }
+
+    /**
+     * Returns the map relating card names to their image paths relative to the display table class
+     *
+     * @return
+     */
+    @Override
+    public Map<String, String> getCardImagePaths() {
+        return null;
+    }
 }

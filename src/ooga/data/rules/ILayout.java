@@ -69,4 +69,10 @@ public interface ILayout {
      * @return
      */
     double getCardRatio();
+
+    /**
+     * Returns the map relating card names to their image paths relative to the display table class
+     * @return
+     */
+    Map<String, String> getCardImagePaths(); // TODO: UPDATE API
 }

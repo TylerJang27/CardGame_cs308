@@ -47,6 +47,11 @@ public class View implements ExternalAPI {
         };
 
     }
+
+    public void reportError(String key, String... formats){
+        //TODO
+        System.out.println("error received of type: " + key);
+    }
     /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
      * to the front end from the back end. This is done by sending a list of cell objects which

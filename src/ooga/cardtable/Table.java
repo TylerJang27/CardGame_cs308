@@ -1,11 +1,13 @@
 package ooga.cardtable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Map.Entry;
 import ooga.data.rules.IPhaseMachine;
 
 public class Table implements ITable {
+
   private IPhaseMachine machine;
   private IGameState lastState;
 
@@ -43,6 +45,11 @@ public class Table implements ITable {
 
   @Override
   public Map<String, ICell> getCellData() {
-    return machine.getTopLevelCells();
+    Map<String, ICell> cells = machine.getTopLevelCells();
+    Map<String, ICell> ret = new HashMap<>();
+    for (Entry<String, ICell> e : cells.entrySet()) {
+      ret.put(e.getKey(), e.getValue().copy());
+    }
+    return ret;
   }
 }
