@@ -183,6 +183,7 @@ public class MasterRuleFactory implements Factory {
 
     private static Boolean checkRecipient(IMove move, String name, Map<String, ICellGroup> cellGroupMap) {
         System.out.println("checking recipient");
+        System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
         System.out.println("\tname is empty: " + name.isEmpty());
         System.out.println("\tis in cell group map and cell group name matches: " + cellGroupMap.get(name).isInGroup(move.getRecipient().findHead().getName()));
         System.out.println("\tcell name matches: " + name.equals(move.getRecipient().getName().split(",")[0]));

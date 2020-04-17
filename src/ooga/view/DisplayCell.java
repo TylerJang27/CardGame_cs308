@@ -75,7 +75,10 @@ public class DisplayCell {
         myImageView.fitWidthProperty().bind(width);
         myImageView.fitHeightProperty().bind(height);
 
-        enableDrag(myImageView);
+        if (!myCell.isFixed()) { //TODO: TYLER DID THIS SARAH/MARIUSZ/SOMEONE ON FRONT END PLEASE HELP ME MAKE THIS NOT DRAGGABLE
+            enableDrag(myImageView);
+        }
+
         myGroup.getChildren().add(myImageView);
 
         offsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -offset), Offset.SOUTH, new Point2D(0,offset), Offset.EAST, new Point2D(offset, 0),Offset.WEST, new Point2D(-offset,0), Offset.NORTHEAST, new Point2D(offset,-offset), Offset.SOUTHEAST, new Point2D(offset,offset), Offset.NORTHWEST, new Point2D(-offset,-offset), Offset.SOUTHWEST, new Point2D(-offset,offset));
