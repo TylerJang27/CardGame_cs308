@@ -64,6 +64,12 @@ public class View implements ExternalAPI {
         myDisplayTable.updateCells(cellData);
     }
 
+
+    @Override
+    public void setUpdatesToCellData(Map<String,ICell> cellData) {
+        myDisplayTable.updateTheseCells(cellData);
+    }
+
     /**
      * Sets score of players to be displayed
      *

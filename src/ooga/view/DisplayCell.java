@@ -24,11 +24,8 @@ public class DisplayCell {
 
     private Map<Offset, DisplayCell> myDisplayChildren = new HashMap<>();
     private ICell myCell;
-    private Group myGroup = new Group();
 
     private ImageView myImageView;
-    private Image myFaceUp;
-    private Image myFaceDown;
 
     private Map<Offset, Point2D> offsetDirToAmount;
 
@@ -40,32 +37,27 @@ public class DisplayCell {
     public DisplayCell(DisplayTable.MyDragInterface dragLambda, DisplayTable.MyClickInterface clickLambda, ICell cell, Map<String, String> cardNameToFileName, Pair<NumberBinding, NumberBinding>location, NumberBinding height, NumberBinding width, double offset) {
         myDragLambda = dragLambda;
         myClickLambda = clickLambda;
-
         myCell = cell;
-        myFaceDown = new Image(cardNameToFileName.get("faceDown"));
-        //System.out.println("A: " + cardNameToFileName.toString());
+
         if(myCell.getDeck().peek() != null) {
-            String cardName = myCell.getDeck().peek().getName(); //TODO: ADD TRY CATCH FOR GETTING IMAGE
-            System.out.println("A: Cardname: " + cardName);
-            //ardName = "solitaire/DS.png";
-            myFaceUp = new Image(cardNameToFileName.get(cardName));
+            if (myCell.getDeck().peek().isFaceUp()) {
+                myImageView = new ImageView(new Image(cardNameToFileName.get(myCell.getDeck().peek().getName())));
+            } else {
+                myImageView = new ImageView(new Image(cardNameToFileName.get("faceDown")));
+            }
 /*
             try {
-                myFaceUp = new Image(cardName + ".png");//cardNameToFileName.get(myCell.getDeck().peek().getName()));
+                Image faceUp = new Image(cardName + ".png");//cardNameToFileName.get(myCell.getDeck().peek().getName()));
             } catch (IllegalArgumentException e) {
-                myFaceUp = new Image("0C" + ".png"); //TODO: REPLACE WITH A DEFAULT CARD SKIN
+                Image faceUp = new Image("0C" + ".png"); //TODO: REPLACE WITH A DEFAULT CARD SKIN
             }
 */
-            if (myCell.getDeck().peek().isFaceUp()) {
-                myImageView = new ImageView(myFaceUp);
-            } else {
-                myImageView = new ImageView(myFaceDown);
-            }
         } else {
-            String cellName = myCell.getName();
-            //myFaceUp = new Image(cardNameToFileName.get(cellName));
-            myFaceUp = new Image(cardNameToFileName.get("celloutline"));
-            myImageView = new ImageView(myFaceUp);
+            /*String cellName = myCell.getName();
+                myFaceUp = new Image(cardNameToFileName.get(cellName));
+
+             */
+            myImageView = new ImageView(new Image(cardNameToFileName.get("celloutline")));
         }
 
         myImageView.layoutXProperty().bind(Bindings.divide(myImageView.fitWidthProperty(),-2));
@@ -75,33 +67,27 @@ public class DisplayCell {
         myImageView.fitWidthProperty().bind(width);
         myImageView.fitHeightProperty().bind(height);
 
-        if (!myCell.isFixed()) { //TODO: TYLER DID THIS SARAH/MARIUSZ/SOMEONE ON FRONT END PLEASE HELP ME MAKE THIS NOT DRAGGABLE
+        if(myCell.getDeck().peek() != null && !myCell.isFixed()) {
             enableDrag(myImageView);
+            enableClick(myImageView);
         }
-
-        myGroup.getChildren().add(myImageView);
 
         offsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -offset), Offset.SOUTH, new Point2D(0,offset), Offset.EAST, new Point2D(offset, 0),Offset.WEST, new Point2D(-offset,0), Offset.NORTHEAST, new Point2D(offset,-offset), Offset.SOUTHEAST, new Point2D(offset,offset), Offset.NORTHWEST, new Point2D(-offset,-offset), Offset.SOUTHWEST, new Point2D(-offset,offset));
 
         for (IOffset dir: myCell.getAllChildren().keySet()) {
             Cell childCell = (Cell) myCell.getAllChildren().get(dir);
-            if (dir == Offset.NONE) { // && childCell.getDeck().peek() == null
+            if (dir == Offset.NONE) {
                 continue;
             }
             Point2D offsetAmount = offsetDirToAmount.get(dir);
             Pair<NumberBinding, NumberBinding> childOffset = new Pair<>(myImageView.translateXProperty().add(offsetAmount.getX()),myImageView.translateYProperty().add(offsetAmount.getY()));
             DisplayCell childDisplayCell = new DisplayCell(myDragLambda, myClickLambda, childCell, cardNameToFileName, childOffset, height, width, offset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
-            myGroup.getChildren().add(childDisplayCell.getImageView());
         }
     }
 
     public Map<Offset,DisplayCell> getAllChildren() {
         return myDisplayChildren;
-    }
-
-    public Group getGroup() {
-        return myGroup;
     }
 
     public ImageView getImageView() {
@@ -134,7 +120,9 @@ public class DisplayCell {
             resetAll(this);
             myDragLambda.returnSelectedDisplayCell(this);
         });
+    }
 
+    private void enableClick(ImageView source) {
         source.setOnMouseClicked( click -> {
             myClickLambda.returnSelectedDisplayCell(this);
         });
@@ -151,7 +139,9 @@ public class DisplayCell {
     }
 
     private void moveAll(DisplayCell selectedCell, Point2D initDragToXY) {
-        moveChildTo(selectedCell,initDragToXY);
+        if (!selectedCell.getCell().isFixed()) { // TODO: allows for cards to be draggable while children are not, necessary?
+            moveChildTo(selectedCell,initDragToXY);
+        }
         for (Offset dir: selectedCell.getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;
