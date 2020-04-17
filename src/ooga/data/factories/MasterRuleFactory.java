@@ -41,6 +41,7 @@ public class MasterRuleFactory implements Factory {
     private static final String SHUFFLE = "Shuffle";
     private static final String OFFSET = "Offset";
     private static final String MOVER_DESTINATION = "MoverDestination";
+    private static final String DONOR_DESTINATION = "DonorDestination";
     private static final String FLIP = "Flip";
     private static final String POINTS = "Points";
     private static final String NEXT_PHASE = "NextPhase";
@@ -115,6 +116,11 @@ public class MasterRuleFactory implements Factory {
                 cardActionList.add(ActionFactory.getAction((Element)movAction, ruleName + M));
             }
             //FIXME: ADDED BY TYLER TO CORRECT
+            Node donAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(DONOR_DESTINATION));
+            if (donAction != null) {
+                cardActionList.add(ActionFactory.getAction((Element)donAction, ruleName + D));
+            }
+
 
             Node phaseAction = XMLHelper.getNodeByName(allActions, resources.getString(NEXT_PHASE));
             try {

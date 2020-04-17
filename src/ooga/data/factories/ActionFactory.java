@@ -1,5 +1,6 @@
 package ooga.data.factories;
 
+import jdk.swing.interop.SwingInterOpUtils;
 import ooga.cardtable.*;
 import ooga.data.XMLException;
 import ooga.data.XMLHelper;
@@ -8,10 +9,8 @@ import ooga.data.rules.ICardAction;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.sql.SQLOutput;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -48,6 +47,9 @@ public class ActionFactory implements Factory {
     private static final String NEXT_PHASE = "NextPhase";
     private static final String PHASE = "Phase";
 
+    private static final String EXCEPT = "Except";
+    private static final String PRESERVE = "Preserve";
+
     private static final String R = "R";
     private static final String M = "M";
     private static final String D = "D";
@@ -74,11 +76,11 @@ public class ActionFactory implements Factory {
         List<Consumer<IMove>> actions = new ArrayList<>();
         try {
             Consumer<IMove> cardAction = (IMove move) -> {
-                extractCellsToMove(e, currCell, move);
+                extractCellsToMove(e, currCell, move); ///TODO: DOES THIS DO ANYTHING????
 
                 ICell destination = extractDestinationBehavior(e, moverCell, donorCell, recipientCell, move);
 
-                IOffset off = extractOffsetBehavior(e);
+                IOffset off = extractOffsetBehavior(e, currCell, move);
 
                 extractRotationBehavior(e, currCell, move);
 
@@ -100,7 +102,7 @@ public class ActionFactory implements Factory {
 
     private static void extractCellsToMove(Element e, Function<IMove, ICell> currCell, IMove move) {
         List< ICell > cellsToMove = new ArrayList<>();
-        String numCards = XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS));
+        String numCards = XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS)).toUpperCase();
         //determines number of cards to move
         if (numCards.equals(resources.getString(ALL))) {
             cellsToMove.addAll(currCell.apply(move).getAllCells());
@@ -133,8 +135,6 @@ public class ActionFactory implements Factory {
             System.out.println("current cell: "+currParent);
             recipientCell.apply(move).addCell(off, currCell.apply(move));
             System.out.println(destination.getName());
-
-            System.out.println("get moved bitch: " + currCell.apply(move).getTotalSize());
         }
     }
 
@@ -151,11 +151,13 @@ public class ActionFactory implements Factory {
         return dest;
     }
 
-    private static IOffset extractOffsetBehavior(Element e) {
+    private static IOffset extractOffsetBehavior(Element e, Function<IMove, ICell> currCell, IMove move) {
         String offset = XMLHelper.getTextValue(e, resources.getString(OFFSET));
         IOffset off;
         if (Offset.validOffsets.contains(offset)) {
             off = Offset.valueOf(offset.toUpperCase());
+        } else if (offset.equalsIgnoreCase(resources.getString(PRESERVE))) {
+            off = currCell.apply(move).getOffsetFromParent();
         } else {
             off = Offset.NONE;
         }
@@ -179,7 +181,13 @@ public class ActionFactory implements Factory {
         String flip = XMLHelper.getTextValue(e, resources.getString(FLIP));
         System.out.println("flippy: " + flip);
         if (Offset.validOffsets.contains(flip.toLowerCase())) {
+            System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+            System.out.println("\tcurr: " + currCell.apply(move).getName());
             System.out.println("flippy offset");
+            System.out.println(currCell.apply(move).getPeak(Offset.valueOf(flip.toUpperCase())).getName());
+
+
+        //TODO: tyler needs help
             System.out.println("my flippy cell: " + currCell.apply(move).getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().getName());
             currCell.apply(move).getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().flip();
         } else if (flip.equals(resources.getString(ALL))) {
