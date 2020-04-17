@@ -10,6 +10,72 @@
         <deck_name>pack52</deck_name>
         <shuffle>yes</shuffle>
         <card>
+            <name>DC</name>
+            <value>0</value>
+            <color>black</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>DD</name>
+            <value>0</value>
+            <color>red</color>
+            <suit>d</suit>
+        </card>
+        <card>
+            <name>DH</name>
+            <value>0</value>
+            <color>red</color>
+            <suit>h</suit>
+        </card>
+        <card>
+            <name>DS</name>
+            <value>0</value>
+            <color>black</color>
+            <suit>s</suit>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>D2</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>D3</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>D4</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>D5</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>D6</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+        </card>
+        <card>
+            <name>D7</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+        </card>
+        <card>
             <name>AC</name>
             <value>1</value>
             <color>black</color>
@@ -331,6 +397,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,U</card>
                 </init_cards>
             </cell>
@@ -338,6 +405,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D2,U</card>
                     <card>Rd,D</card>
                     <card>Rd,U</card>
                 </init_cards>
@@ -346,6 +414,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D3,U</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,U</card>
@@ -355,6 +424,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D4,U</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -365,6 +435,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D5,U</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -376,6 +447,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D6,U</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -388,6 +460,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D7,U</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -402,22 +475,30 @@
             <cell name="club">
                 <fan>none</fan>
                 <rotation>0</rotation>
-                <init_cards/>
+                <init_cards>
+                    <card>DC,U</card>
+                </init_cards>
             </cell>
             <cell name="diamond">
                 <fan>none</fan>
                 <rotation>0</rotation>
-                <init_cards/>
+                <init_cards>
+                    <card>DD,U</card>
+                </init_cards>
             </cell>
             <cell name="heart">
                 <fan>none</fan>
                 <rotation>0</rotation>
-                <init_cards/>
+                <init_cards>
+                    <card>DH,U</card>
+                </init_cards>
             </cell>
             <cell name="spade">
                 <fan>none</fan>
                 <rotation>0</rotation>
-                <init_cards/>
+                <init_cards>
+                    <card>DS,U</card>
+                </init_cards>
             </cell>
         </group>
         <group category="deck">

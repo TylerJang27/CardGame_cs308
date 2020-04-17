@@ -1,4 +1,4 @@
-# Progress Meeting 1
+# Progress Meeting 2
 
 Present: Sarah, Mariusz, Maverick, Andrew, Tyler, Christina (TA)
 
