@@ -21,7 +21,7 @@ public class Deck implements IDeck {
   @Override
   public boolean isFixed() {
     if (cards.size() > 0) {
-      System.out.println(cards.get(0).getName());
+      //System.out.println(cards.get(0).getName());
       return cards.get(0).isFixed();
     } else {
       return false;
@@ -106,8 +106,12 @@ public class Deck implements IDeck {
   @Override
   public void addDeck(IDeck deck) { //fixme consider making an iterable?
     for (int i = deck.size()-1; i >= 0; i--) {
+      System.out.println(deck.peekCardAtIndex(i) + "is my card");
       addCard(deck.getCardAtIndex(i));
     }
+    /*for (int k = 0; k < deck.size(); k ++) {
+      addCard(deck.getCardAtIndex(k));
+    }*/
   }
 
   @Override
@@ -121,7 +125,7 @@ public class Deck implements IDeck {
       String name) { //TODO: MAKE SURE THIS WORKS WITH THE OFFSET AS I WANT IT TO
     for (ICard c : cards) {
       if (c.getName().equals(name)) {
-        System.out.println("searched name: " + c.getName());
+        //System.out.println("searched name: " + c.getName());
         cards.remove(c);
         return c;
       }

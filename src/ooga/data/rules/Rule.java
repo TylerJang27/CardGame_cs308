@@ -23,10 +23,10 @@ public class Rule implements IRule { //TODO: ADD DOCUMENTATION
     public boolean checkValidMove(IMove move) {
         int counter = 0;
         for (Function<IMove, Boolean> f: myConditions) {
-            System.out.println(counter + "conditioncounter");
+            //System.out.println(counter + "conditioncounter");
             counter++;
             if (!f.apply(move)) {
-                System.out.println(f.apply(move).toString());
+                //System.out.println(f.apply(move).toString());
                 return false; //TODO: CHECK FAILURE CONDITION OF cs308
             }
         }

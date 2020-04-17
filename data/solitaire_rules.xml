@@ -575,11 +575,11 @@
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <num_cards>none</num_cards>
+                            <num_cards>t</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>south</offset>
-                            <flip>n</flip>
+                            <flip>*</flip>
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
@@ -608,7 +608,7 @@
                         </receiver>
                         <mover>
                             <direction>u</direction>
-                            <value>1</value>
+                            <value>*</value>
                             <color>*</color>
                             <suit>=</suit>
                             <num_cards>*</num_cards>
@@ -635,10 +635,10 @@
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <num_cards>*</num_cards>
+                            <num_cards>1</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>0</offset>
+                            <offset>none</offset>
                             <flip>y</flip>
                         </mover_dest>
                         <donor_dest>
@@ -734,7 +734,7 @@
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <num_cards>1</num_cards>
+                            <num_cards>t</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>0</offset>

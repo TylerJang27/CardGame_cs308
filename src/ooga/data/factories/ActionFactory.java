@@ -61,6 +61,8 @@ public class ActionFactory implements Factory {
     private static final String YES = "Yes";
     private static final String NO = "No";
     private static final String REVERSE = "Reverse";
+    private static final String TOP = "Top";
+    private static final String BOTTOM = "Bottom";
 
     private static DocumentBuilder documentBuilder;
     public static final List<String> TRUE_CHECKS = new ArrayList<>(Arrays.asList(new String[]{"", resources.getString(ALL)}));
@@ -93,9 +95,9 @@ public class ActionFactory implements Factory {
 
                     //TODO: IMPLEMENT SHUFFLE
 
-                    System.out.println("Time to move");
-                    System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    System.out.println("d: " + move.getDonor().getTotalSize() + "|m: " + move.getMover().getTotalSize() + "|r: " + move.getRecipient().getTotalSize());
+                    //System.out.println("Time to move");
+                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                    //System.out.println("d: " + move.getDonor().getTotalSize() + "|m: " + move.getMover().getTotalSize() + "|r: " + move.getRecipient().getTotalSize());
 
 
                     //applyDestinationBehavior(recipientCell, currCell, curr, move, destination, off);
@@ -106,7 +108,7 @@ public class ActionFactory implements Factory {
         } catch (Exception ex) {
             throw new XMLException(ex, Factory.MISSING_ERROR + "," + resources.getString(ACTION));
         }
-        System.out.println("ACTINO" + actions.size());
+        //System.out.println("ACTINO" + actions.size());
         return new CardAction(actions);
     }
 
@@ -115,13 +117,13 @@ public class ActionFactory implements Factory {
         for (int k = 0; k < excepts.getLength(); k ++) {
             Node exceptedCell = excepts.item(k);
             if (exceptedCell.getTextContent().equalsIgnoreCase(currCell.apply(move).findHead().getName())) {
-                System.out.println("EXCEPTED!");
+                //System.out.println("EXCEPTED!");
                 return true;
             }
         }
-        System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-        System.out.println("\tcurr: " + currCell.apply(move).getName());
-        System.out.println("NOT EXCEPTED!");
+        //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+        //System.out.println("\tcurr: " + currCell.apply(move).getName());
+        //System.out.println("NOT EXCEPTED!");
         return false;
     }
 
@@ -134,12 +136,38 @@ public class ActionFactory implements Factory {
             cellToMove = (currCell.apply(move));
         } else if (Offset.validOffsets.contains(numCards)) {
             cellToMove = (currCell.apply(move).getPeak(Offset.valueOf(numCards.toUpperCase())));
+            if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
+                currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
+            }
+        } else if (numCards.equalsIgnoreCase(resources.getString(TOP))) {
+            cellToMove = currCell.apply(move).copy((ICell c) -> {
+                if (!c.getDeck().peek().isFixed()) {
+                    return c.getDeck().getNextCard();
+                }
+                return null;
+            });
+            if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
+                currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
+            }
+        } else if (numCards.equalsIgnoreCase(resources.getString(BOTTOM))) {
+            cellToMove = currCell.apply(move).copy((ICell c) -> {
+                if (!c.getDeck().peek().isFixed()) {
+                    return (c.getDeck().getBottomCard());
+                }
+                return null;
+            });
+            if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
+                currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
+            }
         } else {
             try {
                 int cardQuantity = Integer.parseInt(numCards);
                 cellToMove = new Cell("");
                 for (int k = 0; k < cardQuantity; k ++) {
-                    cellToMove.addCard(Offset.NONE, currCell.apply(move).getDeck().getBottomCard());
+                    cellToMove.addCard(Offset.NONE, currCell.apply(move).findLeaf().getDeck().getNextCard());
+                }
+                if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
+                    currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
                 }
             } catch (Exception ex) {
 
@@ -154,24 +182,23 @@ public class ActionFactory implements Factory {
             //IOffset offsetFromParent = recipientCell.apply(move).getOffsetFromParent();
             //recipientCell.apply(move).getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
             //destination.addCell(off, currCell.apply(move));
-            System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-            System.out.println("is this null: " + currCell);
+            //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+            //System.out.println("is this null: " + currCell);
             IOffset offsetFromParent = null;
             if (currCell.getParent() != null) {
                 offsetFromParent = currCell.getOffsetFromParent();
             }
             //TODO: WRITING BAD CODE
-            System.out.println("hello");
+            //System.out.println("hello");
 
 
-            ICell currParent = currCell.getParent();
-            System.out.println("current cell parent: "+currParent);
+            //System.out.println("current cell parent: "+currParent);
             if (offsetFromParent != null) {
                 currCell.getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
             }
-            System.out.println("current cell: "+currParent);
+            //System.out.println("current cell: "+currParent);
             recipientCell.apply(move).addCell(off, currCell);
-            System.out.println(destination.getName());
+            //System.out.println(destination.getName());
         }
     }
 
@@ -198,7 +225,7 @@ public class ActionFactory implements Factory {
         } else {
             off = Offset.NONE;
         }
-        System.out.println(off.getOffset() + "is my offset!"); //TODO: DEBUG OFFSET
+        //System.out.println(off.getOffset() + "is my offset!"); //TODO: DEBUG OFFSET
         return off;
     }
 
@@ -215,19 +242,19 @@ public class ActionFactory implements Factory {
     }
 
     private static void extractFlipBehavior(Element e, ICell currCell, IMove move) {
-        System.out.println("nodeheaderflippy" + e.getNodeName() + ":" + e.getTextContent());
-        System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-        System.out.println("\tcurr: " + currCell.getName());
+        //System.out.println("nodeheaderflippy" + e.getNodeName() + ":" + e.getTextContent());
+        //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+        //System.out.println("\tcurr: " + currCell.getName());
         String flip = XMLHelper.getTextValue(e, resources.getString(FLIP));
-        System.out.println("flippy: " + flip);
-        if (Offset.validOffsets.contains(flip.toLowerCase())) {
-            System.out.println("my flippy cell: " + currCell.getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().getName());
+        //System.out.println("flippy: " + flip);
+        if (Offset.validOffsets.contains(flip.toLowerCase()) && currCell.getAllChildren().containsKey(Offset.valueOf(flip.toUpperCase()))) {
+            //System.out.println("my flippy cell: " + currCell.getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().getName());
             ICard cardToFlip = currCell.getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek();
-            if (!cardToFlip.isFaceUp()) {
+            if (cardToFlip != null && !cardToFlip.isFaceUp()) {
                 cardToFlip.flip();
             }
         } else if (flip.equals(resources.getString(ALL))) {
-            System.out.println("flippy all");
+            //System.out.println("flippy all");
             for (ICell c : currCell.getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
                     ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
@@ -237,7 +264,7 @@ public class ActionFactory implements Factory {
                 }
             }
         } else if (flip.equals(resources.getString(NO))) {
-            System.out.println("flippy DOWN");
+            //System.out.println("flippy DOWN");
             for (ICell c : currCell.getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
                     ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
@@ -247,7 +274,7 @@ public class ActionFactory implements Factory {
                 }
             }
         }
-        System.out.println("sad flippy");
+        //System.out.println("sad flippy");
     }
 
     private static void extractShuffleBehavior(Element e, ICell currCell) {
