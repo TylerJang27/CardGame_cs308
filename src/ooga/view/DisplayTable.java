@@ -97,7 +97,7 @@ public class DisplayTable {
 
     private boolean checkMove() {
         DisplayCell intersectedCell = checkIntersections();
-        if (intersectedCell != myMovedDisplayCell && !myMovedDisplayCell.getCell().isFixed()) { //TODO: TYLER FUDGED WITH THIS
+        if (intersectedCell != myMovedDisplayCell) { //TODO: TYLER FUDGED WITH THIS
             myMover = myMovedDisplayCell.getCell();
             myDonor = myMovedDisplayCell.getCell().findHead();
             myRecipient = intersectedCell.getCell().findLeaf();

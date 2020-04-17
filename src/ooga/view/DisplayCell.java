@@ -75,6 +75,8 @@ public class DisplayCell {
         myImageView.fitWidthProperty().bind(width);
         myImageView.fitHeightProperty().bind(height);
 
+        System.out.println("is this fixed:" + myCell.isFixed());
+        System.out.println("\t" + myCell.getDeck().isFixed());
         if (!myCell.isFixed()) { //TODO: TYLER DID THIS SARAH/MARIUSZ/SOMEONE ON FRONT END PLEASE HELP ME MAKE THIS NOT DRAGGABLE
             enableDrag(myImageView);
         }

@@ -11,7 +11,7 @@ public class Card implements ICard {
   private boolean faceup;
   private Map<IAttribute, Boolean> attributes;
   private double orientation;
-  private boolean isFixed;
+  private boolean isFixed = false;
 
   public Card(String name) {
     this.name = name;
@@ -129,6 +129,7 @@ public class Card implements ICard {
     Card ret = new Card(name, attrs);
     ret.rotate(orientation);
     ret.faceup = isFaceUp();
+    ret.setFixed(isFixed);
     assert getSuit().equals(ret.getSuit());
     assert getSuit().getColorName().equals(ret.getSuit().getColorName());
     assert getValue().equals(ret.getValue()) && ret.getValue()!=null;
