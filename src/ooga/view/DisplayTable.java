@@ -57,12 +57,9 @@ public class DisplayTable {
         myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
         myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
         myCardOffset = layout.getUpOffsetRatio()*screenwidth;
-        // TODO: get resource file from controller for myCardNameToFileName
-        myCardNameToFileName = new HashMap<>();
-        List<String> cardDeck = Arrays.asList( "faceDown", "AC", "2C", "3C","4C","5C","6C","7C","8C","9C","0C","JC","QC","KC","AD","2D","3D","4D","5D","6D","7D","8D","9D","0D","JD","QD","KD","AH","2H","3H","4H","5H","6H","7H","8H","9H","0H","JH","QH","KH","AS","2S","3S","4S", "5S", "6S", "7S", "8S","9S", "0S", "JS", "QS", "KS");
-        for (String card: cardDeck) {
-            myCardNameToFileName.put(card, card+".png");
-        }
+
+        myCardNameToFileName = layout.getCardImagePaths();
+
         //myCellNameToLocation = layout.getCellLayout();
         myCellNameToLocation = new HashMap<>();
         Map<String, ICoordinate> locations = layout.getCellLayout();
@@ -151,12 +148,12 @@ public class DisplayTable {
     private List<DisplayCell> makeDisplayCells(Map<String,ICell> cellData) {
         List<DisplayCell> displayCellData = new ArrayList<>();
         for (String c: cellData.keySet()) {
-            displayCellData.add(makeDisplayCell(c,(Cell)cellData.get(c)));
+            displayCellData.add(makeDisplayCell(c,cellData.get(c))); // TODO
         }
         return displayCellData;
     }
 
-    private DisplayCell makeDisplayCell(String key, Cell cell) {
+    private DisplayCell makeDisplayCell(String key, ICell cell) {
         Pair<NumberBinding, NumberBinding> location = myCellNameToLocation.get(key);
 
         return new DisplayCell(getDraggedCell, getClickedCell, cell, myCardNameToFileName, location, myCardHeight, myCardWidth, myCardOffset);

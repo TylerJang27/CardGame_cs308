@@ -9,6 +9,7 @@ public class Layout implements ILayout {
     private static final int SCREEN_WIDTH = 100;
 
     private Map<String, ICoordinate> cellLayout;
+    private Map<String, String> cardImagePaths;
 
     private int numPlayers;
 
@@ -31,10 +32,11 @@ public class Layout implements ILayout {
 
     public Layout () {}
 
-    public Layout(Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings) {
+    public Layout(Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings, Map<String, String> cardImages) {
         //gameName = game;
 
         cellLayout = cellCoords;
+        cardImagePaths = cardImages;
 
         numPlayers = numberSettings.get(PLAYERS);
 
@@ -145,6 +147,6 @@ public class Layout implements ILayout {
      */
     @Override
     public Map<String, String> getCardImagePaths() {
-        return null;
+        return cardImagePaths;
     }
 }

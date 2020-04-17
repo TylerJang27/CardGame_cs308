@@ -23,8 +23,10 @@ public class LayoutFactory {
     private static final String RESOURCES = "ooga.resources";
     private static final String RESOURCE_PACKAGE = RESOURCES + "." + "layout_word";
     private static final String RESOURCE_COORD_PACKAGE = RESOURCES + "." + "layout_coord";
+    private static final String RESOURCE_MAP_PACKAGE = RESOURCES + "." + "layout_deck";
     private static final ResourceBundle layoutResources = ResourceBundle.getBundle(RESOURCE_PACKAGE);
     private static final ResourceBundle coordResources = ResourceBundle.getBundle(RESOURCE_COORD_PACKAGE);
+    private static final ResourceBundle mapResources = ResourceBundle.getBundle(RESOURCE_MAP_PACKAGE);
 
     private static DocumentBuilder documentBuilder;
 
@@ -60,7 +62,26 @@ public class LayoutFactory {
 
                 coordMap.put(cellName, coord);
             }
-            return new Layout(coordMap, numberSettings);
+
+            Node beginning = root.getElementsByTagName(mapResources.getString("Start")).item(0);
+            Node ending = root.getElementsByTagName(mapResources.getString("Extension")).item(0);
+
+            String intro = beginning.getTextContent();
+            String outro = ending.getTextContent();
+
+            Node deck = root.getElementsByTagName(mapResources.getString("Cards")).item(0);
+
+            NodeList cardList = ((Element) deck).getElementsByTagName(mapResources.getString("Card"));
+
+            Map<String, String> cardMap = new HashMap<>();
+
+            for(int i = 0; i < cardList.getLength(); i++) {
+                String name = cardList.item(i).getTextContent();
+                String path = intro + name + outro;
+                cardMap.put(name, path);
+            }
+
+            return new Layout(coordMap, numberSettings, cardMap);
         } catch (Exception e) {
             throw new XMLException(e, Factory.MISSING_ERROR + "," + LAYOUT_TYPE);
         }
