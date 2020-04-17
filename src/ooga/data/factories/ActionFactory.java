@@ -133,6 +133,8 @@ public class ActionFactory implements Factory {
             System.out.println("current cell: "+currParent);
             recipientCell.apply(move).addCell(off, currCell.apply(move));
             System.out.println(destination.getName());
+
+            System.out.println("get moved bitch: " + currCell.apply(move).getTotalSize());
         }
     }
 

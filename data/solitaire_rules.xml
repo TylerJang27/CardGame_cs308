@@ -475,11 +475,11 @@
                     </receive_rule>
                     <action>
                         <receiver_dest>
-                            <destination>r</destination>    #
-                            <num_cards>*</num_cards>        #
+                            <destination>r</destination>
+                            <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
-                            <direction>0</direction>        #
-                            <offset>south</offset>          #
+                            <direction>0</direction>
+                            <offset>south</offset>
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>

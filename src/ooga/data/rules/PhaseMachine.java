@@ -50,6 +50,7 @@ public class PhaseMachine implements IPhaseMachine {
   }
 
   private void cycleAutomatic() {
+    System.out.println("my phase is " + currentPhase.getMyName() + " and my automaticity is " + currentPhase.isAutomatic());
     if (currentPhase.isAutomatic()) {
       IPhaseArrow arrow = currentPhase.executeAutomaticActions(null, lastMove); //TODO: REPLACE WITH PLAYER
       moveToNextPhase(arrow);
@@ -151,8 +152,10 @@ public class PhaseMachine implements IPhaseMachine {
     System.out.println("I'm a dummy if this doesn't print");
     if (arrow != null) {
       moveToNextPhase(arrow);
+      System.out.println("welcome to Phase: " + currentPhase.getMyName());
       return GameState.WAITING;
     }
+    System.out.println("welcome to Phase: " + currentPhase.getMyName());
     return GameState.INVALID;
 
     /*if (next == null) {

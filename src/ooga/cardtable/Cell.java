@@ -369,8 +369,8 @@ public class Cell implements ICell {
       System.out.println("filling in the rest");
       ICell ret = this;
       for (int i = 1; i < names.length; i++) {
-        setCellAtOffset(Offset.valueOf(names[i]), new Cell(getName()+","+names[i]));
-        ret = ret.getAllChildren().get(Offset.valueOf(names[i]));
+        setCellAtOffset(Offset.valueOf(names[i].toUpperCase()), new Cell(getName()+","+names[i]));
+        ret = ret.getAllChildren().get(Offset.valueOf(names[i].toUpperCase()));
       }
       return ret;
     }
