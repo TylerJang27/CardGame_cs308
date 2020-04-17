@@ -568,14 +568,14 @@
                     <action>
                         <receiver_dest>
                             <destination>r</destination>
-                            <num_cards>*</num_cards>
+                            <num_cards>none</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>south</offset>
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <num_cards>*</num_cards>
+                            <num_cards>none</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>south</offset>
@@ -728,7 +728,7 @@
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <num_cards>*</num_cards>
+                            <num_cards>1</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>0</offset>
