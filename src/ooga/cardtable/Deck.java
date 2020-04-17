@@ -21,6 +21,7 @@ public class Deck implements IDeck {
   @Override
   public boolean isFixed() {
     if (cards.size() > 0) {
+      System.out.println(cards.get(0).getName());
       return cards.get(0).isFixed();
     } else {
       return false;
@@ -71,7 +72,7 @@ public class Deck implements IDeck {
     if (isEmpty()) {
       return null;
     }
-    if (cards.get(index).isFixed()) {
+    if (cards.get(index).isFixed() && cards.size() > 1) {
       return getRandomCard();
     }
     return cards.remove(index);

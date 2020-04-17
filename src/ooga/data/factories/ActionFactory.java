@@ -254,12 +254,7 @@ public class ActionFactory implements Factory {
         String shuffle = XMLHelper.getTextValue(e, resources.getString(SHUFFLE));
         if (shuffle.equalsIgnoreCase(resources.getString(REVERSE))) {
             for (Map.Entry<IOffset, ICell> entry: currCell.getAllChildren().entrySet()) {
-                System.out.println(entry.getValue().getDeck().peek());
-                System.out.println(entry.getValue().getDeck().peekBottom());
                 entry.getValue().getDeck().reverse();
-                System.out.println("reverse reverse!");
-                System.out.println(entry.getValue().getDeck().peek());
-                System.out.println(entry.getValue().getDeck().peekBottom());
             }
         }
     }
