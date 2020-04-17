@@ -93,7 +93,7 @@ public class DisplayTable {
 
     private boolean checkMove() {
         DisplayCell intersectedCell = checkIntersections();
-        if (intersectedCell != myMovedDisplayCell && !myMovedDisplayCell.getCell().isFixed()) { //TODO: Hi Tyler, do you not want a fixed cell to be intersectable?
+        if (intersectedCell != myMovedDisplayCell) {
             myMover = myMovedDisplayCell.getCell();
             myDonor = myMovedDisplayCell.getCell().findHead();
             myRecipient = intersectedCell.getCell().findLeaf();

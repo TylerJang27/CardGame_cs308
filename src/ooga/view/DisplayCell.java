@@ -67,7 +67,7 @@ public class DisplayCell {
         myImageView.fitWidthProperty().bind(width);
         myImageView.fitHeightProperty().bind(height);
 
-        if(myCell.getDeck().peek() != null || !myCell.isFixed()) {
+        if(myCell.getDeck().peek() != null && !myCell.isFixed()) {
             enableDrag(myImageView);
             enableClick(myImageView);
         }
@@ -139,7 +139,7 @@ public class DisplayCell {
     }
 
     private void moveAll(DisplayCell selectedCell, Point2D initDragToXY) {
-        if (!selectedCell.getCell().isFixed()) {
+        if (!selectedCell.getCell().isFixed()) { // TODO: allows for cards to be draggable while children are not, necessary?
             moveChildTo(selectedCell,initDragToXY);
         }
         for (Offset dir: selectedCell.getAllChildren().keySet()) {
