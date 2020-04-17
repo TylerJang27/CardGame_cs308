@@ -14,6 +14,7 @@ public class Card implements ICard {
 
   public Card(String name) {
     this.name = name;
+    System.out.println("card name" + name);
     faceup = false;
     orientation = 0;
   }
@@ -24,7 +25,7 @@ public class Card implements ICard {
     attributes = new HashMap<>();
     attributes.put(s, true);
     attributes.put(v, true);
-    name = s.getName() + "" + v.getName();
+    //name = s.getName() + "" + v.getName();
   }
 
   public Card(ISuit s, IValue v) { //fixme remove later? added to make compile
