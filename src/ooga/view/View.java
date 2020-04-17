@@ -1,9 +1,12 @@
 package ooga.view;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
 import ooga.controller.Controller;
@@ -44,6 +47,11 @@ public class View implements ExternalAPI {
         };
 
     }
+
+    public void reportError(String key, String... formats){
+        //TODO
+        System.out.println("error received of type: " + key);
+    }
     /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
      * to the front end from the back end. This is done by sending a list of cell objects which
@@ -53,7 +61,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setCellData(Map<String,ICell> cellData) {
-        myRoot.setCenter(myDisplayTable.updateCells(cellData));
+        myDisplayTable.updateCells(cellData);
     }
 
     /**
@@ -144,6 +152,8 @@ public class View implements ExternalAPI {
         gameStage = new Stage();
         gameStage.setScene(gameScene);
         gameStage.show();
+        gameStage.minHeightProperty().bind(Bindings.multiply(myDisplayTable.getPane().widthProperty(),layout.getScreenRatio()));
+        gameStage.minWidthProperty().bind(Bindings.divide(myDisplayTable.getPane().heightProperty(),layout.getScreenRatio()));
     }
 
     public void listenForGameChoice(ChangeListener<String> listener){

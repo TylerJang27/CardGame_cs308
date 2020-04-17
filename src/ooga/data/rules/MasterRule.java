@@ -35,9 +35,9 @@ public class MasterRule implements IMasterRule {
     }
 
     @Override
-    public IPhaseArrow executeAutoActions(IPlayer player) {
+    public IPhaseArrow executeAutoActions(IPlayer player, IMove move) {
         //TODO: USE AUTORULES FOR THIS CONDITIONAL
-        if (checkAutoRules()) {
+        if (checkAutoRules(move)) {
             IPhaseArrow lastArrow = null;
             for (IControlAction action : myControlActions) {
                 lastArrow = action.execute(player);
@@ -48,18 +48,24 @@ public class MasterRule implements IMasterRule {
     }
     
     @Override
-    public boolean checkAutoRules() {
+    public boolean checkAutoRules(IMove move) {
         boolean flag = true;
         for (IRule rule: myAutoRules) {
-            if (!rule.checkValidMove(null)) { //TODO: VERIFY THIS NULL WORKS
+            System.out.println("yabbadabbadoo");
+            if (!rule.checkValidMove(move)) { //TODO: VERIFY THIS NULL WORKS
+                System.out.println("yabbadabbadont1");
                 return false;
             }
+            System.out.println("yabbadabbadont");
         }
         return flag;
     }
 
     @Override
     public boolean checkValidMove(IMove move) {
+        //TODO: MAVERICK IS AN IDIOT AND A GENIUS
+        //return true;
+        System.out.println("\n\nchecking valid move " + getName());
         boolean flag = true;
         for (IRule rule: myRules) {
             if (!rule.checkValidMove(move)) {

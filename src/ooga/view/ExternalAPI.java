@@ -12,6 +12,12 @@ import java.util.Map;
 public interface ExternalAPI {
 
     /**
+     * report an error where the key is the key to a error message in a properties file and the formats are the error-specific information
+     * @param key
+     * @param formats
+     */
+    void reportError(String key, String... formats);
+    /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
      * to the front end from the back end. This is done by sending a list of cell objects which
      * represent groups of cards and their associated state (i.e. face up/down, staggered/even, card type)

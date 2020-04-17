@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import ooga.cardtable.ICell;
-import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
 import ooga.cardtable.IPlayer;
 
@@ -38,7 +37,7 @@ public interface IPhase {
    */
   List<IMasterRule> getRuleList();
 
-  IPhaseArrow executeAutomaticActions(IPlayer player);
+  IPhaseArrow executeAutomaticActions(IPlayer player, IMove move);
 
   Map<String, ICell> getMyCellMap();
 

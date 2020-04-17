@@ -24,6 +24,7 @@ public class PhaseFactory implements Factory {
     private static final String PHASE_TYPE = "PhaseType";
     private static final String MANUAL = "Manual";
     private static final String AUTO = "Auto";
+    private static final String AUTOMATIC = "Automatic";
     private static final String VALID_DONORS = "ValidDonors";
     private static final String CATEGORY = "Category";
     private static final String RULES = "Rules";
@@ -69,7 +70,7 @@ public class PhaseFactory implements Factory {
 
                 //phase info and type
                 String phaseName = XMLHelper.getAttribute(phase, resources.getString(NAME));
-                boolean automatic = AUTO.equals(XMLHelper.getTextValue(phase, resources.getString(PHASE_TYPE)));
+                boolean automatic = resources.getString(AUTOMATIC).equals(XMLHelper.getTextValue(phase, resources.getString(PHASE_TYPE)));
 
                 //valid donors
                 Element donorHeadNode = (Element)XMLHelper.getNodeByName(phaseNodes, resources.getString(VALID_DONORS));

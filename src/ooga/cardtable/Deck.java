@@ -18,10 +18,23 @@ public class Deck implements IDeck {
     myName = name;
     cards = d;
   }
+  @Override
+  public boolean isFixed() {
+    if (cards.size() > 0) {
+      return cards.get(0).isFixed();
+    } else {
+      return false;
+    }
+  }
 
   @Override
   public void shuffle() {
     Collections.shuffle(cards);
+  }
+
+  @Override
+  public void reverse() {
+    Collections.reverse(cards);
   }
 
   @Override
@@ -58,6 +71,9 @@ public class Deck implements IDeck {
     if (isEmpty()) {
       return null;
     }
+    if (cards.get(index).isFixed()) {
+      return getRandomCard();
+    }
     return cards.remove(index);
   }
 
@@ -82,14 +98,14 @@ public class Deck implements IDeck {
   @Override
   public void addCard(ICard card) { //fixme make package private?
     if (card != null) {
-      cards.add(card);
+      cards.add(0, card);
     }
   }
 
   @Override
   public void addDeck(IDeck deck) { //fixme consider making an iterable?
-    for (int i = 0; i < deck.size(); i++) {
-      addCard(deck.peekCardAtIndex(i));
+    for (int i = deck.size()-1; i >= 0; i--) {
+      addCard(deck.getCardAtIndex(i));
     }
   }
 
@@ -104,6 +120,8 @@ public class Deck implements IDeck {
       String name) { //TODO: MAKE SURE THIS WORKS WITH THE OFFSET AS I WANT IT TO
     for (ICard c : cards) {
       if (c.getName().equals(name)) {
+        System.out.println("searched name: " + c.getName());
+        cards.remove(c);
         return c;
       }
     }
@@ -111,8 +129,17 @@ public class Deck implements IDeck {
   }
 
   @Override
+  public IDeck copy() {
+    List<ICard> c = new ArrayList<>();
+    for (ICard card: cards) {
+      c.add(card.copy());
+    }
+    return new Deck(myName, c);
+  }
+
+  @Override
   public boolean equals(Object other) {
-    if (!(other instanceof  Deck)) {
+    if (!(other instanceof Deck)) {
       return false;
     }
     Deck d = (Deck) other;

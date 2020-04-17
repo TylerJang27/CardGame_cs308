@@ -34,6 +34,8 @@ public class DeckFactory implements Factory {
     private static final String VALUE = "Value";
     private static final String COLOR = "Color";
     private static final String SUIT = "Suit";
+    private static final String FIXED = "Fixed";
+    private static final String TRUE = "True";
 
     private static DocumentBuilder documentBuilder;
 
@@ -108,6 +110,7 @@ public class DeckFactory implements Factory {
         IDeck myDeck = new Deck(deckName, cardList);
         if (shuffle.equals(YES)) {
             myDeck.shuffle();
+            System.out.println("I CAN SHUFFLEE");
         }
         return myDeck;
     }
@@ -118,6 +121,13 @@ public class DeckFactory implements Factory {
         IColor color = new Color(Factory.getVal(node, COLOR, resources));
         ISuit suit = new Suit(Factory.getVal(node, SUIT, resources), color);
         IValue value = new Value(val + suit.getName(), val);
-        return new Card(cardName, suit, value);
+        String fixed = XMLHelper.getTextValue((Element)node, resources.getString(FIXED));
+        boolean isFixed = false;
+        if (fixed != null && !fixed.isEmpty() && fixed.equalsIgnoreCase(TRUE)) {
+            isFixed = true;
+        }
+        ICard c = new Card(cardName, suit, value);
+        c.setFixed(isFixed);
+        return c;
     }
 }

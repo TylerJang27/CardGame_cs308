@@ -4,6 +4,8 @@ public interface IDeck {
 
   void shuffle();
 
+  void reverse(); //TODO: ADD TO API CHANGES
+
   int size();
 
   boolean isEmpty();
@@ -29,4 +31,8 @@ public interface IDeck {
   String getName(); //TODO: ADD TO API CHANGES
 
   ICard getCardByName(String name); //TODO: ADD TO API CHANGES
+
+  IDeck copy();
+
+  boolean isFixed(); //TODO: ADD TO API CHANGES
 }
