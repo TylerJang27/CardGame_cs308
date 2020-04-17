@@ -93,13 +93,13 @@ public class Deck implements IDeck {
   @Override
   public void addCard(ICard card) { //fixme make package private?
     if (card != null) {
-      cards.add(card);
+      cards.add(0, card);
     }
   }
 
   @Override
   public void addDeck(IDeck deck) { //fixme consider making an iterable?
-    for (int i = 0; i < deck.size(); i++) {
+    for (int i = deck.size()-1; i >= 0; i--) {
       addCard(deck.peekCardAtIndex(i));
     }
   }

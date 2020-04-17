@@ -64,7 +64,7 @@ public class MasterRule implements IMasterRule {
     @Override
     public boolean checkValidMove(IMove move) {
         //TODO: MAVERICK IS AN IDIOT AND A GENIUS
-        return true;/*
+        //return true;/*
         boolean flag = true;
         for (IRule rule: myRules) {
             if (!rule.checkValidMove(move)) {
@@ -74,7 +74,7 @@ public class MasterRule implements IMasterRule {
             }
         }
         System.out.println("I hereby declare this move:" + true);
-        return flag;*/
+        return flag;
     }
 
     @Override
