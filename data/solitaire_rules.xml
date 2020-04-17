@@ -584,6 +584,11 @@
                         <donor_dest>
                             <destination>d</destination>
                             <num_cards>south</num_cards>
+                            <except>hand</except>
+                            <except>club</except>
+                            <except>heart</except>
+                            <except>spade</except>
+                            <except>diamond</except>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>preserve</offset>
@@ -606,7 +611,7 @@
                             <value>1</value>
                             <color>*</color>
                             <suit>=</suit>
-                            <num_cards>1</num_cards>
+                            <num_cards>*</num_cards>
                             <is_faceup>y</is_faceup>
                             <name>*</name>
                         </mover>
@@ -638,6 +643,7 @@
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
+                            <except>hand</except>
                             <num_cards>south</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
@@ -679,15 +685,15 @@
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>south</offset>
+                            <offset>none</offset>
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>south</offset>
-                            <flip>y</flip>
+                            <offset>none</offset>
+                            <flip>n</flip>
                         </mover_dest>
                         <next_phase phase="check_eog"></next_phase>
                     </action>

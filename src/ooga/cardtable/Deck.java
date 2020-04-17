@@ -33,6 +33,11 @@ public class Deck implements IDeck {
   }
 
   @Override
+  public void reverse() {
+    Collections.reverse(cards);
+  }
+
+  @Override
   public int size() {
     return cards.size();
   }
@@ -100,7 +105,7 @@ public class Deck implements IDeck {
   @Override
   public void addDeck(IDeck deck) { //fixme consider making an iterable?
     for (int i = deck.size()-1; i >= 0; i--) {
-      addCard(deck.peekCardAtIndex(i));
+      addCard(deck.getCardAtIndex(i));
     }
   }
 

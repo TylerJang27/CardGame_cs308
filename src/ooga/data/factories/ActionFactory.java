@@ -1,15 +1,15 @@
 package ooga.data.factories;
 
-import jdk.swing.interop.SwingInterOpUtils;
 import ooga.cardtable.*;
 import ooga.data.XMLException;
 import ooga.data.XMLHelper;
 import ooga.data.rules.CardAction;
 import ooga.data.rules.ICardAction;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
-import java.sql.SQLOutput;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -60,6 +60,7 @@ public class ActionFactory implements Factory {
     private static final String SAME = "Same";
     private static final String YES = "Yes";
     private static final String NO = "No";
+    private static final String REVERSE = "Reverse";
 
     private static DocumentBuilder documentBuilder;
     public static final List<String> TRUE_CHECKS = new ArrayList<>(Arrays.asList(new String[]{"", resources.getString(ALL)}));
@@ -76,25 +77,30 @@ public class ActionFactory implements Factory {
         List<Consumer<IMove>> actions = new ArrayList<>();
         try {
             Consumer<IMove> cardAction = (IMove move) -> {
-                ICell updatedCurrCell = extractCellsToMove(e, currCell, move); ///TODO: DOES THIS DO ANYTHING????
+                Boolean excepted = extractExceptBehavior(e, currCell, move);
+                if (!excepted) {
+                    ICell updatedCurrCell = extractCellsToMove(e, currCell, move); ///TODO: DOES THIS DO ANYTHING????
 
-                ICell destination = extractDestinationBehavior(e, moverCell, donorCell, recipientCell, move);
+                    ICell destination = extractDestinationBehavior(e, moverCell, donorCell, recipientCell, move);
 
-                IOffset off = extractOffsetBehavior(e, updatedCurrCell, move);
+                    IOffset off = extractOffsetBehavior(e, updatedCurrCell, move);
 
-                extractRotationBehavior(e, updatedCurrCell, move);
+                    extractRotationBehavior(e, updatedCurrCell, move);
 
-                extractFlipBehavior(e, updatedCurrCell, move);
+                    extractFlipBehavior(e, updatedCurrCell, move);
 
-                //TODO: IMPLEMENT SHUFFLE
+                    extractShuffleBehavior(e, updatedCurrCell);
 
-                System.out.println("Time to move");
-                System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                System.out.println("d: " + move.getDonor().getTotalSize() + "|m: " + move.getMover().getTotalSize() + "|r: " + move.getRecipient().getTotalSize());
+                    //TODO: IMPLEMENT SHUFFLE
+
+                    System.out.println("Time to move");
+                    System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                    System.out.println("d: " + move.getDonor().getTotalSize() + "|m: " + move.getMover().getTotalSize() + "|r: " + move.getRecipient().getTotalSize());
 
 
-                //applyDestinationBehavior(recipientCell, currCell, curr, move, destination, off);
-                applyDestinationBehavior(recipientCell, updatedCurrCell, curr, move, destination, off);
+                    //applyDestinationBehavior(recipientCell, currCell, curr, move, destination, off);
+                    applyDestinationBehavior(recipientCell, updatedCurrCell, curr, move, destination, off);
+                }
             };
             actions.add(cardAction);
         } catch (Exception ex) {
@@ -102,6 +108,21 @@ public class ActionFactory implements Factory {
         }
         System.out.println("ACTINO" + actions.size());
         return new CardAction(actions);
+    }
+
+    private static Boolean extractExceptBehavior(Element e, Function<IMove, ICell> currCell, IMove move) {
+        NodeList excepts = e.getElementsByTagName(resources.getString(EXCEPT));
+        for (int k = 0; k < excepts.getLength(); k ++) {
+            Node exceptedCell = excepts.item(k);
+            if (exceptedCell.getTextContent().equalsIgnoreCase(currCell.apply(move).findHead().getName())) {
+                System.out.println("EXCEPTED!");
+                return true;
+            }
+        }
+        System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+        System.out.println("\tcurr: " + currCell.apply(move).getName());
+        System.out.println("NOT EXCEPTED!");
+        return false;
     }
 
     private static ICell extractCellsToMove(Element e, Function<IMove, ICell> currCell, IMove move) {
@@ -195,6 +216,8 @@ public class ActionFactory implements Factory {
 
     private static void extractFlipBehavior(Element e, ICell currCell, IMove move) {
         System.out.println("nodeheaderflippy" + e.getNodeName() + ":" + e.getTextContent());
+        System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+        System.out.println("\tcurr: " + currCell.getName());
         String flip = XMLHelper.getTextValue(e, resources.getString(FLIP));
         System.out.println("flippy: " + flip);
         if (Offset.validOffsets.contains(flip.toLowerCase())) {
@@ -213,9 +236,32 @@ public class ActionFactory implements Factory {
                     }
                 }
             }
+        } else if (flip.equals(resources.getString(NO))) {
+            System.out.println("flippy DOWN");
+            for (ICell c : currCell.getAllCells()) {
+                for (int k = 0; k < c.getDeck().size(); k++) {
+                    ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
+                    if (cardToFlip.isFaceUp()) {
+                        cardToFlip.flip();
+                    }
+                }
+            }
         }
         System.out.println("sad flippy");
     }
 
+    private static void extractShuffleBehavior(Element e, ICell currCell) {
+        String shuffle = XMLHelper.getTextValue(e, resources.getString(SHUFFLE));
+        if (shuffle.equalsIgnoreCase(resources.getString(REVERSE))) {
+            for (Map.Entry<IOffset, ICell> entry: currCell.getAllChildren().entrySet()) {
+                System.out.println(entry.getValue().getDeck().peek());
+                System.out.println(entry.getValue().getDeck().peekBottom());
+                entry.getValue().getDeck().reverse();
+                System.out.println("reverse reverse!");
+                System.out.println(entry.getValue().getDeck().peek());
+                System.out.println(entry.getValue().getDeck().peekBottom());
+            }
+        }
+    }
 
 }

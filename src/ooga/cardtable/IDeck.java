@@ -4,6 +4,8 @@ public interface IDeck {
 
   void shuffle();
 
+  void reverse(); //TODO: ADD TO API CHANGES
+
   int size();
 
   boolean isEmpty();
