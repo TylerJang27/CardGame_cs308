@@ -72,7 +72,7 @@ public class RowMenu implements Menu {
 
   @Override
   public void addChosenHandler(ChangeListener<String> listener) {
-    System.out.println("test");
+    //System.out.println("test");
     myGameProperty.addListener(listener);
   }
 

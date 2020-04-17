@@ -11,11 +11,11 @@ public class Card implements ICard {
   private boolean faceup;
   private Map<IAttribute, Boolean> attributes;
   private double orientation;
-  private boolean isFixed;
+  private boolean isFixed = false;
 
   public Card(String name) {
     this.name = name;
-    System.out.println("card name" + name);
+    //System.out.println("card name" + name);
     faceup = false;
     orientation = 0;
   }
@@ -84,7 +84,7 @@ public class Card implements ICard {
   public IValue getValue() { //FIXME duped code
     IValue ret = null;
     for (Entry<IAttribute, Boolean> e : attributes.entrySet()) {
-      System.out.println("Value check: "+e);
+      //System.out.println("Value check: "+e);
       // fixme need to hide info here
       if (e.getKey().getType().toLowerCase().contains("value")){// && e.getValue()) {//fixme monster
         ret = (IValue) e.getKey();
@@ -129,6 +129,7 @@ public class Card implements ICard {
     Card ret = new Card(name, attrs);
     ret.rotate(orientation);
     ret.faceup = isFaceUp();
+    ret.setFixed(isFixed);
     assert getSuit().equals(ret.getSuit());
     assert getSuit().getColorName().equals(ret.getSuit().getColorName());
     assert getValue().equals(ret.getValue()) && ret.getValue()!=null;

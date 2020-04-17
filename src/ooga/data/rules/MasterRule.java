@@ -25,9 +25,9 @@ public class MasterRule implements IMasterRule {
     @Override
     public IGameState executeMove(IMove move) {
         if (checkValidMove(move)) {
-            System.out.println("time to act");
+            //System.out.println("time to act");
             for (ICardAction action: myCardActions) {
-                System.out.println("\t let's do it");
+                //System.out.println("\t let's do it");
                 action.execute(move);
             }
         }
@@ -51,12 +51,12 @@ public class MasterRule implements IMasterRule {
     public boolean checkAutoRules(IMove move) {
         boolean flag = true;
         for (IRule rule: myAutoRules) {
-            System.out.println("yabbadabbadoo");
+            //System.out.println("yabbadabbadoo");
             if (!rule.checkValidMove(move)) { //TODO: VERIFY THIS NULL WORKS
-                System.out.println("yabbadabbadont1");
+                //System.out.println("yabbadabbadont1");
                 return false;
             }
-            System.out.println("yabbadabbadont");
+            //System.out.println("yabbadabbadont");
         }
         return flag;
     }
@@ -65,16 +65,16 @@ public class MasterRule implements IMasterRule {
     public boolean checkValidMove(IMove move) {
         //TODO: MAVERICK IS AN IDIOT AND A GENIUS
         //return true;
-        System.out.println("\n\nchecking valid move " + getName());
+        //System.out.println("\n\nchecking valid move " + getName());
         boolean flag = true;
         for (IRule rule: myRules) {
             if (!rule.checkValidMove(move)) {
-                System.out.println(rule.getName());
-                System.out.println("I hereby declare this move:" + false);
+                //System.out.println(rule.getName());
+                //System.out.println("I hereby declare this move:" + false);
                 return false;
             }
         }
-        System.out.println("I hereby declare this move:" + true);
+        //System.out.println("I hereby declare this move:" + true);
         return flag;
     }
 

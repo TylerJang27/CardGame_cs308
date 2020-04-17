@@ -40,11 +40,13 @@ public class DisplayCell {
         myCell = cell;
 
         if(myCell.getDeck().peek() != null) {
+
             if (myCell.getDeck().peek().isFaceUp()) {
                 myImageView = new ImageView(new Image(cardNameToFileName.get(myCell.getDeck().peek().getName())));
             } else {
                 myImageView = new ImageView(new Image(cardNameToFileName.get("faceDown")));
             }
+
 /*
             try {
                 Image faceUp = new Image(cardName + ".png");//cardNameToFileName.get(myCell.getDeck().peek().getName()));
