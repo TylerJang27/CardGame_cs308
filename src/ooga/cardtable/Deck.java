@@ -116,6 +116,7 @@ public class Deck implements IDeck {
     for (ICard c : cards) {
       if (c.getName().equals(name)) {
         System.out.println("searched name: " + c.getName());
+        cards.remove(c);
         return c;
       }
     }
