@@ -118,6 +118,7 @@ public class PhaseMachine implements IPhaseMachine {
   }
 
   private ICell findNamedCell(String nm) {
+    updateCellParents();
     System.out.println("findname: "+nm);
     String[] names = nm.split(",");
     String firstName = names[0];
@@ -153,9 +154,11 @@ public class PhaseMachine implements IPhaseMachine {
     if (arrow != null) {
       moveToNextPhase(arrow);
       System.out.println("welcome to Phase: " + currentPhase.getMyName());
+      updateCellParents();
       return GameState.WAITING;
     }
     System.out.println("welcome to Phase: " + currentPhase.getMyName());
+    updateCellParents();  
     return GameState.INVALID;
 
     /*if (next == null) {
@@ -169,6 +172,13 @@ public class PhaseMachine implements IPhaseMachine {
     }
     currentPhase = nextPhase;
     return state;*/
+  }
+
+  private void updateCellParents() {
+    for (ICell c: cells) {
+      c.updateParentage();
+      //System.out.println("Phase cell: "+c);
+    }
   }
 
   private void moveToNextPhase(IPhaseArrow arrow) {
