@@ -25,6 +25,7 @@ public class Cell implements ICell {
   public Cell(String nm, IDeck d) {
     this(nm);
     deck = d;
+    //System.out.println(d.size() + "how big is it " + nm);
   }
 
   @Override
@@ -52,7 +53,10 @@ public class Cell implements ICell {
     if (cellDeckBuilder != null) {
       //TODO: DOUBLE CHECK THIS WORKS
       ICell toAdd = cellDeckBuilder.apply(mainDeck);
-      addCell(Offset.NONE, toAdd);
+      this.children = toAdd.getAllChildren();
+      this.deck = toAdd.getDeck();
+      updateParentage();
+      //addCell(Offset.NONE, toAdd);
     }
     cellDeckBuilder = null;
   }
@@ -168,7 +172,7 @@ public class Cell implements ICell {
     if (offset != Offset.NONE) {
       recipient = getAllChildren().get(offset);
     } else {
-      recipient = this;
+      recipient = this; //TODO: HEAD
     }
     if (recipient == null) {
       //System.out.println(this.getName() + "yolo");
@@ -251,6 +255,9 @@ public class Cell implements ICell {
 
   @Override
   public ICell getPeak(IOffset offset) {
+    if (offset.equals(Offset.NONE)) {
+      return this;
+    }
     ICell temp = this;
     while (temp.getDeck().size() > 0) { //TODO: VERIFY THIS DOESN'T SKIP EMPTIES
       temp = getAllChildren().get(offset);

@@ -49,6 +49,7 @@ public class Phase implements IPhase {
       if (!isAuto) {
         myGameState = ruleToExecute.executeMove(move); //TODO: ADD GAME STATE FUNCTIONALITY
         System.out.println("MasterRule executed manual moves");
+        System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
         System.out.println(move.getDonor().getName());
         System.out.println(move.getMover().getName());
         System.out.println(move.getRecipient().getName());

@@ -112,7 +112,7 @@ public class MasterRuleFactory implements Factory {
             }
             Node movAction = (Element)XMLHelper.getNodeByName(allActions, resources.getString(MOVER_DESTINATION));
             if (movAction != null) {
-                cardActionList.add(ActionFactory.getAction((Element)recAction, ruleName + M));
+                cardActionList.add(ActionFactory.getAction((Element)movAction, ruleName + M));
             }
             //FIXME: ADDED BY TYLER TO CORRECT
 
@@ -177,6 +177,13 @@ public class MasterRuleFactory implements Factory {
 
     private static Boolean checkRecipient(IMove move, String name, Map<String, ICellGroup> cellGroupMap) {
         System.out.println("checking recipient");
+        System.out.println("\tname is empty: " + name.isEmpty());
+        System.out.println("\tis in cell group map and cell group name matches: " + cellGroupMap.get(name).isInGroup(move.getRecipient().findHead().getName()));
+        System.out.println("\tcell name matches: " + name.equals(move.getRecipient().getName().split(",")[0]));
+        System.out.println("\t\tresult: " + (name.isEmpty()||
+                (cellGroupMap.containsKey(name) &&
+                        cellGroupMap.get(name).isInGroup(move.getRecipient().findHead().getName()))||
+                name.equals(move.getRecipient().getName().split(",")[0])));
         return name.isEmpty()||
                 (cellGroupMap.containsKey(name) &&
                         cellGroupMap.get(name).isInGroup(move.getRecipient().findHead().getName()))||
