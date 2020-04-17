@@ -29,6 +29,11 @@ public class Cell implements ICell {
   }
 
   @Override
+  public boolean isFixed() {
+    return deck.isFixed();
+  }
+
+  @Override
   public List<ICell> getCellsbyName(String name) {
     List<ICell> cellList = new ArrayList<>();
     if (isInGroup(name)) {
@@ -104,6 +109,9 @@ public class Cell implements ICell {
   @Override
   public IOffset getOffsetFromParent() {
     //System.out.println(parent.getAllChildren());
+    if (parent == null) {
+      return Offset.NONE;
+    }
     for (Entry<IOffset, ICell> e : parent.getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE && e.getValue().equals(this)) {
         return e.getKey();
@@ -259,8 +267,8 @@ public class Cell implements ICell {
       return this;
     }
     ICell temp = this;
-    while (temp.getDeck().size() > 0) { //TODO: VERIFY THIS DOESN'T SKIP EMPTIES
-      temp = getAllChildren().get(offset);
+    while (temp.getAllChildren().keySet().contains(offset)) { //TODO: VERIFY THIS DOESN'T SKIP EMPTIES
+      temp = temp.getAllChildren().get(offset);
     }
     return temp;
   }
@@ -274,6 +282,9 @@ public class Cell implements ICell {
     /*if (!(other instanceof Cell)) {
       return false;
     }*/
+    if (other == null) {
+      return false;
+    }
     Cell c = (Cell) other;
     if (!deck.equals(c.deck)) {
       return false;
@@ -369,8 +380,8 @@ public class Cell implements ICell {
       System.out.println("filling in the rest");
       ICell ret = this;
       for (int i = 1; i < names.length; i++) {
-        setCellAtOffset(Offset.valueOf(names[i]), new Cell(getName()+","+names[i]));
-        ret = ret.getAllChildren().get(Offset.valueOf(names[i]));
+        setCellAtOffset(Offset.valueOf(names[i].toUpperCase()), new Cell(getName()+","+names[i]));
+        ret = ret.getAllChildren().get(Offset.valueOf(names[i].toUpperCase()));
       }
       return ret;
     }
