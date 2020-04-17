@@ -639,7 +639,7 @@
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>0</offset>
-                            <flip>n</flip>
+                            <flip>y</flip>
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
