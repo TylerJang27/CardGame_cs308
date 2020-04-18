@@ -1,6 +1,6 @@
-# Progress Meeting 2
+# Progress Meeting 3
 
-Present: Sarah, Mariusz, Maverick, Andrew, Tyler, Christina (TA)
+Present: Sarah, Maverick, Andrew, Tyler, Christina (TA)
 
 Date: 4/18/20
 
