@@ -217,9 +217,9 @@ public class RuleFactory implements Factory {
                 };
             } else {
                 valueChecker = (IMove move) -> {
-                    System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    System.out.println("\t\tcolor: " +  (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase())));
+                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                    //System.out.println("\t\tcolor: " +  (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase())));
                     return (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase()));
                 };
             }
@@ -244,9 +244,9 @@ public class RuleFactory implements Factory {
                 //System.out.println("checking the value of mover:" + currCell.apply(move).getDeck().peek().getValue().getNumber());
                 //System.out.println("checking the value of rec:" + recipientCell.apply(move).getDeck().peek().getValue());
                 //System.out.println("checking the value of rec:" + recipientCell.apply(move).getDeck().peek().getValue().getNumber());
-                System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                System.out.println("\tcurr: " + currCell.apply(move).getName());
-                System.out.println("\t\tvalue: " + (currCell.apply(move).getDeck().peek().getValue().getNumber() - value ==
+                //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                //System.out.println("\t\tvalue: " + (currCell.apply(move).getDeck().peek().getValue().getNumber() - value ==
                         recipientCell.apply(move).getDeck().peek().getValue().getNumber()));
 
                 return (currCell.apply(move).getDeck().peek().getValue().getNumber() - value ==
