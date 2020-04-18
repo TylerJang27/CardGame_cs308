@@ -409,7 +409,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,U</card>
+                    <card>2H,U</card>
                 </init_cards>
             </cell>
             <cell name="2">
@@ -417,8 +417,8 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D2,U</card>
-                    <card>Rd,D</card>
-                    <card>Rd,U</card>
+                    <card>3S,D</card>
+                    <card>AH,U</card>
                 </init_cards>
             </cell>
             <cell name="3">
@@ -426,9 +426,9 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D3,U</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,U</card>
+                    <card>KD,D</card>
+                    <card>4H,D</card>
+                    <card>AS,U</card>
                 </init_cards>
             </cell>
             <cell name="4">
@@ -436,10 +436,10 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D4,U</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,U</card>
+                    <card>0S,D</card>
+                    <card>JH,D</card>
+                    <card>QC,D</card>
+                    <card>4S,U</card>
                 </init_cards>
             </cell>
             <cell name="5">
@@ -447,11 +447,11 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D5,U</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,U</card>
+                    <card>7H,D</card>
+                    <card>7S,D</card>
+                    <card>8H,D</card>
+                    <card>8C,D</card>
+                    <card>9H,U</card>
                 </init_cards>
             </cell>
             <cell name="6">
@@ -459,12 +459,12 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D6,U</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,U</card>
+                    <card>AD,D</card>
+                    <card>KC,D</card>
+                    <card>KS,D</card>
+                    <card>0D,D</card>
+                    <card>2D,D</card>
+                    <card>2C,U</card>
                 </init_cards>
             </cell>
             <cell name="7">
@@ -472,13 +472,13 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D7,U</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,D</card>
-                    <card>Rd,U</card>
+                    <card>6H,D</card>
+                    <card>JS,D</card>
+                    <card>JC,D</card>
+                    <card>2H,D</card>
+                    <card>5H,D</card>
+                    <card>6D,D</card>
+                    <card>2C,U</card>
                 </init_cards>
             </cell>
         </group>

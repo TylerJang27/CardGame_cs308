@@ -25,10 +25,10 @@ public class Main {
     private static void testStyleXML() {
         File f = new File("data/default_style.xml");
         IStyle myStyle = StyleFactory.getStyle(f);
-        System.out.println(myStyle.getCardSkinPath());
-        System.out.println(myStyle.getLanguage());
-        System.out.println(myStyle.getDifficulty());
-        System.out.println(myStyle.getSound());
+        //System.out.println(myStyle.getCardSkinPath());
+        //System.out.println(myStyle.getLanguage());
+        //System.out.println(myStyle.getDifficulty());
+        //System.out.println(myStyle.getSound());
     }
     private static void testLayoutXML() {
         File f = new File("data/solitaire_layout.xml");

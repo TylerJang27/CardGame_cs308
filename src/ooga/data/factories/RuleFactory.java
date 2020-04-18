@@ -63,7 +63,7 @@ public class RuleFactory implements Factory {
 
     public static IRule buildRule(Element e, String ruleName, Map<String, ICellGroup> cellGroupMap) {
         return buildRule(e, ruleName, cellGroupMap, (IMove move)->{
-            System.out.println("default true");
+            //System.out.println("default true");
             return true;
         });
     }
@@ -87,7 +87,7 @@ public class RuleFactory implements Factory {
             extractNameCondition(e, cellGroupMap, conditions, currCell);
 
             extractConditionCondition(e, cellGroupMap, conditions);
-            System.out.println(conditions.size() + " is my condition size");
+            //System.out.println(conditions.size() + " is my condition size");
             return new Rule(ruleName, conditions);
         } catch (Exception ee) {
             throw new XMLException(ee, Factory.MISSING_ERROR + "," + resources.getString(RULES));
@@ -115,9 +115,9 @@ public class RuleFactory implements Factory {
         String name = XMLHelper.getTextValue(e, resources.getString(NAME));
         if (!TRUE_CHECKS.contains(name)) {
             valueChecker = (IMove move) -> {
-                System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                System.out.println("\tcurr: " + currCell.apply(move).getName());
-                System.out.println("\t\tname result: " + ((cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(currCell.apply(move).findHead().getName())) || (currCell.apply(move).findHead().getName().equalsIgnoreCase(name))));
+                //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                //System.out.println("\t\tname result: " + ((cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(currCell.apply(move).findHead().getName())) || (currCell.apply(move).findHead().getName().equalsIgnoreCase(name))));
                 return (cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(currCell.apply(move).findHead().getName())) || (currCell.apply(move).findHead().getName().equalsIgnoreCase(name));
             };
             conditions.add(valueChecker);
@@ -130,17 +130,17 @@ public class RuleFactory implements Factory {
         if (!TRUE_CHECKS.contains(faceUp)) {
             if (faceUp.equalsIgnoreCase(resources.getString(YES))) {
                 valueChecker = (IMove move) -> {
-                    System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    System.out.println("\t\tfaceupY: " + (currCell.apply(move).getDeck().peek().isFaceUp()));
+                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                    //System.out.println("\t\tfaceupY: " + (currCell.apply(move).getDeck().peek().isFaceUp()));
                     return (currCell.apply(move).getDeck().peek().isFaceUp());
                 };
             } else {
                 valueChecker = (IMove move) -> {
-                    System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    System.out.println("deck faceup?: " + currCell.apply(move).getDeck().peek().isFaceUp());
-                    System.out.println("\t\tfaceupN: " + !(currCell.apply(move).getDeck().peek().isFaceUp()));
+                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                    //System.out.println("deck faceup?: " + currCell.apply(move).getDeck().peek().isFaceUp());
+                    //System.out.println("\t\tfaceupN: " + !(currCell.apply(move).getDeck().peek().isFaceUp()));
                     return !(currCell.apply(move).getDeck().peek().isFaceUp());
                 };
             }
@@ -157,10 +157,10 @@ public class RuleFactory implements Factory {
         if (!TRUE_CHECKS.contains(numCards)) {
             Integer value = Integer.parseInt(numCards);
             valueChecker = (IMove move) -> {
-                System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                System.out.println("\tcurr: " + currCell.apply(move).getName());
-                System.out.println("\texpected numcards value: " + value);
-                System.out.println("\t\tnumcards: " + (currCell.apply(move).getTotalSize() == value)); //FIXME: BREAKS HERE
+                //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                //System.out.println("\texpected numcards value: " + value);
+                //System.out.println("\t\tnumcards: " + (currCell.apply(move).getTotalSize() == value)); //FIXME: BREAKS HERE
                 return (currCell.apply(move).getTotalSize() == value);
             };
             conditions.add(valueChecker);
@@ -173,23 +173,23 @@ public class RuleFactory implements Factory {
         if (!TRUE_CHECKS.contains(suit)) {
             if (suit.equals(resources.getString(SAME))) {
                 valueChecker = (IMove move) -> {
-                    System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    System.out.println("\t\tsuit: " + (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName())));
+                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                    //System.out.println("\t\tsuit: " + (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName())));
                     return (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName()));
                 };
             } else if (suit.equals(resources.getString(NOT))) {
                 valueChecker = (IMove move) -> {
-                    System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    System.out.println("\t\tsuit: " + !(currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName())));
+                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                    //System.out.println("\t\tsuit: " + !(currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName())));
                     return !(currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName()));
                 };
             } else {
                 valueChecker = (IMove move) -> {
-                    System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    System.out.println("\t\tsuit: " + (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(suit.toUpperCase())));
+                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                    //System.out.println("\t\tsuit: " + (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(suit.toUpperCase())));
                     return (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(suit.toUpperCase()));
                 };
             }
@@ -203,23 +203,23 @@ public class RuleFactory implements Factory {
         if (!TRUE_CHECKS.contains(color)) {
             if (color.equals(resources.getString(SAME))) {
                 valueChecker = (IMove move) -> {
-                    System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    System.out.println("\t\tcolor: " + (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName())));
+                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                    //System.out.println("\t\tcolor: " + (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName())));
                     return currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName());
                 };
             } else if (color.equals(resources.getString(NOT))) {
                 valueChecker = (IMove move) -> {
-                    System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    System.out.println("\t\tcolor: " +!(currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName())));
+                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                    //System.out.println("\t\tcolor: " +!(currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName())));
                     return !(currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName()));
                 };
             } else {
                 valueChecker = (IMove move) -> {
-                    System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    System.out.println("\t\tcolor: " +  (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase())));
+                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                    //System.out.println("\t\tcolor: " +  (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase())));
                     return (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase()));
                 };
             }
@@ -244,10 +244,10 @@ public class RuleFactory implements Factory {
                 //System.out.println("checking the value of mover:" + currCell.apply(move).getDeck().peek().getValue().getNumber());
                 //System.out.println("checking the value of rec:" + recipientCell.apply(move).getDeck().peek().getValue());
                 //System.out.println("checking the value of rec:" + recipientCell.apply(move).getDeck().peek().getValue().getNumber());
-                System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                System.out.println("\tcurr: " + currCell.apply(move).getName());
-                System.out.println("\t\tvalue: " + (currCell.apply(move).getDeck().peek().getValue().getNumber() - value ==
-                        recipientCell.apply(move).getDeck().peek().getValue().getNumber()));
+                //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
+                //System.out.println("\tcurr: " + currCell.apply(move).getName());
+                //System.out.println("\t\tvalue: " + (currCell.apply(move).getDeck().peek().getValue().getNumber() - value ==
+                //        recipientCell.apply(move).getDeck().peek().getValue().getNumber()));
 
                 return (currCell.apply(move).getDeck().peek().getValue().getNumber() - value ==
                         recipientCell.apply(move).getDeck().peek().getValue().getNumber());
