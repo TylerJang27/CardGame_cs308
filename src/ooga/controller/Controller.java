@@ -25,7 +25,8 @@ public class Controller extends Application {
 
     // TODO: Put the file here
     private static final String DEFAULT_STYLE_FILE = "data/default_style.xml";
-    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";
+    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";
 
     private View myView;
     private IMove myCurrentMove;

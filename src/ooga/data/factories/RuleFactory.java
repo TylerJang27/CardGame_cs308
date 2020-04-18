@@ -247,7 +247,7 @@ public class RuleFactory implements Factory {
                 //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
                 //System.out.println("\tcurr: " + currCell.apply(move).getName());
                 //System.out.println("\t\tvalue: " + (currCell.apply(move).getDeck().peek().getValue().getNumber() - value ==
-                        recipientCell.apply(move).getDeck().peek().getValue().getNumber()));
+                //        recipientCell.apply(move).getDeck().peek().getValue().getNumber()));
 
                 return (currCell.apply(move).getDeck().peek().getValue().getNumber() - value ==
                         recipientCell.apply(move).getDeck().peek().getValue().getNumber());
