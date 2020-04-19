@@ -154,8 +154,7 @@ public class View implements ExternalAPI {
         myDisplayTable = new DisplayTable(getMove, (Layout) layout, 500);
         myRoot = new BorderPane();
         myRoot.setCenter(myDisplayTable.getPane());
-        Scene gameScene = new Scene(myRoot,500,500);
-        gameScene.getStylesheets().add("ooga.resources.skins/lightmode.css"); // getClass().getResource("ooga.resources.skins/lightmode.css").toExternalForm()
+        Scene gameScene = new Scene(myRoot,650,500);
         gameStage = new Stage();
         gameStage.setScene(gameScene);
         gameStage.show();

@@ -1,22 +1,16 @@
 package ooga.view.menu;
 
-import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -25,7 +19,7 @@ import ooga.view.Dictionary;
 
 public class RowMenu implements Menu {
   private static final double DEFAULT_SIZE= 500;
-  private static final Insets MARGINS = new Insets(20,20,20,20);
+  private static final Insets MARGINS = new Insets(305,20,20,20);
   private static final double SPACING = 10;
   private static final ResourceBundle LANGUAGES = ResourceBundle.getBundle("ooga.resources.languages.supportedlanguages");
   private static final String CHOICES = "ooga.resources.languages.menu";
@@ -35,6 +29,7 @@ public class RowMenu implements Menu {
   private BorderPane myPane;
   private Stage myStage;
   private StringProperty myGameProperty;
+  private Scene myScene;
 
   public RowMenu(){
 
@@ -45,15 +40,15 @@ public class RowMenu implements Menu {
 
     // Make application name at top of screen
     StackPane gameNamePane = new StackPane();
-    //Text gameName = new Text(APPLICATION_NAME);
-    //gameNamePane.getChildren().add(gameName); //add imageView to stackPane
-    Button fakebutton = new Button("Accept");
-    fakebutton.getStyleClass().add("button1");
-    gameNamePane.getChildren().add(fakebutton);
+    Text gameName = new Text(APPLICATION_NAME);
+    gameName.getStyleClass().add("title");
+    gameNamePane.getChildren().add(gameName);
+    gameNamePane.getStyleClass().add("titleborder");
     myPane.setTop(gameNamePane);
 
     // Create HBox for game choices (options)
-    HBox options = new HBox(SPACING);
+    HBox options = new HBox();
+    options.getStyleClass().add("options");
     myPane.setCenter(options);
     options.setPadding(MARGINS);
 
@@ -78,15 +73,21 @@ public class RowMenu implements Menu {
     });
 
     // Make dashboard for bottom of screen
-    Pane dashboard = new Pane();
+
+
+    HBox dashboard = new HBox();
     dashboard.getChildren().add(languages);
+    dashboard.getStyleClass().add("border");
+    dashboard.getStyleClass().add("dashboard");
+
     myPane.setBottom(dashboard);
 
 
     // Create scene and set stage using myPane (BorderPane)
     myStage = new Stage();
-    Scene scene = new Scene(myPane,DEFAULT_SIZE,DEFAULT_SIZE);
-    myStage.setScene(scene);
+    myScene = new Scene(myPane,650,500);
+    myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/dukemode.css").toExternalForm()); //
+    myStage.setScene(myScene);
   }
 
   @Override
