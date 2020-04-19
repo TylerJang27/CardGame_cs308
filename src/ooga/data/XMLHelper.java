@@ -26,7 +26,6 @@ import org.xml.sax.SAXException;
  *
  * @author Tyler Jang
  */
-//TODO: PLEASE HELP WITH STATIC
 public class XMLHelper {
     public static final String XML_END = ".xml";
     public static String TYPE = "type";
