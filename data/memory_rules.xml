@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data type="rule">
+    <settings>
+        <players>1</players>
+        <layout>data/memory_layout.xml</layout>
+    </settings>
+</data>
