@@ -22,6 +22,7 @@ public class RowMenu implements Menu {
   private static final Insets MARGINS = new Insets(305,20,20,20);
   private static final double SPACING = 10;
   private static final ResourceBundle LANGUAGES = ResourceBundle.getBundle("ooga.resources.languages.supportedlanguages");
+  private static final ResourceBundle SKINS = ResourceBundle.getBundle("ooga.resources.skins.supportedskins");
   private static final String CHOICES = "ooga.resources.languages.menu";
   private static final ResourceBundle GAMES = ResourceBundle.getBundle("ooga.resources.languages.menu.English");
   private static final String APPLICATION_NAME = "Solitaire Confinement";
@@ -72,11 +73,25 @@ public class RowMenu implements Menu {
       }
     });
 
+    // Add listener to language change drop down
+    ComboBox<String> skins = new ComboBox<>();
+    skins.getItems().addAll(SKINS.getString("supported").split(","));
+    skins.valueProperty().addListener(new ChangeListener<String>() {
+      @Override
+      public void changed(ObservableValue<? extends String> observable, String oldValue,
+                          String newValue) {
+        System.out.println("I clicked on "+newValue);
+        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue+".css").toExternalForm()); //
+        if (oldValue.equals(null)) {
+          oldValue = "Duke";
+        }
+        myScene.getStylesheets().remove(getClass().getResource("/ooga/resources/skins/"+oldValue+".css").toExternalForm()); // fixme null pointer exception on firstclick
+      }
+    });
+
     // Make dashboard for bottom of screen
-
-
     HBox dashboard = new HBox();
-    dashboard.getChildren().add(languages);
+    dashboard.getChildren().addAll(languages, skins);
     dashboard.getStyleClass().add("border");
     dashboard.getStyleClass().add("dashboard");
 
@@ -86,7 +101,7 @@ public class RowMenu implements Menu {
     // Create scene and set stage using myPane (BorderPane)
     myStage = new Stage();
     myScene = new Scene(myPane,650,500);
-    myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/dukemode.css").toExternalForm()); //
+    myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/Duke.css").toExternalForm()); //
     myStage.setScene(myScene);
   }
 
