@@ -4,6 +4,7 @@ Date: 4/18/20
 Team Name: Solitaire Confinement (Team 52 Pickup)
 
 ### Agenda
+* Recap Presentation with TA
 * Plan for Complete
 
 ### Plan by Person
