@@ -31,8 +31,13 @@ Team Name: Solitaire Confinement (Team 52 Pickup)
     * Monday night: Start JUnit Tests
     * Wednesday night: No more chained method calls and refactored factories, extract static CellHelper.java
     * Wednesday night?: XML writer
+<<<<<<< HEAD
     * Wednesday night?: score and other features
     * Thursday night?: XML validator
+=======
+    * Thursday night?: XML validator
+    * 
+>>>>>>> develop
 * Mariusz
     * Check in
     * Help with dashboard/settings?

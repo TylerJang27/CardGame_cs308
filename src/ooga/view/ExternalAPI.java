@@ -27,6 +27,15 @@ public interface ExternalAPI {
     void setCellData(Map<String,ICell> cellData);
 
     /**
+     * setCellData() is called regularly by the Controller to pass the correct state of the board
+     * to the front end from the back end. This is done by sending a list of cell objects which
+     * represent groups of cards and their associated state (i.e. face up/down, staggered/even, card type)
+     *
+     * @param cellData
+     */
+    void setUpdatesToCellData(Map<String,ICell> cellData);
+
+    /**
      * Sets score of players to be displayed
      * @param playerScores maps playerID to total score
      */
