@@ -25,6 +25,11 @@ public class View implements ExternalAPI {
     private static final String APPLICATION_NAME = "Solitaire Confinement";
     private static final String APPLICATION_ICON = "/ooga/resources/cards.png";
 
+    private static final ResourceBundle LANGUAGES = ResourceBundle.getBundle("ooga.resources.languages.supportedlanguages");
+    private static final ResourceBundle SKINS = ResourceBundle.getBundle("ooga.resources.skins.supportedskins");
+
+    private static final String MESSAGES = "ooga.resources.languages.messages.";
+
     @FunctionalInterface
     public
     interface TriggerMove {
@@ -74,7 +79,7 @@ public class View implements ExternalAPI {
             myLanguage = myStyle.getLanguage();
         }
 
-        myMenu = new Menu(APPLICATION_NAME, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
+        myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
 
         myStage = new Stage();
         myStage.setScene(myMenu.getScene());
@@ -95,7 +100,7 @@ public class View implements ExternalAPI {
 
         getMove = giveMove::sendMove;
 
-        myMenu = new Menu(APPLICATION_NAME, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
+        myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
 
         myStage = new Stage();
         myStage.setScene(myMenu.getScene());
@@ -120,14 +125,15 @@ public class View implements ExternalAPI {
             }
         });
 
-        Button restartButton = new Button("");
+        ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
+        Button restartButton = new Button(currentMessages.getString("restart"));
         restartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 System.out.println("View 114: Call lambda to notify backend");
             }
         });
 
-        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, myMenu.getGame());
+        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, restartButton, myMenu.getGame());
         myStage.setScene(myGameScreen.getScene());
 
         myStage.minHeightProperty().bind(Bindings.multiply(myGameScreen.getDisplayTable().getPane().widthProperty(),layout.getScreenRatio()));

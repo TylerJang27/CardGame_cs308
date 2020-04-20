@@ -19,10 +19,8 @@ import ooga.view.View;
 
 public class Menu {
   private static final Insets MARGINS = new Insets(305,20,20,20);
-  private static final ResourceBundle LANGUAGES = ResourceBundle.getBundle("ooga.resources.languages.supportedlanguages");
+
   private static final String CHOICES = "ooga.resources.languages.games";
-  private static final ResourceBundle GAMES = ResourceBundle.getBundle("ooga.resources.languages.games.English");
-  private static final ResourceBundle SKINS = ResourceBundle.getBundle("ooga.resources.skins.supportedskins");
 
   private BorderPane myBorderPane;
   private Stage myStage;
@@ -32,7 +30,7 @@ public class Menu {
   private String myGame;
   private View.ChangeValue myThemeLambda;
 
-  public Menu(String appName, View.ChangeValue themeLambda, View.ChangeValue languageLambda, String defaultTheme, String defaultLanguage, double screenHeight, double screenWidth){
+  public Menu(String appName, ResourceBundle supportedLangs, ResourceBundle supportedSkins, View.ChangeValue themeLambda, View.ChangeValue languageLambda, String defaultTheme, String defaultLanguage, double screenHeight, double screenWidth){
 
     myGameProperty = new SimpleStringProperty();
     Dictionary.getInstance().addReference(CHOICES);
@@ -40,8 +38,8 @@ public class Menu {
     myBorderPane = new BorderPane();
 
     setTopBorder(appName);
-    setCenter();
-    setBottomBorder(defaultTheme, defaultLanguage, themeLambda, languageLambda);
+    setCenter(defaultLanguage);
+    setBottomBorder(supportedLangs, supportedSkins, defaultTheme, defaultLanguage, themeLambda, languageLambda);
 
     myScene = new Scene(myBorderPane,screenWidth,screenHeight);
     myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+defaultTheme.toLowerCase()+"/mainmenu.css").toExternalForm()); //
@@ -56,9 +54,9 @@ public class Menu {
     return myGame;
   }
 
-  private void setBottomBorder(String defaultTheme, String defaultLanguage, View.ChangeValue themeLambda, View.ChangeValue languageLambda) {
+  private void setBottomBorder(ResourceBundle supportedLangs, ResourceBundle supportedSkins, String defaultTheme, String defaultLanguage, View.ChangeValue themeLambda, View.ChangeValue languageLambda) {
     ComboBox<String> languages = new ComboBox<>();
-    languages.getItems().addAll(LANGUAGES.getString("supported").split(","));
+    languages.getItems().addAll(supportedLangs.getString("supported").split(","));
     languages.setValue(defaultLanguage);
     languages.valueProperty().addListener(new ChangeListener<String>() {
       @Override
@@ -70,7 +68,7 @@ public class Menu {
     });
 
     ComboBox<String> skins = new ComboBox<>();
-    skins.getItems().addAll(SKINS.getString("supported").split(","));
+    skins.getItems().addAll(supportedSkins.getString("supported").split(","));
     skins.setValue(defaultTheme);
     skins.valueProperty().addListener(new ChangeListener<String>() {
       @Override
@@ -90,7 +88,7 @@ public class Menu {
     myBorderPane.setBottom(dashboard);
   }
 
-  private void setCenter() {
+  private void setCenter(String defaultLanguage) {
     HBox options = new HBox();
     options.getStyleClass().add("options");
     myBorderPane.setCenter(options);
@@ -99,7 +97,9 @@ public class Menu {
     options.prefWidthProperty().bind(myBorderPane.widthProperty());
     options.prefHeightProperty().bind(myBorderPane.heightProperty());
 
-    for(String game : GAMES.keySet()){
+    ResourceBundle games = ResourceBundle.getBundle("ooga.resources.languages.games."+defaultLanguage);
+
+    for(String game : games.keySet()){
       addOption(game,options);
     }
   }
