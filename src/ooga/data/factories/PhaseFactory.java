@@ -17,6 +17,8 @@ import java.util.*;
  * This PhaseFactory implements Factory and constructs IPhases using the createPhases() method.
  * These IPhases are used to store information about the rules and actions that process the players' moves, functioning as a finite state machine.
  *
+ * This Factory depends on MasterRuleFactory, RuleFactory, and ActionFactory working properly.
+ *
  * @author Tyler Jang
  */
 public class PhaseFactory implements Factory {
@@ -99,7 +101,7 @@ public class PhaseFactory implements Factory {
                 List<String> validDonorNames = extractValidDonors(phaseNodes);
 
                 Node rules = XMLHelper.getNodeByName(phaseNodes, RESOURCES.getString(RULES));
-                List<IMasterRule> phaseRules = MasterRuleFactory.getRules(rules, cellGroupMap, cellMap, phaseName);
+                List<IMasterRule> phaseRules = MasterRuleFactory.createMasterRules(rules, cellGroupMap, cellMap, phaseName);
 
                 IPhase newPhase = new Phase(phaseName, phaseRules, validDonorNames, cellGroupMap, cellMap, automatic);
                 if (phaseMap.isEmpty()) {

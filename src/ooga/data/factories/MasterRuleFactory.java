@@ -12,6 +12,14 @@ import org.w3c.dom.NodeList;
 import java.util.*;
 import java.util.function.Function;
 
+/**
+ * This MasterRuleFactory implements Factory constructs IMasterRules using the createMasterRules() method.
+ * These IMasterRules contain logic to determine whether a move is valid and whether phase changes should occur.
+ *
+ * This Factory depends on RuleFactory and ActionFactory working properly.
+ *
+ * @author Tyler Jang
+ */
 public class MasterRuleFactory implements Factory {
     private static final ResourceBundle RESOURCES = PhaseFactory.RESOURCES;
 
@@ -64,7 +72,16 @@ public class MasterRuleFactory implements Factory {
 
     protected static final List<String> TRUE_CHECKS = List.of("", RESOURCES.getString(ALL));
 
-    public static List<IMasterRule> getRules(Node rules, Map<String, ICellGroup> cellGroupMap, Map<String, ICell> cellMap, String phaseName) {
+    /**
+     * Builds and returns IMasterRules built for an IPhase from a rules XML. Requirements for rules XML can be found in ____.
+     *
+     * @param rules         the Node from which IMasterRules are built
+     * @param cellGroupMap  the Map of String ICellGroup names to ICellGroups
+     * @param cellMap       the Map of String ICell names to ICells
+     * @param phaseName     the String name of the IPhase
+     * @return              a List of IMasterRules for an IPhase, each with their own internal IRules and actions
+     */
+    public static List<IMasterRule> createMasterRules(Node rules, Map<String, ICellGroup> cellGroupMap, Map<String, ICell> cellMap, String phaseName) {
         List<String> masterRuleNames = new ArrayList<>();
         List<IMasterRule> masterRuleList = new ArrayList<>();
         Map<String, IMasterRule> ruleMap = new HashMap<>();
@@ -77,15 +94,12 @@ public class MasterRuleFactory implements Factory {
                 Element ruleNode = (Element) ruleNodeList.item(k);
                 String ruleName = XMLHelper.getAttribute(ruleNode, RESOURCES.getString(CATEGORY));
 
-                //supports multiple receive rules
                 List<IRule> autoRules = new ArrayList<>();
                 List<IRule> allRules = getAllRules(cellGroupMap, ruleName, ruleNode, autoRules);
-                //allRules.addAll(autoRules);
 
                 List<IControlAction> controlActionList = new ArrayList<>();
                 List<ICardAction> cardActionList = getCardandControlActions(phaseName, ruleNode, ruleName, controlActionList);
 
-                //TODO: REFACTOR TO HERE TO AN ACTION FACTORY
                 IMasterRule masterRule = new MasterRule(allRules, autoRules, cardActionList, controlActionList);
                 masterRuleNames.add(ruleName);
                 masterRuleList.add(masterRule);
@@ -99,6 +113,15 @@ public class MasterRuleFactory implements Factory {
         return masterRuleList;
     }
 
+    /**
+     * Extracts the ICardActions and the IControlActions for a given phase.
+     *
+     * @param phaseName         the String name of the current IPhase being created
+     * @param ruleNode          the Node corresponding to the IMasterRule
+     * @param ruleName          the String name of the IMasterRule
+     * @param controlActionList a List of IControlActions that will be processed upon successful validation of an IMasterRule
+     * @return                  a List of ICardActions that will be processed upon successful validation of an IMasterRule
+     */
     private static List<ICardAction> getCardandControlActions(String phaseName, Element ruleNode, String ruleName, List<IControlAction> controlActionList) {
         List<ICardAction> cardActionList = new ArrayList<>();
         NodeList actionList = ruleNode.getElementsByTagName(RESOURCES.getString(ACTION));               //TODO: REFACTOR FROM HERE TO AN ACTION FACTORY
@@ -107,21 +130,7 @@ public class MasterRuleFactory implements Factory {
 
             NodeList allActions = actionHeadNode.getChildNodes();
 
-            Node recAction = (Element) XMLHelper.getNodeByName(allActions, RESOURCES.getString(RECEIVER_DESTINATION));
-            if (recAction != null) {
-                cardActionList.add(ActionFactory.getAction((Element) recAction, ruleName + R));
-                //TODO: FOLLOW CONVENTION WITH FACTORY METHOD NAMES
-            }
-            Node movAction = (Element) XMLHelper.getNodeByName(allActions, RESOURCES.getString(MOVER_DESTINATION));
-            if (movAction != null) {
-                cardActionList.add(ActionFactory.getAction((Element) movAction, ruleName + M));
-            }
-            //FIXME: ADDED BY TYLER TO CORRECT
-            Node donAction = (Element) XMLHelper.getNodeByName(allActions, RESOURCES.getString(DONOR_DESTINATION));
-            if (donAction != null) {
-                cardActionList.add(ActionFactory.getAction((Element) donAction, ruleName + D));
-            }
-
+            getCardActions(ruleName, cardActionList, allActions);
 
             Node phaseAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(NEXT_PHASE));
             try {
@@ -140,6 +149,38 @@ public class MasterRuleFactory implements Factory {
         return cardActionList;
     }
 
+    /**
+     * Extracts the ICardActions parsed from the XML and adds them to cardActionList.
+     *
+     * @param ruleName          the name of the rule being created
+     * @param cardActionList    the List of ICardActions being added to
+     * @param allActions        the NodeList being parsed from
+     */
+    private static void getCardActions(String ruleName, List<ICardAction> cardActionList, NodeList allActions) {
+        Node recAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(RECEIVER_DESTINATION));
+        if (recAction != null) {
+            cardActionList.add(ActionFactory.getAction((Element) recAction, ruleName + R));
+        }
+        Node movAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(MOVER_DESTINATION));
+        if (movAction != null) {
+            cardActionList.add(ActionFactory.getAction((Element) movAction, ruleName + M));
+        }
+        Node donAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(DONOR_DESTINATION));
+        if (donAction != null) {
+            cardActionList.add(ActionFactory.getAction((Element) donAction, ruleName + D));
+        }
+    }
+
+    /**
+     * Extracts the receiver rules, the mover rules, the donor rules, and the conditional rules for a given IMasterRule.
+     * This supports having multiple receive_rules, but all must be satisfied in order for a move to be considered valid.
+     *
+     * @param cellGroupMap  the Map of String ICellGroup names to ICellGroups
+     * @param ruleName      the String name of the rule
+     * @param ruleNode      the Node corresponding to the IMasterRule
+     * @param autoRules     a List of all the automatic IRules that are
+     * @return              a List of all the IRules for receivers, movers, and donors
+     */
     private static List<IRule> getAllRules(Map<String, ICellGroup> cellGroupMap, String ruleName, Element ruleNode, List<IRule> autoRules) {
         NodeList receiverRuleNodeList = ruleNode.getElementsByTagName(RESOURCES.getString(RECEIVE_RULE));
         List<IRule> allRules = new ArrayList<>();
@@ -169,6 +210,15 @@ public class MasterRuleFactory implements Factory {
         return allRules;
     }
 
+    /**
+     * A helper method for extracting the current cell from a move, using internally defined rule name appending.
+     *
+     * @param ruleName      the name of the rule being analyzed
+     * @param moverCell     the function for retrieving the Cell being moved
+     * @param donorCell     the function for retrieving the Cell being donated from
+     * @param recipientCell the function for retrieving the Cell receiving the move
+     * @return              a Function to retrieve the current Cell
+     */
     protected static Function<IMove, ICell> getCurrentCellFunction(String ruleName, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell) {
         Function<IMove, ICell> currCell;
         char currentChar = ruleName.charAt(ruleName.length() - 1);
@@ -182,16 +232,15 @@ public class MasterRuleFactory implements Factory {
         return currCell;
     }
 
+    /**
+     * Returns whether or not the current cell or cell's group name matches with the recipient.
+     *
+     * @param move          the IMove being processed
+     * @param name          the name of the cell or cell group in question
+     * @param cellGroupMap  the Map of String ICellGroup names to ICellGroups
+     * @return              a Boolean representing whether or not this name is attached to the Receiver
+     */
     private static Boolean checkRecipient(IMove move, String name, Map<String, ICellGroup> cellGroupMap) {
-        //System.out.println("checking recipient");
-        //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-        //System.out.println("\tname is empty: " + name.isEmpty());
-        //System.out.println("\tis in cell group map and cell group name matches: " + cellGroupMap.get(name).isInGroup(move.getRecipient().findHead().getName()));
-        //System.out.println("\tcell name matches: " + name.equals(move.getRecipient().getName().split(",")[0]));
-        //System.out.println("\t\tresult: " + (name.isEmpty()||
-        //        (cellGroupMap.containsKey(name) &&
-        //                cellGroupMap.get(name).isInGroup(move.getRecipient().findHead().getName()))||
-        //        name.equals(move.getRecipient().getName().split(",")[0])));
         return name.isEmpty() ||
                 (cellGroupMap.containsKey(name) &&
                         cellGroupMap.get(name).isInGroup(move.getRecipient().findHead().getName())) ||
