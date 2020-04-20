@@ -33,6 +33,12 @@ public class Cell implements ICell {
     return deck.isFixed();
   }
 
+  /**
+   * Return all the ICells represented by the name for either a group or an individual cell.
+   *
+   * @param name  the query
+   * @return      a List of ICells matching the name
+   */
   @Override
   public List<ICell> getCellsbyName(String name) {
     List<ICell> cellList = new ArrayList<>();
@@ -42,10 +48,15 @@ public class Cell implements ICell {
     return cellList;
   }
 
+  /**
+   * Returns whether or not the name is contained by getCellsByName() for this name.
+   *
+   * @param name  the query
+   * @return      whether or not the name is relevant
+   */
   @Override
   public boolean isInGroup(String name) {
     return this.name.equals(name);
-    //TODO: DOUBLE CHECK HAPPY WITH THIS IMPLEMENTATION
   }
 
   @Override

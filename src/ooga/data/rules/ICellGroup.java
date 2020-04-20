@@ -5,6 +5,8 @@ import ooga.cardtable.IDeck;
 
 import java.util.Map;
 
+//TODO: ADD TO API CHANGES
+
 /**
  * Gets information on a group of thematically linked cells. Includes the group name itself and the cells contained within the group.
  *
@@ -26,6 +28,11 @@ public interface ICellGroup extends Cellular {
      */
     Map<String, ICell> getCellMap();
 
-    void initializeAll(IDeck mainDeck); //TODO: ADD TO API CHANGES
+    /**
+     * Initializes all of the ICells referred to by this group name.
+     *
+     * @param mainDeck the IDeck with which the ICells should be initialized.
+     */
+    void initializeAll(IDeck mainDeck);
 
 }
