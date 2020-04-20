@@ -4,79 +4,93 @@ import ooga.cardtable.ICell;
 import ooga.data.XMLException;
 import ooga.data.XMLHelper;
 import ooga.data.rules.ICellGroup;
-import ooga.data.rules.IPhase;
 import ooga.data.rules.IMasterRule;
+import ooga.data.rules.IPhase;
 import ooga.data.rules.Phase;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
 import java.util.*;
 
 public class PhaseFactory implements Factory {
-    private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
-    private static final String PHASES = "phases";
-    private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE+PHASES);
+    protected static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
+    protected static final String PHASES = "phases";
+    protected static final ResourceBundle RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + PHASES);
 
-    private static final String PHASE = "Phase";
-    private static final String NAME = "Name";
-    private static final String PHASE_TYPE = "PhaseType";
-    private static final String MANUAL = "Manual";
-    private static final String AUTO = "Auto";
-    private static final String AUTOMATIC = "Automatic";
-    private static final String VALID_DONORS = "ValidDonors";
-    private static final String CATEGORY = "Category";
-    private static final String RULES = "Rules";
-    private static final String RULE = "Rule";
-    private static final String RECEIVE_RULE = "ReceiveRule";
-    private static final String RECEIVER = "Receiver";
-    private static final String MOVER = "Mover";
-    private static final String DIRECTION = "Direction";
-    private static final String VALUE = "Value";
-    private static final String COLOR = "Color";
-    private static final String SUIT = "Suit";
-    private static final String NUMBER_CARDS = "NumberCards";
-    private static final String IS_FACEUP = "IsFaceup";
-    private static final String DONOR = "Donor";
-    private static final String ALL = "*";
-    private static final String ACTION = "Action";
-    private static final String RECEIVER_DESTINATION = "ReceiverDestination";
-    private static final String DESTINATION = "Destination";
-    private static final String STACK = "Stack";
-    private static final String SHUFFLE = "Shuffle";
-    private static final String OFFSET = "Offset";
-    private static final String MOVER_DESTINATION = "MoverDestination";
-    private static final String FLIP = "Flip";
-    private static final String POINTS = "Points";
-    private static final String NEXT_PHASE = "NextPhase";
+    protected static final String PHASE = "Phase";
+    protected static final String NAME = "Name";
+    protected static final String PHASE_TYPE = "PhaseType";
+    protected static final String MANUAL = "Manual";
+    protected static final String AUTO = "Auto";
+    protected static final String AUTOMATIC = "Automatic";
+    protected static final String VALID_DONORS = "ValidDonors";
+    protected static final String CATEGORY = "Category";
+    protected static final String RULES = "Rules";
+    protected static final String RULE = "Rule";
+    protected static final String RECEIVE_RULE = "ReceiveRule";
+    protected static final String RECEIVER = "Receiver";
+    protected static final String MOVER = "Mover";
+    protected static final String DIRECTION = "Direction";
+    protected static final String VALUE = "Value";
+    protected static final String COLOR = "Color";
+    protected static final String SUIT = "Suit";
+    protected static final String NUMBER_CARDS = "NumberCards";
+    protected static final String IS_FACEUP = "IsFaceup";
+    protected static final String DONOR = "Donor";
+    protected static final String ALL = "*";
+    protected static final String ACTION = "Action";
+    protected static final String RECEIVER_DESTINATION = "ReceiverDestination";
+    protected static final String DESTINATION = "Destination";
+    protected static final String STACK = "Stack";
+    protected static final String SHUFFLE = "Shuffle";
+    protected static final String OFFSET = "Offset";
+    protected static final String MOVER_DESTINATION = "MoverDestination";
+    protected static final String FLIP = "Flip";
+    protected static final String POINTS = "Points";
+    protected static final String NEXT_PHASE = "NextPhase";
+    protected static final String DONOR_DESTINATION = "DonorDestination";
+    protected static final String CONDITION = "Condition";
 
-    private static DocumentBuilder documentBuilder;
+    protected static final String R = "R";
+    protected static final String M = "M";
+    protected static final String D = "D";
+    protected static final String C = "C";
+    protected static final String UP = "Up";
+    protected static final String DOWN = "Down";
+    protected static final String NOT = "Not";
+    protected static final String SAME = "Same";
+    protected static final String YES = "Yes";
+    protected static final String NO = "No";
 
-    public PhaseFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
+    protected static final String TOP = "Top";
+    protected static final String BOTTOM = "Bottom";
+    protected static final String EXCEPT = "Except";
+    protected static final String PRESERVE = "Preserve";
+    protected static final String REVERSE = "Reverse";
 
     public static Map<String, IPhase> getPhases(Element root, Map<String, ICellGroup> cellGroupMap, Map<String, ICell> cellMap) {
         try {
             Node phases = root.getElementsByTagName(PHASES).item(0);
 
-            NodeList phaseList = ((Element)phases).getElementsByTagName(resources.getString(PHASE));
+            NodeList phaseList = ((Element) phases).getElementsByTagName(RESOURCES.getString(PHASE));
 
             Map<String, IPhase> phaseMap = new HashMap<>();
 
 
-            for (int k = 0; k < phaseList.getLength(); k ++) {
-                Element phase = (Element)phaseList.item(k);
+            for (int k = 0; k < phaseList.getLength(); k++) {
+                Element phase = (Element) phaseList.item(k);
                 NodeList phaseNodes = phase.getChildNodes();
 
                 //phase info and type
-                String phaseName = XMLHelper.getAttribute(phase, resources.getString(NAME));
-                boolean automatic = resources.getString(AUTOMATIC).equals(XMLHelper.getTextValue(phase, resources.getString(PHASE_TYPE)));
+                String phaseName = XMLHelper.getAttribute(phase, RESOURCES.getString(NAME));
+                boolean automatic = RESOURCES.getString(AUTOMATIC).equals(XMLHelper.getTextValue(phase, RESOURCES.getString(PHASE_TYPE)));
 
                 //valid donors
-                Element donorHeadNode = (Element)XMLHelper.getNodeByName(phaseNodes, resources.getString(VALID_DONORS));
+                Element donorHeadNode = (Element) XMLHelper.getNodeByName(phaseNodes, RESOURCES.getString(VALID_DONORS));
                 List<String> validDonorNames = new ArrayList<>();
                 if (donorHeadNode.hasChildNodes()) {
-                    NodeList donorNodeList = donorHeadNode.getElementsByTagName(resources.getString(CATEGORY));
+                    NodeList donorNodeList = donorHeadNode.getElementsByTagName(RESOURCES.getString(CATEGORY));
                     for (int j = 0; j < donorNodeList.getLength(); j++) {
                         Node donor = donorNodeList.item(j);
                         validDonorNames.add(donor.getTextContent());
@@ -84,7 +98,7 @@ public class PhaseFactory implements Factory {
                 }
 
                 //rules
-                Node rules = XMLHelper.getNodeByName(phaseNodes, resources.getString(RULES));
+                Node rules = XMLHelper.getNodeByName(phaseNodes, RESOURCES.getString(RULES));
                 List<IMasterRule> phaseRules = MasterRuleFactory.getRules(rules, cellGroupMap, cellMap, phaseName);
 
                 //phase

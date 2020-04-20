@@ -9,58 +9,59 @@ import ooga.data.rules.IRule;
 import ooga.data.rules.Rule;
 import org.w3c.dom.Element;
 
-import javax.xml.parsers.DocumentBuilder;
 import java.util.*;
 import java.util.function.Function;
 
 public class RuleFactory implements Factory {
-    private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
-    private static final String PHASES = "phases";
-    private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE+PHASES);
+    private static final ResourceBundle RESOURCES = PhaseFactory.RESOURCES;
 
-    private static final String CATEGORY = "Category";
-    private static final String CONDITION = "Condition";
-    private static final String RULES = "Rules";
-    private static final String RULE = "Rule";
-    private static final String RECEIVE_RULE = "ReceiveRule";
-    private static final String RECEIVER = "Receiver";
-    private static final String MOVER = "Mover";
-    private static final String DIRECTION = "Direction";
-    private static final String VALUE = "Value";
-    private static final String COLOR = "Color";
-    private static final String SUIT = "Suit";
-    private static final String NUMBER_CARDS = "NumberCards";
-    private static final String IS_FACEUP = "IsFaceup";
-    private static final String NAME = "Name";
-    private static final String DONOR = "Donor";
-    private static final String ALL = "All";
-    private static final String ACTION = "Action";
-    private static final String RECEIVER_DESTINATION = "ReceiverDestination";
-    private static final String DESTINATION = "Destination";
-    private static final String STACK = "Stack";
-    private static final String SHUFFLE = "Shuffle";
-    private static final String OFFSET = "Offset";
-    private static final String MOVER_DESTINATION = "MoverDestination";
-    private static final String FLIP = "Flip";
-    private static final String POINTS = "Points";
-    private static final String NEXT_PHASE = "NextPhase";
+    private static final String PHASE = PhaseFactory.PHASE;
+    private static final String NAME = PhaseFactory.NAME;
+    private static final String PHASE_TYPE = PhaseFactory.PHASE_TYPE;
+    private static final String MANUAL = PhaseFactory.MANUAL;
+    private static final String AUTO = PhaseFactory.AUTO;
+    private static final String AUTOMATIC = PhaseFactory.AUTOMATIC;
+    private static final String VALID_DONORS = PhaseFactory.VALID_DONORS;
+    private static final String CATEGORY = PhaseFactory.CATEGORY;
+    private static final String RULES = PhaseFactory.RULES;
+    private static final String RULE = PhaseFactory.RULE;
+    private static final String RECEIVE_RULE = PhaseFactory.RECEIVE_RULE;
+    private static final String RECEIVER = PhaseFactory.RECEIVER;
+    private static final String MOVER = PhaseFactory.MOVER;
+    private static final String DIRECTION = PhaseFactory.DIRECTION;
+    private static final String VALUE = PhaseFactory.VALUE;
+    private static final String COLOR = PhaseFactory.COLOR;
+    private static final String SUIT = PhaseFactory.SUIT;
+    private static final String NUMBER_CARDS = PhaseFactory.NUMBER_CARDS;
+    private static final String IS_FACEUP = PhaseFactory.IS_FACEUP;
+    private static final String DONOR = PhaseFactory.DONOR;
+    //private static final String ALL = PhaseFactory.ALL;
+    private static final String ACTION = PhaseFactory.ACTION;
+    private static final String RECEIVER_DESTINATION = PhaseFactory.RECEIVER_DESTINATION;
+    private static final String DESTINATION = PhaseFactory.DESTINATION;
+    private static final String STACK = PhaseFactory.STACK;
+    private static final String SHUFFLE = PhaseFactory.SHUFFLE;
+    private static final String OFFSET = PhaseFactory.OFFSET;
+    private static final String MOVER_DESTINATION = PhaseFactory.MOVER_DESTINATION;
+    private static final String FLIP = PhaseFactory.FLIP;
+    private static final String POINTS = PhaseFactory.POINTS;
+    private static final String NEXT_PHASE = PhaseFactory.NEXT_PHASE;
+    private static final String DONOR_DESTINATION = PhaseFactory.DONOR_DESTINATION;
+    private static final String CONDITION = PhaseFactory.CONDITION;
 
-    private static final String R = "R";
-    private static final String M = "M";
-    private static final String D = "D";
-    private static final String C = "C";
-    private static final String UP = "Up";
-    private static final String DOWN = "Down";
-    private static final String NOT = "Not";
-    private static final String SAME = "Same";
-    private static final String YES = "Yes";
-    private static final String NO = "No";
+    private static final String R = PhaseFactory.R;
+    private static final String M = PhaseFactory.M;
+    private static final String D = PhaseFactory.D;
+    private static final String C = PhaseFactory.C;
+    private static final String UP = PhaseFactory.UP;
+    private static final String DOWN = PhaseFactory.DOWN;
+    private static final String NOT = PhaseFactory.NOT;
+    private static final String SAME = PhaseFactory.SAME;
+    private static final String YES = PhaseFactory.YES;
+    private static final String NO = PhaseFactory.NO;
 
-    private static DocumentBuilder documentBuilder;
-    public static final List<String> TRUE_CHECKS = List.of("", resources.getString(ALL).strip());
-
-    public RuleFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
-
+    private static final List<String> TRUE_CHECKS = MasterRuleFactory.TRUE_CHECKS;
+    
     public static IRule buildRule(Element e, String ruleName, Map<String, ICellGroup> cellGroupMap) {
         return buildRule(e, ruleName, cellGroupMap, (IMove move)->{
             //System.out.println("default true");
@@ -90,12 +91,12 @@ public class RuleFactory implements Factory {
             //System.out.println(conditions.size() + " is my condition size");
             return new Rule(ruleName, conditions);
         } catch (Exception ee) {
-            throw new XMLException(ee, Factory.MISSING_ERROR + "," + resources.getString(RULES));
+            throw new XMLException(ee, Factory.MISSING_ERROR + "," + RESOURCES.getString(RULES));
         }
     }
 
     private static void extractConditionCondition(Element e, Map<String, ICellGroup> cellGroupMap, List<Function<IMove, Boolean>> conditions) {
-        String cellOrGroupName = XMLHelper.getAttribute(e, resources.getString(CATEGORY));
+        String cellOrGroupName = XMLHelper.getAttribute(e, RESOURCES.getString(CATEGORY));
         if (cellGroupMap != null && !TRUE_CHECKS.contains(cellOrGroupName)) {
             List<ICell> allMatchingCells = new ArrayList<>();
             for (Map.Entry<String, ICellGroup> entry: cellGroupMap.entrySet()) {
@@ -112,7 +113,7 @@ public class RuleFactory implements Factory {
 
     private static void extractNameCondition(Element e, Map<String, ICellGroup> cellGroupMap, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
-        String name = XMLHelper.getTextValue(e, resources.getString(NAME));
+        String name = XMLHelper.getTextValue(e, RESOURCES.getString(NAME));
         if (!TRUE_CHECKS.contains(name)) {
             valueChecker = (IMove move) -> {
                 //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
@@ -126,9 +127,9 @@ public class RuleFactory implements Factory {
 
     private static void extractFaceUpCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
-        String faceUp = XMLHelper.getTextValue(e, resources.getString(IS_FACEUP));
+        String faceUp = XMLHelper.getTextValue(e, RESOURCES.getString(IS_FACEUP));
         if (!TRUE_CHECKS.contains(faceUp)) {
-            if (faceUp.equalsIgnoreCase(resources.getString(YES))) {
+            if (faceUp.equalsIgnoreCase(RESOURCES.getString(YES))) {
                 valueChecker = (IMove move) -> {
                     //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
                     //System.out.println("\tcurr: " + currCell.apply(move).getName());
@@ -151,9 +152,9 @@ public class RuleFactory implements Factory {
     private static void extractNumCardsCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
         //System.out.println("yolofdsafdsafdsafdasfsdaffs");
-        //System.out.println(resources.getString(ALL).strip());
-        //System.out.println(XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS)));
-        String numCards = XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS)).strip();
+        //System.out.println(RESOURCES.getString(ALL).strip());
+        //System.out.println(XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)));
+        String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).strip();
         if (!TRUE_CHECKS.contains(numCards)) {
             Integer value = Integer.parseInt(numCards);
             valueChecker = (IMove move) -> {
@@ -169,16 +170,16 @@ public class RuleFactory implements Factory {
 
     private static void extractSuitCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
-        String suit = XMLHelper.getTextValue(e, resources.getString(SUIT));
+        String suit = XMLHelper.getTextValue(e, RESOURCES.getString(SUIT));
         if (!TRUE_CHECKS.contains(suit)) {
-            if (suit.equals(resources.getString(SAME))) {
+            if (suit.equals(RESOURCES.getString(SAME))) {
                 valueChecker = (IMove move) -> {
                     //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
                     //System.out.println("\tcurr: " + currCell.apply(move).getName());
                     //System.out.println("\t\tsuit: " + (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName())));
                     return (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName()));
                 };
-            } else if (suit.equals(resources.getString(NOT))) {
+            } else if (suit.equals(RESOURCES.getString(NOT))) {
                 valueChecker = (IMove move) -> {
                     //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
                     //System.out.println("\tcurr: " + currCell.apply(move).getName());
@@ -199,16 +200,16 @@ public class RuleFactory implements Factory {
 
     private static void extractColorCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
-        String color = XMLHelper.getTextValue(e, resources.getString(COLOR));
+        String color = XMLHelper.getTextValue(e, RESOURCES.getString(COLOR));
         if (!TRUE_CHECKS.contains(color)) {
-            if (color.equals(resources.getString(SAME))) {
+            if (color.equals(RESOURCES.getString(SAME))) {
                 valueChecker = (IMove move) -> {
                     //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
                     //System.out.println("\tcurr: " + currCell.apply(move).getName());
                     //System.out.println("\t\tcolor: " + (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName())));
                     return currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName());
                 };
-            } else if (color.equals(resources.getString(NOT))) {
+            } else if (color.equals(RESOURCES.getString(NOT))) {
                 valueChecker = (IMove move) -> {
                     //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
                     //System.out.println("\tcurr: " + currCell.apply(move).getName());
@@ -229,11 +230,11 @@ public class RuleFactory implements Factory {
 
     private static void extractValueCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
-        String direction = XMLHelper.getTextValue(e, resources.getString(DIRECTION));
-        String valueText = XMLHelper.getTextValue(e, resources.getString(VALUE));
+        String direction = XMLHelper.getTextValue(e, RESOURCES.getString(DIRECTION));
+        String valueText = XMLHelper.getTextValue(e, RESOURCES.getString(VALUE));
         if (!TRUE_CHECKS.contains(valueText) && !TRUE_CHECKS.contains(direction)) {
             Integer value;
-            if (direction.equals(resources.getString(DOWN))) {
+            if (direction.equals(RESOURCES.getString(DOWN))) {
                 value = -1 * Integer.parseInt(valueText);
             } else {
                 value = Integer.parseInt(valueText);

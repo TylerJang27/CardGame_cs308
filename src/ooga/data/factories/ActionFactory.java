@@ -9,65 +9,67 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class ActionFactory implements Factory {
-    private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
-    private static final String PHASES = "phases";
-    private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE+PHASES);
+    private static final ResourceBundle RESOURCES = PhaseFactory.RESOURCES;
 
-    private static final String CATEGORY = "Category";
-    private static final String CONDITION = "Condition";
-    private static final String RULES = "Rules";
-    private static final String RULE = "Rule";
-    private static final String RECEIVE_RULE = "ReceiveRule";
-    private static final String RECEIVER = "Receiver";
-    private static final String MOVER = "Mover";
-    private static final String DIRECTION = "Direction";
-    private static final String VALUE = "Value";
-    private static final String COLOR = "Color";
-    private static final String SUIT = "Suit";
-    private static final String NUMBER_CARDS = "NumberCards";
-    private static final String IS_FACEUP = "IsFaceup";
-    private static final String NAME = "Name";
-    private static final String DONOR = "Donor";
-    private static final String ALL = "All";
-    private static final String ACTION = "Action";
-    private static final String RECEIVER_DESTINATION = "ReceiverDestination";
-    private static final String DESTINATION = "Destination";
-    private static final String STACK = "Stack";
-    private static final String SHUFFLE = "Shuffle";
-    private static final String OFFSET = "Offset";
-    private static final String MOVER_DESTINATION = "MoverDestination";
-    private static final String FLIP = "Flip";
-    private static final String POINTS = "Points";
-    private static final String NEXT_PHASE = "NextPhase";
-    private static final String PHASE = "Phase";
+    private static final String PHASE = PhaseFactory.PHASE;
+    private static final String NAME = PhaseFactory.NAME;
+    private static final String PHASE_TYPE = PhaseFactory.PHASE_TYPE;
+    private static final String MANUAL = PhaseFactory.MANUAL;
+    private static final String AUTO = PhaseFactory.AUTO;
+    private static final String AUTOMATIC = PhaseFactory.AUTOMATIC;
+    private static final String VALID_DONORS = PhaseFactory.VALID_DONORS;
+    private static final String CATEGORY = PhaseFactory.CATEGORY;
+    private static final String RULES = PhaseFactory.RULES;
+    private static final String RULE = PhaseFactory.RULE;
+    private static final String RECEIVE_RULE = PhaseFactory.RECEIVE_RULE;
+    private static final String RECEIVER = PhaseFactory.RECEIVER;
+    private static final String MOVER = PhaseFactory.MOVER;
+    private static final String DIRECTION = PhaseFactory.DIRECTION;
+    private static final String VALUE = PhaseFactory.VALUE;
+    private static final String COLOR = PhaseFactory.COLOR;
+    private static final String SUIT = PhaseFactory.SUIT;
+    private static final String NUMBER_CARDS = PhaseFactory.NUMBER_CARDS;
+    private static final String IS_FACEUP = PhaseFactory.IS_FACEUP;
+    private static final String DONOR = PhaseFactory.DONOR;
+    //private static final String ALL = PhaseFactory.ALL;
+    private static final String ACTION = PhaseFactory.ACTION;
+    private static final String RECEIVER_DESTINATION = PhaseFactory.RECEIVER_DESTINATION;
+    private static final String DESTINATION = PhaseFactory.DESTINATION;
+    private static final String STACK = PhaseFactory.STACK;
+    private static final String SHUFFLE = PhaseFactory.SHUFFLE;
+    private static final String OFFSET = PhaseFactory.OFFSET;
+    private static final String MOVER_DESTINATION = PhaseFactory.MOVER_DESTINATION;
+    private static final String FLIP = PhaseFactory.FLIP;
+    private static final String POINTS = PhaseFactory.POINTS;
+    private static final String NEXT_PHASE = PhaseFactory.NEXT_PHASE;
+    private static final String DONOR_DESTINATION = PhaseFactory.DONOR_DESTINATION;
+    private static final String CONDITION = PhaseFactory.CONDITION;
 
-    private static final String EXCEPT = "Except";
-    private static final String PRESERVE = "Preserve";
+    private static final String R = PhaseFactory.R;
+    private static final String M = PhaseFactory.M;
+    private static final String D = PhaseFactory.D;
+    private static final String C = PhaseFactory.C;
+    private static final String UP = PhaseFactory.UP;
+    private static final String DOWN = PhaseFactory.DOWN;
+    private static final String NOT = PhaseFactory.NOT;
+    private static final String SAME = PhaseFactory.SAME;
+    private static final String YES = PhaseFactory.YES;
+    private static final String NO = PhaseFactory.NO;
 
-    private static final String R = "R";
-    private static final String M = "M";
-    private static final String D = "D";
-    private static final String C = "C";
-    private static final String UP = "Up";
-    private static final String DOWN = "Down";
-    private static final String NOT = "Not";
-    private static final String SAME = "Same";
-    private static final String YES = "Yes";
-    private static final String NO = "No";
-    private static final String REVERSE = "Reverse";
-    private static final String TOP = "Top";
-    private static final String BOTTOM = "Bottom";
+    private static final String TOP = PhaseFactory.TOP;
+    private static final String BOTTOM = PhaseFactory.BOTTOM;
+    private static final String EXCEPT = PhaseFactory.EXCEPT;
+    private static final String PRESERVE = PhaseFactory.PRESERVE;
+    private static final String REVERSE = PhaseFactory.REVERSE;
 
-    private static DocumentBuilder documentBuilder;
-    public static final List<String> TRUE_CHECKS = new ArrayList<>(Arrays.asList(new String[]{"", resources.getString(ALL)}));
+    private static final List<String> TRUE_CHECKS = MasterRuleFactory.TRUE_CHECKS;
 
-    public ActionFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
+    private static final String ALL = MasterRuleFactory.ALL;
 
     public static ICardAction getAction(Element e, String ruleName) {
         Function<IMove, ICell> moverCell = (IMove move) -> move.getMover();
@@ -106,14 +108,14 @@ public class ActionFactory implements Factory {
             };
             actions.add(cardAction);
         } catch (Exception ex) {
-            throw new XMLException(ex, Factory.MISSING_ERROR + "," + resources.getString(ACTION));
+            throw new XMLException(ex, Factory.MISSING_ERROR + "," + RESOURCES.getString(ACTION));
         }
         //System.out.println("ACTINO" + actions.size());
         return new CardAction(actions);
     }
 
     private static Boolean extractExceptBehavior(Element e, Function<IMove, ICell> currCell, IMove move) {
-        NodeList excepts = e.getElementsByTagName(resources.getString(EXCEPT));
+        NodeList excepts = e.getElementsByTagName(RESOURCES.getString(EXCEPT));
         for (int k = 0; k < excepts.getLength(); k ++) {
             Node exceptedCell = excepts.item(k);
             if (exceptedCell.getTextContent().equalsIgnoreCase(currCell.apply(move).findHead().getName())) {
@@ -129,9 +131,9 @@ public class ActionFactory implements Factory {
 
     private static ICell extractCellsToMove(Element e, Function<IMove, ICell> currCell, IMove move) {
         ICell cellToMove = currCell.apply(move);
-        String numCards = XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS)).toUpperCase();
+        String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).toUpperCase();
         //determines number of cards to move
-        if (numCards.equals(resources.getString(ALL))) {
+        if (numCards.equals(RESOURCES.getString(ALL))) {
             //cellsToMove.addAll(currCell.apply(move).getAllCells());
             cellToMove = (currCell.apply(move));
         } else if (Offset.validOffsets.contains(numCards)) {
@@ -139,7 +141,7 @@ public class ActionFactory implements Factory {
             if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
                 currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
             }
-        } else if (numCards.equalsIgnoreCase(resources.getString(TOP))) {
+        } else if (numCards.equalsIgnoreCase(RESOURCES.getString(TOP))) {
             cellToMove = currCell.apply(move).copy((ICell c) -> {
                 if (!c.getDeck().peek().isFixed()) {
                     return c.getDeck().getNextCard();
@@ -149,7 +151,7 @@ public class ActionFactory implements Factory {
             if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
                 currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
             }
-        } else if (numCards.equalsIgnoreCase(resources.getString(BOTTOM))) {
+        } else if (numCards.equalsIgnoreCase(RESOURCES.getString(BOTTOM))) {
             cellToMove = currCell.apply(move).copy((ICell c) -> {
                 if (!c.getDeck().peek().isFixed()) {
                     return (c.getDeck().getBottomCard());
@@ -203,11 +205,11 @@ public class ActionFactory implements Factory {
     }
 
     private static ICell extractDestinationBehavior(Element e, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell, IMove move) {
-        String destination = XMLHelper.getTextValue(e, resources.getString(DESTINATION));
+        String destination = XMLHelper.getTextValue(e, RESOURCES.getString(DESTINATION));
         ICell dest;
-        if (destination.equals(resources.getString(M))) {
+        if (destination.equals(RESOURCES.getString(M))) {
             dest = moverCell.apply(move);
-        } else if (destination.equals(resources.getString(D))) {
+        } else if (destination.equals(RESOURCES.getString(D))) {
             dest = donorCell.apply(move);
         } else {
             dest = recipientCell.apply(move);
@@ -216,11 +218,11 @@ public class ActionFactory implements Factory {
     }
 
     private static IOffset extractOffsetBehavior(Element e, ICell currCell, IMove move) {
-        String offset = XMLHelper.getTextValue(e, resources.getString(OFFSET));
+        String offset = XMLHelper.getTextValue(e, RESOURCES.getString(OFFSET));
         IOffset off;
         if (Offset.validOffsets.contains(offset)) {
             off = Offset.valueOf(offset.toUpperCase());
-        } else if (offset.equalsIgnoreCase(resources.getString(PRESERVE))) {
+        } else if (offset.equalsIgnoreCase(RESOURCES.getString(PRESERVE))) {
             off = currCell.getOffsetFromParent();
         } else {
             off = Offset.NONE;
@@ -230,7 +232,7 @@ public class ActionFactory implements Factory {
     }
 
     private static void extractRotationBehavior(Element e, ICell currCell, IMove move) {
-        String turn = XMLHelper.getTextValue(e, resources.getString(DIRECTION));
+        String turn = XMLHelper.getTextValue(e, RESOURCES.getString(DIRECTION));
         if (!TRUE_CHECKS.contains(turn)) {
             Double angle = Double.parseDouble(turn);
             for (ICell c : currCell.getAllCells()) {
@@ -245,7 +247,7 @@ public class ActionFactory implements Factory {
         //System.out.println("nodeheaderflippy" + e.getNodeName() + ":" + e.getTextContent());
         //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
         //System.out.println("\tcurr: " + currCell.getName());
-        String flip = XMLHelper.getTextValue(e, resources.getString(FLIP));
+        String flip = XMLHelper.getTextValue(e, RESOURCES.getString(FLIP));
         //System.out.println("flippy: " + flip);
         if (Offset.validOffsets.contains(flip.toLowerCase()) && currCell.getAllChildren().containsKey(Offset.valueOf(flip.toUpperCase()))) {
             //System.out.println("my flippy cell: " + currCell.getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().getName());
@@ -253,7 +255,7 @@ public class ActionFactory implements Factory {
             if (cardToFlip != null && !cardToFlip.isFaceUp()) {
                 cardToFlip.flip();
             }
-        } else if (flip.equals(resources.getString(ALL))) {
+        } else if (flip.equals(RESOURCES.getString(ALL))) {
             //System.out.println("flippy all");
             for (ICell c : currCell.getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
@@ -263,7 +265,7 @@ public class ActionFactory implements Factory {
                     }
                 }
             }
-        } else if (flip.equals(resources.getString(NO))) {
+        } else if (flip.equals(RESOURCES.getString(NO))) {
             //System.out.println("flippy DOWN");
             for (ICell c : currCell.getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
@@ -278,8 +280,8 @@ public class ActionFactory implements Factory {
     }
 
     private static void extractShuffleBehavior(Element e, ICell currCell) {
-        String shuffle = XMLHelper.getTextValue(e, resources.getString(SHUFFLE));
-        if (shuffle.equalsIgnoreCase(resources.getString(REVERSE))) {
+        String shuffle = XMLHelper.getTextValue(e, RESOURCES.getString(SHUFFLE));
+        if (shuffle.equalsIgnoreCase(RESOURCES.getString(REVERSE))) {
             for (Map.Entry<IOffset, ICell> entry: currCell.getAllChildren().entrySet()) {
                 entry.getValue().getDeck().reverse();
             }
