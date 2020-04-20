@@ -30,7 +30,7 @@ public class PhaseMachineFactory implements Factory {
      * Builds and returns an IPhaseMachine built from a rules XML. Requirements for rules XML can be found in _____.
      *
      * @param dataFile the file from which to build an IPhaseMachine implementation
-     * @return an IPhaseMachine implementation built and initialized based on the rules XML.
+     * @return an IPhaseMachine implementation built and initialized based on the rules XML
      */
     public static IPhaseMachine createPhaseMachine(File dataFile) {
         try {
