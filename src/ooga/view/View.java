@@ -4,12 +4,9 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
@@ -17,63 +14,134 @@ import ooga.controller.Controller;
 import ooga.data.rules.ILayout;
 import ooga.data.rules.Layout;
 import ooga.data.style.IStyle;
+import ooga.view.gamescreen.GameScreen;
+import ooga.view.menu.Menu;
 
 import java.util.Map;
-import ooga.view.menu.Menu;
-import ooga.view.menu.RowMenu;
-
-
+import java.util.ResourceBundle;
 
 public class View implements ExternalAPI {
 
+    private static final String APPLICATION_NAME = "Solitaire Confinement";
+    private static final String APPLICATION_ICON = "/ooga/resources/cards.png";
+
+    private static final ResourceBundle LANGUAGES = ResourceBundle.getBundle("ooga.resources.languages.supportedlanguages");
+    private static final ResourceBundle SKINS = ResourceBundle.getBundle("ooga.resources.skins.supportedskins");
+
+    private static final String MESSAGES = "ooga.resources.languages.messages.";
+
     @FunctionalInterface
+    public
     interface TriggerMove {
         public void giveIMove(IMove move);
     }
 
     @FunctionalInterface
-    public interface ChangeTheme {
-        public void setTheme(String theme);
+    public interface ChangeValue {
+        public void setValue(String newValue);
     }
 
-
-    private IMove myLatestMove;
     private TriggerMove getMove;
 
     private String myTheme = "Duke"; // fixme decide on a default and implement
+    private String myLanguage = "English";
 
-    private Menu myMenu;
-    private DisplayTable myDisplayTable;
-    private BorderPane myRoot;
-
-    // trying to get scene transition
     private Stage myStage;
-    private Scene myGameScene;
-    private Scene myMenuScene;
+    private Menu myMenu;
+    private GameScreen myGameScreen;
+
     private IStyle myStyle;
 
-    public View(Controller.GiveMove giveMove){
+    private static final double DEFAULT_WIDTH = 650;
+    private static final double DEFAULT_HEIGHT = 500;
 
-        ChangeTheme getTheme = (String theme) -> {
+
+    public View(Controller.GiveMove giveMove, IStyle style){
+
+        ChangeValue getTheme = (String theme) -> {
             myTheme = theme;
+            myStyle.setTableSkinPath(theme);
         };
 
-        getMove = (IMove move) -> {
-            myLatestMove = move;
-            giveMove.sendMove(move);
+        ChangeValue getLanguage = (String language) -> {
+            myLanguage = language;
+            myStyle.setLanguage(language);
         };
 
-        myMenu = new RowMenu(getTheme, myTheme);
-        myMenuScene = myMenu.getScene();
+        getMove = giveMove::sendMove;
+
+        myStyle = style;
+
+        if (myStyle.getTableSkinPath() != null) {
+            myTheme = myStyle.getTableSkinPath();
+        }
+        if (myStyle.getLanguage() != null) {
+            myLanguage = myStyle.getLanguage();
+        }
+
+        myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
+
         myStage = new Stage();
-        myStage.setScene(myMenuScene);
+        myStage.setScene(myMenu.getScene());
+        myStage.getIcons().add(new Image(APPLICATION_ICON));
+        myStage.setTitle(APPLICATION_NAME);
         myStage.show();
     }
 
-    public void reportError(String key, String... formats){
-        //TODO
-        System.out.println("error received of type: " + key);
+    public View(Controller.GiveMove giveMove){
+
+        ChangeValue getLanguage = (String language) -> {
+            myLanguage = language;
+        };
+
+        ChangeValue getTheme = (String theme) -> {
+            myTheme = theme;
+        };
+
+        getMove = giveMove::sendMove;
+
+        myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
+
+        myStage = new Stage();
+        myStage.setScene(myMenu.getScene());
+        myStage.getIcons().add(new Image(APPLICATION_ICON));
+        myStage.setTitle(APPLICATION_NAME);
+        myStage.show();
     }
+
+    /**
+     * Sets the locations of all cell types and the framework for creating new cell locations if applicable.
+     *
+     * @param layout
+     */
+    @Override
+    public void setLayout(ILayout layout) {
+
+        Button backButton = new Button();
+        backButton.setGraphic(new ImageView(new Image("/ooga/resources/backarrow.png", 20, 20, false, false)));
+        backButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                myStage.setScene(myMenu.getScene());
+            }
+        });
+
+        ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
+        Button restartButton = new Button(currentMessages.getString("restart"));
+        restartButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                System.out.println("View 114: Call lambda to notify backend");
+            }
+        });
+
+        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, restartButton, myMenu.getGame(), currentMessages.getString("score"));
+        myStage.setScene(myGameScreen.getScene());
+
+        myStage.minHeightProperty().bind(Bindings.multiply(myGameScreen.getDisplayTable().getPane().widthProperty(),layout.getScreenRatio()));
+        myStage.minWidthProperty().bind(Bindings.divide(myGameScreen.getDisplayTable().getPane().heightProperty(),layout.getScreenRatio()));
+
+    }
+
+
     /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
      * to the front end from the back end. This is done by sending a list of cell objects which
@@ -83,14 +151,50 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setCellData(Map<String,ICell> cellData) {
-        myDisplayTable.updateCells(cellData);
+        myGameScreen.initializeTable(cellData);
     }
 
 
     @Override
     public void setUpdatesToCellData(Map<String,ICell> cellData) {
-        myDisplayTable.updateTheseCells(cellData);
+        myGameScreen.updateTable(cellData);
     }
+
+
+    public void listenForGameChoice(ChangeListener<String> listener){
+        myMenu.addChosenHandler(listener);
+    }
+
+
+
+
+    /**
+     * Returns a boolean indicating whether a user has made a change since the Controller's last
+     * call to getUserInput().
+     */
+    @Override
+    public boolean isUserInput() {
+        return false;
+    }
+
+    /**
+     * getUserInput() is called regularly by the Controller to obtain the new move made by
+     * any player.
+     * <p>
+     * Sets isUserInput() to false, pending a new move from any player.
+     *
+     * @return a map from the clicked on object to the released on object of the user's action
+     */
+    @Override
+    public IMove getUserInput() {
+        return null;
+    }
+
+    public void reportError(String key, String... formats){
+        //TODO
+        System.out.println("error received of type: " + key);
+    }
+
 
     /**
      * Sets score of players to be displayed
@@ -99,8 +203,9 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setScores(Map<Integer, Double> playerScores) {
-
+        myGameScreen.updateScore(playerScores.get(0));
     }
+
 
     /**
      * If triggered by player move, please call setCellData() first so that the most recent arrangement
@@ -132,74 +237,4 @@ public class View implements ExternalAPI {
 
     }
 
-    /**
-     * Returns a boolean indicating whether a user has made a change since the Controller's last
-     * call to getUserInput().
-     */
-    @Override
-    public boolean isUserInput() {
-        return false;
-    }
-
-    /**
-     * getUserInput() is called regularly by the Controller to obtain the new move made by
-     * any player.
-     * <p>
-     * Sets isUserInput() to false, pending a new move from any player.
-     *
-     * @return a map from the clicked on object to the released on object of the user's action
-     */
-    @Override
-    public IMove getUserInput() {
-        return null;
-    }
-
-    /**
-     * Sets the style of the game, including color of table, location of menu/its display elements,
-     * font type, font size, text colors, margins, etc.
-     *
-     * @param style
-     */
-    @Override
-    public void setStyle(IStyle style) {
-        myStyle = style;
-        //myTheme = style.getTableSkinPath();
-        /*
-        style.setTableSkinPath(myTheme); //when the combobox is updated
-         */
-    }
-
-    /**
-     * Sets the locations of all cell types and the framework for creating new cell locations if applicable.
-     *
-     * @param layout
-     */
-    @Override
-    public void setLayout(ILayout layout) {
-        myDisplayTable = new DisplayTable(getMove, (Layout) layout, 650, myTheme);
-        myRoot = new BorderPane();
-        myRoot.setCenter(myDisplayTable.getPane());
-
-        HBox dashboard = new HBox();
-        Button backbutton = new Button();
-        backbutton.setGraphic(new ImageView(new Image("/ooga/resources/backarrow.png", 20, 20, false, false)));
-        backbutton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                myStage.setScene(myMenuScene);
-                // TODO: tell backend the current game has ended
-            }
-        });
-        dashboard.getChildren().add(backbutton);
-        myRoot.setBottom(dashboard);
-
-        myGameScene = new Scene(myRoot,650,500);
-        myGameScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme+"/gametable.css").toExternalForm()); //
-        myStage.setScene(myGameScene);
-        myStage.minHeightProperty().bind(Bindings.multiply(myDisplayTable.getPane().widthProperty(),layout.getScreenRatio()));
-        myStage.minWidthProperty().bind(Bindings.divide(myDisplayTable.getPane().heightProperty(),layout.getScreenRatio()));
-    }
-
-    public void listenForGameChoice(ChangeListener<String> listener){
-        myMenu.addChosenHandler(listener);
-    }
 }

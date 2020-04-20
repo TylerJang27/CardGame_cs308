@@ -1,17 +1,10 @@
-package ooga.view;
+package ooga.view.gamescreen;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.input.*;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 import ooga.cardtable.*;
 import javafx.geometry.Point2D;
