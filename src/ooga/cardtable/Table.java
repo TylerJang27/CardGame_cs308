@@ -27,6 +27,11 @@ public class Table implements ITable {
   }
 
   @Override
+  public void restartGame() {
+    machine.restartGame();
+  }
+
+  @Override
   public void setCellList(List<ICell> cellList) {
     //machine.setCellList(cellList);
     System.out.println("Deprecated");

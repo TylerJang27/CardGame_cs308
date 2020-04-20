@@ -3,7 +3,6 @@ package ooga.data.rules;
 import java.util.List;
 import java.util.Map;
 import ooga.cardtable.ICell;
-import ooga.cardtable.IDeck;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
 import ooga.data.rules.excluded.IPhaseHistoryCell;
@@ -14,7 +13,7 @@ import ooga.data.rules.excluded.IPhaseHistoryCell;
  */
 public interface IPhaseMachine {
 
-  public static final String DATA_TYPE = "rule";
+  String DATA_TYPE = "rule";
 
   //TODO: potentially also add deck stuff here
 
@@ -27,7 +26,7 @@ public interface IPhaseMachine {
    */
   Map<String, IPhase> getPhases();
 
-  void addPhase(IPhase phase);
+  //void addPhase(IPhase phase); //TODO: REMOVE IN API CHANGES
 
   /**
    * Gives a list of phase names

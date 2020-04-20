@@ -57,12 +57,6 @@ public class PhaseMachine implements IPhaseMachine {
   }
 
   @Override
-  public void addPhase(IPhase phase) {
-    phases.put(phase.getMyName(), phase);
-    //phase.setCellList(cells);
-  }
-
-  @Override
   public List<String> getPhaseNames() {
     return new ArrayList<>(phases.keySet());
   }
