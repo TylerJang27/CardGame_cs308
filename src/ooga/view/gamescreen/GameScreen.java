@@ -18,10 +18,10 @@ public class GameScreen {
 
     private Scene myScene;
 
-    public GameScreen(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, Button restartButton, String game) {
+    public GameScreen(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, Button restartButton, String game, String scoreLabel) {
 
         myDisplayTable = new DisplayTable(moveLambda, (Layout) layout, 650, theme);
-        myDashboard = new Dashboard(backButton, restartButton);
+        myDashboard = new Dashboard(backButton, restartButton, scoreLabel);
         myHeader = new Header(game);
 
         myBorderPane = new BorderPane();
@@ -32,6 +32,10 @@ public class GameScreen {
         myScene = new Scene(myBorderPane,650,500);
         myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+theme.toLowerCase()+"/gametable.css").toExternalForm()); //
 
+    }
+
+    public void updateScore(double score) {
+        myDashboard.updateScore(score);
     }
 
     public void initializeTable(Map<String,ICell> cellData) {
