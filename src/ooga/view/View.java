@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -27,6 +28,12 @@ public class View implements ExternalAPI {
         public void giveIMove(IMove move);
     }
 
+    @FunctionalInterface
+    public
+    interface ChangeTheme {
+        public void setTheme(String theme);
+    }
+
     private Stage gameStage;
     private Menu myMenu;
     private DisplayTable myDisplayTable;
@@ -36,14 +43,21 @@ public class View implements ExternalAPI {
 
     private BorderPane myRoot;
 
+    private String myTheme = "Duke"; // fixme decide on a default and implement
+
     public View(Controller.GiveMove giveMove){
-        myMenu = new RowMenu();
+
+        ChangeTheme getTheme = (String theme) -> {
+            myTheme = theme;
+            System.out.println("Theme is "+theme);
+        };
+
+        myMenu = new RowMenu(getTheme);
         myMenu.show();
 
         getMove = (IMove move) -> {
             myLatestMove = move;
             giveMove.sendMove(move);
-            System.out.println("View has the latest move");
         };
 
     }
@@ -141,7 +155,6 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setStyle(IStyle style) {
-        //TODO: find out style formatting
     }
 
     /**
@@ -151,7 +164,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setLayout(ILayout layout) {
-        myDisplayTable = new DisplayTable(getMove, (Layout) layout, 500);
+        myDisplayTable = new DisplayTable(getMove, (Layout) layout, 500, myTheme);
         myRoot = new BorderPane();
         myRoot.setCenter(myDisplayTable.getPane());
         Scene gameScene = new Scene(myRoot,650,500);

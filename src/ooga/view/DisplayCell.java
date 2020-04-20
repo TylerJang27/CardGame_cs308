@@ -46,19 +46,7 @@ public class DisplayCell {
             } else {
                 myImageView = new ImageView(new Image(cardNameToFileName.get("faceDown")));
             }
-
-/*
-            try {
-                Image faceUp = new Image(cardName + ".png");//cardNameToFileName.get(myCell.getDeck().peek().getName()));
-            } catch (IllegalArgumentException e) {
-                Image faceUp = new Image("0C" + ".png"); //TODO: REPLACE WITH A DEFAULT CARD SKIN
-            }
-*/
         } else {
-            /*String cellName = myCell.getName();
-                myFaceUp = new Image(cardNameToFileName.get(cellName));
-
-             */
             myImageView = new ImageView(new Image(cardNameToFileName.get("celloutline")));
         }
 

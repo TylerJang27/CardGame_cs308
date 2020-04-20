@@ -16,6 +16,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ooga.view.Dictionary;
+import ooga.view.View;
 
 public class RowMenu implements Menu {
   private static final double DEFAULT_SIZE= 500;
@@ -32,12 +33,14 @@ public class RowMenu implements Menu {
   private StringProperty myGameProperty;
   private Scene myScene;
 
-  public RowMenu(){
+  private View.ChangeTheme myThemeLambda;
+
+  public RowMenu(View.ChangeTheme themeLambda){
+    myThemeLambda = themeLambda;
 
     myGameProperty = new SimpleStringProperty();
     Dictionary.getInstance().addReference(CHOICES);
     myPane = new BorderPane();
-
 
     // Make application name at top of screen
     StackPane gameNamePane = new StackPane();
@@ -80,12 +83,9 @@ public class RowMenu implements Menu {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue,
                           String newValue) {
-        System.out.println("I clicked on "+newValue);
+        myThemeLambda.setTheme(newValue);
         myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue+".css").toExternalForm()); //
-        if (oldValue.equals(null)) {
-          oldValue = "Duke";
-        }
-        myScene.getStylesheets().remove(getClass().getResource("/ooga/resources/skins/"+oldValue+".css").toExternalForm()); // fixme null pointer exception on firstclick
+        //myScene.getStylesheets().remove(getClass().getResource("/ooga/resources/skins/"+oldValue+".css").toExternalForm()); // fixme null pointer exception on firstclick
       }
     });
 

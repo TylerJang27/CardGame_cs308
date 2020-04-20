@@ -47,7 +47,7 @@ public class DisplayTable {
     ICell myRecipient;
     IMove myMove;
 
-    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenWidth) {
+    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme) {
 
         myPane = new Pane();
 
@@ -56,6 +56,10 @@ public class DisplayTable {
         myCardOffset = layout.getUpOffsetRatio()*screenWidth;
 
         myCardNameToFileName = layout.getCardImagePaths();
+        if (!theme.equals("Classic")) {
+            myCardNameToFileName.remove("faceDown");
+            myCardNameToFileName.put("faceDown","/ooga/resources/skins/"+theme+".png");
+        }
 
         myCellNameToLocation = new HashMap<>();
         Map<String, ICoordinate> locations = layout.getCellLayout();

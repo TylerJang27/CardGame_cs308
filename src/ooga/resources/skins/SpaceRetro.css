@@ -12,15 +12,13 @@
 }
 
 .border{
-    -fx-background-color: #000000;
     -fx-base: #000000;
 }
 
 .titleborder{
-    -fx-background-color: #000000;
     -fx-base: #000000;
     -fx-font-family: "Harlow Solid Italic";
-    -fx-padding: 5;
+    -fx-padding: 20;
 }
 
 .title{
