@@ -24,35 +24,15 @@ public class MasterRuleFactory implements Factory {
     private static final ResourceBundle RESOURCES = PhaseFactory.RESOURCES;
 
     private static final String PHASE = PhaseFactory.PHASE;
-    private static final String NAME = PhaseFactory.NAME;
-    private static final String PHASE_TYPE = PhaseFactory.PHASE_TYPE;
-    private static final String MANUAL = PhaseFactory.MANUAL;
-    private static final String AUTO = PhaseFactory.AUTO;
-    private static final String AUTOMATIC = PhaseFactory.AUTOMATIC;
-    private static final String VALID_DONORS = PhaseFactory.VALID_DONORS;
     private static final String CATEGORY = PhaseFactory.CATEGORY;
-    private static final String RULES = PhaseFactory.RULES;
     private static final String RULE = PhaseFactory.RULE;
     private static final String RECEIVE_RULE = PhaseFactory.RECEIVE_RULE;
     private static final String RECEIVER = PhaseFactory.RECEIVER;
     private static final String MOVER = PhaseFactory.MOVER;
-    private static final String DIRECTION = PhaseFactory.DESTINATION;
-    private static final String VALUE = PhaseFactory.VALUE;
-    private static final String COLOR = PhaseFactory.COLOR;
-    private static final String SUIT = PhaseFactory.SUIT;
-    private static final String NUMBER_CARDS = PhaseFactory.NUMBER_CARDS;
-    private static final String IS_FACEUP = PhaseFactory.IS_FACEUP;
     private static final String DONOR = PhaseFactory.DONOR;
-    private static final String ALL_STAR = PhaseFactory.ALL_STAR;
     private static final String ACTION = PhaseFactory.ACTION;
     private static final String RECEIVER_DESTINATION = PhaseFactory.RECEIVER_DESTINATION;
-    private static final String DESTINATION = PhaseFactory.DESTINATION;
-    private static final String STACK = PhaseFactory.STACK;
-    private static final String SHUFFLE = PhaseFactory.SHUFFLE;
-    private static final String OFFSET = PhaseFactory.OFFSET;
     private static final String MOVER_DESTINATION = PhaseFactory.MOVER_DESTINATION;
-    private static final String FLIP = PhaseFactory.FLIP;
-    private static final String POINTS = PhaseFactory.POINTS;
     private static final String NEXT_PHASE = PhaseFactory.NEXT_PHASE;
     private static final String DONOR_DESTINATION = PhaseFactory.DONOR_DESTINATION;
     private static final String CONDITION = PhaseFactory.CONDITION;
@@ -61,12 +41,6 @@ public class MasterRuleFactory implements Factory {
     private static final String M = PhaseFactory.M;
     private static final String D = PhaseFactory.D;
     private static final String C = PhaseFactory.C;
-    private static final String UP = PhaseFactory.UP;
-    private static final String DOWN = PhaseFactory.DOWN;
-    private static final String NOT = PhaseFactory.NOT;
-    private static final String SAME = PhaseFactory.SAME;
-    private static final String YES = PhaseFactory.YES;
-    private static final String NO = PhaseFactory.NO;
 
     protected static final String ALL = "All";
 
