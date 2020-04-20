@@ -18,10 +18,10 @@ public class GameScreen {
 
     private Scene myScene;
 
-    public GameScreen(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, String game) {
+    public GameScreen(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, Button restartButton, String game) {
 
         myDisplayTable = new DisplayTable(moveLambda, (Layout) layout, 650, theme);
-        myDashboard = new Dashboard(backButton);
+        myDashboard = new Dashboard(backButton, restartButton);
         myHeader = new Header(game);
 
         myBorderPane = new BorderPane();

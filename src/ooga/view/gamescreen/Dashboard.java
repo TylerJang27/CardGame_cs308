@@ -9,10 +9,12 @@ public class Dashboard {
     private Pane myPane;
     private HBox myBox;
 
-    public Dashboard(Button backButton) {
+    public Dashboard(Button backButton, Button restartButton) {
         myPane = new Pane();
         myBox = new HBox();
-        myBox.getChildren().add(backButton);
+        myBox.getChildren().addAll(backButton, restartButton);
+        myBox.getStyleClass().add("dashboard");
+        myPane.getStyleClass().add("dashboard");
         myPane.getChildren().add(myBox);
     }
 
