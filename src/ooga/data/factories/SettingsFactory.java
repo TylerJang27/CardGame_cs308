@@ -26,7 +26,7 @@ public class SettingsFactory implements Factory {
 
     /**
      * Builds and returns an ISettings built from a rules XML. Requirements for rules XML can be found in ____.
-     * 
+     *
      * @param root the root of the file from which an ISettings is built
      * @return an ISettings implementation storing information about setup and game play
      */
