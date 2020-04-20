@@ -65,6 +65,8 @@ public class Controller extends Application {
                 if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
                     myChangedCells.put(i, myCurrentCells.get(i));
                 }
+                //System.out.println(myCurrentCells.get("heart"));
+                //System.out.println(myCurrentCells.get("heart").getDeck().peek());
             }
             myView.setUpdatesToCellData(myChangedCells);
             myPreviousCells = myCurrentCells;

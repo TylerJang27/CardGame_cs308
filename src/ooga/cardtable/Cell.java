@@ -79,9 +79,6 @@ public class Cell implements ICell {
 
   @Override
   public IDeck getDeck() {
-    for (ICell i : children.values()) {
-      //System.out.println("card" + i.getDeck().peek());
-    }
     return deck;
   }
 
@@ -402,15 +399,13 @@ public class Cell implements ICell {
 
   @Override
   public ICell copy() {
-    ICell ret = new Cell(name);
-    ret.getDeck().addDeck(getDeck().copy());
+    IDeck d = getDeck().copy();
+    ICell ret = new Cell(name, d);
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE) {
         ret.setCellAtOffset(e.getKey(), e.getValue().copy());
       }
     }
-    //System.out.println("copy orig: "+this);
-    //System.out.println("copy ret: "+ret);
     return ret;
   }
 

@@ -55,12 +55,11 @@ public class ActionFactory implements Factory {
      * @param ruleName  the String name of the IMasterRule
      * @return          an ICardAction built for this IMasterRule
      */
-    public static ICardAction cardAction(Element e, String ruleName) {
+    public static ICardAction createAction(Element e, String ruleName) {
         Function<IMove, ICell> moverCell = (IMove move) -> move.getMover();
         Function<IMove, ICell> donorCell = (IMove move) -> move.getDonor();
         Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
         Function<IMove, ICell> currCell = MasterRuleFactory.getCurrentCellFunction(ruleName, moverCell, donorCell, recipientCell);
-        String curr = ("" + ruleName.charAt(ruleName.length() - 1));
 
         List<Consumer<IMove>> actions = new ArrayList<>();
         try {
@@ -111,7 +110,6 @@ public class ActionFactory implements Factory {
      * @return          the ICell representing all cells to be moved
      */
     private static ICell extractCellsToMove(Element e, Function<IMove, ICell> currCell, IMove move) {
-        ICell cellToMove = currCell.apply(move);
         String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).toUpperCase();
         if (numCards.equals(RESOURCES.getString(ALL))) {
             return currCell.apply(move);

@@ -40,6 +40,8 @@ public class Table implements ITable {
   @Override
   public IGameState update(IMove move) {
     lastState = machine.update(move);
+    System.out.println("phase machine:");
+    System.out.println(machine.getTopLevelCells().get("heart"));
     return lastState;
   }
 
