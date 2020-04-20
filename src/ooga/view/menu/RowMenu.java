@@ -141,7 +141,11 @@ public class RowMenu implements Menu {
     option.setOnMouseClicked(new EventHandler<MouseEvent>() {
       @Override
       public void handle(MouseEvent event) {
-        myGameProperty.setValue(key);
+        String newGame = key;
+        if (myGameProperty.getValue() != null && myGameProperty.getValue().equals(key)) {
+          newGame = key.toUpperCase();
+        }
+        myGameProperty.setValue(newGame);
       }
     });
     hbox.getChildren().add(option);
