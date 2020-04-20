@@ -13,16 +13,19 @@ public class GameScreen {
 
     private DisplayTable myDisplayTable;
     private Dashboard myDashboard;
+    private Header myHeader;
     private BorderPane myBorderPane;
 
     private Scene myScene;
 
-    public GameScreen(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton) {
+    public GameScreen(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, String game) {
 
         myDisplayTable = new DisplayTable(moveLambda, (Layout) layout, 650, theme);
         myDashboard = new Dashboard(backButton);
+        myHeader = new Header(game);
 
         myBorderPane = new BorderPane();
+        myBorderPane.setTop(myHeader.getPane());
         myBorderPane.setCenter(myDisplayTable.getPane());
         myBorderPane.setBottom(myDashboard.getPane());
 

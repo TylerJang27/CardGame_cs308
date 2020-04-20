@@ -13,6 +13,16 @@
     -fx-focus-color: #FFFFFF;
 }
 
+.title{
+    -fx-fill: #FFFFFF;
+    -fx-alignment: "center";
+}
+
+.header{
+    -fx-padding: 10;
+    -fx-alignment: "center";
+}
+
 .cardskin{
     -fx-image: url(duked.png);
 }

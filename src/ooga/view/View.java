@@ -55,6 +55,8 @@ public class View implements ExternalAPI {
 
         myStage = new Stage();
         myStage.setScene(myMenu.getScene());
+        myStage.getIcons().add(new Image("/ooga/resources/cards.png"));
+        myStage.setTitle("Solitaire Confinement");
         myStage.show();
     }
 
@@ -74,7 +76,7 @@ public class View implements ExternalAPI {
             }
         });
 
-        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton);
+        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, myMenu.getGame());
         myStage.setScene(myGameScreen.getScene());
 
         myStage.minHeightProperty().bind(Bindings.multiply(myGameScreen.getDisplayTable().getPane().widthProperty(),layout.getScreenRatio()));

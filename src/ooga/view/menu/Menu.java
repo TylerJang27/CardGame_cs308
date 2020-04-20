@@ -30,6 +30,7 @@ public class Menu {
   private StringProperty myGameProperty;
   private Scene myScene;
 
+  private String myGame;
   private View.ChangeTheme myThemeLambda;
 
   public Menu(View.ChangeTheme themeLambda, String defaultTheme, double screenHeight, double screenWidth){
@@ -51,6 +52,10 @@ public class Menu {
 
   public Scene getScene() {
     return myScene;
+  }
+
+  public String getGame() {
+    return myGame;
   }
 
   private void setBottomBorder() {
@@ -124,6 +129,7 @@ public class Menu {
         if (myGameProperty.getValue() != null && myGameProperty.getValue().equals(key)) {
           newGame = key.toUpperCase();
         }
+        myGame = newGame;
         myGameProperty.setValue(newGame);
       }
     });
