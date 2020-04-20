@@ -26,6 +26,12 @@ public class PhaseMachineFactory implements Factory {
 
     public static final String START = "INIT_PHASE";
 
+    /**
+     * Builds and returns an IPhaseMachine built from a rules XML. Requirements for rules XML can be found in _____.
+     *
+     * @param dataFile  the file from which to build an IPhaseMachine implementation
+     * @return          an IPhaseMachine implementation built and initialized based on the rules XML.
+     */
     public static IPhaseMachine getPhaseMachine(File dataFile) {
         try {
             Element root = XMLHelper.getRootAndCheck(dataFile, RULES_TYPE, INVALID_ERROR);

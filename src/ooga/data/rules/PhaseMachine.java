@@ -45,7 +45,6 @@ public class PhaseMachine implements IPhaseMachine {
   }
 
   private void cycleAutomatic() {
-    //System.out.println("my phase is " + currentPhase.getMyName() + " and my automaticity is " + currentPhase.isAutomatic());
     if (currentPhase.isAutomatic()) {
       IPhaseArrow arrow = currentPhase.executeAutomaticActions(null, lastMove); //TODO: REPLACE WITH PLAYER
       moveToNextPhase(arrow);
@@ -78,15 +77,6 @@ public class PhaseMachine implements IPhaseMachine {
     return currentPhase.getMyCellMap();
   }
 
-  /*@Override
-  public void setCellList(List<ICell> cellList) {
-    cells = new ArrayList<>(cellList);
-    for (IPhase ph: phases.values()) {
-      ph.setCellList(cells);
-    }
-  }
-   */
-
   @Override
   public List<String> getTopLevelCellNames() {
     List<String> ret = new ArrayList<>();
@@ -114,7 +104,6 @@ public class PhaseMachine implements IPhaseMachine {
 
   private ICell findNamedCell(String nm) {
     updateCellParents();
-    //System.out.println("findname: "+nm);
     String[] names = nm.split(",");
     String firstName = names[0];
     String[] restNames = new String[names.length-1];
@@ -131,48 +120,26 @@ public class PhaseMachine implements IPhaseMachine {
         }
       }
     }
-    //System.out.println("a named cell was asked for and not found, and that (might be) terrible.");
     return ret;
   }
 
   @Override
   public IGameState update(IMove move) {
-    //String next = getCurrentPhase().getNextPhaseName(move);
     move = replaceMoveCells(move);
-    //System.out.println("phasemachine got move");
-    //System.out.println(move.getDonor().getName());
-    //System.out.println(move.getMover().getName());
-    //System.out.println(move.getRecipient().getName());
     IPhaseArrow arrow = currentPhase.executeMove(move);
     lastMove = move;
-    //System.out.println("I'm a dummy if this doesn't print");
     if (arrow != null) {
       moveToNextPhase(arrow);
-      //System.out.println("welcome to Phase: " + currentPhase.getMyName());
       updateCellParents();
       return GameState.WAITING;
     }
-    //System.out.println("welcome to Phase: " + currentPhase.getMyName());
-    updateCellParents();  
+    updateCellParents();
     return GameState.INVALID;
-
-    /*if (next == null) {
-      return GameState.INVALID; //FIXME
-    }
-    IPhase nextPhase = phases.get(next);
-    IGameState state = nextPhase.executeAutomaticActions();
-    while (state != GameState.WAITING) { //FIXME
-      nextPhase = phases.get(nextPhase.getNextPhaseName(null));
-      state = nextPhase.executeAutomaticActions();
-    }
-    currentPhase = nextPhase;
-    return state;*/
   }
 
   private void updateCellParents() {
     for (ICell c: cells) {
       c.updateParentage();
-      //System.out.println("Phase cell: "+c);
     }
   }
 
@@ -189,7 +156,7 @@ public class PhaseMachine implements IPhaseMachine {
 
   @Override
   public List<IPhaseHistoryCell> getHistory() {
-    //System.out.println("To be implemented later");
+    System.out.println("To be implemented later");
     return null; //FIXME
   }
 
