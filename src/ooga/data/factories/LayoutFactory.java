@@ -2,7 +2,6 @@ package ooga.data.factories;
 
 import ooga.data.XMLException;
 import ooga.data.XMLHelper;
-import ooga.data.factories.Factory;
 import ooga.data.rules.ILayout;
 import ooga.data.rules.Layout;
 import ooga.data.style.Coordinate;
@@ -11,11 +10,18 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
 
-public class LayoutFactory {
+/**
+ * This LayoutFactory implements Factory and constructs an ILayout using the createLayout() method.
+ * This ILayout is used to store information about where cells should be located and how they should be drawn for a particular game.
+ *
+ * @author Andrew Krier, Tyler Jang
+ */
+public class LayoutFactory implements Factory {
 
     private static String LAYOUT_TYPE = ILayout.DATA_TYPE;
     private static String INVALID_ERROR = "INVALID_FILE";
@@ -28,13 +34,15 @@ public class LayoutFactory {
     private static final ResourceBundle coordResources = ResourceBundle.getBundle(RESOURCE_COORD_PACKAGE);
     private static final ResourceBundle mapResources = ResourceBundle.getBundle(RESOURCE_MAP_PACKAGE);
 
-    private static DocumentBuilder documentBuilder;
+    //TODO: @ANDREW REFACTOR and add Error Handling
 
-    public LayoutFactory() {
-        documentBuilder = XMLHelper.getDocumentBuilder();
-    }
-
-    public static ILayout getLayout(File dataFile) {
+    /**
+     * Builds and returns an ILayout from a layout XML file. Requirements for layout XML can be found in ___.
+     *
+     * @param dataFile the file from which to build an ILayout implementation
+     * @return an ILayout implementation built from the layout XML
+     */
+    public static ILayout createLayout(File dataFile) {
         try {
             Element root = XMLHelper.getRootAndCheck(dataFile, LAYOUT_TYPE, INVALID_ERROR);
 
@@ -51,7 +59,7 @@ public class LayoutFactory {
             NodeList cellList = ((Element) cells).getElementsByTagName(coordResources.getString("Cell"));
 
             Map<String, ICoordinate> coordMap = new HashMap<>();
-            for (int k = 0; k < cellList.getLength(); k ++) {
+            for (int k = 0; k < cellList.getLength(); k++) {
                 Element n = (Element) cellList.item(k); // FIXME
                 String cellName = XMLHelper.getAttribute(n, coordResources.getString("Name"));
                 NodeList coordinate = n.getChildNodes();
@@ -75,7 +83,7 @@ public class LayoutFactory {
 
             Map<String, String> cardMap = new HashMap<>();
 
-            for(int i = 0; i < cardList.getLength(); i++) {
+            for (int i = 0; i < cardList.getLength(); i++) {
                 String name = cardList.item(i).getTextContent();
                 String path = intro + name + outro;
                 cardMap.put(name, path);

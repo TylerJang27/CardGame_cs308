@@ -1,19 +1,20 @@
 package ooga.data;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * Static class for parsing XML files, with each sub-class implementation returning an instance of a Data class object.
@@ -26,7 +27,6 @@ import org.xml.sax.SAXException;
  *
  * @author Tyler Jang
  */
-//TODO: PLEASE HELP WITH STATIC
 public class XMLHelper {
     public static final String XML_END = ".xml";
     public static String TYPE = "type";
@@ -35,7 +35,7 @@ public class XMLHelper {
      * Gets the root element of an XML file. This will reset the reading process, such that the XML hierarchy can be built.
      *
      * @param xmlFile the File from which to read
-     * @return      the Root Element
+     * @return the Root Element
      */
     public static Element getRootElement(DocumentBuilder db, File xmlFile) {
         try {
@@ -52,19 +52,18 @@ public class XMLHelper {
      * constants, the file will be considered valid for the time being.
      *
      * @param dataFile the File to be analyzed
-     * @return      a boolean representing whether the file seems to be an XML file
+     * @return a boolean representing whether the file seems to be an XML file
      */
     public static boolean isXML(File dataFile) {
         return -1 != dataFile.getName().indexOf(XML_END);
     }
-    //TODO: REPLACE WITH MORE RIGOROUS CHECK
 
     /**
      * Checks if file is valid based on its root element. If this attribute does not match type, this file will be considered invalid.
      *
      * @param root the root Element
      * @param type the type of XML file (e.g. Simulation)
-     * @return    a boolean if file is valid based on its root element
+     * @return a boolean if file is valid based on its root element
      */
     public static boolean isValidFile(Element root, String type) {
         return getAttribute(root, TYPE).equals(type);
@@ -75,7 +74,7 @@ public class XMLHelper {
      *
      * @param e             the Element from which to retrieve the attribute
      * @param attributeName the attribute's label to retrieve
-     * @return              the retrieved Attribute
+     * @return the retrieved Attribute
      */
     public static String getAttribute(Element e, String attributeName) {
         return e.getAttribute(attributeName);
@@ -84,10 +83,10 @@ public class XMLHelper {
     /**
      * Retrieves the text value in the XML file for a given tagName. Mandatory can be defined to determine whether or not an exception is thrown if a tag is not found.
      *
-     * @param e       the Element from which to retrieve the attribute
-     * @param tagName the tag to search for in the XML file
+     * @param e               the Element from which to retrieve the attribute
+     * @param tagName         the tag to search for in the XML file
      * @param missingRunnable a runnable to execute if the element is not present (e.g. throw an exception, do nothing)
-     * @return        the text for that tag
+     * @return the text for that tag
      */
     public static String getTextValue(Element e, String tagName, Runnable missingRunnable) {
         NodeList nodeList = e.getElementsByTagName(tagName);
@@ -104,18 +103,19 @@ public class XMLHelper {
      *
      * @param e       the Element from which to retrieve the attribute
      * @param tagName the tag to search for in the XML file
-     * @return        the text for that tag
+     * @return the text for that tag
      */
     public static String getTextValue(Element e, String tagName) {
-        return getTextValue(e, tagName, () -> {});
+        return getTextValue(e, tagName, () -> {
+        });
     }
 
     /**
      * Retrieves the node within a list by name. Returns null if not found
      *
-     * @param n         the NodeList to search through
-     * @param nodeName  the name of the node to be searched for
-     * @return          the Node matching the name or null
+     * @param n        the NodeList to search through
+     * @param nodeName the name of the node to be searched for
+     * @return the Node matching the name or null
      */
     public static Node getNodeByName(NodeList n, String nodeName) {
         for (int k = 0; k < n.getLength(); k++) {
@@ -129,10 +129,10 @@ public class XMLHelper {
     /**
      * Retrieves the root element of a file and checks to make sure it fits the correct type
      *
-     * @param dataFile  the File from which to read
-     * @param type      the type of XML data to be read
-     * @param error     the error message to be thrown
-     * @return          the Root Element
+     * @param dataFile the File from which to read
+     * @param type     the type of XML data to be read
+     * @param error    the error message to be thrown
+     * @return the Root Element
      */
     public static Element getRootAndCheck(File dataFile, String type, String error) {
         DocumentBuilder documentBuilder = getDocumentBuilder();
@@ -187,10 +187,11 @@ public class XMLHelper {
      */
     public static Map<String, Integer> readNumberSettings(Element root, ResourceBundle resource) {
         Map<String, Integer> styles = new HashMap<>();
-        for (Map.Entry<String, String> e: readStringSettings(root, resource).entrySet()) {
+        for (Map.Entry<String, String> e : readStringSettings(root, resource).entrySet()) {
             try {
                 styles.put(e.getKey(), Integer.parseInt(e.getValue()));
-            } catch (Exception ee){ }
+            } catch (Exception ee) {
+            }
         }
         return styles;
     }

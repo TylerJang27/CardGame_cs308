@@ -14,7 +14,7 @@ public class Settings implements ISettings {
      * The constructor for Settings, storing information on the players and the layout
      *
      * @param players the number of players
-     * @param layout the path to the ILayout file
+     * @param layout  the path to the ILayout file
      */
     public Settings(int players, String layout) {
         numPlayers = players;

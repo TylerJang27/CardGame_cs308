@@ -1,19 +1,18 @@
 package ooga.data.factories;
 
-import java.io.File;
-import java.util.Map;
-import java.util.ResourceBundle;
-
 import ooga.data.XMLException;
 import ooga.data.XMLHelper;
 import ooga.data.style.IStyle;
 import ooga.data.style.StyleData;
 import org.w3c.dom.Element;
 
-import javax.xml.parsers.DocumentBuilder;
+import java.io.File;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
- * Class for parsing XML files to determine Styling information for the view. Creates an IStyle instance from which styling information can be read.
+ * This StyleFactory implements Factory and constructs an IStyle using the createStyle() method.
+ * Style information is used by the view.
  * <p>
  * Class based mainly on ConfigParser.java from spike_simulation by Rhondu Smithwick and Robert C.
  * Duvall https://coursework.cs.duke.edu/compsci308_2020spring/spike_simulation/blob/master/src/xml/XMLParser.java
@@ -26,33 +25,23 @@ import javax.xml.parsers.DocumentBuilder;
 public class StyleFactory implements Factory {
 
     public static String STYLE_TYPE = IStyle.DATA_TYPE;
-    //TODO: INCORPORATE ERROR MESSAGES
 
     private static String WORD = "word";
     private static String NUMBER = "number";
-    private static String STYLE =  "style";
+    private static String STYLE = "style";
     private static final String RESOURCES = "ooga.resources";
     private static final String RESOURCE_PACKAGE = RESOURCES + "." + STYLE + "_";
-    private static final ResourceBundle wordResources = ResourceBundle.getBundle(RESOURCE_PACKAGE+WORD);
-    private static final ResourceBundle numberResources = ResourceBundle.getBundle(RESOURCE_PACKAGE+NUMBER);
-    //TODO: IMPLEMENT DEFAULTS
-
-    //TODO: REMOVE HARD CODING?
-
-    private static DocumentBuilder documentBuilder;
-
-    public StyleFactory() {
-        documentBuilder = XMLHelper.getDocumentBuilder();
-    }
+    private static final ResourceBundle wordResources = ResourceBundle.getBundle(RESOURCE_PACKAGE + WORD);
+    private static final ResourceBundle numberResources = ResourceBundle.getBundle(RESOURCE_PACKAGE + NUMBER);
 
     /**
-     * Get data contained in this XML file as an IStyle object. Tests to ensure that the file is valid.
+     * Builds and returns an IStyle from a styling XML. Requirements for style XML can be found in ___.
      *
      * @param dataFile file from which to read configuration
-     * @return    an IStyle with all of its configuration information stored
+     * @return an IStyle with all of its configuration information stored
      * @throws XMLException if the file is not considered valid due to its root element or file ending
      */
-    public static IStyle getStyle(File dataFile) {
+    public static IStyle createStyle(File dataFile) {
         try {
             Element root = XMLHelper.getRootAndCheck(dataFile, STYLE_TYPE, INVALID_ERROR);
 

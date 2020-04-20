@@ -8,7 +8,9 @@ public interface ITable {
 
   void setPhaseMachine(IPhaseMachine machine);
 
-  void setCellList(List<ICell> cellList);
+    void restartGame(); //TODO: ADD TO API CHANGES
+
+    void setCellList(List<ICell> cellList);
 
   /**
    * Updates the table based on the move. Returns true if move was valid, false otherwise

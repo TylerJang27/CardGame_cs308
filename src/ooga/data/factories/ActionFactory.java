@@ -9,67 +9,53 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * This ActionFactory implements Factory and constructs an ICardAction using the createAction() method.
+ * These ICardActions govern where cards should move if an IMove is considered valid.
+ *
+ * @author Tyler Jang
+ */
 public class ActionFactory implements Factory {
-    private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
-    private static final String PHASES = "phases";
-    private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE+PHASES);
+    private static final ResourceBundle RESOURCES = PhaseFactory.RESOURCES;
 
-    private static final String CATEGORY = "Category";
-    private static final String CONDITION = "Condition";
-    private static final String RULES = "Rules";
-    private static final String RULE = "Rule";
-    private static final String RECEIVE_RULE = "ReceiveRule";
-    private static final String RECEIVER = "Receiver";
-    private static final String MOVER = "Mover";
-    private static final String DIRECTION = "Direction";
-    private static final String VALUE = "Value";
-    private static final String COLOR = "Color";
-    private static final String SUIT = "Suit";
-    private static final String NUMBER_CARDS = "NumberCards";
-    private static final String IS_FACEUP = "IsFaceup";
-    private static final String NAME = "Name";
-    private static final String DONOR = "Donor";
-    private static final String ALL = "All";
-    private static final String ACTION = "Action";
-    private static final String RECEIVER_DESTINATION = "ReceiverDestination";
-    private static final String DESTINATION = "Destination";
-    private static final String STACK = "Stack";
-    private static final String SHUFFLE = "Shuffle";
-    private static final String OFFSET = "Offset";
-    private static final String MOVER_DESTINATION = "MoverDestination";
-    private static final String FLIP = "Flip";
-    private static final String POINTS = "Points";
-    private static final String NEXT_PHASE = "NextPhase";
-    private static final String PHASE = "Phase";
 
-    private static final String EXCEPT = "Except";
-    private static final String PRESERVE = "Preserve";
+    private static final String DIRECTION = PhaseFactory.DIRECTION;
+    private static final String NUMBER_CARDS = PhaseFactory.NUMBER_CARDS;
+    private static final String ACTION = PhaseFactory.ACTION;
+    private static final String DESTINATION = PhaseFactory.DESTINATION;
+    private static final String SHUFFLE = PhaseFactory.SHUFFLE;
+    private static final String OFFSET = PhaseFactory.OFFSET;
+    private static final String FLIP = PhaseFactory.FLIP;
 
-    private static final String R = "R";
-    private static final String M = "M";
-    private static final String D = "D";
-    private static final String C = "C";
-    private static final String UP = "Up";
-    private static final String DOWN = "Down";
-    private static final String NOT = "Not";
-    private static final String SAME = "Same";
-    private static final String YES = "Yes";
-    private static final String NO = "No";
-    private static final String REVERSE = "Reverse";
-    private static final String TOP = "Top";
-    private static final String BOTTOM = "Bottom";
+    private static final String M = PhaseFactory.M;
+    private static final String D = PhaseFactory.D;
+    private static final String NO = PhaseFactory.NO;
 
-    private static DocumentBuilder documentBuilder;
-    public static final List<String> TRUE_CHECKS = new ArrayList<>(Arrays.asList(new String[]{"", resources.getString(ALL)}));
+    private static final String TOP = PhaseFactory.TOP;
+    private static final String BOTTOM = PhaseFactory.BOTTOM;
+    private static final String EXCEPT = PhaseFactory.EXCEPT;
+    private static final String PRESERVE = PhaseFactory.PRESERVE;
+    private static final String REVERSE = PhaseFactory.REVERSE;
 
-    public ActionFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
+    private static final List<String> TRUE_CHECKS = MasterRuleFactory.TRUE_CHECKS;
 
-    public static ICardAction getAction(Element e, String ruleName) {
+    private static final String ALL = MasterRuleFactory.ALL;
+
+    /**
+     * Builds and returns an IAction built for an IMasterRule from a rules XML. Requirements for rules XML can be found in ___.
+     *
+     * @param e         the Element from which IRules are built
+     * @param ruleName  the String name of the IMasterRule
+     * @return          an ICardAction built for this IMasterRule
+     */
+    public static ICardAction cardAction(Element e, String ruleName) {
         Function<IMove, ICell> moverCell = (IMove move) -> move.getMover();
         Function<IMove, ICell> donorCell = (IMove move) -> move.getDonor();
         Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
@@ -81,156 +67,221 @@ public class ActionFactory implements Factory {
             Consumer<IMove> cardAction = (IMove move) -> {
                 Boolean excepted = extractExceptBehavior(e, currCell, move);
                 if (!excepted) {
-                    ICell updatedCurrCell = extractCellsToMove(e, currCell, move); ///TODO: DOES THIS DO ANYTHING????
-
+                    ICell updatedCurrCell = extractCellsToMove(e, currCell, move);
                     ICell destination = extractDestinationBehavior(e, moverCell, donorCell, recipientCell, move);
-
                     IOffset off = extractOffsetBehavior(e, updatedCurrCell, move);
-
                     extractRotationBehavior(e, updatedCurrCell, move);
-
                     extractFlipBehavior(e, updatedCurrCell, move);
-
                     extractShuffleBehavior(e, updatedCurrCell);
-
-                    //TODO: IMPLEMENT SHUFFLE
-
-                    //System.out.println("Time to move");
-                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    //System.out.println("d: " + move.getDonor().getTotalSize() + "|m: " + move.getMover().getTotalSize() + "|r: " + move.getRecipient().getTotalSize());
-
-
-                    //applyDestinationBehavior(recipientCell, currCell, curr, move, destination, off);
-                    applyDestinationBehavior(recipientCell, updatedCurrCell, curr, move, destination, off);
+                    applyDestinationBehavior(recipientCell, updatedCurrCell, move, destination, off);
                 }
             };
             actions.add(cardAction);
         } catch (Exception ex) {
-            throw new XMLException(ex, Factory.MISSING_ERROR + "," + resources.getString(ACTION));
+            throw new XMLException(ex, Factory.MISSING_ERROR + "," + RESOURCES.getString(ACTION));
         }
-        //System.out.println("ACTINO" + actions.size());
         return new CardAction(actions);
     }
 
+    /**
+     * Extracts whether or not this current ICell should be excepted from the action behavior
+     *
+     * @param e         the Element from which IRules are built
+     * @param currCell  a Function to retrieve the current cell
+     * @param move      the IMove from which to extract behavior
+     * @return          a Boolean representing whether or not the ICell should be excepted
+     */
     private static Boolean extractExceptBehavior(Element e, Function<IMove, ICell> currCell, IMove move) {
-        NodeList excepts = e.getElementsByTagName(resources.getString(EXCEPT));
-        for (int k = 0; k < excepts.getLength(); k ++) {
+        NodeList excepts = e.getElementsByTagName(RESOURCES.getString(EXCEPT));
+        for (int k = 0; k < excepts.getLength(); k++) {
             Node exceptedCell = excepts.item(k);
             if (exceptedCell.getTextContent().equalsIgnoreCase(currCell.apply(move).findHead().getName())) {
-                //System.out.println("EXCEPTED!");
                 return true;
             }
         }
-        //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-        //System.out.println("\tcurr: " + currCell.apply(move).getName());
-        //System.out.println("NOT EXCEPTED!");
         return false;
     }
 
+    /**
+     * Extracts the ICell that should be moved for a given IAction.
+     *
+     * @param e         the Element from which IRules are built
+     * @param currCell  a Function to retrieve the current cell
+     * @param move      the IMove from which to extract behavior
+     * @return          the ICell representing all cells to be moved
+     */
     private static ICell extractCellsToMove(Element e, Function<IMove, ICell> currCell, IMove move) {
         ICell cellToMove = currCell.apply(move);
-        String numCards = XMLHelper.getTextValue(e, resources.getString(NUMBER_CARDS)).toUpperCase();
-        //determines number of cards to move
-        if (numCards.equals(resources.getString(ALL))) {
-            //cellsToMove.addAll(currCell.apply(move).getAllCells());
-            cellToMove = (currCell.apply(move));
+        String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).toUpperCase();
+        if (numCards.equals(RESOURCES.getString(ALL))) {
+            return currCell.apply(move);
         } else if (Offset.validOffsets.contains(numCards)) {
-            cellToMove = (currCell.apply(move).getPeak(Offset.valueOf(numCards.toUpperCase())));
-            if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
-                currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
-            }
-        } else if (numCards.equalsIgnoreCase(resources.getString(TOP))) {
-            cellToMove = currCell.apply(move).copy((ICell c) -> {
-                if (!c.getDeck().peek().isFixed()) {
-                    return c.getDeck().getNextCard();
-                }
-                return null;
-            });
-            if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
-                currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
-            }
-        } else if (numCards.equalsIgnoreCase(resources.getString(BOTTOM))) {
-            cellToMove = currCell.apply(move).copy((ICell c) -> {
-                if (!c.getDeck().peek().isFixed()) {
-                    return (c.getDeck().getBottomCard());
-                }
-                return null;
-            });
-            if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
-                currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
-            }
+            return extractOffsetCells(currCell, move, numCards);
+        } else if (numCards.equalsIgnoreCase(RESOURCES.getString(TOP))) {
+            return extractTopFromCells(currCell, move);
+        } else if (numCards.equalsIgnoreCase(RESOURCES.getString(BOTTOM))) {
+            return extractBottomFromCells(currCell, move);
         } else {
-            try {
-                int cardQuantity = Integer.parseInt(numCards);
-                cellToMove = new Cell("");
-                for (int k = 0; k < cardQuantity; k ++) {
-                    cellToMove.addCard(Offset.NONE, currCell.apply(move).findLeaf().getDeck().getNextCard());
-                }
-                if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
-                    currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
-                }
-            } catch (Exception ex) {
+            return extractQuantityfromCell(currCell, move, numCards);
+        }
+    }
 
-            }
+    /**
+     * Extracts the ICell to be moved based on an offset condition.
+     *
+     * @param currCell  a Function to retrieve the current cell
+     * @param move      the IMove from which to extract behavior
+     * @param offset  a String representing the direction of cards to read from
+     * @return          the ICell representing all cells to be moved
+     */
+    private static ICell extractOffsetCells(Function<IMove, ICell> currCell, IMove move, String offset) {
+        ICell cellToMove;
+        cellToMove = (currCell.apply(move).getPeak(Offset.valueOf(offset.toUpperCase())));
+        if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
+            currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
         }
         return cellToMove;
     }
 
-    private static void applyDestinationBehavior(Function<IMove, ICell> recipientCell, ICell currCell, String curr, IMove move, ICell destination, IOffset off) {
-        //System.out.println("destination: fun!" + destination.findHead().getName() + "\n\t" + currCell.apply(move).findHead().getName());
+    /**
+     * Extracts the ICell to be moved based on a bottom condition.
+     *
+     * @param currCell  a Function to retrieve the current cell
+     * @param move      the IMove from which to extract behavior
+     * @return          the ICell representing all cells to be moved
+     */
+    private static ICell extractBottomFromCells(Function<IMove, ICell> currCell, IMove move) {
+        ICell cellToMove;
+        cellToMove = currCell.apply(move).copy((ICell c) -> {
+            if (!c.getDeck().peek().isFixed()) {
+                return (c.getDeck().getBottomCard());
+            }
+            return null;
+        });
+        if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
+            currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
+        }
+        return cellToMove;
+    }
+
+    /**
+     * Extracts the ICell to be moved based on a top condition.
+     *
+     * @param currCell  a Function to retrieve the current cell
+     * @param move      the IMove from which to extract behavior
+     * @return          the ICell representing all cells to be moved
+     */
+    private static ICell extractTopFromCells(Function<IMove, ICell> currCell, IMove move) {
+        ICell cellToMove;
+        cellToMove = currCell.apply(move).copy((ICell c) -> {
+            if (!c.getDeck().peek().isFixed()) {
+                return c.getDeck().getNextCard();
+            }
+            return null;
+        });
+        if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
+            currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
+        }
+        return cellToMove;
+    }
+
+    /**
+     * Extracts the ICell to be moved based on a number of cards condition.
+     *
+     * @param currCell  a Function to retrieve the current cell
+     * @param move      the IMove from which to extract behavior
+     * @param numCards  a String representing the number of ICards to move
+     * @return          the ICell representing all cells to be moved
+     */
+    private static ICell extractQuantityfromCell(Function<IMove, ICell> currCell, IMove move, String numCards) {
+        ICell cellToMove = new Cell("");
+        try {
+            int cardQuantity = Integer.parseInt(numCards);
+            for (int k = 0; k < cardQuantity; k++) {
+                cellToMove.addCard(Offset.NONE, currCell.apply(move).findLeaf().getDeck().getNextCard());
+            }
+            if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
+                currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
+            }
+        } catch (Exception ex) {
+            cellToMove = currCell.apply(move);
+        }
+        return cellToMove;
+    }
+
+    /**
+     * Extracts the destination for the ICell being moved.
+     *
+     * @param e                 the Element from which IRules are built
+     * @param moverCell         the Function representing the mover from the IMove
+     * @param donorCell         the Function representing the donor from the IMove
+     * @param recipientCell     the Function representing the recipient from the IMove
+     * @param move              the IMove being processed
+     * @return                  the ICell to which the ICell in question should move
+     */
+    private static ICell extractDestinationBehavior(Element e, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell, IMove move) {
+        String destination = XMLHelper.getTextValue(e, RESOURCES.getString(DESTINATION));
+        if (destination.equals(RESOURCES.getString(M))) {
+            return moverCell.apply(move);
+        } else if (destination.equals(RESOURCES.getString(D))) {
+            return donorCell.apply(move);
+        } else {
+            return recipientCell.apply(move);
+        }
+    }
+
+    /**
+     * Applies the move from the currCell to the destination.
+     *
+     * @param recipientCell     the Function representing the recipient from the IMove
+     * @param currCell          the current ICell being moved
+     * @param move              the IMove being processed
+     * @param destination       the destination of the currCell
+     * @param off               the IOffset to be applied from the destination
+     */
+    private static void applyDestinationBehavior(Function<IMove, ICell> recipientCell, ICell currCell, IMove move, ICell destination, IOffset off) {
         if (!destination.findHead().getName().equalsIgnoreCase(currCell.findHead().getName())) {
-            //IOffset offsetFromParent = recipientCell.apply(move).getOffsetFromParent();
-            //recipientCell.apply(move).getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
-            //destination.addCell(off, currCell.apply(move));
-            //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-            //System.out.println("is this null: " + currCell);
             IOffset offsetFromParent = null;
             if (currCell.getParent() != null) {
                 offsetFromParent = currCell.getOffsetFromParent();
             }
-            //TODO: WRITING BAD CODE
-            //System.out.println("hello");
-
-
-            //System.out.println("current cell parent: "+currParent);
             if (offsetFromParent != null) {
                 currCell.getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
             }
-            //System.out.println("current cell: "+currParent);
             recipientCell.apply(move).addCell(off, currCell);
-            //System.out.println(destination.getName());
         }
     }
 
-    private static ICell extractDestinationBehavior(Element e, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell, IMove move) {
-        String destination = XMLHelper.getTextValue(e, resources.getString(DESTINATION));
-        ICell dest;
-        if (destination.equals(resources.getString(M))) {
-            dest = moverCell.apply(move);
-        } else if (destination.equals(resources.getString(D))) {
-            dest = donorCell.apply(move);
-        } else {
-            dest = recipientCell.apply(move);
-        }
-        return dest;
-    }
-
+    /**
+     * Extracts the IOffset for the ICardAction.
+     *
+     * @param e             the Element from which IRules are built
+     * @param currCell      the current ICell being moved
+     * @param move          the IMove being processed
+     * @return              the IOffset to be applied from the destination
+     */
     private static IOffset extractOffsetBehavior(Element e, ICell currCell, IMove move) {
-        String offset = XMLHelper.getTextValue(e, resources.getString(OFFSET));
+        String offset = XMLHelper.getTextValue(e, RESOURCES.getString(OFFSET));
         IOffset off;
         if (Offset.validOffsets.contains(offset)) {
             off = Offset.valueOf(offset.toUpperCase());
-        } else if (offset.equalsIgnoreCase(resources.getString(PRESERVE))) {
+        } else if (offset.equalsIgnoreCase(RESOURCES.getString(PRESERVE))) {
             off = currCell.getOffsetFromParent();
         } else {
             off = Offset.NONE;
         }
-        //System.out.println(off.getOffset() + "is my offset!"); //TODO: DEBUG OFFSET
         return off;
     }
 
+    /**
+     * Extracts and applies the rotation to be applied to the ICell.
+     *
+     * @param e             the Element from which IRules are built
+     * @param currCell      the current ICell being moved
+     * @param move          the IMove being processed
+     */
     private static void extractRotationBehavior(Element e, ICell currCell, IMove move) {
-        String turn = XMLHelper.getTextValue(e, resources.getString(DIRECTION));
+        String turn = XMLHelper.getTextValue(e, RESOURCES.getString(DIRECTION));
         if (!TRUE_CHECKS.contains(turn)) {
             Double angle = Double.parseDouble(turn);
             for (ICell c : currCell.getAllCells()) {
@@ -241,20 +292,21 @@ public class ActionFactory implements Factory {
         }
     }
 
+    /**
+     * Extracts and applies the flipping to the ICell.
+     *
+     * @param e             the Element from which IRules are built
+     * @param currCell      the current ICell being moved
+     * @param move          the IMove being processed
+     */
     private static void extractFlipBehavior(Element e, ICell currCell, IMove move) {
-        //System.out.println("nodeheaderflippy" + e.getNodeName() + ":" + e.getTextContent());
-        //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-        //System.out.println("\tcurr: " + currCell.getName());
-        String flip = XMLHelper.getTextValue(e, resources.getString(FLIP));
-        //System.out.println("flippy: " + flip);
+        String flip = XMLHelper.getTextValue(e, RESOURCES.getString(FLIP));
         if (Offset.validOffsets.contains(flip.toLowerCase()) && currCell.getAllChildren().containsKey(Offset.valueOf(flip.toUpperCase()))) {
-            //System.out.println("my flippy cell: " + currCell.getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek().getName());
             ICard cardToFlip = currCell.getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek();
             if (cardToFlip != null && !cardToFlip.isFaceUp()) {
                 cardToFlip.flip();
             }
-        } else if (flip.equals(resources.getString(ALL))) {
-            //System.out.println("flippy all");
+        } else if (flip.equals(RESOURCES.getString(ALL))) {
             for (ICell c : currCell.getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
                     ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
@@ -263,8 +315,7 @@ public class ActionFactory implements Factory {
                     }
                 }
             }
-        } else if (flip.equals(resources.getString(NO))) {
-            //System.out.println("flippy DOWN");
+        } else if (flip.equals(RESOURCES.getString(NO))) {
             for (ICell c : currCell.getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
                     ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
@@ -274,13 +325,17 @@ public class ActionFactory implements Factory {
                 }
             }
         }
-        //System.out.println("sad flippy");
     }
 
+    /**
+     * Extracts and applies the shuffle behavior to be applied to the currCell and its children after moving.
+     * @param e             the Element from which IRules are built
+     * @param currCell      the current ICell after moving
+     */
     private static void extractShuffleBehavior(Element e, ICell currCell) {
-        String shuffle = XMLHelper.getTextValue(e, resources.getString(SHUFFLE));
-        if (shuffle.equalsIgnoreCase(resources.getString(REVERSE))) {
-            for (Map.Entry<IOffset, ICell> entry: currCell.getAllChildren().entrySet()) {
+        String shuffle = XMLHelper.getTextValue(e, RESOURCES.getString(SHUFFLE));
+        if (shuffle.equalsIgnoreCase(RESOURCES.getString(REVERSE))) {
+            for (Map.Entry<IOffset, ICell> entry : currCell.getAllChildren().entrySet()) {
                 entry.getValue().getDeck().reverse();
             }
         }
