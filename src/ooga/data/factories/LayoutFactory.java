@@ -42,7 +42,7 @@ public class LayoutFactory implements Factory {
      * @param dataFile the file from which to build an ILayout implementation
      * @return an ILayout implementation built from the layout XML
      */
-    public static ILayout getLayout(File dataFile) {
+    public static ILayout createLayout(File dataFile) {
         try {
             Element root = XMLHelper.getRootAndCheck(dataFile, LAYOUT_TYPE, INVALID_ERROR);
 

@@ -3,9 +3,7 @@ package ooga;
 
 import javafx.application.Application;
 import ooga.controller.Controller;
-import ooga.data.factories.LayoutFactory;
 import ooga.data.factories.StyleFactory;
-import ooga.data.rules.ILayout;
 import ooga.data.style.IStyle;
 
 import java.io.File;
@@ -24,7 +22,7 @@ public class Main {
 
     private static void testStyleXML() {
         File f = new File("data/default_style.xml");
-        IStyle myStyle = StyleFactory.getStyle(f);
+        IStyle myStyle = StyleFactory.createStyle(f);
         //System.out.println(myStyle.getCardSkinPath());
         //System.out.println(myStyle.getLanguage());
         //System.out.println(myStyle.getDifficulty());

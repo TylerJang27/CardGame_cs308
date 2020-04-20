@@ -109,7 +109,7 @@ public class Controller extends Application {
         File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
 
 
-        myView.setLayout(LayoutFactory.getLayout(f));
+        myView.setLayout(LayoutFactory.createLayout(f));
         myView.setCellData(myCellMap);
         myPreviousCells = myCellMap;
         //myView.setCellData(Map.copyOf(myTable.getCellData()));
