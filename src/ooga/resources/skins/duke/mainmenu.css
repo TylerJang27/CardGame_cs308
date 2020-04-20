@@ -1,12 +1,14 @@
 /*
-    Document   : lightmode
+    This is a required file for using the Duke Theme
+    Document: Duke Theme Main Menu
+    Required path: skins/duke/mainmenu.css
 */
 
 .root{
     -fx-font-size: 12pt;
-    -fx-font-family: "Arial Black";
+    -fx-font-family: "Stencil";
     -fx-base: #BBA1BB;
-    -fx-background-image: url("drivingcar.gif");
+    -fx-background-image: url("dukefans.gif");
     -fx-background-size: stretch;
     -fx-focus-color: #FFFFFF;
 }
@@ -17,7 +19,6 @@
 
 .titleborder{
     -fx-base: #000000;
-    -fx-font-family: "Harlow Solid Italic";
     -fx-padding: 20;
 }
 
@@ -34,17 +35,18 @@
     -fx-spacing: 10;
     -fx-fill: #FFFFFF;
     -fx-font-family: "Arial Black";
+    -fx-fill: #FFFFFF;
 }
 
 .options{
     -fx-spacing: 10;
-    -fx-font-family: "Arial Black";
 }
 
 .button{
-    -fx-background-color: linear-gradient(#E4E4E4, #D5D5D5);
+    -fx-background-color: linear-gradient(#C9C9C9 , #DFDFDF );
+
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(#E084E0, #EFE1EF);
+    -fx-background-color: linear-gradient(#000FFF , #D8DBFF  );
 }

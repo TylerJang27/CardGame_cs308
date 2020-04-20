@@ -1,0 +1,18 @@
+/*
+    This is a required file for using the Duke Theme
+    Document: Duke Theme Game Table
+    Required path: skins/duke/gametable.css
+*/
+
+.root{
+    -fx-font-size: 12pt;
+    -fx-font-family: "Stencil";
+    -fx-base: #BBA1BB;
+    -fx-background-image: url("coachkcourt.jpg");
+    -fx-background-size: stretch;
+    -fx-focus-color: #FFFFFF;
+}
+
+.cardskin{
+    -fx-image: url(duked.png);
+}

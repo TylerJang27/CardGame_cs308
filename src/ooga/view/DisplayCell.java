@@ -45,6 +45,7 @@ public class DisplayCell {
                 myImageView = new ImageView(new Image(cardNameToFileName.get(myCell.getDeck().peek().getName())));
             } else {
                 myImageView = new ImageView(new Image(cardNameToFileName.get("faceDown")));
+                myImageView.getStyleClass().add("cardskin");
             }
         } else {
             myImageView = new ImageView(new Image(cardNameToFileName.get("celloutline")));

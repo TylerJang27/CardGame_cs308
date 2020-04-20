@@ -52,7 +52,7 @@ public class View implements ExternalAPI {
             System.out.println("Theme is "+theme);
         };
 
-        myMenu = new RowMenu(getTheme);
+        myMenu = new RowMenu(getTheme, myTheme);
         myMenu.show();
 
         getMove = (IMove move) -> {
@@ -164,10 +164,11 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setLayout(ILayout layout) {
-        myDisplayTable = new DisplayTable(getMove, (Layout) layout, 500, myTheme);
+        myDisplayTable = new DisplayTable(getMove, (Layout) layout, 650, myTheme);
         myRoot = new BorderPane();
         myRoot.setCenter(myDisplayTable.getPane());
         Scene gameScene = new Scene(myRoot,650,500);
+        gameScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme+"/gametable.css").toExternalForm()); //
         gameStage = new Stage();
         gameStage.setScene(gameScene);
         gameStage.show();

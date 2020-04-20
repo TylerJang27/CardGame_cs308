@@ -51,15 +51,12 @@ public class DisplayTable {
 
         myPane = new Pane();
 
+
         myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
         myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
         myCardOffset = layout.getUpOffsetRatio()*screenWidth;
 
         myCardNameToFileName = layout.getCardImagePaths();
-        if (!theme.equals("Classic")) {
-            myCardNameToFileName.remove("faceDown");
-            myCardNameToFileName.put("faceDown","/ooga/resources/skins/"+theme+".png");
-        }
 
         myCellNameToLocation = new HashMap<>();
         Map<String, ICoordinate> locations = layout.getCellLayout();
