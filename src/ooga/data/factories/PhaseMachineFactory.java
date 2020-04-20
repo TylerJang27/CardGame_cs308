@@ -43,6 +43,7 @@ public class PhaseMachineFactory implements Factory {
 
             return new PhaseMachine(phases, START, settings, deck);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new XMLException(e, Factory.MISSING_ERROR + "," + RULES_TYPE);
         }
     }
