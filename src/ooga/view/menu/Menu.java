@@ -20,9 +20,8 @@ import ooga.view.View;
 public class Menu {
   private static final Insets MARGINS = new Insets(305,20,20,20);
   private static final ResourceBundle LANGUAGES = ResourceBundle.getBundle("ooga.resources.languages.supportedlanguages");
-  private static final String CHOICES = "ooga.resources.languages.menu";
-  private static final ResourceBundle GAMES = ResourceBundle.getBundle("ooga.resources.languages.menu.English");
-  private static final String APPLICATION_NAME = "Solitaire Confinement";
+  private static final String CHOICES = "ooga.resources.languages.games";
+  private static final ResourceBundle GAMES = ResourceBundle.getBundle("ooga.resources.languages.games.English");
   private static final ResourceBundle SKINS = ResourceBundle.getBundle("ooga.resources.skins.supportedskins");
 
   private BorderPane myBorderPane;
@@ -31,19 +30,18 @@ public class Menu {
   private Scene myScene;
 
   private String myGame;
-  private View.ChangeTheme myThemeLambda;
+  private View.ChangeValue myThemeLambda;
 
-  public Menu(View.ChangeTheme themeLambda, String defaultTheme, double screenHeight, double screenWidth){
+  public Menu(String appName, View.ChangeValue themeLambda, View.ChangeValue languageLambda, String defaultTheme, String defaultLanguage, double screenHeight, double screenWidth){
 
-    myThemeLambda = themeLambda;
     myGameProperty = new SimpleStringProperty();
     Dictionary.getInstance().addReference(CHOICES);
 
     myBorderPane = new BorderPane();
 
-    setTopBorder();
+    setTopBorder(appName);
     setCenter();
-    setBottomBorder();
+    setBottomBorder(defaultTheme, defaultLanguage, themeLambda, languageLambda);
 
     myScene = new Scene(myBorderPane,screenWidth,screenHeight);
     myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+defaultTheme.toLowerCase()+"/mainmenu.css").toExternalForm()); //
@@ -58,24 +56,27 @@ public class Menu {
     return myGame;
   }
 
-  private void setBottomBorder() {
+  private void setBottomBorder(String defaultTheme, String defaultLanguage, View.ChangeValue themeLambda, View.ChangeValue languageLambda) {
     ComboBox<String> languages = new ComboBox<>();
     languages.getItems().addAll(LANGUAGES.getString("supported").split(","));
+    languages.setValue(defaultLanguage);
     languages.valueProperty().addListener(new ChangeListener<String>() {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue,
                           String newValue) {
+        languageLambda.setValue(newValue);
         Dictionary.getInstance().setLanguage(newValue);
       }
     });
 
     ComboBox<String> skins = new ComboBox<>();
     skins.getItems().addAll(SKINS.getString("supported").split(","));
+    skins.setValue(defaultTheme);
     skins.valueProperty().addListener(new ChangeListener<String>() {
       @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue,
                           String newValue) {
-        myThemeLambda.setTheme(newValue);
+        themeLambda.setValue(newValue);
         myScene.getStylesheets().clear();
         myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue.toLowerCase()+"/mainmenu.css").toExternalForm());
       }
@@ -103,9 +104,9 @@ public class Menu {
     }
   }
 
-  private void setTopBorder() {
+  private void setTopBorder(String appName) {
     StackPane gameNamePane = new StackPane();
-    Text gameName = new Text(APPLICATION_NAME);
+    Text gameName = new Text(appName);
     gameName.getStyleClass().add("title");
     gameNamePane.getChildren().add(gameName);
     gameNamePane.getStyleClass().add("titleborder");

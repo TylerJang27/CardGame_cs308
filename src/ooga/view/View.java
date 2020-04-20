@@ -18,8 +18,12 @@ import ooga.view.gamescreen.GameScreen;
 import ooga.view.menu.Menu;
 
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class View implements ExternalAPI {
+
+    private static final String APPLICATION_NAME = "Solitaire Confinement";
+    private static final String APPLICATION_ICON = "/ooga/resources/cards.png";
 
     @FunctionalInterface
     public
@@ -28,35 +32,75 @@ public class View implements ExternalAPI {
     }
 
     @FunctionalInterface
-    public interface ChangeTheme {
-        public void setTheme(String theme);
+    public interface ChangeValue {
+        public void setValue(String newValue);
     }
 
     private TriggerMove getMove;
 
     private String myTheme = "Duke"; // fixme decide on a default and implement
+    private String myLanguage = "English";
 
     private Stage myStage;
     private Menu myMenu;
     private GameScreen myGameScreen;
 
+    private IStyle myStyle;
+
     private static final double DEFAULT_WIDTH = 650;
     private static final double DEFAULT_HEIGHT = 500;
 
+
+    public View(Controller.GiveMove giveMove, IStyle style){
+
+        ChangeValue getTheme = (String theme) -> {
+            myTheme = theme;
+            myStyle.setTableSkinPath(theme);
+        };
+
+        ChangeValue getLanguage = (String language) -> {
+            myLanguage = language;
+            myStyle.setLanguage(language);
+        };
+
+        getMove = giveMove::sendMove;
+
+        myStyle = style;
+
+        if (myStyle.getTableSkinPath() != null) {
+            myTheme = myStyle.getTableSkinPath();
+        }
+        if (myStyle.getLanguage() != null) {
+            myLanguage = myStyle.getLanguage();
+        }
+
+        myMenu = new Menu(APPLICATION_NAME, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
+
+        myStage = new Stage();
+        myStage.setScene(myMenu.getScene());
+        myStage.getIcons().add(new Image(APPLICATION_ICON));
+        myStage.setTitle(APPLICATION_NAME);
+        myStage.show();
+    }
+
     public View(Controller.GiveMove giveMove){
 
-        ChangeTheme getTheme = (String theme) -> {
+        ChangeValue getLanguage = (String language) -> {
+            myLanguage = language;
+        };
+
+        ChangeValue getTheme = (String theme) -> {
             myTheme = theme;
         };
 
         getMove = giveMove::sendMove;
 
-        myMenu = new Menu(getTheme, myTheme, DEFAULT_HEIGHT, DEFAULT_WIDTH);
+        myMenu = new Menu(APPLICATION_NAME, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
 
         myStage = new Stage();
         myStage.setScene(myMenu.getScene());
-        myStage.getIcons().add(new Image("/ooga/resources/cards.png"));
-        myStage.setTitle("Solitaire Confinement");
+        myStage.getIcons().add(new Image(APPLICATION_ICON));
+        myStage.setTitle(APPLICATION_NAME);
         myStage.show();
     }
 
@@ -73,6 +117,13 @@ public class View implements ExternalAPI {
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 myStage.setScene(myMenu.getScene());
+            }
+        });
+
+        Button restartButton = new Button("");
+        restartButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                System.out.println("View 114: Call lambda to notify backend");
             }
         });
 
@@ -131,21 +182,6 @@ public class View implements ExternalAPI {
     @Override
     public IMove getUserInput() {
         return null;
-    }
-
-    /**
-     * Sets the style of the game, including color of table, location of menu/its display elements,
-     * font type, font size, text colors, margins, etc.
-     *
-     * @param style
-     */
-    @Override
-    public void setStyle(IStyle style) {
-        //myStyle = style;
-        //myTheme = style.getTableSkinPath();
-        /*
-        style.setTableSkinPath(myTheme); //when the combobox is updated
-         */
     }
 
     public void reportError(String key, String... formats){
