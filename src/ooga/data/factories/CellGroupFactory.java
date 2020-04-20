@@ -93,7 +93,7 @@ public class CellGroupFactory implements Factory {
             IOffset offset = extractCellOffset(cell);
             Double rotation = extractCellRotation(cell);
             Node initializeSettings = XMLHelper.getNodeByName(cell.getChildNodes(), resources.getString(INIT_CARD));
-            Function<IDeck, ICell> initializer = InitializeFactory.getInitialization(initializeSettings, offset, rotation);
+            Function<IDeck, ICell> initializer = InitializeFactory.createInitialization(initializeSettings, offset, rotation);
 
             ICell builtCell = new Cell(cellName);
             builtCell.setDraw(initializer);
