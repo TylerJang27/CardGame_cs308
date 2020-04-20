@@ -1,19 +1,15 @@
-package ooga.view;
+package ooga.view.gamescreen;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 import ooga.cardtable.*;
-import ooga.data.rules.ILayout;
 import ooga.data.rules.Layout;
 import ooga.data.style.ICoordinate;
+import ooga.view.View;
+
 import java.util.*;
 
 public class DisplayTable {
