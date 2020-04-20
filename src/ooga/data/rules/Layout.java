@@ -4,6 +4,11 @@ import ooga.data.style.ICoordinate;
 
 import java.util.Map;
 
+/**
+ * This class implements ILayout and stores information about layout for displaying to the view.
+ *
+ * @author Andrew Krier
+ */
 public class Layout implements ILayout {
 
     private static final int SCREEN_WIDTH = 100;
@@ -30,8 +35,19 @@ public class Layout implements ILayout {
     private static final String FACE_DOWN_OFFSET = "face_down_offset";
     private static final String FACE_UP_OFFSET = "face_up_offset";
 
-    public Layout () {}
+    /**
+     * The default Constructor for Layout.
+     */
+    public Layout() {
+    }
 
+    /**
+     * The Constructor for layout, taking in a Map of cell coordinates, number settings, and information on card skins.
+     *
+     * @param cellCoords        a Map of String ICell names to their ICoordinate information
+     * @param numberSettings    a Map of String settings names to their Integer information
+     * @param cardImages        a Map of String ICard names to their skins
+     */
     public Layout(Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings, Map<String, String> cardImages) {
         //gameName = game;
 
@@ -63,6 +79,7 @@ public class Layout implements ILayout {
 
     /**
      * Gives number of players allowed in this game
+     *
      * @return
      */
     public int getNumPlayers() {
@@ -71,6 +88,7 @@ public class Layout implements ILayout {
 
     /**
      * Gives the screen height value relative to screen width
+     *
      * @return
      */
     public double getScreenRatio() {
@@ -79,6 +97,7 @@ public class Layout implements ILayout {
 
     /**
      * Gives the card width value relative to screen width
+     *
      * @return
      */
     public double getCardWidthRatio() {
@@ -87,6 +106,7 @@ public class Layout implements ILayout {
 
     /**
      * Gives the card height value relative to screen width
+     *
      * @return
      */
     public double getCardHeightRatio() {
@@ -95,6 +115,7 @@ public class Layout implements ILayout {
 
     /**
      * Gives the offset for face down cards relative to screen width
+     *
      * @return
      */
     public double getDownOffsetRatio() {
@@ -103,6 +124,7 @@ public class Layout implements ILayout {
 
     /**
      * Gives the offset for face up cards relative to screen width
+     *
      * @return
      */
     public double getUpOffsetRatio() {

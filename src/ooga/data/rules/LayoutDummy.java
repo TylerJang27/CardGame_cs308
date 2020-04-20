@@ -8,6 +8,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A dummy implementation of Layout, used to hard code Layout tests.
+ *
+ * @author Andrew Krier
+ */
 public class LayoutDummy extends Layout {
 
     private static final int SCREEN_WIDTH = 100;
@@ -146,7 +151,7 @@ public class LayoutDummy extends Layout {
         };
         ArrayList<String> names = new ArrayList(Arrays.asList("deck", "hand", "club", "diamond", "heart", "spade", "1", "2", "3", "4", "5", "6", "7"));
 
-        for(int i = 0; i < names.size(); i++) {
+        for (int i = 0; i < names.size(); i++) {
             ret.put(names.get(i), new Coordinate(coords[i][0], coords[i][1]));
         }
 

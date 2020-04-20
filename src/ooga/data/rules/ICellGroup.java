@@ -8,7 +8,7 @@ import java.util.Map;
 //TODO: ADD TO API CHANGES
 
 /**
- * Gets information on a group of thematically linked cells. Includes the group name itself and the cells contained within the group.
+ * This interface stores groups of related cells. Gets information on a group of thematically linked cells. Includes the group name itself and the cells contained within the group.
  *
  * @author Tyler Jang
  */

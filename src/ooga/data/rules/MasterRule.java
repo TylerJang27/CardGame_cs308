@@ -7,6 +7,12 @@ import ooga.cardtable.IPlayer;
 
 import java.util.List;
 
+/**
+ * This class implements IMasterRule and controls all of the logic for an IMove. Each IPhase has several MasterRules, each of which govern their own
+ * conditional trees and appropriate actions.
+ *
+ * @author Tyler Jang
+ */
 public class MasterRule implements IMasterRule {
 
     private List<IRule> myRules;
@@ -15,6 +21,14 @@ public class MasterRule implements IMasterRule {
     private List<IControlAction> myControlActions;
     private String MASTER_RULE = "This is a Master Rule";
 
+    /**
+     * Constructor for MasterRule. Sets all the rules and all of the actions.
+     *
+     * @param rules             a List of IRules to be validated for a move
+     * @param autoRules         a List of IRule conditions to be validated
+     * @param cardActions       a List of ICardActions to be activated upon validation of the rules
+     * @param controlActions    a List of IControlActions to be activated upon validation of the auto rules
+     */
     public MasterRule(List<IRule> rules, List<IRule> autoRules, List<ICardAction> cardActions, List<IControlAction> controlActions) {
         myRules = rules;
         myAutoRules = autoRules;
@@ -22,21 +36,31 @@ public class MasterRule implements IMasterRule {
         myControlActions = controlActions;
     }
 
+    /**
+     * Executes a move, validating it and updating card actions.
+     *
+     * @param move  the IMove to be processed
+     * @return      the new IGameState
+     */
     @Override
     public IGameState executeMove(IMove move) {
         if (checkValidMove(move)) {
-            //System.out.println("time to act");
-            for (ICardAction action: myCardActions) {
-                //System.out.println("\t let's do it");
+            for (ICardAction action : myCardActions) {
                 action.execute(move);
             }
         }
         return GameState.WAITING;
     }
 
+    /**
+     * Executes the automatic actions associated with the IMasterRule.
+     *
+     * @param player  the player to which points and adjustments should be made
+     * @param move    the IMove to be processed
+     * @return        an IPhaseArrow containing the current phase and the new phase to be updated to
+     */
     @Override
     public IPhaseArrow executeAutoActions(IPlayer player, IMove move) {
-        //TODO: USE AUTORULES FOR THIS CONDITIONAL
         if (checkAutoRules(move)) {
             IPhaseArrow lastArrow = null;
             for (IControlAction action : myControlActions) {
@@ -46,38 +70,46 @@ public class MasterRule implements IMasterRule {
         }
         return null;
     }
-    
+
+    /**
+     * Validates the auto rules based on a move.
+     *
+     * @param move    the IMove to validate
+     * @return        whether or not control changes should be processed accordingly
+     */
     @Override
     public boolean checkAutoRules(IMove move) {
         boolean flag = true;
-        for (IRule rule: myAutoRules) {
-            //System.out.println("yabbadabbadoo");
+        for (IRule rule : myAutoRules) {
             if (!rule.checkValidMove(move)) { //TODO: VERIFY THIS NULL WORKS
-                //System.out.println("yabbadabbadont1");
                 return false;
             }
-            //System.out.println("yabbadabbadont");
         }
         return flag;
     }
 
+    /**
+     * Validates the IMove.
+     *
+     * @param move    the IMove to validate
+     * @return        whether or not the move is valid for this IRule
+     */
     @Override
     public boolean checkValidMove(IMove move) {
-        //TODO: MAVERICK IS AN IDIOT AND A GENIUS
-        //return true;
-        //System.out.println("\n\nchecking valid move " + getName());
         boolean flag = true;
-        for (IRule rule: myRules) {
+        for (IRule rule : myRules) {
             if (!rule.checkValidMove(move)) {
-                //System.out.println(rule.getName());
-                //System.out.println("I hereby declare this move:" + false);
                 return false;
             }
         }
-        //System.out.println("I hereby declare this move:" + true);
         return flag;
     }
 
+    /**
+     * Retrieves the name of the IRule.
+     *
+     * @return the IRule's name
+     */
     @Override
     public String getName() {
         return MASTER_RULE;
