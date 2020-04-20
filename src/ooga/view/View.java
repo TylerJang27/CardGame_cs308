@@ -40,6 +40,9 @@ public class View implements ExternalAPI {
     private Menu myMenu;
     private GameScreen myGameScreen;
 
+    private static final double DEFAULT_WIDTH = 650;
+    private static final double DEFAULT_HEIGHT = 500;
+
     public View(Controller.GiveMove giveMove){
 
         ChangeTheme getTheme = (String theme) -> {
@@ -48,7 +51,7 @@ public class View implements ExternalAPI {
 
         getMove = giveMove::sendMove;
 
-        myMenu = new Menu(getTheme, myTheme);
+        myMenu = new Menu(getTheme, myTheme, DEFAULT_HEIGHT, DEFAULT_WIDTH);
 
         myStage = new Stage();
         myStage.setScene(myMenu.getScene());
@@ -71,7 +74,7 @@ public class View implements ExternalAPI {
             }
         });
 
-        myGameScreen = new GameScreen(getMove, (Layout) layout, 650, myTheme, backButton);
+        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton);
         myStage.setScene(myGameScreen.getScene());
 
         myStage.minHeightProperty().bind(Bindings.multiply(myGameScreen.getDisplayTable().getPane().widthProperty(),layout.getScreenRatio()));

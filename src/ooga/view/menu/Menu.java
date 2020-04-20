@@ -18,10 +18,7 @@ import javafx.stage.Stage;
 import ooga.view.View;
 
 public class Menu {
-  private static final double DEFAULT_HEIGHT= 500;
-  private static final double DEFAULT_WIDTH= 650;
   private static final Insets MARGINS = new Insets(305,20,20,20);
-  private static final double SPACING = 10;
   private static final ResourceBundle LANGUAGES = ResourceBundle.getBundle("ooga.resources.languages.supportedlanguages");
   private static final String CHOICES = "ooga.resources.languages.menu";
   private static final ResourceBundle GAMES = ResourceBundle.getBundle("ooga.resources.languages.menu.English");
@@ -35,7 +32,7 @@ public class Menu {
 
   private View.ChangeTheme myThemeLambda;
 
-  public Menu(View.ChangeTheme themeLambda, String defaultTheme){
+  public Menu(View.ChangeTheme themeLambda, String defaultTheme, double screenHeight, double screenWidth){
 
     myThemeLambda = themeLambda;
     myGameProperty = new SimpleStringProperty();
@@ -47,7 +44,7 @@ public class Menu {
     setCenter();
     setBottomBorder();
 
-    myScene = new Scene(myBorderPane,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+    myScene = new Scene(myBorderPane,screenWidth,screenHeight);
     myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+defaultTheme.toLowerCase()+"/mainmenu.css").toExternalForm()); //
 
   }
