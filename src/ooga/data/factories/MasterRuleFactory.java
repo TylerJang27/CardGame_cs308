@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.function.Function;
 
 /**
- * This MasterRuleFactory implements Factory constructs IMasterRules using the createMasterRules() method.
+ * This MasterRuleFactory implements Factory and constructs IMasterRules using the createMasterRules() method.
  * These IMasterRules contain logic to determine whether a move is valid and whether phase changes should occur.
  *
  * This Factory depends on RuleFactory and ActionFactory working properly.
@@ -159,15 +159,15 @@ public class MasterRuleFactory implements Factory {
     private static void getCardActions(String ruleName, List<ICardAction> cardActionList, NodeList allActions) {
         Node recAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(RECEIVER_DESTINATION));
         if (recAction != null) {
-            cardActionList.add(ActionFactory.getAction((Element) recAction, ruleName + R));
+            cardActionList.add(ActionFactory.cardAction((Element) recAction, ruleName + R));
         }
         Node movAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(MOVER_DESTINATION));
         if (movAction != null) {
-            cardActionList.add(ActionFactory.getAction((Element) movAction, ruleName + M));
+            cardActionList.add(ActionFactory.cardAction((Element) movAction, ruleName + M));
         }
         Node donAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(DONOR_DESTINATION));
         if (donAction != null) {
-            cardActionList.add(ActionFactory.getAction((Element) donAction, ruleName + D));
+            cardActionList.add(ActionFactory.cardAction((Element) donAction, ruleName + D));
         }
     }
 
