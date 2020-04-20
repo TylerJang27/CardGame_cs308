@@ -11,8 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This PhaseMachineFactory implements Factory and constructs a PhaseMachine using the getPhaseMachine() method.
- * This PhaseMachine is used to govern the flow of rules, actions, and moves within a card game.
+ * This PhaseMachineFactory implements Factory and constructs an IPhaseMachine using the getPhaseMachine() method.
+ * This IPhaseMachine is used to govern the flow of rules, actions, and moves within a card game.
  * <p>
  * This Factory is dependent on CellGroupFactory, DeckFactory, MasterRuleFactory, and PhaseFactory functioning properly.
  *
