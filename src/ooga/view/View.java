@@ -34,19 +34,20 @@ public class View implements ExternalAPI {
         public void setTheme(String theme);
     }
 
-    private Stage gameStage;
-    private Menu myMenu;
-    private DisplayTable myDisplayTable;
 
     private IMove myLatestMove;
     private TriggerMove getMove;
 
-    private BorderPane myRoot;
-
     private String myTheme = "Duke"; // fixme decide on a default and implement
 
+    private Menu myMenu;
+    private DisplayTable myDisplayTable;
+    private BorderPane myRoot;
+
     // trying to get scene transition
-    
+    private Stage myStage;
+    private Scene myGameScene;
+    private Scene myMenuScene;
 
     public View(Controller.GiveMove giveMove){
 
@@ -54,14 +55,16 @@ public class View implements ExternalAPI {
             myTheme = theme;
         };
 
-        myMenu = new RowMenu(getTheme, myTheme);
-        myMenu.show();
-
         getMove = (IMove move) -> {
             myLatestMove = move;
             giveMove.sendMove(move);
         };
 
+        myMenu = new RowMenu(getTheme, myTheme);
+
+        myStage = new Stage();
+        myStage.setScene(myMenuScene);
+        myStage.show();
     }
 
     public void reportError(String key, String... formats){
@@ -107,8 +110,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void endGame(Map<Integer, Boolean> playerOutcomes, Map<Integer, Double> playerScores, Map<Integer, Integer> highScores) {
-        myMenu.show();
-
+        // idk
     }
 
     /**
@@ -169,13 +171,13 @@ public class View implements ExternalAPI {
         myDisplayTable = new DisplayTable(getMove, (Layout) layout, 650, myTheme);
         myRoot = new BorderPane();
         myRoot.setCenter(myDisplayTable.getPane());
-        Scene gameScene = new Scene(myRoot,650,500);
-        gameScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme+"/gametable.css").toExternalForm()); //
-        gameStage = new Stage();
-        gameStage.setScene(gameScene);
-        gameStage.show();
-        gameStage.minHeightProperty().bind(Bindings.multiply(myDisplayTable.getPane().widthProperty(),layout.getScreenRatio()));
-        gameStage.minWidthProperty().bind(Bindings.divide(myDisplayTable.getPane().heightProperty(),layout.getScreenRatio()));
+        myGameScene = new Scene(myRoot,650,500);
+        myGameScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme+"/gametable.css").toExternalForm()); //
+        //myStage = new Stage();
+        myStage.setScene(myGameScene);
+        //myStage.show();
+        myStage.minHeightProperty().bind(Bindings.multiply(myDisplayTable.getPane().widthProperty(),layout.getScreenRatio()));
+        myStage.minWidthProperty().bind(Bindings.divide(myDisplayTable.getPane().heightProperty(),layout.getScreenRatio()));
     }
 
     public void listenForGameChoice(ChangeListener<String> listener){

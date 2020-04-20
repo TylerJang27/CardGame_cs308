@@ -48,11 +48,15 @@ public class RowMenu implements Menu {
     setCenter();
     setBottomBorder();
 
-    myStage = new Stage();
+    //myStage = new Stage();
     myScene = new Scene(myPane,DEFAULT_WIDTH,DEFAULT_HEIGHT);
     myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+defaultTheme.toLowerCase()+"/mainmenu.css").toExternalForm()); //
-    myStage.setScene(myScene);
+    //myStage.setScene(myScene);
 
+  }
+
+  public Scene getScene() {
+    return myScene;
   }
 
   private void setBottomBorder() {
