@@ -141,6 +141,11 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setStyle(IStyle style) {
+        //myStyle = style;
+        //myTheme = style.getTableSkinPath();
+        /*
+        style.setTableSkinPath(myTheme); //when the combobox is updated
+         */
     }
 
     public void reportError(String key, String... formats){
