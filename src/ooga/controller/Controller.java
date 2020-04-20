@@ -12,6 +12,7 @@ import ooga.view.View;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,6 +69,7 @@ public class Controller extends Application {
                 //System.out.println(myCurrentCells.get("heart"));
                 //System.out.println(myCurrentCells.get("heart").getDeck().peek());
             }
+            processInvalidMove(move);
             myView.setUpdatesToCellData(myChangedCells);
             myPreviousCells = myCurrentCells;
             myChangedCells.clear();
@@ -78,6 +80,18 @@ public class Controller extends Application {
         myStyleFile = new File(DEFAULT_STYLE_FILE);
         //myStyle = StyleFactory.getStyle(myStyleFile);
         //myView.setStyle(myStyle);
+    }
+
+    private void processInvalidMove(IMove move) {
+        if (myChangedCells.size() == 0) {
+            List<ICell> resetters = List.of(move.getRecipient(), move.getMover(), move.getDonor());
+            for (ICell c: resetters) {
+                c=c.findHead();
+                if (c != null) {
+                    myChangedCells.put(c.getName(), c);
+                }
+            }
+        }
     }
 
     //TODO: REPLACE WITH LOGIC REGARDING METHODS AT THE BOTTOM
