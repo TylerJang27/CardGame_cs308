@@ -6,14 +6,11 @@ import ooga.cardtable.*;
 import ooga.data.factories.PhaseMachineFactory;
 import ooga.data.factories.LayoutFactory;
 import ooga.data.rules.IPhaseMachine;
-import ooga.data.rules.LayoutDummy;
-import ooga.data.rules.PhaseMachine;
 
 import ooga.data.style.IStyle;
 import ooga.view.View;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,7 +103,7 @@ public class Controller extends Application {
         // TODO: Give game name somehow, figure out who's building the phase machine
         myRuleFile = new File(DEFAULT_RULE_FILE);
 
-        myCurrentPhaseMachine = PhaseMachineFactory.getPhaseMachine(myRuleFile);
+        myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
         myTable = new Table(myCurrentPhaseMachine);
         myCellMap = myTable.getCellData();
         File f = new File(myCurrentPhaseMachine.getSettings().getLayout());

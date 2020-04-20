@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * This SettingsFactory implements Factory and constructs an ISettings using the getSettings() method.
+ * This SettingsFactory implements Factory and constructs an ISettings using the createSettings() method.
  * This ISettings is used to store information about rules and configuration for a given game, including the filepath to its layout file.
  *
  * @author Tyler Jang
@@ -30,7 +30,7 @@ public class SettingsFactory implements Factory {
      * @param root the root of the file from which an ISettings is built
      * @return an ISettings implementation storing information about setup and game play
      */
-    public static ISettings getSettings(Element root) {
+    public static ISettings createSettings(Element root) {
         try {
             Map<String, String> settings = XMLHelper.readStringSettings(root, resources);
 

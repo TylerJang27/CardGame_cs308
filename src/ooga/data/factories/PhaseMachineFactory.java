@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This PhaseMachineFactory implements Factory and constructs an IPhaseMachine using the getPhaseMachine() method.
+ * This PhaseMachineFactory implements Factory and constructs an IPhaseMachine using the createPhaseMachine() method.
  * This IPhaseMachine is used to govern the flow of rules, actions, and moves within a card game.
  * <p>
  * This Factory is dependent on CellGroupFactory, DeckFactory, MasterRuleFactory, and PhaseFactory functioning properly.
@@ -32,12 +32,12 @@ public class PhaseMachineFactory implements Factory {
      * @param dataFile the file from which to build an IPhaseMachine implementation
      * @return an IPhaseMachine implementation built and initialized based on the rules XML.
      */
-    public static IPhaseMachine getPhaseMachine(File dataFile) {
+    public static IPhaseMachine createPhaseMachine(File dataFile) {
         try {
             Element root = XMLHelper.getRootAndCheck(dataFile, RULES_TYPE, INVALID_ERROR);
-            ISettings settings = SettingsFactory.getSettings(root);
-            IDeck deck = DeckFactory.getDeck(root);
-            Map<String, ICellGroup> cellGroups = CellGroupFactory.getCellGroups(root);
+            ISettings settings = SettingsFactory.createSettings(root);
+            IDeck deck = DeckFactory.createDeck(root);
+            Map<String, ICellGroup> cellGroups = CellGroupFactory.createCellGroups(root);
             Map<String, ICell> allBaseCells = getAllCells(cellGroups);
             Map<String, IPhase> phases = PhaseFactory.getPhases(root, cellGroups, allBaseCells);
 

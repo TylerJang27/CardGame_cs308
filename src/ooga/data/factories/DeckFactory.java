@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * This DeckFactory implements Factory and constructs an IDeck using the getDeck() method.
+ * This DeckFactory implements Factory and constructs an IDeck using the createDeck() method.
  * Has the option to read in a Deck from a separate file or directly from a rules file.
  * This IDeck is used to store information about all the cards, including their name, color, suit, and value.
  *
@@ -44,7 +44,7 @@ public class DeckFactory implements Factory {
      * @return              a fully constructed IDeck instance
      * @throws XMLException if deck is empty or missing
      */
-    public static IDeck getDeck(Element root) {
+    public static IDeck createDeck(Element root) {
         try {
             Node deck = root.getElementsByTagName(DECK).item(0);
             if (deck.hasChildNodes()) {

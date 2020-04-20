@@ -38,8 +38,8 @@ public class PhaseMachine implements IPhaseMachine {
     for (Map.Entry<String, ICell> e: getTopLevelCells().entrySet()) {
       cells.add(e.getValue());
     }
-    for (Map.Entry<String, ICellGroup> e: currentPhase.getMyCellGroupMap().entrySet()) {
-      e.getValue().initializeAll(deckCopy);
+    for (Map.Entry<String, ICell> e: currentPhase.getMyCellMap().entrySet()) {
+      e.getValue().initializeCards(deckCopy);
     }
     cycleAutomatic();
   }
