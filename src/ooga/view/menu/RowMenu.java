@@ -77,7 +77,6 @@ public class RowMenu implements Menu {
         myThemeLambda.setTheme(newValue);
         myScene.getStylesheets().clear();
         myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue.toLowerCase()+"/mainmenu.css").toExternalForm());
-        //myScene.getStylesheets().remove(getClass().getResource("/ooga/resources/skins/"+oldValue.toLowerCase()+"/mainmenu.css").toExternalForm()); // fixme null pointer exception on firstclick
       }
     });
 
