@@ -47,8 +47,9 @@ public class DisplayCell {
                 myImageView = new ImageView(new Image(cardNameToFileName.get("faceDown")));
                 myImageView.getStyleClass().add("cardskin");
             }
+
         } else {
-            myImageView = new ImageView(new Image(cardNameToFileName.get("celloutline")));
+            myImageView = new ImageView(new Image("/ooga/resources/em.jpg"));
         }
 
         myImageView.layoutXProperty().bind(Bindings.divide(myImageView.fitWidthProperty(),-2));
