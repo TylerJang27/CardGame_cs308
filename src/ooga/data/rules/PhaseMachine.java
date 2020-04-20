@@ -21,16 +21,26 @@ public class PhaseMachine implements IPhaseMachine {
   private IDeck fullDeck;
 
   public PhaseMachine(Map<String, IPhase> ph, String startName, ISettings settings, IDeck deck) {
+    fullDeck = deck;
     lastMove = null;
     history = new ArrayList<>();
     phases = ph;
     startPhase = phases.get(startName);
+    mySettings = settings;
+    restartGame();
+  }
+
+  @Override
+  public void restartGame() {
     currentPhase = startPhase;
     cells = new ArrayList<>();
+    IDeck deckCopy = fullDeck.copy();
     for (Map.Entry<String, ICell> e: getTopLevelCells().entrySet()) {
       cells.add(e.getValue());
     }
-    mySettings = settings;
+    for (Map.Entry<String, ICellGroup> e: currentPhase.getMyCellGroupMap().entrySet()) {
+      e.getValue().initializeAll(deckCopy);
+    }
     cycleAutomatic();
   }
 

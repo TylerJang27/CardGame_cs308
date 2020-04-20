@@ -31,30 +31,14 @@ public class PhaseMachineFactory implements Factory {
             Element root = XMLHelper.getRootAndCheck(dataFile, RULES_TYPE, INVALID_ERROR);
             ISettings settings = SettingsFactory.getSettings(root);
             IDeck deck = DeckFactory.getDeck(root);
-            IDeck deckCopy = deck.copy();
-            Map<String, ICellGroup> cellGroups = initializeCellsFromDeck(root, deck);
+            Map<String, ICellGroup> cellGroups = CellGroupFactory.getCellGroups(root);
             Map<String, ICell> allBaseCells = getAllCells(cellGroups);
             Map<String, IPhase> phases = PhaseFactory.getPhases(root, cellGroups, allBaseCells);
 
-            return new PhaseMachine(phases, START, settings, deckCopy);
+            return new PhaseMachine(phases, START, settings, deck);
         } catch (Exception e) {
             throw new XMLException(e, Factory.MISSING_ERROR + "," + RULES_TYPE);
         }
-    }
-
-    /**
-     * Builds the cell groups with initial configuration. Returns a Map of String cell group names to cell groups.
-     *
-     * @param root  the root of the document to read game rules from
-     * @param deck  the deck from which to initialize the cells
-     * @return      Map of String cell group names to cell groups
-     */
-    private static Map<String, ICellGroup> initializeCellsFromDeck(Element root, IDeck deck) {
-        Map<String, ICellGroup> cellGroups = CellGroupFactory.getCellGroups(root);
-        for (Map.Entry<String, ICellGroup> e : cellGroups.entrySet()) {
-            e.getValue().initializeAll(deck);
-        }
-        return cellGroups;
     }
 
     /**
