@@ -7,7 +7,6 @@
 .root{
     -fx-font-size: 12pt;
     -fx-font-family: "Stencil";
-    -fx-base: #BBA1BB;
     -fx-background-image: url("dukefans.gif");
     -fx-background-size: stretch;
     -fx-focus-color: #FFFFFF;
