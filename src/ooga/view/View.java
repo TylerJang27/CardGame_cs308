@@ -49,7 +49,6 @@ public class View implements ExternalAPI {
 
         ChangeTheme getTheme = (String theme) -> {
             myTheme = theme;
-            System.out.println("Theme is "+theme);
         };
 
         myMenu = new RowMenu(getTheme, myTheme);

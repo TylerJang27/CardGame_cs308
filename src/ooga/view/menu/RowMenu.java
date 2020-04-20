@@ -75,7 +75,8 @@ public class RowMenu implements Menu {
       public void changed(ObservableValue<? extends String> observable, String oldValue,
                           String newValue) {
         myThemeLambda.setTheme(newValue);
-        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue.toLowerCase()+"/mainmenu.css").toExternalForm()); //
+        myScene.getStylesheets().clear();
+        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue.toLowerCase()+"/mainmenu.css").toExternalForm());
         //myScene.getStylesheets().remove(getClass().getResource("/ooga/resources/skins/"+oldValue.toLowerCase()+"/mainmenu.css").toExternalForm()); // fixme null pointer exception on firstclick
       }
     });
