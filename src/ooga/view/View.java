@@ -50,6 +50,7 @@ public class View implements ExternalAPI {
     private Stage myStage;
     private Scene myGameScene;
     private Scene myMenuScene;
+    private IStyle myStyle;
 
     public View(Controller.GiveMove giveMove){
 
@@ -161,6 +162,11 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setStyle(IStyle style) {
+        myStyle = style;
+        //myTheme = style.getTableSkinPath();
+        /*
+        style.setTableSkinPath(myTheme); //when the combobox is updated
+         */
     }
 
     /**
