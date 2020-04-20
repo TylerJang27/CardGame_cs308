@@ -27,6 +27,13 @@
     -fx-spacing: 20;
     -fx-padding: 5;
     -fx-font-family: "Arial Black";
+    -fx-font-size: 10pt;
+    -fx-alignment: "center";
+}
+
+.score{
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 10pt;
 }
 
 .cardskin{

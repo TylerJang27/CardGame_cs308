@@ -133,7 +133,7 @@ public class View implements ExternalAPI {
             }
         });
 
-        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, restartButton, myMenu.getGame());
+        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, restartButton, myMenu.getGame(), currentMessages.getString("score"));
         myStage.setScene(myGameScreen.getScene());
 
         myStage.minHeightProperty().bind(Bindings.multiply(myGameScreen.getDisplayTable().getPane().widthProperty(),layout.getScreenRatio()));
@@ -203,7 +203,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setScores(Map<Integer, Double> playerScores) {
-
+        myGameScreen.updateScore(playerScores.get(0));
     }
 
 
