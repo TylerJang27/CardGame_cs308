@@ -45,21 +45,11 @@ public class DisplayCell {
                 myImageView = new ImageView(new Image(cardNameToFileName.get(myCell.getDeck().peek().getName())));
             } else {
                 myImageView = new ImageView(new Image(cardNameToFileName.get("faceDown")));
+                myImageView.getStyleClass().add("cardskin");
             }
 
-/*
-            try {
-                Image faceUp = new Image(cardName + ".png");//cardNameToFileName.get(myCell.getDeck().peek().getName()));
-            } catch (IllegalArgumentException e) {
-                Image faceUp = new Image("0C" + ".png"); //TODO: REPLACE WITH A DEFAULT CARD SKIN
-            }
-*/
         } else {
-            /*String cellName = myCell.getName();
-                myFaceUp = new Image(cardNameToFileName.get(cellName));
-
-             */
-            myImageView = new ImageView(new Image(cardNameToFileName.get("celloutline")));
+            myImageView = new ImageView(new Image("/ooga/resources/em.jpg"));
         }
 
         myImageView.layoutXProperty().bind(Bindings.divide(myImageView.fitWidthProperty(),-2));

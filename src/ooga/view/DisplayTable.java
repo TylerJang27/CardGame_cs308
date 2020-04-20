@@ -47,9 +47,10 @@ public class DisplayTable {
     ICell myRecipient;
     IMove myMove;
 
-    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenWidth) {
+    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme) {
 
         myPane = new Pane();
+
 
         myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
         myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());

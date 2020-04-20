@@ -2,11 +2,15 @@ package ooga.view;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
 import ooga.controller.Controller;
@@ -27,25 +31,42 @@ public class View implements ExternalAPI {
         public void giveIMove(IMove move);
     }
 
-    private Stage gameStage;
-    private Menu myMenu;
-    private DisplayTable myDisplayTable;
+    @FunctionalInterface
+    public interface ChangeTheme {
+        public void setTheme(String theme);
+    }
+
 
     private IMove myLatestMove;
     private TriggerMove getMove;
 
+    private String myTheme = "Duke"; // fixme decide on a default and implement
+
+    private Menu myMenu;
+    private DisplayTable myDisplayTable;
     private BorderPane myRoot;
 
+    // trying to get scene transition
+    private Stage myStage;
+    private Scene myGameScene;
+    private Scene myMenuScene;
+
     public View(Controller.GiveMove giveMove){
-        myMenu = new RowMenu();
-        myMenu.show();
+
+        ChangeTheme getTheme = (String theme) -> {
+            myTheme = theme;
+        };
 
         getMove = (IMove move) -> {
             myLatestMove = move;
             giveMove.sendMove(move);
-            System.out.println("View has the latest move");
         };
 
+        myMenu = new RowMenu(getTheme, myTheme);
+        myMenuScene = myMenu.getScene();
+        myStage = new Stage();
+        myStage.setScene(myMenuScene);
+        myStage.show();
     }
 
     public void reportError(String key, String... formats){
@@ -91,8 +112,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void endGame(Map<Integer, Boolean> playerOutcomes, Map<Integer, Double> playerScores, Map<Integer, Integer> highScores) {
-        myMenu.show();
-
+        // idk
     }
 
     /**
@@ -141,7 +161,6 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setStyle(IStyle style) {
-        //TODO: find out style formatting
     }
 
     /**
@@ -151,15 +170,27 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setLayout(ILayout layout) {
-        myDisplayTable = new DisplayTable(getMove, (Layout) layout, 500);
+        myDisplayTable = new DisplayTable(getMove, (Layout) layout, 650, myTheme);
         myRoot = new BorderPane();
         myRoot.setCenter(myDisplayTable.getPane());
-        Scene gameScene = new Scene(myRoot,500,500);
-        gameStage = new Stage();
-        gameStage.setScene(gameScene);
-        gameStage.show();
-        gameStage.minHeightProperty().bind(Bindings.multiply(myDisplayTable.getPane().widthProperty(),layout.getScreenRatio()));
-        gameStage.minWidthProperty().bind(Bindings.divide(myDisplayTable.getPane().heightProperty(),layout.getScreenRatio()));
+
+        HBox dashboard = new HBox();
+        Button backbutton = new Button();
+        backbutton.setGraphic(new ImageView(new Image("/ooga/resources/backarrow.png", 20, 20, false, false)));
+        backbutton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                myStage.setScene(myMenuScene);
+                // TODO: tell backend the current game has ended
+            }
+        });
+        dashboard.getChildren().add(backbutton);
+        myRoot.setBottom(dashboard);
+
+        myGameScene = new Scene(myRoot,650,500);
+        myGameScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme+"/gametable.css").toExternalForm()); //
+        myStage.setScene(myGameScene);
+        myStage.minHeightProperty().bind(Bindings.multiply(myDisplayTable.getPane().widthProperty(),layout.getScreenRatio()));
+        myStage.minWidthProperty().bind(Bindings.divide(myDisplayTable.getPane().heightProperty(),layout.getScreenRatio()));
     }
 
     public void listenForGameChoice(ChangeListener<String> listener){

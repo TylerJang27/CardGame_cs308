@@ -1,0 +1,26 @@
+/*
+    This is a required file for using the SpaceRetro Theme
+    Document: SpaceRetro Theme Game Table
+    Required path: skins/spaceretro/gametable.css
+*/
+
+.root{
+    -fx-font-size: 12pt;
+    -fx-font-family: "Arial Black";
+    -fx-base: #BBA1BB;
+    -fx-background-image: url("galaxy.jpg");
+    -fx-background-size: stretch;
+    -fx-focus-color: #FFFFFF;
+}
+
+.cardskin{
+    -fx-image: url(starry.png);
+}
+
+.button{
+    -fx-background-color: linear-gradient(#E4E4E4, #D5D5D5);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#E084E0, #EFE1EF);
+}
