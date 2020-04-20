@@ -16,3 +16,11 @@
 .cardskin{
     -fx-image: url(starry.png);
 }
+
+.button{
+    -fx-background-color: linear-gradient(#E4E4E4, #D5D5D5);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#E084E0, #EFE1EF);
+}

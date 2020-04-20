@@ -15,4 +15,6 @@ public interface Menu {
   void show();
 
   void addChosenHandler(ChangeListener<String> listener);
+
+  Scene getScene();
 }

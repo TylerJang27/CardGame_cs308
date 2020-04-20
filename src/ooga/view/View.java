@@ -2,12 +2,15 @@ package ooga.view;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
 import ooga.controller.Controller;
@@ -29,8 +32,7 @@ public class View implements ExternalAPI {
     }
 
     @FunctionalInterface
-    public
-    interface ChangeTheme {
+    public interface ChangeTheme {
         public void setTheme(String theme);
     }
 
@@ -61,7 +63,7 @@ public class View implements ExternalAPI {
         };
 
         myMenu = new RowMenu(getTheme, myTheme);
-
+        myMenuScene = myMenu.getScene();
         myStage = new Stage();
         myStage.setScene(myMenuScene);
         myStage.show();
@@ -171,11 +173,22 @@ public class View implements ExternalAPI {
         myDisplayTable = new DisplayTable(getMove, (Layout) layout, 650, myTheme);
         myRoot = new BorderPane();
         myRoot.setCenter(myDisplayTable.getPane());
+
+        HBox dashboard = new HBox();
+        Button backbutton = new Button();
+        backbutton.setGraphic(new ImageView(new Image("/ooga/resources/backarrow.png", 20, 20, false, false)));
+        backbutton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                myStage.setScene(myMenuScene);
+                // TODO: tell backend the current game has ended
+            }
+        });
+        dashboard.getChildren().add(backbutton);
+        myRoot.setBottom(dashboard);
+
         myGameScene = new Scene(myRoot,650,500);
         myGameScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme+"/gametable.css").toExternalForm()); //
-        //myStage = new Stage();
         myStage.setScene(myGameScene);
-        //myStage.show();
         myStage.minHeightProperty().bind(Bindings.multiply(myDisplayTable.getPane().widthProperty(),layout.getScreenRatio()));
         myStage.minWidthProperty().bind(Bindings.divide(myDisplayTable.getPane().heightProperty(),layout.getScreenRatio()));
     }

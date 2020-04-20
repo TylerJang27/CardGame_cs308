@@ -16,3 +16,12 @@
 .cardskin{
     -fx-image: url(duked.png);
 }
+
+.button{
+    -fx-background-color: linear-gradient(#C9C9C9 , #DFDFDF );
+
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#000FFF , #D8DBFF  );
+}
