@@ -191,20 +191,20 @@ public class MasterRuleFactory implements Factory {
 
             Node recRule = XMLHelper.getNodeByName(allConditions, RESOURCES.getString(RECEIVER));
             if (recRule != null) {
-                allRules.add(RuleFactory.buildRule((Element) recRule, ruleName + R, cellGroupMap, (IMove move) -> checkRecipient(move, ruleName, cellGroupMap)));
+                allRules.add(RuleFactory.createRule((Element) recRule, ruleName + R, cellGroupMap, (IMove move) -> checkRecipient(move, ruleName, cellGroupMap)));
             }
             Node movRule = XMLHelper.getNodeByName(allConditions, RESOURCES.getString(MOVER));
             if (movRule != null) {
-                allRules.add(RuleFactory.buildRule((Element) movRule, ruleName + M, cellGroupMap));
+                allRules.add(RuleFactory.createRule((Element) movRule, ruleName + M, cellGroupMap));
             }
             Node donRule = XMLHelper.getNodeByName(allConditions, RESOURCES.getString(DONOR));
             if (donRule != null) {
-                allRules.add(RuleFactory.buildRule((Element) donRule, ruleName + D, cellGroupMap));
+                allRules.add(RuleFactory.createRule((Element) donRule, ruleName + D, cellGroupMap));
             }
             NodeList condRuleList = receiverRuleNode.getElementsByTagName(RESOURCES.getString(CONDITION));
             for (int l = 0; l < condRuleList.getLength(); l++) {
                 Node condRule = condRuleList.item(l);
-                autoRules.add(RuleFactory.buildRule((Element) condRule, ruleName + C, cellGroupMap));
+                autoRules.add(RuleFactory.createRule((Element) condRule, ruleName + C, cellGroupMap));
             }
         }
         return allRules;

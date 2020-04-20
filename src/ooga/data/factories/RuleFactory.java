@@ -9,9 +9,18 @@ import ooga.data.rules.IRule;
 import ooga.data.rules.Rule;
 import org.w3c.dom.Element;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.function.Function;
 
+/**
+ * This RuleFactory implements Factory and constructs IRules using the createRule() method.
+ * These IRules validate logic at runtime for given IMoves.
+ *
+ * @author Tyler Jang
+ */
 public class RuleFactory implements Factory {
     private static final ResourceBundle RESOURCES = PhaseFactory.RESOURCES;
 
@@ -61,22 +70,35 @@ public class RuleFactory implements Factory {
     private static final String NO = PhaseFactory.NO;
 
     private static final List<String> TRUE_CHECKS = MasterRuleFactory.TRUE_CHECKS;
-    
-    public static IRule buildRule(Element e, String ruleName, Map<String, ICellGroup> cellGroupMap) {
-        return buildRule(e, ruleName, cellGroupMap, (IMove move)->{
-            //System.out.println("default true");
-            return true;
-        });
+
+    /**
+     * The default method for building and returning a singular IRule from a rules XML. Requirements for rules XML can be found in ___.
+     *
+     * @param e             the Element from which IRules are built
+     * @param ruleName      the Name of the Rule being created
+     * @param cellGroupMap  the Map of String ICellGroup names to ICellGroups
+     * @return              an IRule built for this IMasterRule
+     */
+    public static IRule createRule(Element e, String ruleName, Map<String, ICellGroup> cellGroupMap) {
+        return createRule(e, ruleName, cellGroupMap, (IMove move) -> true);
     }
 
-    public static IRule buildRule(Element e, String ruleName, Map<String, ICellGroup> cellGroupMap, Function<IMove, Boolean> cond) {
+    /**
+     * Builds and returns a singular IRule from a rules XML. Requirements for rules XML can be found in ___.
+     *
+     * @param e             the Element from which IRules are built
+     * @param ruleName      the Name of the Rule being created
+     * @param cellGroupMap  the Map of String ICellGroup names to ICellGroups
+     * @param cond          the first condition to be added to createRule
+     * @return              an IRule built for this IMasterRule
+     */
+    public static IRule createRule(Element e, String ruleName, Map<String, ICellGroup> cellGroupMap, Function<IMove, Boolean> cond) {
         List<Function<IMove, Boolean>> conditions = new ArrayList<>();
         conditions.add(cond);
 
         try {
             Function<IMove, ICell> moverCell = (IMove move) -> move.getMover();
             Function<IMove, ICell> donorCell = (IMove move) -> move.getDonor();
-            //Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
             Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
             Function<IMove, ICell> currCell = MasterRuleFactory.getCurrentCellFunction(ruleName, moverCell, donorCell, recipientCell);
 
@@ -88,21 +110,27 @@ public class RuleFactory implements Factory {
             extractNameCondition(e, cellGroupMap, conditions, currCell);
 
             extractConditionCondition(e, cellGroupMap, conditions);
-            //System.out.println(conditions.size() + " is my condition size");
             return new Rule(ruleName, conditions);
         } catch (Exception ee) {
             throw new XMLException(ee, Factory.MISSING_ERROR + "," + RESOURCES.getString(RULES));
         }
     }
 
+    /**
+     * Extracts the global conditions that must be met for a rule to be considered valid.
+     *
+     * @param e             the Element from which to parse conditions
+     * @param cellGroupMap  the Map of String ICellGroup names to ICellGroups
+     * @param conditions    the List of Functions to which conditions should be added
+     */
     private static void extractConditionCondition(Element e, Map<String, ICellGroup> cellGroupMap, List<Function<IMove, Boolean>> conditions) {
         String cellOrGroupName = XMLHelper.getAttribute(e, RESOURCES.getString(CATEGORY));
         if (cellGroupMap != null && !TRUE_CHECKS.contains(cellOrGroupName)) {
             List<ICell> allMatchingCells = new ArrayList<>();
-            for (Map.Entry<String, ICellGroup> entry: cellGroupMap.entrySet()) {
+            for (Map.Entry<String, ICellGroup> entry : cellGroupMap.entrySet()) {
                 allMatchingCells.addAll(entry.getValue().getCellsbyName(cellOrGroupName));
             }
-            for (ICell cell: allMatchingCells) {
+            for (ICell cell : allMatchingCells) {
                 extractFaceUpCondition(e, conditions, (IMove move) -> cell);
                 extractColorCondition(e, conditions, (IMove move) -> cell, (IMove move) -> cell);
                 extractSuitCondition(e, conditions, (IMove move) -> cell, (IMove move) -> cell);
@@ -111,123 +139,115 @@ public class RuleFactory implements Factory {
         }
     }
 
+    /**
+     * Extracts the name of an ICell that must match the particular Rule and adds it as a Function to conditions.
+     *
+     * @param e             the Element from which to parse conditions
+     * @param cellGroupMap  the Map of String ICellGroup names to ICellGroups
+     * @param conditions    the List of Functions to which conditions should be added
+     * @param currCell      a Function to retrieve the current cell
+     */
     private static void extractNameCondition(Element e, Map<String, ICellGroup> cellGroupMap, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
         String name = XMLHelper.getTextValue(e, RESOURCES.getString(NAME));
         if (!TRUE_CHECKS.contains(name)) {
-            valueChecker = (IMove move) -> {
-                //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                //System.out.println("\tcurr: " + currCell.apply(move).getName());
-                //System.out.println("\t\tname result: " + ((cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(currCell.apply(move).findHead().getName())) || (currCell.apply(move).findHead().getName().equalsIgnoreCase(name))));
-                return (cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(currCell.apply(move).findHead().getName())) || (currCell.apply(move).findHead().getName().equalsIgnoreCase(name));
-            };
+            valueChecker = (IMove move) -> (cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(currCell.apply(move).findHead().getName())) || (currCell.apply(move).findHead().getName().equalsIgnoreCase(name));
             conditions.add(valueChecker);
         }
     }
 
+    /**
+     * Extracts whether an ICell should be faceup and adds it as a Function to conditions.
+     *
+     * @param e             the Element from which to parse conditions
+     * @param conditions    the List of Functions to which conditions should be added
+     * @param currCell      a Function to retrieve the current cell
+     */
     private static void extractFaceUpCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
         String faceUp = XMLHelper.getTextValue(e, RESOURCES.getString(IS_FACEUP));
         if (!TRUE_CHECKS.contains(faceUp)) {
             if (faceUp.equalsIgnoreCase(RESOURCES.getString(YES))) {
-                valueChecker = (IMove move) -> {
-                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    //System.out.println("\t\tfaceupY: " + (currCell.apply(move).getDeck().peek().isFaceUp()));
-                    return (currCell.apply(move).getDeck().peek().isFaceUp());
-                };
+                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().isFaceUp());
+
             } else {
-                valueChecker = (IMove move) -> {
-                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    //System.out.println("deck faceup?: " + currCell.apply(move).getDeck().peek().isFaceUp());
-                    //System.out.println("\t\tfaceupN: " + !(currCell.apply(move).getDeck().peek().isFaceUp()));
-                    return !(currCell.apply(move).getDeck().peek().isFaceUp());
-                };
+                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peek().isFaceUp());
             }
             conditions.add(valueChecker);
         }
     }
 
+    /**
+     * Extracts how many cards should be part of an IMove for this ICell and adds it as a Function to conditions.
+     *
+     * @param e             the Element from which to parse conditions
+     * @param conditions    the List of Functions to which conditions should be added
+     * @param currCell      a Function to retrieve the current cell
+     */
     private static void extractNumCardsCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
-        //System.out.println("yolofdsafdsafdsafdasfsdaffs");
-        //System.out.println(RESOURCES.getString(ALL).strip());
-        //System.out.println(XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)));
         String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).strip();
         if (!TRUE_CHECKS.contains(numCards)) {
             Integer value = Integer.parseInt(numCards);
-            valueChecker = (IMove move) -> {
-                //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                //System.out.println("\tcurr: " + currCell.apply(move).getName());
-                //System.out.println("\texpected numcards value: " + value);
-                //System.out.println("\t\tnumcards: " + (currCell.apply(move).getTotalSize() == value)); //FIXME: BREAKS HERE
-                return (currCell.apply(move).getTotalSize() == value);
-            };
+            valueChecker = (IMove move) -> (currCell.apply(move).getTotalSize() == value);
             conditions.add(valueChecker);
         }
     }
 
+    /**
+     * Extracts what suit should be this part of an IMove for this ICell and adds it as a Function to conditions.
+     *
+     * @param e             the Element from which to parse conditions
+     * @param conditions    the List of Functions to which conditions should be added
+     * @param recipientCell a Function to retrieve the recipient cell
+     * @param currCell      a Function to retrieve the current cell
+     */
     private static void extractSuitCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
         String suit = XMLHelper.getTextValue(e, RESOURCES.getString(SUIT));
         if (!TRUE_CHECKS.contains(suit)) {
             if (suit.equals(RESOURCES.getString(SAME))) {
-                valueChecker = (IMove move) -> {
-                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    //System.out.println("\t\tsuit: " + (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName())));
-                    return (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName()));
-                };
+                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName()));
             } else if (suit.equals(RESOURCES.getString(NOT))) {
-                valueChecker = (IMove move) -> {
-                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    //System.out.println("\t\tsuit: " + !(currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName())));
-                    return !(currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName()));
-                };
+                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName()));
             } else {
-                valueChecker = (IMove move) -> {
-                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    //System.out.println("\t\tsuit: " + (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(suit.toUpperCase())));
-                    return (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(suit.toUpperCase()));
-                };
+                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(suit.toUpperCase()));
             }
             conditions.add(valueChecker);
         }
     }
 
+    /**
+     * Extracts what color should be this part of an IMove for this ICell and adds it as a Function to conditions.
+     *
+     * @param e             the Element from which to parse conditions
+     * @param conditions    the List of Functions to which conditions should be added
+     * @param recipientCell a Function to retrieve the recipient cell
+     * @param currCell      a Function to retrieve the current cell
+     */
     private static void extractColorCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
         String color = XMLHelper.getTextValue(e, RESOURCES.getString(COLOR));
         if (!TRUE_CHECKS.contains(color)) {
             if (color.equals(RESOURCES.getString(SAME))) {
-                valueChecker = (IMove move) -> {
-                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    //System.out.println("\t\tcolor: " + (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName())));
-                    return currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName());
-                };
+                valueChecker = (IMove move) -> currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName());
             } else if (color.equals(RESOURCES.getString(NOT))) {
-                valueChecker = (IMove move) -> {
-                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    //System.out.println("\t\tcolor: " +!(currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName())));
-                    return !(currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName()));
-                };
+                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName()));
             } else {
-                valueChecker = (IMove move) -> {
-                    //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                    //System.out.println("\tcurr: " + currCell.apply(move).getName());
-                    //System.out.println("\t\tcolor: " +  (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase())));
-                    return (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase()));
-                };
+                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase()));
             }
             conditions.add(valueChecker);
         }
     }
 
+    /**
+     * Extracts what value should be this part of an IMove for this ICell and adds it as a Function to conditions.
+     *
+     * @param e             the Element from which to parse conditions
+     * @param conditions    the List of Functions to which conditions should be added
+     * @param recipientCell a Function to retrieve the recipient cell
+     * @param currCell      a Function to retrieve the current cell
+     */
     private static void extractValueCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
         String direction = XMLHelper.getTextValue(e, RESOURCES.getString(DIRECTION));
@@ -239,20 +259,8 @@ public class RuleFactory implements Factory {
             } else {
                 value = Integer.parseInt(valueText);
             }
-
-            valueChecker = (IMove move) -> {
-                //System.out.println("checking the value of mover:" + currCell.apply(move).getDeck());
-                //System.out.println("checking the value of mover:" + currCell.apply(move).getDeck().peek().getValue().getNumber());
-                //System.out.println("checking the value of rec:" + recipientCell.apply(move).getDeck().peek().getValue());
-                //System.out.println("checking the value of rec:" + recipientCell.apply(move).getDeck().peek().getValue().getNumber());
-                //System.out.println("d: " + move.getDonor().getName() + "|m: " + move.getMover().getName() + "|r: " + move.getRecipient().getName());
-                //System.out.println("\tcurr: " + currCell.apply(move).getName());
-                //System.out.println("\t\tvalue: " + (currCell.apply(move).getDeck().peek().getValue().getNumber() - value ==
-                //        recipientCell.apply(move).getDeck().peek().getValue().getNumber()));
-
-                return (currCell.apply(move).getDeck().peek().getValue().getNumber() - value ==
+            valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().getValue().getNumber() - value ==
                         recipientCell.apply(move).getDeck().peek().getValue().getNumber());
-                };
             conditions.add(valueChecker);
         }
     }
