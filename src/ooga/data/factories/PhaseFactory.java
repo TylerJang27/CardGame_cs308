@@ -13,6 +13,12 @@ import org.w3c.dom.NodeList;
 
 import java.util.*;
 
+/**
+ * This PhaseFactory implements Factory and constructs IPhases using the createPhases() method.
+ * These IPhases are used to store information about the rules and actions that process the players' moves, functioning as a finite state machine.
+ *
+ * @author Tyler Jang
+ */
 public class PhaseFactory implements Factory {
     protected static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
     protected static final String PHASES = "phases";
@@ -38,7 +44,7 @@ public class PhaseFactory implements Factory {
     protected static final String NUMBER_CARDS = "NumberCards";
     protected static final String IS_FACEUP = "IsFaceup";
     protected static final String DONOR = "Donor";
-    protected static final String ALL = "*";
+    protected static final String ALL_STAR = "*";
     protected static final String ACTION = "Action";
     protected static final String RECEIVER_DESTINATION = "ReceiverDestination";
     protected static final String DESTINATION = "Destination";
@@ -69,53 +75,60 @@ public class PhaseFactory implements Factory {
     protected static final String PRESERVE = "Preserve";
     protected static final String REVERSE = "Reverse";
 
-    public static Map<String, IPhase> getPhases(Element root, Map<String, ICellGroup> cellGroupMap, Map<String, ICell> cellMap) {
+    /**
+     * Builds and returns IPhases built from a rules XML. Requirements for rules can be found in ___.
+     *
+     * @param root          the root of the file from which IPhases are built
+     * @param cellGroupMap  a Map of String cell group names to ICellGroup implementations
+     * @param cellMap       a Map of String cell group names to ICell implementations
+     * @return              a Map of String phase names to IPhase implementations
+     */
+    public static Map<String, IPhase> createPhases(Element root, Map<String, ICellGroup> cellGroupMap, Map<String, ICell> cellMap) {
         try {
             Node phases = root.getElementsByTagName(PHASES).item(0);
-
             NodeList phaseList = ((Element) phases).getElementsByTagName(RESOURCES.getString(PHASE));
-
             Map<String, IPhase> phaseMap = new HashMap<>();
-
 
             for (int k = 0; k < phaseList.getLength(); k++) {
                 Element phase = (Element) phaseList.item(k);
                 NodeList phaseNodes = phase.getChildNodes();
 
-                //phase info and type
                 String phaseName = XMLHelper.getAttribute(phase, RESOURCES.getString(NAME));
                 boolean automatic = RESOURCES.getString(AUTOMATIC).equals(XMLHelper.getTextValue(phase, RESOURCES.getString(PHASE_TYPE)));
 
-                //valid donors
-                Element donorHeadNode = (Element) XMLHelper.getNodeByName(phaseNodes, RESOURCES.getString(VALID_DONORS));
-                List<String> validDonorNames = new ArrayList<>();
-                if (donorHeadNode.hasChildNodes()) {
-                    NodeList donorNodeList = donorHeadNode.getElementsByTagName(RESOURCES.getString(CATEGORY));
-                    for (int j = 0; j < donorNodeList.getLength(); j++) {
-                        Node donor = donorNodeList.item(j);
-                        validDonorNames.add(donor.getTextContent());
-                    }
-                }
+                List<String> validDonorNames = extractValidDonors(phaseNodes);
 
-                //rules
                 Node rules = XMLHelper.getNodeByName(phaseNodes, RESOURCES.getString(RULES));
                 List<IMasterRule> phaseRules = MasterRuleFactory.getRules(rules, cellGroupMap, cellMap, phaseName);
 
-                //phase
                 IPhase newPhase = new Phase(phaseName, phaseRules, validDonorNames, cellGroupMap, cellMap, automatic);
                 if (phaseMap.isEmpty()) {
                     phaseMap.put(PhaseMachineFactory.START, newPhase);
                 }
                 phaseMap.put(phaseName, newPhase);
-
             }
             return phaseMap;
-
         } catch (Exception e) {
             throw new XMLException(e, MISSING_ERROR + "," + PHASES);
         }
-
-
     }
 
+    /**
+     * Extracts the names of valid ICells and ICellGroups from the rules XML.
+     *
+     * @param phaseNodes the NodeList containing information on an IPhase
+     * @return a List of Strings representing valid donor names
+     */
+    private static List<String> extractValidDonors(NodeList phaseNodes) {
+        Element donorHeadNode = (Element) XMLHelper.getNodeByName(phaseNodes, RESOURCES.getString(VALID_DONORS));
+        List<String> validDonorNames = new ArrayList<>();
+        if (donorHeadNode.hasChildNodes()) {
+            NodeList donorNodeList = donorHeadNode.getElementsByTagName(RESOURCES.getString(CATEGORY));
+            for (int j = 0; j < donorNodeList.getLength(); j++) {
+                Node donor = donorNodeList.item(j);
+                validDonorNames.add(donor.getTextContent());
+            }
+        }
+        return validDonorNames;
+    }
 }

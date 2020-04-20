@@ -39,7 +39,7 @@ public class PhaseMachineFactory implements Factory {
             IDeck deck = DeckFactory.createDeck(root);
             Map<String, ICellGroup> cellGroups = CellGroupFactory.createCellGroups(root);
             Map<String, ICell> allBaseCells = getAllCells(cellGroups);
-            Map<String, IPhase> phases = PhaseFactory.getPhases(root, cellGroups, allBaseCells);
+            Map<String, IPhase> phases = PhaseFactory.createPhases(root, cellGroups, allBaseCells);
 
             return new PhaseMachine(phases, START, settings, deck);
         } catch (Exception e) {

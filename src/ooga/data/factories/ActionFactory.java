@@ -36,7 +36,7 @@ public class ActionFactory implements Factory {
     private static final String NUMBER_CARDS = PhaseFactory.NUMBER_CARDS;
     private static final String IS_FACEUP = PhaseFactory.IS_FACEUP;
     private static final String DONOR = PhaseFactory.DONOR;
-    //private static final String ALL = PhaseFactory.ALL;
+    private static final String ALL_STAR = PhaseFactory.ALL_STAR;
     private static final String ACTION = PhaseFactory.ACTION;
     private static final String RECEIVER_DESTINATION = PhaseFactory.RECEIVER_DESTINATION;
     private static final String DESTINATION = PhaseFactory.DESTINATION;
