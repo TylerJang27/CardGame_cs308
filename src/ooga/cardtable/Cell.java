@@ -63,7 +63,7 @@ public class Cell implements ICell {
       updateParentage();
       //addCell(Offset.NONE, toAdd);
     }
-    cellDeckBuilder = null;
+    //cellDeckBuilder = null;
   }
 
   @Override

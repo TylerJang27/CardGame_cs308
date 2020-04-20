@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import ooga.cardtable.GameState;
-import ooga.cardtable.ICell;
-import ooga.cardtable.IGameState;
-import ooga.cardtable.IMove;
+
+import ooga.cardtable.*;
 
 import ooga.data.rules.excluded.IPhaseHistoryCell;
 
@@ -20,22 +18,9 @@ public class PhaseMachine implements IPhaseMachine {
   private List<IPhaseHistoryCell> history;
   private ISettings mySettings;
   private IMove lastMove;
+  private IDeck fullDeck;
 
-  /*public PhaseMachine() {
-    history = new ArrayList<>();
-    phases = new HashMap<>();
-  }
-
-  public PhaseMachine(List<IPhase> ph, String startName) {
-    this();
-    for (IPhase p: ph) {
-      addPhase(p);
-    }
-    startPhase = phases.get(startName); //FIXME add error checking
-    currentPhase = startPhase;
-  }*/
-
-  public PhaseMachine(Map<String, IPhase> ph, String startName, ISettings settings) {
+  public PhaseMachine(Map<String, IPhase> ph, String startName, ISettings settings, IDeck deck) {
     lastMove = null;
     history = new ArrayList<>();
     phases = ph;
