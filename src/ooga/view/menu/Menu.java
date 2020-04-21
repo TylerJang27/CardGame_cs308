@@ -76,7 +76,10 @@ public class Menu {
                           String newValue) {
         themeLambda.setValue(newValue);
         myScene.getStylesheets().clear();
-        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue.toLowerCase()+"/mainmenu.css").toExternalForm());
+        try{
+          myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue.toLowerCase()+"/mainmenu.css").toExternalForm());
+        } catch (Exception e) {
+        }
       }
     });
 
