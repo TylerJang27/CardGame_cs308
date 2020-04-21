@@ -13,9 +13,9 @@ import java.util.ResourceBundle;
  * @author Tyler Jang
  */
 public interface Factory {
-    String INVALID_ERROR = "INVALID_FILE";
-    String MISSING_ERROR = "MISSING_ATTRIBUTE";
-    String CONTROL_ERROR = "CONTROL_ERROR";
+    String INVALID_ERROR = "InvalidFile";
+    String MISSING_ERROR = "MissingAttribute";
+    String CONTROL_ERROR = "ControlError";
 
     /**
      * Retrieves the String value of the first tag relative to n with the label matched to tagRef in resources.

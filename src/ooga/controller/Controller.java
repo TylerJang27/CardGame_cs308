@@ -3,15 +3,18 @@ package ooga.controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import ooga.cardtable.*;
+import ooga.data.XMLException;
 import ooga.data.factories.PhaseMachineFactory;
 import ooga.data.factories.LayoutFactory;
 import ooga.data.factories.StyleFactory;
 import ooga.data.rules.IPhaseMachine;
 
 import ooga.data.style.IStyle;
+import ooga.view.ExternalAPI;
 import ooga.view.View;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +64,11 @@ public class Controller extends Application {
             //System.out.println(move.getDonor().getName());
             //System.out.println(move.getMover().getName());
             //System.out.println(move.getRecipient().getName());
-            myTable.update(move);
+            try {
+                myTable.update(move);
+            } catch (XMLException e) {
+                reportError(e);
+            }
             myCurrentCells = myTable.getCellData();
             for (String i : myCurrentCells.keySet()) {
                 if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
@@ -82,6 +89,16 @@ public class Controller extends Application {
             myView.setUpdatesToCellData(myCurrentCells); },
                 myStyle);
         initializeHandlers(myView);
+    }
+
+    private void reportError(Exception e) {
+        String[] messages = e.getMessage().split(",");
+        List<String> tags = new ArrayList<>();
+        for (int k = 1; k < messages.length; k ++) {
+            tags.add(messages[k]);
+        }
+        String[] tagArray = new String[messages.length-1];
+        myView.reportError(messages[0], tags.toArray(tagArray));
     }
 
     private void processInvalidMove(IMove move) {
@@ -135,7 +152,11 @@ public class Controller extends Application {
 
     private void newMove() {
         myCurrentMove = getMove();
-        myTable.update(myCurrentMove);
+        try {
+            myTable.update(myCurrentMove);
+        } catch (XMLException e) {
+            reportError(e);
+        }
         myView.setCellData(Map.copyOf(myTable.getCellData()));
     }
 
