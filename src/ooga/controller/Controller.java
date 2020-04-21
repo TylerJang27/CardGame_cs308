@@ -30,6 +30,10 @@ public class Controller extends Application {
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";
     private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";
 
+    private static final String WIN = "win";
+    private static final String LOSS = "loss";
+    private static final String INVALID = "invalid";
+
     private View myView;
     private IMove myCurrentMove;
     private ITable myTable;
@@ -37,6 +41,7 @@ public class Controller extends Application {
     private File myStyleFile;
     private File myRuleFile;
     private File myLayoutFile;
+    private IGameState lastState;
     private IPhaseMachine myCurrentPhaseMachine;
     private Map<String, ICell> myCellMap;
     private Map<String, ICell> myCurrentCells;
@@ -65,7 +70,14 @@ public class Controller extends Application {
             //System.out.println(move.getMover().getName());
             //System.out.println(move.getRecipient().getName());
             try {
-                myTable.update(move);
+                lastState = myTable.update(move);
+                if (lastState.equals(GameState.WIN)) {
+                    myView.reportError(WIN);
+                } else if (lastState.equals(GameState.INVALID)) {
+                    myView.reportError(INVALID);
+                } else if (lastState.equals(GameState.LOSS)) {
+                    myView.reportError(LOSS);
+                }
             } catch (XMLException e) {
                 reportError(e);
             }
