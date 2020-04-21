@@ -26,6 +26,8 @@ public class Controller extends Application {
 
     // TODO: Put the file here
     private static final String DEFAULT_STYLE_FILE = "data/default_style.xml";
+    private static final String BACKUP_STYLE_FILE = "data/default_style_orig.xml";
+
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";
     private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_2.xml";
@@ -95,14 +97,24 @@ public class Controller extends Application {
             myChangedCells.clear();
             //myView.setCellData(Map.copyOf(myTable.getCellData()));
         };
-        myStyleFile = new File(DEFAULT_STYLE_FILE);
-        myStyle = StyleFactory.createStyle(myStyleFile);
+
+        myStyle = extractStyle();
         myView = new View(gm, ()->{
             myTable.restartGame();
             myCurrentCells = myTable.getCellData();
             myView.setUpdatesToCellData(myCurrentCells); },
                 myStyle);
         initializeHandlers(myView);
+    }
+
+    private IStyle extractStyle() {
+        try {
+            myStyleFile = new File(DEFAULT_STYLE_FILE);
+            return StyleFactory.createStyle(myStyleFile);
+        } catch (Exception e) {
+            myStyleFile = new File(BACKUP_STYLE_FILE);
+            return StyleFactory.createStyle(myStyleFile, DEFAULT_STYLE_FILE);
+        }
     }
 
     private void reportError(Exception e) {
