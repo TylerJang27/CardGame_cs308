@@ -6,10 +6,7 @@ import ooga.data.factories.Factory;
 import ooga.data.factories.PhaseMachineFactory;
 import ooga.data.rules.excluded.IPhaseHistoryCell;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class implements IPhaseMachine and governs the Finite State Machine that will process moves and update the IPhase accordingly.
@@ -17,6 +14,12 @@ import java.util.Map;
  * @author Maverick Chung, Tyler Jang
  */
 public class PhaseMachine implements IPhaseMachine {
+
+    private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
+    private static final String PHASES = "phases";
+    private static final ResourceBundle RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + PHASES);
+
+    private static final String WIN = "Win";
 
     private Map<String, IPhase> phases;
     private IPhase startPhase;
@@ -68,7 +71,7 @@ public class PhaseMachine implements IPhaseMachine {
      */
     private void cycleAutomatic() {
         if (currentPhase.isAutomatic()) {
-            IPhaseArrow arrow = currentPhase.executeAutomaticActions(currentPlayer, lastMove); //TODO: REPLACE WITH PLAYER
+            IPhaseArrow arrow = currentPhase.executeAutomaticActions(currentPlayer, lastMove);
             moveToNextPhase(arrow);
         }
     }
@@ -190,6 +193,9 @@ public class PhaseMachine implements IPhaseMachine {
         if (arrow != null) {
             moveToNextPhase(arrow);
             updateCellParents();
+            if (currentPhase.getMyName().equalsIgnoreCase(RESOURCES.getString(WIN))) {
+                return GameState.WIN;
+            }
             return GameState.WAITING;
         }
         updateCellParents();

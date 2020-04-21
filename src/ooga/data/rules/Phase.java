@@ -111,6 +111,9 @@ public class Phase implements IPhase {
         IPhaseArrow lastArrow = new PhaseArrow(myName, "", myName);
         for (IMasterRule rule : myRules) {
             lastArrow = rule.executeAutoActions(player, move);
+            if (lastArrow != null) {
+                return lastArrow;
+            }
         }
         return lastArrow;
     }

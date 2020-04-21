@@ -28,7 +28,7 @@ public class Controller extends Application {
     // TODO: Put the file here
     private static final String DEFAULT_STYLE_FILE = "data/default_style.xml";
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";
-    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";
+    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_2.xml";
 
     private static final String WIN = "win";
     private static final String LOSS = "loss";
@@ -150,8 +150,12 @@ public class Controller extends Application {
         //System.out.println(gameName);
         // TODO: Give game name somehow, figure out who's building the phase machine
         myRuleFile = new File(DEFAULT_RULE_FILE);
-
-        myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
+        try {
+            myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
+        } catch (XMLException e) {
+            e.printStackTrace();
+            reportError(e);
+        }
         myTable = new Table(myCurrentPhaseMachine);
         myCellMap = myTable.getCellData();
         File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
