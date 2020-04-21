@@ -19,7 +19,6 @@ public class DisplayTable {
     private NumberBinding myCardHeight;
     private NumberBinding myCardWidth;
     private double myCardOffset;
-    private Map<String, String> myCardNameToFileName;
     private Map<String, Pair<NumberBinding, NumberBinding>> myCellNameToLocation;
 
     @FunctionalInterface
@@ -43,16 +42,17 @@ public class DisplayTable {
     ICell myRecipient;
     IMove myMove;
 
-    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme) {
+    String mySkinType;
 
+    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenWidth, String skinType) {
+
+        mySkinType = skinType;
         myPane = new Pane();
 
 
         myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
         myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
         myCardOffset = layout.getUpOffsetRatio()*screenWidth;
-
-        myCardNameToFileName = layout.getCardImagePaths();
 
         myCellNameToLocation = new HashMap<>();
         Map<String, ICoordinate> locations = layout.getCellLayout();
@@ -160,7 +160,7 @@ public class DisplayTable {
 
     private DisplayCell makeDisplayCell(String key, ICell cell) {
         Pair<NumberBinding, NumberBinding> location = myCellNameToLocation.get(key);
-        return new DisplayCell(getDraggedCell, getClickedCell, cell, myCardNameToFileName, location, myCardHeight, myCardWidth, myCardOffset);
+        return new DisplayCell(getDraggedCell, getClickedCell, cell, mySkinType, location, myCardHeight, myCardWidth, myCardOffset);
     }
 
     private void drawDisplayCells(List<DisplayCell> DisplayCellData) {

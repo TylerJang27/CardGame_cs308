@@ -47,7 +47,7 @@ public class View implements ExternalAPI {
 
     private TriggerMove getMove;
 
-    private String myTheme = "Duke"; // fixme decide on a default and implement
+    private String myTheme = "Duke";
     private String myLanguage = "English";
 
     private Stage myStage;
