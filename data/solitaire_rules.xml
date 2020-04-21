@@ -408,7 +408,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D1,U</card>
+                    <card>D1,U,none</card>
                     <card>Rd,U</card>
                 </init_cards>
             </cell>
@@ -416,7 +416,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D2,U</card>
+                    <card>D2,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,U</card>
                 </init_cards>
@@ -425,7 +425,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D3,U</card>
+                    <card>D3,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,U</card>
@@ -435,7 +435,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D4,U</card>
+                    <card>D4,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -446,7 +446,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D5,U</card>
+                    <card>D5,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -458,7 +458,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D6,U</card>
+                    <card>D6,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -471,7 +471,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D7,U</card>
+                    <card>D7,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>

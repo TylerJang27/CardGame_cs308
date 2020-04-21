@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<data type = "style">
-    <language>english</language>
-    <cards>card_path</cards>
-    <table>Duke</table>
-    <dark>0</dark>
-    <difficulty>3</difficulty>
-    <sound>1</sound>
-</data>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><data type="style"><sound>1</sound><cards>card_path</cards><difficulty>3</difficulty><language>english</language><dark>0</dark><table>Landscapes</table></data>
