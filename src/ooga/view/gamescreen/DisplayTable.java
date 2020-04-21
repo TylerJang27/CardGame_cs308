@@ -19,7 +19,6 @@ public class DisplayTable {
     private NumberBinding myCardHeight;
     private NumberBinding myCardWidth;
     private double myCardOffset;
-    private Map<String, String> myCardNameToFileName;
     private Map<String, Pair<NumberBinding, NumberBinding>> myCellNameToLocation;
 
     @FunctionalInterface
@@ -43,16 +42,17 @@ public class DisplayTable {
     ICell myRecipient;
     IMove myMove;
 
-    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme) {
+    String mySkinType;
 
+    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenWidth, String skinType) {
+
+        mySkinType = skinType;
         myPane = new Pane();
 
 
         myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
         myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
         myCardOffset = layout.getUpOffsetRatio()*screenWidth;
-
-        myCardNameToFileName = layout.getCardImagePaths();
 
         myCellNameToLocation = new HashMap<>();
         Map<String, ICoordinate> locations = layout.getCellLayout();
@@ -140,14 +140,19 @@ public class DisplayTable {
 
     private void clearDisplayCell(DisplayCell dc) {
         myDisplayCellData.remove(dc);  // remove the display cell + all its children from the list of active display cells
-        myPane.getChildren().remove(dc.getImageView()); // remove the display cell +  all its children from the screen
+        if (dc.getImageView().equals(null)) {
+            System.out.println("I'm broken, help");
+            System.out.println(myDisplayCellData.size());
+            System.out.println(myPane.getChildren().size());
+        } else {
+            myPane.getChildren().remove(dc.getImageView()); // remove the display cell +  all its children from the screen
+        }
         for (IOffset dir: dc.getCell().getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;
             }
             clearDisplayCell(dc.getAllChildren().get(dir));
         }
-        //System.out.println("Removed "+dc.getCell().getName());, correctly removes everybody
     }
 
     private List<DisplayCell> makeDisplayCells(Map<String,ICell> cellData) {
@@ -160,7 +165,7 @@ public class DisplayTable {
 
     private DisplayCell makeDisplayCell(String key, ICell cell) {
         Pair<NumberBinding, NumberBinding> location = myCellNameToLocation.get(key);
-        return new DisplayCell(getDraggedCell, getClickedCell, cell, myCardNameToFileName, location, myCardHeight, myCardWidth, myCardOffset);
+        return new DisplayCell(getDraggedCell, getClickedCell, cell, mySkinType, location, myCardHeight, myCardWidth, myCardOffset);
     }
 
     private void drawDisplayCells(List<DisplayCell> DisplayCellData) {

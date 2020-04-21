@@ -8,6 +8,7 @@ import ooga.data.rules.Layout;
 import ooga.view.View;
 
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class GameScreen {
 
@@ -20,7 +21,16 @@ public class GameScreen {
 
     public GameScreen(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, Button restartButton, String game, String scoreLabel) {
 
-        myDisplayTable = new DisplayTable(moveLambda, (Layout) layout, 650, theme);
+        // Current default is standard, can change
+        String skinType = "classic";
+        ResourceBundle cardskins = ResourceBundle.getBundle("ooga.resources.decks.supportedthemes");
+        for (String the : cardskins.getString("standard").split(",")) {
+            if (theme.equals(the)) {
+                skinType = theme;
+            }
+        }
+
+        myDisplayTable = new DisplayTable(moveLambda, (Layout) layout, 650, skinType);
         myDashboard = new Dashboard(backButton, restartButton, scoreLabel);
         myHeader = new Header(game);
 

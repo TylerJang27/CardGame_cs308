@@ -1,0 +1,15 @@
+Hi Tyler, this is about adding decks.
+I added the current skins under "classic", which will be the default if the current card type/theme combination is not supported
+
+To add new card skins:
+1) Go to decks/CARDTYPE/THEME and add a CARDNAME.png file for every card.
+- By CARDTYPE I mean, for example, "standard" if its a deck with 52 cards, 4 suits, 2 colors, etc.
+- By CARDNAME I mean, for example, 0C.png, 3S.png, if the deck is standard.
+- By THEME    I mean, for example, duke, spaceretro, landscapes, etc.
+2) Go to decks/supportedthemes.properties and add the theme for the deck you just made to whatever key it belongs
+- So if you made a standard deck for out CS308 theme, then under the "standard" key, add "cs308"
+
+Bonus) Right now I assume every game is using a standard deck. If we actually end up making chess or uno or something,
+        I'll add a map of game name to deck type in a properties file. :)
+
+
