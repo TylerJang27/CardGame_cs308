@@ -142,6 +142,8 @@ public class DisplayTable {
         myDisplayCellData.remove(dc);  // remove the display cell + all its children from the list of active display cells
         if (dc.getImageView().equals(null)) {
             System.out.println("I'm broken, help");
+            System.out.println(myDisplayCellData.size());
+            System.out.println(myPane.getChildren().size());
         } else {
             myPane.getChildren().remove(dc.getImageView()); // remove the display cell +  all its children from the screen
         }
@@ -151,7 +153,6 @@ public class DisplayTable {
             }
             clearDisplayCell(dc.getAllChildren().get(dir));
         }
-        //System.out.println("Removed "+dc.getCell().getName());, correctly removes everybody
     }
 
     private List<DisplayCell> makeDisplayCells(Map<String,ICell> cellData) {
