@@ -86,6 +86,7 @@ public class Controller extends Application {
             for (String i : myCurrentCells.keySet()) {
                 if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
                     myChangedCells.put(i, myCurrentCells.get(i));
+                    myPreviousCells.remove(i);
                 }
             }
             processInvalidMove(move);
@@ -115,10 +116,10 @@ public class Controller extends Application {
     }
 
     private void processInvalidMove(IMove move) {
-        if (myChangedCells.size() == 0) {
+        if (myChangedCells.isEmpty()) {
             List<ICell> resetters = List.of(move.getRecipient(), move.getMover(), move.getDonor());
             for (ICell c: resetters) {
-                c=c.findHead();
+                c=myCurrentCells.get(c.findHead().getName());
                 if (c != null) {
                     myChangedCells.put(c.getName(), c);
                 }
