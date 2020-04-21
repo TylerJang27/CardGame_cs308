@@ -4,9 +4,12 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
@@ -17,6 +20,7 @@ import ooga.data.style.IStyle;
 import ooga.view.gamescreen.GameScreen;
 import ooga.view.menu.Menu;
 
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -144,6 +148,19 @@ public class View implements ExternalAPI {
 
     }
 
+
+    public void displayMessage(String key, List<String> args){
+        // fixme im horribly inefficient
+        // TODO: implement messages with args
+        ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
+        String message = currentMessages.getString(key);
+        Text text = new Text(message);
+        Pane messagePane = new Pane();
+        messagePane.getChildren().add(text);
+        Scene messageScene = new Scene(messagePane);
+        Stage popUp = new Stage();
+        popUp.setScene(messageScene);
+    }
 
     /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
