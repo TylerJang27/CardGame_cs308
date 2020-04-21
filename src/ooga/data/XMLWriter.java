@@ -1,147 +1,98 @@
 package ooga.data;
 
+import ooga.data.factories.Factory;
+import ooga.data.factories.StyleFactory;
+import ooga.data.style.IStyle;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.util.Map;
+import java.util.ResourceBundle;
 
+/**
+ * Class for writing styling information into an XML file. Saves user settings.
+ *
+ * @author Andrew Krier, Tyler Jang
+ */
 public class XMLWriter {
-}
 
-/**
- * Below file written for use in the simulation project to build an XML file
- * Yes I know it's bad code I didn't know better at the time
- * @author Andrew Krier
- */
+    private static String WORD = "word";
+    private static String NUMBER = "number";
+    private static String STYLE = "style";
+    private static final String RESOURCES = "ooga.resources";
+    private static final String RESOURCE_PACKAGE = RESOURCES + "." + STYLE + "_";
+    private static final ResourceBundle WORD_RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + WORD);
+    private static final ResourceBundle NUMBER_RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + NUMBER);
 
-/*
+    private static final String DATA = "data";
+    private static final String TYPE = "type";
+    private static final String DATA_TYPE = StyleFactory.STYLE_TYPE;
 
-package XML;
+    private static final String LANGUAGE = "Language";
+    private static final String CARDS = "Cards";
+    private static final String TABLE = "Table";
 
-import cellsociety.Grid;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-
-
-/**
- * This class takes in a grid and simData class and saves a corresponding XML file
- * @author Andrew Krier
- */
-/*
-public class XMLDocumentBuilder {
-    private SimData mySimData;
-    private Grid myGrid;
-    private String myAuthor;
-    private String mySim;
-    private int mySides;
-    private int myRows;
-    private int myColumns;
-    private double mySimVal;
-    private String myRetVals = "";
-    private String myWrap;
-    private String myNeighbors;
-    private String[] myVariables = new String[9];
-    private static final String fileLocation = "XML_SAVE_TEST.xml";
+    private static final String DARK = "Dark";
+    private static final String DIFFICULTY = "Difficulty";
+    private static final String SOUND = "Sound";
 
     /**
-     * Sets all the required data for processing and initiates saving
-     * @param simData
-     * @param grid
-     */ /*
-    public XMLDocumentBuilder (SimData simData, Grid grid) {
-        mySimData = simData;
-        myGrid = grid;
-        setVals();
-        setValString();
-        setVariables();
-        saveDoc();
-    }
-
-    private void setVals () {
-        myAuthor = mySimData.getAuthor();
-        mySim = mySimData.getSimType();
-        mySides = mySimData.getShape();
-        myRows = mySimData.getRows();
-        myColumns = mySimData.getColumns();
-        mySimVal = mySimData.getSpreadProb();
-        myWrap = mySimData.getWrapType();
-        myNeighbors = mySimData.getNeighborType();
-    }
-
-    private void setValString () {
-        for (int i = 0; i < myRows; i++) {
-            for (int j = 0; j < myColumns; j++) {
-                myRetVals = myRetVals + String.valueOf(myGrid.getListOfCells().get(j).get(i).getCurrentState());
-            }
-        }
-    }
-
-    private void setVariables () {
-        myVariables[0] = myAuthor;
-        myVariables[1] = mySim;
-        myVariables[2] = String.valueOf(mySides);
-        myVariables[3] = String.valueOf(myRows);
-        myVariables[4] = String.valueOf(myColumns);
-        myVariables[5] = String.valueOf(mySimVal);
-        myVariables[6] = myRetVals;
-        myVariables[7] = myWrap;
-        myVariables[8] = myNeighbors;
-    }
-
-    private void saveDoc () {
+     * Writes information from IStyle implementation to filepath
+     *
+     * @param filepath the destination for the XML file
+     * @param style    the IStyle from which to build the XML file
+     */
+    public static void writeStyle(String filepath, IStyle style) {
         try {
-            DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+            DocumentBuilder documentBuilder = XMLHelper.getDocumentBuilder();
             Document document = documentBuilder.newDocument();
-            Element root = document.createElement("data");
+            Element root = document.createElement(DATA);
             document.appendChild(root);
 
-            Attr attribute = document.createAttribute("game");
-            attribute.setValue(mySimData.DATA_TYPE);
+            Attr attribute = document.createAttribute(TYPE);
+            attribute.setValue(DATA_TYPE);
             root.setAttributeNode(attribute);
 
-            addElement(document, root);
+            addStyle(document, root, style);
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(document);
-            StreamResult streamResult = new StreamResult(new File(fileLocation));
+            StreamResult streamResult = new StreamResult(new File(filepath));
 
             transformer.transform(domSource, streamResult);
-
-        } catch (ParserConfigurationException | TransformerException e) {
-
+        } catch (TransformerException e) {
+            throw new XMLException(e, Factory.UNKNOWN_ERROR);
         }
     }
 
-    private void addElement (Document document, Element root) {
-        for (int i = 0; i < myVariables.length; i++) {
-            Element e = document.createElement(mySimData.DATA_FIELDS.get(i));
-            e.appendChild(document.createTextNode(myVariables[i]));
+    /**
+     * Extracts information from style to add to the document
+     *
+     * @param document the document to which data should be added
+     * @param root     the root Element of the document
+     * @param style    the IStyle implementation from which to parse data
+     */
+    private static void addStyle(Document document, Element root, IStyle style) {
+        Map<String, String> vals = Map.of(
+                WORD_RESOURCES.getString(LANGUAGE), style.getLanguage(),
+                WORD_RESOURCES.getString(CARDS), style.getCardSkinPath(),
+                WORD_RESOURCES.getString(TABLE), style.getTheme(),
+                NUMBER_RESOURCES.getString(DARK), "" + (style.getDarkMode() ? 1 : 0),
+                NUMBER_RESOURCES.getString(DIFFICULTY), ("" + style.getDifficulty()),
+                NUMBER_RESOURCES.getString(SOUND), "" + (style.getSound() ? 1 : 0));
+        for (Map.Entry<String, String> entry : vals.entrySet()) {
+            Element e = document.createElement(entry.getKey());
+            e.appendChild(document.createTextNode(entry.getValue()));
             root.appendChild(e);
         }
     }
-
 }
-
- */
