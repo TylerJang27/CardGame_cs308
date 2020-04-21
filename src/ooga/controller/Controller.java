@@ -69,6 +69,7 @@ public class Controller extends Application {
             } catch (XMLException e) {
                 reportError(e);
             }
+            myView.setScores(Map.of(1, myTable.getCurrentPlayer().getScore()));
             myCurrentCells = myTable.getCellData();
             for (String i : myCurrentCells.keySet()) {
                 if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {

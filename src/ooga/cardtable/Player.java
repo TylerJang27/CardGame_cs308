@@ -19,6 +19,10 @@ public class Player implements IPlayer {
     name = nm;
   }
 
+  public Player() {
+    this(null, 1);
+  }
+
   @Override
   public ICell getHand() {
     return hand;
@@ -42,5 +46,10 @@ public class Player implements IPlayer {
   @Override
   public double getScore() {
     return score;
+  }
+
+  @Override
+  public void setScore(double d) {
+    score = d;
   }
 }

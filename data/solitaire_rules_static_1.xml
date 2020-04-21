@@ -595,7 +595,7 @@
                             <flip>south</flip>
                         </donor_dest>
                         <!-- points included in the tag below-->
-                        <next_phase phase="check_eog">10</next_phase>
+                        <next_phase phase="check_eog">10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="suits">
@@ -608,7 +608,7 @@
                         </receiver>
                         <mover>
                             <direction>u</direction>
-                            <value>*</value>
+                            <value>1</value>
                             <color>*</color>
                             <suit>=</suit>
                             <num_cards>*</num_cards>
@@ -650,7 +650,7 @@
                             <offset>preserve</offset>
                             <flip>south</flip>
                         </donor_dest>
-                        <next_phase phase = "check_eog">20</next_phase>
+                        <next_phase phase = "check_eog">20.0</next_phase>
                     </action>
                 </rule>
                 <rule category="deck">
@@ -695,7 +695,7 @@
                             <offset>none</offset>
                             <flip>n</flip>
                         </mover_dest>
-                        <next_phase phase="check_eog">-10</next_phase>
+                        <next_phase phase="check_eog">-10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="hand">
@@ -740,7 +740,7 @@
                             <offset>0</offset>
                             <flip>none</flip>
                         </mover_dest>
-                        <next_phase phase = "check_eog">0</next_phase>
+                        <next_phase phase = "check_eog">0.0</next_phase>
                     </action>
                 </rule>
             </rules>
@@ -766,7 +766,7 @@
                     </receive_rule>
                     <action>
                         <!-- go to end of game -->
-                        <next_phase phase="end_of_game">500</next_phase>
+                        <next_phase phase="end_of_game">500.0</next_phase>
                     </action>
                 </rule>
                 <rule category="">

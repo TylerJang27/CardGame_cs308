@@ -209,7 +209,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setScores(Map<Integer, Double> playerScores) {
-        myGameScreen.updateScore(playerScores.get(0));
+        myGameScreen.updateScore(playerScores.get(1));
     }
 
 

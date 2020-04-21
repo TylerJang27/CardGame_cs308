@@ -26,6 +26,7 @@ public class PhaseMachine implements IPhaseMachine {
     private ISettings mySettings;
     private IMove lastMove;
     private IDeck fullDeck;
+    private IPlayer currentPlayer;
 
     /**
      * The Constructor for the PhaseMachine, taking information about phases, settings, and the entire deck. Initializes the ICell information as necessary.
@@ -67,7 +68,7 @@ public class PhaseMachine implements IPhaseMachine {
      */
     private void cycleAutomatic() {
         if (currentPhase.isAutomatic()) {
-            IPhaseArrow arrow = currentPhase.executeAutomaticActions(null, lastMove); //TODO: REPLACE WITH PLAYER
+            IPhaseArrow arrow = currentPhase.executeAutomaticActions(currentPlayer, lastMove); //TODO: REPLACE WITH PLAYER
             moveToNextPhase(arrow);
         }
     }
@@ -184,7 +185,7 @@ public class PhaseMachine implements IPhaseMachine {
     @Override
     public IGameState update(IMove move) {
         move = replaceMoveCells(move);
-        IPhaseArrow arrow = currentPhase.executeMove(move);
+        IPhaseArrow arrow = currentPhase.executeMove(move, currentPlayer);
         lastMove = move;
         if (arrow != null) {
             moveToNextPhase(arrow);
@@ -218,6 +219,16 @@ public class PhaseMachine implements IPhaseMachine {
         } else {
             throw new XMLException(Factory.CONTROL_ERROR);
         }
+    }
+
+    /**
+     * Sets the current player for the move.
+     *
+     * @param player the current player
+     */
+    @Override
+    public void setCurrentPlayer(IPlayer player) {
+        currentPlayer = player;
     }
 
     /**

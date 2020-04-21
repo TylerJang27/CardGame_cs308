@@ -110,13 +110,13 @@ public class MasterRuleFactory implements Factory {
             try {
                 String newPhase = XMLHelper.getAttribute((Element) phaseAction, RESOURCES.getString(PHASE));
                 String pointVal = phaseAction.getTextContent();
-                Integer points = 0;
+                Double points = 0.0;
                 try {
                     if (!pointVal.isEmpty()) {
-                        points = Integer.parseInt(pointVal);
+                        points = Double.parseDouble(pointVal);
                     }
                 } catch (NumberFormatException e) {
-                    points = 0;
+                    points = 0.0;
                 }
                 IPhaseArrow arrow = new PhaseArrow(phaseName, ruleName, newPhase);
                 controlActionList.add(new ControlAction(arrow, points));

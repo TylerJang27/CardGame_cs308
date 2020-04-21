@@ -608,7 +608,7 @@
                         </receiver>
                         <mover>
                             <direction>u</direction>
-                            <value>*</value>
+                            <value>1</value>
                             <color>*</color>
                             <suit>=</suit>
                             <num_cards>*</num_cards>
