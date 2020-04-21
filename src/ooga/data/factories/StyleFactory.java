@@ -31,8 +31,8 @@ public class StyleFactory implements Factory {
     private static String STYLE = "style";
     private static final String RESOURCES = "ooga.resources";
     private static final String RESOURCE_PACKAGE = RESOURCES + "." + STYLE + "_";
-    private static final ResourceBundle wordResources = ResourceBundle.getBundle(RESOURCE_PACKAGE + WORD);
-    private static final ResourceBundle numberResources = ResourceBundle.getBundle(RESOURCE_PACKAGE + NUMBER);
+    private static final ResourceBundle WORD_RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + WORD);
+    private static final ResourceBundle NUMBER_RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + NUMBER);
 
     /**
      * Builds and returns an IStyle from a styling XML. Requirements for style XML can be found in ___.
@@ -45,8 +45,8 @@ public class StyleFactory implements Factory {
         try {
             Element root = XMLHelper.getRootAndCheck(dataFile, STYLE_TYPE, INVALID_ERROR);
 
-            Map<String, String> stringSettings = XMLHelper.readStringSettings(root, wordResources);
-            Map<String, Integer> numberSettings = XMLHelper.readNumberSettings(root, numberResources);
+            Map<String, String> stringSettings = XMLHelper.readStringSettings(root, WORD_RESOURCES);
+            Map<String, Integer> numberSettings = XMLHelper.readNumberSettings(root, NUMBER_RESOURCES);
             return new StyleData(dataFile.getPath(), stringSettings, numberSettings);
         } catch (Exception e) {
             throw new XMLException(e, Factory.MISSING_ERROR + "," + STYLE_TYPE);

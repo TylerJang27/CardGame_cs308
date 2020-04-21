@@ -1,12 +1,12 @@
 package ooga.data.rules;
 
 import ooga.cardtable.*;
+import ooga.data.XMLException;
+import ooga.data.factories.Factory;
+import ooga.data.factories.PhaseMachineFactory;
 import ooga.data.rules.excluded.IPhaseHistoryCell;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * This class implements IPhaseMachine and governs the Finite State Machine that will process moves and update the IPhase accordingly.
@@ -14,6 +14,13 @@ import java.util.Map;
  * @author Maverick Chung, Tyler Jang
  */
 public class PhaseMachine implements IPhaseMachine {
+
+    private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
+    private static final String PHASES = "phases";
+    private static final ResourceBundle RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + PHASES);
+
+    private static final String WIN = "Win";
+    private static final String LOSS = "Loss";
 
     private Map<String, IPhase> phases;
     private IPhase startPhase;
@@ -23,6 +30,7 @@ public class PhaseMachine implements IPhaseMachine {
     private ISettings mySettings;
     private IMove lastMove;
     private IDeck fullDeck;
+    private IPlayer currentPlayer;
 
     /**
      * The Constructor for the PhaseMachine, taking information about phases, settings, and the entire deck. Initializes the ICell information as necessary.
@@ -64,7 +72,7 @@ public class PhaseMachine implements IPhaseMachine {
      */
     private void cycleAutomatic() {
         if (currentPhase.isAutomatic()) {
-            IPhaseArrow arrow = currentPhase.executeAutomaticActions(null, lastMove); //TODO: REPLACE WITH PLAYER
+            IPhaseArrow arrow = currentPhase.executeAutomaticActions(currentPlayer, lastMove);
             moveToNextPhase(arrow);
         }
     }
@@ -181,11 +189,16 @@ public class PhaseMachine implements IPhaseMachine {
     @Override
     public IGameState update(IMove move) {
         move = replaceMoveCells(move);
-        IPhaseArrow arrow = currentPhase.executeMove(move);
+        IPhaseArrow arrow = currentPhase.executeMove(move, currentPlayer);
         lastMove = move;
         if (arrow != null) {
             moveToNextPhase(arrow);
             updateCellParents();
+            if (currentPhase.getMyName().equalsIgnoreCase(RESOURCES.getString(WIN))) {
+                return GameState.WIN;
+            } else if (currentPhase.getMyName().equalsIgnoreCase(RESOURCES.getString(LOSS))) {
+                return GameState.LOSS;
+            }
             return GameState.WAITING;
         }
         updateCellParents();
@@ -204,12 +217,27 @@ public class PhaseMachine implements IPhaseMachine {
     /**
      * Cycles to the next phase based on an IPhaseArrow.
      *
-     * @param arrow the IPhaseArrow used to determine the next IPhase.
+     * @param arrow the IPhaseArrow used to determine the next IPhase
+     * @throws      XMLException if the phase name in the arrow does not match valid phases
      */
     private void moveToNextPhase(IPhaseArrow arrow) {
         //TODO: UPDATE HISTORY
-        currentPhase = phases.get(arrow.getEndPhaseName());
-        cycleAutomatic();
+        if (phases.containsKey(arrow.getEndPhaseName())) {
+            currentPhase = phases.get(arrow.getEndPhaseName());
+            cycleAutomatic();
+        } else {
+            throw new XMLException(Factory.CONTROL_ERROR);
+        }
+    }
+
+    /**
+     * Sets the current player for the move.
+     *
+     * @param player the current player
+     */
+    @Override
+    public void setCurrentPlayer(IPlayer player) {
+        currentPlayer = player;
     }
 
     /**

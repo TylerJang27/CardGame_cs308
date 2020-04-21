@@ -595,7 +595,7 @@
                             <flip>south</flip>
                         </donor_dest>
                         <!-- points included in the tag below-->
-                        <next_phase phase="check_eog">0</next_phase>
+                        <next_phase phase="check_eog">10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="suits">
@@ -608,7 +608,7 @@
                         </receiver>
                         <mover>
                             <direction>u</direction>
-                            <value>*</value>
+                            <value>1</value>
                             <color>*</color>
                             <suit>=</suit>
                             <num_cards>*</num_cards>
@@ -650,7 +650,7 @@
                             <offset>preserve</offset>
                             <flip>south</flip>
                         </donor_dest>
-                        <next_phase phase = "check_eog">0</next_phase>
+                        <next_phase phase = "check_eog">20.0</next_phase>
                     </action>
                 </rule>
                 <rule category="deck">
@@ -695,7 +695,7 @@
                             <offset>none</offset>
                             <flip>n</flip>
                         </mover_dest>
-                        <next_phase phase="check_eog"></next_phase>
+                        <next_phase phase="check_eog">-10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="hand">
@@ -740,7 +740,7 @@
                             <offset>0</offset>
                             <flip>none</flip>
                         </mover_dest>
-                        <next_phase phase = "check_eog">0</next_phase>
+                        <next_phase phase = "check_eog">0.0</next_phase>
                     </action>
                 </rule>
             </rules>
@@ -753,7 +753,7 @@
                     <receive_rule>
                         <condition category="action">
                             <!-- somehow check that all these are empty -->
-                            <num_cards>0</num_cards>
+                            <num_cards>1</num_cards>
                         </condition>
                         <condition category="hand">
                             <!-- somehow check that all these are empty -->
@@ -766,7 +766,7 @@
                     </receive_rule>
                     <action>
                         <!-- go to end of game -->
-                        <next_phase phase="end_of_game"></next_phase>
+                        <next_phase phase="win">500.0</next_phase>
                     </action>
                 </rule>
                 <rule category="">
@@ -782,7 +782,7 @@
                 </rule>
             </rules>
         </phase>
-        <phase name="end_of_game">
+        <phase name="win">
             <phase_type>manual</phase_type>
             <valid_donors/>
             <rules>
@@ -790,7 +790,7 @@
                     <option>
                         <action>
                             <!-- display end of game screen -->
-                            <next_phase phase = "end_of_game"></next_phase>
+                            <next_phase phase = "win"></next_phase>
                         </action>
                     </option>
                 </rule>

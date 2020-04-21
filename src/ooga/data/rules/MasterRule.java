@@ -4,6 +4,8 @@ import ooga.cardtable.GameState;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
 import ooga.cardtable.IPlayer;
+import ooga.data.XMLException;
+import ooga.data.factories.Factory;
 
 import java.util.List;
 
@@ -80,10 +82,14 @@ public class MasterRule implements IMasterRule {
     @Override
     public boolean checkAutoRules(IMove move) {
         boolean flag = true;
-        for (IRule rule : myAutoRules) {
-            if (!rule.checkValidMove(move)) { //TODO: VERIFY THIS NULL WORKS
-                return false;
+        try {
+            for (IRule rule : myAutoRules) {
+                if (!rule.checkValidMove(move)) { //TODO: VERIFY THIS NULL WORKS
+                    return false;
+                }
             }
+        } catch (NullPointerException e) {
+            throw new XMLException(e, Factory.CONTROL_ERROR);
         }
         return flag;
     }

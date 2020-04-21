@@ -3,6 +3,7 @@ package ooga.data.rules;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IGameState;
 import ooga.cardtable.IMove;
+import ooga.cardtable.IPlayer;
 import ooga.data.rules.excluded.IPhaseHistoryCell;
 
 import java.util.List;
@@ -76,6 +77,13 @@ public interface IPhaseMachine {
      * @param arrow a transition of states
      */
     //void moveToNextPhase(IPhaseArrow arrow);
+
+    /**
+     * Sets the current player for the move.
+     *
+     * @param player the current player
+     */
+    void setCurrentPlayer(IPlayer player);
 
     /**
      * Retrieves the current phase

@@ -6,7 +6,9 @@ import ooga.data.rules.IPhaseMachine;
 
 public interface ITable {
 
-  void setPhaseMachine(IPhaseMachine machine);
+    IPlayer getCurrentPlayer(); //TODO: ADD TO API CHANGES
+
+    void setPhaseMachine(IPhaseMachine machine);
 
     void restartGame(); //TODO: ADD TO API CHANGES
 

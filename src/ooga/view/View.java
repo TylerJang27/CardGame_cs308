@@ -42,6 +42,7 @@ public class View implements ExternalAPI {
     }
 
     private TriggerMove getMove;
+    private Runnable restarter;
 
     private String myTheme = "Duke"; // fixme decide on a default and implement
     private String myLanguage = "English";
@@ -56,11 +57,12 @@ public class View implements ExternalAPI {
     private static final double DEFAULT_HEIGHT = 500;
 
 
-    public View(Controller.GiveMove giveMove, IStyle style){
+    public View(Controller.GiveMove giveMove, Runnable restart, IStyle style){
+        restarter = restart;
 
         ChangeValue getTheme = (String theme) -> {
             myTheme = theme;
-            myStyle.setTableSkinPath(theme);
+            myStyle.setTheme(theme);
         };
 
         ChangeValue getLanguage = (String language) -> {
@@ -72,8 +74,8 @@ public class View implements ExternalAPI {
 
         myStyle = style;
 
-        if (myStyle.getTableSkinPath() != null) {
-            myTheme = myStyle.getTableSkinPath();
+        if (myStyle.getTheme() != null) {
+            myTheme = myStyle.getTheme();
         }
         if (myStyle.getLanguage() != null) {
             myLanguage = myStyle.getLanguage();
@@ -129,7 +131,8 @@ public class View implements ExternalAPI {
         Button restartButton = new Button(currentMessages.getString("restart"));
         restartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                System.out.println("View 114: Call lambda to notify backend");
+                restarter.run();
+                // System.out.println("View 114: Call lambda to notify backend");
             }
         });
 
@@ -191,6 +194,9 @@ public class View implements ExternalAPI {
     }
 
     public void reportError(String key, String... formats){
+        //try translate
+        //catch use the original arguments
+        //pop up the errors
         //TODO
         System.out.println("error received of type: " + key);
     }
@@ -203,7 +209,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setScores(Map<Integer, Double> playerScores) {
-        myGameScreen.updateScore(playerScores.get(0));
+        myGameScreen.updateScore(playerScores.get(1));
     }
 
 

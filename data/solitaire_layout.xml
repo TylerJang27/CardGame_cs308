@@ -6,7 +6,7 @@
         <!-- all of these values are relative to
              a screen width of a control 100 -->
         <screen_height>75</screen_height>
-        <card_width>10</card_width>
+        <card_width>8</card_width>
         <card_height>14</card_height>
         <face_down_offset>2</face_down_offset>
         <face_up_offset>4</face_up_offset>

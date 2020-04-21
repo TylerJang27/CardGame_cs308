@@ -71,14 +71,14 @@ public class RuleFactory implements Factory {
             Function<IMove, ICell> donorCell = (IMove move) -> move.getDonor();
             Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
             Function<IMove, ICell> currCell = MasterRuleFactory.getCurrentCellFunction(ruleName, moverCell, donorCell, recipientCell);
-
-            extractValueCondition(e, conditions, recipientCell, currCell);
-            extractColorCondition(e, conditions, recipientCell, currCell);
-            extractSuitCondition(e, conditions, recipientCell, currCell);
-            extractNumCardsCondition(e, conditions, currCell);
-            extractFaceUpCondition(e, conditions, currCell);
-            extractNameCondition(e, cellGroupMap, conditions, currCell);
-
+            if (!ruleName.substring(ruleName.length() - 1).equalsIgnoreCase(PhaseFactory.C)) {
+                extractValueCondition(e, conditions, recipientCell, currCell);
+                extractColorCondition(e, conditions, recipientCell, currCell);
+                extractSuitCondition(e, conditions, recipientCell, currCell);
+                extractNumCardsCondition(e, conditions, currCell);
+                extractFaceUpCondition(e, conditions, currCell);
+                extractNameCondition(e, cellGroupMap, conditions, currCell);
+            }
             extractConditionCondition(e, cellGroupMap, conditions);
             return new Rule(ruleName, conditions);
         } catch (Exception ee) {
@@ -159,7 +159,7 @@ public class RuleFactory implements Factory {
         String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).strip();
         if (!TRUE_CHECKS.contains(numCards)) {
             Integer value = Integer.parseInt(numCards);
-            valueChecker = (IMove move) -> (currCell.apply(move).getTotalSize() == value);
+            valueChecker = (IMove move) -> currCell.apply(move).getTotalSize() == value;
             conditions.add(valueChecker);
         }
     }
