@@ -1,6 +1,9 @@
 package ooga.data.rules;
 
 import ooga.cardtable.*;
+import ooga.data.XMLException;
+import ooga.data.factories.Factory;
+import ooga.data.factories.PhaseMachineFactory;
 import ooga.data.rules.excluded.IPhaseHistoryCell;
 
 import java.util.ArrayList;
@@ -208,8 +211,12 @@ public class PhaseMachine implements IPhaseMachine {
      */
     private void moveToNextPhase(IPhaseArrow arrow) {
         //TODO: UPDATE HISTORY
-        currentPhase = phases.get(arrow.getEndPhaseName());
-        cycleAutomatic();
+        if (phases.containsKey(arrow.getEndPhaseName())) {
+            currentPhase = phases.get(arrow.getEndPhaseName());
+            cycleAutomatic();
+        } else {
+            throw new XMLException(Factory.CONTROL_ERROR);
+        }
     }
 
     /**

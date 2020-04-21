@@ -111,8 +111,12 @@ public class MasterRuleFactory implements Factory {
                 String newPhase = XMLHelper.getAttribute((Element) phaseAction, RESOURCES.getString(PHASE));
                 String pointVal = phaseAction.getTextContent();
                 Integer points = 0;
-                if (!pointVal.isEmpty()) {
-                    points = Integer.parseInt(pointVal);
+                try {
+                    if (!pointVal.isEmpty()) {
+                        points = Integer.parseInt(pointVal);
+                    }
+                } catch (NumberFormatException e) {
+                    points = 0;
                 }
                 IPhaseArrow arrow = new PhaseArrow(phaseName, ruleName, newPhase);
                 controlActionList.add(new ControlAction(arrow, points));
