@@ -62,7 +62,7 @@ public class View implements ExternalAPI {
 
         ChangeValue getTheme = (String theme) -> {
             myTheme = theme;
-            myStyle.setTableSkinPath(theme);
+            myStyle.setTheme(theme);
         };
 
         ChangeValue getLanguage = (String language) -> {
@@ -74,8 +74,8 @@ public class View implements ExternalAPI {
 
         myStyle = style;
 
-        if (myStyle.getTableSkinPath() != null) {
-            myTheme = myStyle.getTableSkinPath();
+        if (myStyle.getTheme() != null) {
+            myTheme = myStyle.getTheme();
         }
         if (myStyle.getLanguage() != null) {
             myLanguage = myStyle.getLanguage();

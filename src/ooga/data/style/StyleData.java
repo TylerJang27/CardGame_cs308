@@ -2,6 +2,11 @@ package ooga.data.style;
 
 import java.util.Map;
 
+/**
+ * This class governs styling information to be passed to the frontend and saved based on user customization.
+ *
+ * @author Tyler Jang, Andrew Krier
+ */
 public class StyleData implements IStyle {
 
     private String defaultFilePath;
@@ -51,6 +56,7 @@ public class StyleData implements IStyle {
     @Override
     public void setLanguage(String lang) {
         myLanguage = lang;
+        saveSettings();
     }
 
     /**
@@ -71,6 +77,7 @@ public class StyleData implements IStyle {
     @Override
     public void setDarkMode(boolean dark) {
         myDark = dark;
+        saveSettings();
     }
 
     /**
@@ -91,6 +98,7 @@ public class StyleData implements IStyle {
     @Override
     public void setDifficulty(int diff) {
         myDifficulty = diff;
+        saveSettings();
     }
 
     /**
@@ -111,6 +119,7 @@ public class StyleData implements IStyle {
     @Override
     public void setSound(boolean sound) {
         mySound = sound;
+        saveSettings();
     }
 
     /**
@@ -131,6 +140,7 @@ public class StyleData implements IStyle {
     @Override
     public void setCardSkinPath(String path) {
         myCards = path;
+        saveSettings();
     }
 
     /**
@@ -139,7 +149,7 @@ public class StyleData implements IStyle {
      * @return String filepath to skin
      */
     @Override
-    public String getTableSkinPath() {
+    public String getTheme() {
         return myTable;
     }
 
@@ -149,8 +159,9 @@ public class StyleData implements IStyle {
      * @param path String filepath to skin
      */
     @Override
-    public void setTableSkinPath(String path) {
+    public void setTheme(String path) {
         myTable = path;
+        saveSettings();
     }
 
     /**
