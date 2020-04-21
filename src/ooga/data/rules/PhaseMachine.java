@@ -20,6 +20,7 @@ public class PhaseMachine implements IPhaseMachine {
     private static final ResourceBundle RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + PHASES);
 
     private static final String WIN = "Win";
+    private static final String LOSS = "Loss";
 
     private Map<String, IPhase> phases;
     private IPhase startPhase;
@@ -195,6 +196,8 @@ public class PhaseMachine implements IPhaseMachine {
             updateCellParents();
             if (currentPhase.getMyName().equalsIgnoreCase(RESOURCES.getString(WIN))) {
                 return GameState.WIN;
+            } else if (currentPhase.getMyName().equalsIgnoreCase(RESOURCES.getString(LOSS))) {
+                return GameState.LOSS;
             }
             return GameState.WAITING;
         }
