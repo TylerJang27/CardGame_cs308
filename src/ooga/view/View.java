@@ -42,6 +42,7 @@ public class View implements ExternalAPI {
     }
 
     private TriggerMove getMove;
+    private Runnable restarter;
 
     private String myTheme = "Duke"; // fixme decide on a default and implement
     private String myLanguage = "English";
@@ -56,7 +57,8 @@ public class View implements ExternalAPI {
     private static final double DEFAULT_HEIGHT = 500;
 
 
-    public View(Controller.GiveMove giveMove, IStyle style){
+    public View(Controller.GiveMove giveMove, Runnable restart, IStyle style){
+        restarter = restart;
 
         ChangeValue getTheme = (String theme) -> {
             myTheme = theme;
@@ -129,7 +131,8 @@ public class View implements ExternalAPI {
         Button restartButton = new Button(currentMessages.getString("restart"));
         restartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                System.out.println("View 114: Call lambda to notify backend");
+                restarter.run();
+                // System.out.println("View 114: Call lambda to notify backend");
             }
         });
 

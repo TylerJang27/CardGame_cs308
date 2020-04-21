@@ -67,8 +67,6 @@ public class Controller extends Application {
                 if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
                     myChangedCells.put(i, myCurrentCells.get(i));
                 }
-                //System.out.println(myCurrentCells.get("heart"));
-                //System.out.println(myCurrentCells.get("heart").getDeck().peek());
             }
             processInvalidMove(move);
             myView.setUpdatesToCellData(myChangedCells);
@@ -78,7 +76,11 @@ public class Controller extends Application {
         };
         myStyleFile = new File(DEFAULT_STYLE_FILE);
         myStyle = StyleFactory.createStyle(myStyleFile);
-        myView = new View(gm);
+        myView = new View(gm, ()->{
+            myTable.restartGame();
+            myCurrentCells = myTable.getCellData();
+            myView.setUpdatesToCellData(myCurrentCells); },
+                myStyle);
         initializeHandlers(myView);
     }
 
