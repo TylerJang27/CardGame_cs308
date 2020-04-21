@@ -638,7 +638,7 @@
                             <num_cards>1</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>none</offset>
+                            <offset>0</offset>
                             <flip>y</flip>
                         </mover_dest>
                         <donor_dest>

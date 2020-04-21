@@ -133,15 +133,15 @@ public class MasterRuleFactory implements Factory {
     private static void getCardActions(String ruleName, List<ICardAction> cardActionList, NodeList allActions) {
         Node recAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(RECEIVER_DESTINATION));
         if (recAction != null) {
-            cardActionList.add(ActionFactory.cardAction((Element) recAction, ruleName + R));
+            cardActionList.add(ActionFactory.createAction((Element) recAction, ruleName + R));
         }
         Node movAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(MOVER_DESTINATION));
         if (movAction != null) {
-            cardActionList.add(ActionFactory.cardAction((Element) movAction, ruleName + M));
+            cardActionList.add(ActionFactory.createAction((Element) movAction, ruleName + M));
         }
         Node donAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(DONOR_DESTINATION));
         if (donAction != null) {
-            cardActionList.add(ActionFactory.cardAction((Element) donAction, ruleName + D));
+            cardActionList.add(ActionFactory.createAction((Element) donAction, ruleName + D));
         }
     }
 
