@@ -194,6 +194,9 @@ public class View implements ExternalAPI {
     }
 
     public void reportError(String key, String... formats){
+        //try translate
+        //catch use the original arguments
+        //pop up the errors
         //TODO
         System.out.println("error received of type: " + key);
     }
