@@ -207,7 +207,8 @@ public class PhaseMachine implements IPhaseMachine {
     /**
      * Cycles to the next phase based on an IPhaseArrow.
      *
-     * @param arrow the IPhaseArrow used to determine the next IPhase.
+     * @param arrow the IPhaseArrow used to determine the next IPhase
+     * @throws      XMLException if the phase name in the arrow does not match valid phases
      */
     private void moveToNextPhase(IPhaseArrow arrow) {
         //TODO: UPDATE HISTORY
