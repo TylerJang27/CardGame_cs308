@@ -1,4 +1,4 @@
-package ooga.view;
+package ooga.view.menu;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyProperty;
-import javafx.beans.property.StringProperty;
 
 public class Dictionary {
   private static final Dictionary INSTANCE = new Dictionary();

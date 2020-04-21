@@ -1,17 +1,10 @@
-package ooga.view;
+package ooga.view.gamescreen;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.scene.input.*;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 import ooga.cardtable.*;
 import javafx.geometry.Point2D;
@@ -45,21 +38,11 @@ public class DisplayCell {
                 myImageView = new ImageView(new Image(cardNameToFileName.get(myCell.getDeck().peek().getName())));
             } else {
                 myImageView = new ImageView(new Image(cardNameToFileName.get("faceDown")));
+                myImageView.getStyleClass().add("cardskin");
             }
 
-/*
-            try {
-                Image faceUp = new Image(cardName + ".png");//cardNameToFileName.get(myCell.getDeck().peek().getName()));
-            } catch (IllegalArgumentException e) {
-                Image faceUp = new Image("0C" + ".png"); //TODO: REPLACE WITH A DEFAULT CARD SKIN
-            }
-*/
         } else {
-            /*String cellName = myCell.getName();
-                myFaceUp = new Image(cardNameToFileName.get(cellName));
-
-             */
-            myImageView = new ImageView(new Image(cardNameToFileName.get("celloutline")));
+            myImageView = new ImageView(new Image("/ooga/resources/em.jpg"));
         }
 
         myImageView.layoutXProperty().bind(Bindings.divide(myImageView.fitWidthProperty(),-2));
