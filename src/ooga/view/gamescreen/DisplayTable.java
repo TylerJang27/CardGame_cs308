@@ -140,7 +140,11 @@ public class DisplayTable {
 
     private void clearDisplayCell(DisplayCell dc) {
         myDisplayCellData.remove(dc);  // remove the display cell + all its children from the list of active display cells
-        myPane.getChildren().remove(dc.getImageView()); // remove the display cell +  all its children from the screen
+        if (dc.getImageView().equals(null)) {
+            System.out.println("I'm broken, help");
+        } else {
+            myPane.getChildren().remove(dc.getImageView()); // remove the display cell +  all its children from the screen
+        }
         for (IOffset dir: dc.getCell().getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;
