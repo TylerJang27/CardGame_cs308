@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import ooga.cardtable.*;
 import ooga.data.factories.PhaseMachineFactory;
 import ooga.data.factories.LayoutFactory;
+import ooga.data.factories.StyleFactory;
 import ooga.data.rules.IPhaseMachine;
 
 import ooga.data.style.IStyle;
@@ -75,11 +76,10 @@ public class Controller extends Application {
             myChangedCells.clear();
             //myView.setCellData(Map.copyOf(myTable.getCellData()));
         };
+        myStyleFile = new File(DEFAULT_STYLE_FILE);
+        myStyle = StyleFactory.createStyle(myStyleFile);
         myView = new View(gm);
         initializeHandlers(myView);
-        myStyleFile = new File(DEFAULT_STYLE_FILE);
-        //myStyle = StyleFactory.getStyle(myStyleFile);
-        //myView.setStyle(myStyle);
     }
 
     private void processInvalidMove(IMove move) {
