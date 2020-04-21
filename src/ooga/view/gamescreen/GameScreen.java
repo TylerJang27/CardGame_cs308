@@ -25,8 +25,9 @@ public class GameScreen {
         String skinType = "classic";
         ResourceBundle cardskins = ResourceBundle.getBundle("ooga.resources.decks.supportedthemes");
         for (String the : cardskins.getString("standard").split(",")) {
-            if (theme.equals(the)) {
+            if (theme.toLowerCase().equals(the.toLowerCase())) {
                 skinType = theme;
+                break;
             }
         }
 
