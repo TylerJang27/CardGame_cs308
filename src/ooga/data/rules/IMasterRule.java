@@ -5,62 +5,47 @@ import ooga.cardtable.IMove;
 import ooga.cardtable.IPlayer;
 
 /**
- * Gets and evaluates rules for a given phase, based on generic and specific rules.
+ * Interface for evaluating rules for a given phase, based on generic and specific rules.
+ * This interface extends IRule.
+ *
+ * @author Tyler Jang
  */
 public interface IMasterRule extends IRule {
 
-  /**
-   * Evaluates whether the cell in question can receive a cell in this phase
-   *
-   * @param cell the cell to be receiving a cell
-   * @return whether or not the cell is a valid acceptor
-   */
-  //boolean checkValidAcceptor(ICell cell);
+    //boolean checkValidAcceptor(ICell cell);
 
-  /**
-   * Evaluates whether the cell in question can donate a cell in this phase
-   *
-   * @param cell the cell to be receiving a cell
-   * @return whether or not the cell is a valid donor
-   */
-  //boolean checkValidDonor(ICell cell);
+    //boolean checkValidDonor(ICell cell);
 
-  IGameState executeMove(IMove move); //TODO: ADD TO API CHANGES
+    /**
+     * Executes a move, validating it and updating card actions.
+     *
+     * @param move the IMove to be processed
+     * @return the new IGameState
+     */
+    IGameState executeMove(IMove move); //TODO: ADD TO API CHANGES
 
-  IPhaseArrow executeAutoActions(IPlayer player, IMove move); //TODO: ADD TO API CHANGES
+    /**
+     * Executes the automatic actions associated with the IMasterRule.
+     *
+     * @param player the player to which points and adjustments should be made
+     * @param move   the IMove to be processed
+     * @return an IPhaseArrow containing the current phase and the new phase to be updated to
+     */
+    IPhaseArrow executeAutoActions(IPlayer player, IMove move); //TODO: ADD TO API CHANGES
 
-  boolean checkValidMove(IMove move); //TODO: ADD TO API CHANGES
+    /**
+     * Validates the auto rules based on a move.
+     *
+     * @param move the IMove to validate
+     * @return whether or not control changes should be processed accordingly
+     */
+    boolean checkAutoRules(IMove move); //TODO: ADD TO API CHANGES
 
-  boolean checkAutoRules(IMove move); //TODO: ADD TO API CHANGES
+    //boolean checkValidTransfer(ICell don, ICell rec);
 
-  /**
-   * Evaluates whether the cell transfer is valid
-   *
-   * @param don the donor cell
-   * @param rec the acceptor cell
-   * @return whether or not the transfer is allowed
-   */
-  //boolean checkValidTransfer(ICell don, ICell rec);
+    //ICellRegex getAcceptorRegex();
 
-  /**
-   * Returns the regex rules for generic acceptors
-   *
-   * @return the acceptor regex logic
-   */
-  //ICellRegex getAcceptorRegex();
+    //ICellRegex getDonorRegex();
 
-  /**
-   * Returns the regex rules for generic donors
-   *
-   * @return the donor regex logic
-   */
-  //ICellRegex getDonorRegex();
-
-  /**
-   * Returns the regex rules for specific transfers
-   *
-   * @return the transfer regex logic
-   */
-  //ICellRegex getTransferRegex();
-
+    //ICellRegex getTransferRegex();
 }

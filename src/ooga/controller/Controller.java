@@ -6,15 +6,13 @@ import ooga.cardtable.*;
 import ooga.data.factories.PhaseMachineFactory;
 import ooga.data.factories.LayoutFactory;
 import ooga.data.rules.IPhaseMachine;
-import ooga.data.rules.LayoutDummy;
-import ooga.data.rules.PhaseMachine;
 
 import ooga.data.style.IStyle;
 import ooga.view.View;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -68,7 +66,10 @@ public class Controller extends Application {
                 if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
                     myChangedCells.put(i, myCurrentCells.get(i));
                 }
+                //System.out.println(myCurrentCells.get("heart"));
+                //System.out.println(myCurrentCells.get("heart").getDeck().peek());
             }
+            processInvalidMove(move);
             myView.setUpdatesToCellData(myChangedCells);
             myPreviousCells = myCurrentCells;
             myChangedCells.clear();
@@ -78,7 +79,19 @@ public class Controller extends Application {
         initializeHandlers(myView);
         myStyleFile = new File(DEFAULT_STYLE_FILE);
         //myStyle = StyleFactory.getStyle(myStyleFile);
-        myView.setStyle(myStyle);
+        //myView.setStyle(myStyle);
+    }
+
+    private void processInvalidMove(IMove move) {
+        if (myChangedCells.size() == 0) {
+            List<ICell> resetters = List.of(move.getRecipient(), move.getMover(), move.getDonor());
+            for (ICell c: resetters) {
+                c=c.findHead();
+                if (c != null) {
+                    myChangedCells.put(c.getName(), c);
+                }
+            }
+        }
     }
 
     //TODO: REPLACE WITH LOGIC REGARDING METHODS AT THE BOTTOM
@@ -106,13 +119,13 @@ public class Controller extends Application {
         // TODO: Give game name somehow, figure out who's building the phase machine
         myRuleFile = new File(DEFAULT_RULE_FILE);
 
-        myCurrentPhaseMachine = PhaseMachineFactory.getPhaseMachine(myRuleFile);
+        myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
         myTable = new Table(myCurrentPhaseMachine);
         myCellMap = myTable.getCellData();
         File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
 
 
-        myView.setLayout(LayoutFactory.getLayout(f));
+        myView.setLayout(LayoutFactory.createLayout(f));
         myView.setCellData(myCellMap);
         myPreviousCells = myCellMap;
         //myView.setCellData(Map.copyOf(myTable.getCellData()));

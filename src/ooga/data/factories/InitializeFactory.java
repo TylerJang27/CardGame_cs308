@@ -2,23 +2,29 @@ package ooga.data.factories;
 
 import ooga.cardtable.*;
 import ooga.data.XMLException;
-import ooga.data.XMLHelper;
+import ooga.data.factories.buildingblocks.CardBlock;
+import ooga.data.factories.buildingblocks.ICardBlock;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Function;
 
+/**
+ * This InitializeFactory implements Factory and constructs a Function<IDeck, ICell> for each ICell using the createInitialization() method.
+ * This Initialization is used to build the initial card setup for each cell.
+ *
+ * @author Tyler Jang
+ */
 public class InitializeFactory implements Factory {
     private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
     private static final String DECK = "deck";
     private static final String INITIALIZE = "initialize";
-    private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE+DECK);
-    private static final ResourceBundle initializeResources = ResourceBundle.getBundle(RESOURCE_PACKAGE+INITIALIZE);
+    private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE + DECK);
+    private static final ResourceBundle initializeResources = ResourceBundle.getBundle(RESOURCE_PACKAGE + INITIALIZE);
 
     private static final String CARD = "Card";
     private static final String RANDOM = "Random";
@@ -27,12 +33,16 @@ public class InitializeFactory implements Factory {
     private static final String UP = "Up";
     private static final String DOWN = "Down";
 
-    private static DocumentBuilder documentBuilder;
-
-    public InitializeFactory() { documentBuilder = XMLHelper.getDocumentBuilder();}
-
-    public static Function<IDeck, ICell> getInitialization(Node settings, IOffset offset, double rotation) { //TODO: IMPLEMENT ROTATION
-        List<Function<IDeck, ICard>> functionList = new ArrayList<>();
+    /**
+     * Builds and return a Function of IDeck to ICell built from a rules XML. Requirements for rules XML can be found in ___.
+     *
+     * @param settings  the Node from which the Function is built
+     * @param offset    the offset used for all of the cards //TODO: UNLESS OTHERWISE SPECIFIED
+     * @param rotation  the rotation used for the cell
+     * @return          a Function that, when applied, builds an ICell by pulling cards from the supplied IDeck.
+     */
+    public static Function<IDeck, ICell> createInitialization(Node settings, IOffset offset, double rotation) {
+        List<Function<IDeck, ICardBlock>> functionList = new ArrayList<>();
         try {
             NodeList cards = ((Element) settings).getElementsByTagName(resources.getString(CARD));
 
@@ -41,61 +51,135 @@ public class InitializeFactory implements Factory {
                 String[] regexSplit = regex.split(initializeResources.getString(DELIMITER));
 
                 if (regexSplit[0].equals(initializeResources.getString(RANDOM))) {
-                    retrieveRandomCard(functionList, regexSplit[1]);
+                    functionList.add(retrieveRandomCard(regexSplit));
                 } else if (regexSplit[0].equals(initializeResources.getString(ALL))) {
-                    return retrieveDeck();
+                    return retrieveDeck(rotation);
                 } else {
-                    retrieveNameCard(functionList, regexSplit);
+                    functionList.add(retrieveNameCard(regexSplit));
                 }
             }
         } catch (Exception e) {
             throw new XMLException(e, Factory.MISSING_ERROR + "," + resources.getString(INITIALIZE));
         }
-        return getDeckBuilderFunction(offset, functionList);
+        return getDeckBuilderFunction(offset, rotation, functionList);
     }
 
-    private static Function<IDeck, ICell> getDeckBuilderFunction(IOffset offset, List<Function<IDeck, ICard>> functionList) {
+    /**
+     * Condenses functionList into one Function that takes in an IDeck and returns an ICell.
+     *
+     * @param offset        the Offset from which to build the cards
+     * @param rotation      the double rotation for each card
+     * @param functionList  the List of Functions of IDeck to ICardBlock from which to build the full ICell
+     * @return
+     */
+    private static Function<IDeck, ICell> getDeckBuilderFunction(IOffset offset, double rotation, List<Function<IDeck, ICardBlock>> functionList) {
         return (IDeck source) -> {
             ICell c = new Cell("");
             ICell root = c;
-            for (Function<IDeck, ICard> f: functionList) {
-                c.addCard(offset, f.apply(source));
-                c=c.getHeldCells().get(offset);
+            for (Function<IDeck, ICardBlock> f : functionList) {
+                ICardBlock card = f.apply(source);
+                
+                Double rot = rotation;
+                if (card.getFutureRotation() != null) {
+                    rot=card.getFutureRotation();
+                }
+                card.rotate(rot);
+
+                IOffset off = offset;
+                if (card.getOffset() != null) {
+                    off= card.getOffset();
+                }
+                c.addCard(off, card.getCard());
+                if (!off.equals(Offset.NONE)) {
+                    c = c.getHeldCells().get(off);
+                }
             }
             return root;
         };
     }
 
-    private static void retrieveNameCard(List<Function<IDeck, ICard>> functionList, String[] regexSplit) {
-        functionList.add((IDeck source) -> {
+    /**
+     * Builds and returns a Function that retrieves a card from a deck by name.
+     *
+     * @param regexSplit    an array of Strings containing the name of the card and the flip setting
+     * @return              a Function of IDeck to ICardBlock to build the initialization for the cell
+     */
+    private static Function<IDeck, ICardBlock> retrieveNameCard(String[] regexSplit) {
+        return (IDeck source) -> {
             ICard c = source.getCardByName(regexSplit[0]);
             setFlip(c, regexSplit[1]);
-            return c;
-        });
+            return getCardBlock(c, regexSplit);
+        };
     }
 
-    private static Function<IDeck, ICell> retrieveDeck() {
+    /**
+     * Builds and returns a Function that retrieves an entire deck and sets relevant rotation on its cards.
+     *
+     * @param rotation  the rotation to set the cards in the deck
+     * @return          a Function of IDeck to ICell for the entire deck
+     */
+    private static Function<IDeck, ICell> retrieveDeck(double rotation) {
         return (IDeck source) -> {
             ICell c = new Cell("", source);
+            for (int k = 0; k < source.size(); k ++) {
+                source.peekCardAtIndex(k).rotate(rotation);
+            }
             return c;
         };
     }
 
-    private static void retrieveRandomCard(List<Function<IDeck, ICard>> functionList, String direction) {
-        functionList.add((IDeck source) -> {
+    /**
+     * Builds and returns a Function that retrieves a random card from the deck.
+     *
+     * @param regexSplit    an array of Strings containing the name of the card and the flip setting
+     * @return              a Function of IDeck to ICardBlock to build the initialization for the cell
+     */
+    private static Function<IDeck, ICardBlock> retrieveRandomCard(String[] regexSplit) {
+        return (IDeck source) -> {
             ICard c = source.getRandomCard();
-            setFlip(c, direction);
-            return c;
-        });
+            setFlip(c, regexSplit[1]);
+            return getCardBlock(c, regexSplit);
+        };
     }
 
+    /**
+     * Sets the ICard's faceup/facedown orientation based on direction.
+     *
+     * @param c         the ICard to flip
+     * @param direction the String representing whether the card should be up or down
+     */
     private static void setFlip(ICard c, String direction) {
         boolean up = c.isFaceUp();
-        if (up && direction.equals(initializeResources.getString(DOWN))) {
+        if (up && direction.equalsIgnoreCase(initializeResources.getString(DOWN))) {
             c.flip();
-        } else if (!up && direction.equals(initializeResources.getString(UP))) {
+        } else if (!up && direction.equalsIgnoreCase(initializeResources.getString(UP))) {
             c.flip();
         }
+    }
+
+    /**
+     * Builds a wrapper for each ICard, containing information on offset and rotation.
+     *
+     * @param card          the ICard to wrap
+     * @param regexSplit    an array of Strings that may or may not contain information on Offset and direction
+     * @return              an ICardBlock with ICard, offset, and direction information
+     */
+    private static ICardBlock getCardBlock(ICard card, String[] regexSplit) {
+        IOffset off = null;
+        Double rotation = null;
+        if (regexSplit.length > 2) {
+            if (Offset.validOffsets.contains(regexSplit[2].toLowerCase())) {
+                off = Offset.valueOf(regexSplit[2].toUpperCase());
+            }
+            if (regexSplit.length > 3) {
+                try {
+                    rotation = Double.parseDouble(regexSplit[3]);
+                } catch (NumberFormatException e) {
+                    rotation = null;
+                }
+            }
+        }
+        return new CardBlock(card, off, rotation);
     }
 
 }

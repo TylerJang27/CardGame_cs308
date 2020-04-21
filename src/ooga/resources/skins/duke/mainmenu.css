@@ -1,0 +1,51 @@
+/*
+    This is a required file for using the Duke Theme
+    Document: Duke Theme Main Menu
+    Required path: skins/duke/mainmenu.css
+*/
+
+.root{
+    -fx-font-size: 12pt;
+    -fx-font-family: "Stencil";
+    -fx-background-image: url("dukefans.gif");
+    -fx-background-size: stretch;
+    -fx-focus-color: #FFFFFF;
+}
+
+.border{
+    -fx-base: #000000;
+}
+
+.titleborder{
+    -fx-base: #000000;
+    -fx-padding: 20;
+}
+
+.title{
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 30pt;
+    -fx-alignment: "center";
+}
+
+.dashboard{
+    -fx-font-size: 10pt;
+    -fx-alignment: "center";
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-fill: #FFFFFF;
+    -fx-font-family: "Arial Black";
+    -fx-fill: #FFFFFF;
+}
+
+.options{
+    -fx-spacing: 10;
+}
+
+.button{
+    -fx-background-color: linear-gradient(#C9C9C9 , #DFDFDF );
+
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#000FFF , #D8DBFF  );
+}
