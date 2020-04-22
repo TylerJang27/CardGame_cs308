@@ -20,6 +20,7 @@ import ooga.data.style.IStyle;
 import ooga.view.gamescreen.GameScreen;
 import ooga.view.menu.Menu;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -132,18 +133,49 @@ public class View implements ExternalAPI {
 
     }
 
+    public void displayMessage(String key) {
+        displayMessage(key, new ArrayList<>());
+    }
 
     public void displayMessage(String key, List<String> args){
         // fixme im horribly inefficient
-        // TODO: implement messages with args
+        System.out.println("reported");
         ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
-        String message = currentMessages.getString(key);
-        Text text = new Text(message);
+        String displayMessage = translateAndFormat(key, args, currentMessages);
+        System.out.println(displayMessage);
+        Text text = new Text(displayMessage);
         Pane messagePane = new Pane();
         messagePane.getChildren().add(text);
         Scene messageScene = new Scene(messagePane);
         Stage popUp = new Stage();
         popUp.setScene(messageScene);
+    }
+
+    /**
+     * Translates a String key and its replacements args and formats them. If a translation or format is not found, the original language or key is displayed.
+     *
+     * @param key               the String containing the formatting elements
+     * @param args              the List of Strings containing elements to insert
+     * @param currentMessages   the ResourceBundle with which to translate
+     * @return                  the properly translated and formatted String
+     */
+    private String translateAndFormat(String key, List<String> args, ResourceBundle currentMessages) {
+        List<String> argsTranslated = new ArrayList<>();
+        for (String s:args) {
+            try {
+                argsTranslated.add(currentMessages.getString(s));
+            } catch (Exception e) {
+                argsTranslated.add(s);
+            }
+        }
+        String message = currentMessages.getString(key);
+        String displayMessage = message;
+        try {
+            displayMessage=String.format(message, argsTranslated);
+        } catch (Exception e) {
+            displayMessage = message;
+        }
+        return displayMessage;
     }
 
     /**

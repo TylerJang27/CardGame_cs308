@@ -75,11 +75,11 @@ public class Controller extends Application {
             try {
                 lastState = myTable.update(move);
                 if (lastState.equals(GameState.WIN)) {
-                    myView.reportError(WIN);
+                    myView.displayMessage(WIN);
                 } else if (lastState.equals(GameState.INVALID)) {
-                    myView.reportError(INVALID);
+                    myView.displayMessage(INVALID);
                 } else if (lastState.equals(GameState.LOSS)) {
-                    myView.reportError(LOSS);
+                    myView.displayMessage(LOSS);
                 }
             } catch (XMLException e) {
                 reportError(e);
@@ -125,9 +125,8 @@ public class Controller extends Application {
         for (int k = 1; k < messages.length; k ++) {
             tags.add(messages[k]);
         }
-        String[] tagArray = new String[messages.length-1];
         if (myView!= null) {
-            myView.reportError(messages[0], tags.toArray(tagArray));
+            myView.displayMessage(messages[0], tags);
         }
     }
 
