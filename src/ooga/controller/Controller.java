@@ -29,9 +29,9 @@ public class Controller extends Application {
     private static final String BACKUP_STYLE_FILE = "data/default_style_orig.xml";
 
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";           //default
-    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";    //fixed cards, demo
+    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";    //fixed cards, demo
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_2.xml";  //almost win state
-    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_3.xml";  //xsd error
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_3.xml";  //xsd error
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_4.xml";  //runtime phase error
 
     private static final String WIN = "win";
