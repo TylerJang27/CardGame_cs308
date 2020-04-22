@@ -126,7 +126,10 @@ public class Controller extends Application {
             tags.add(messages[k]);
         }
         String[] tagArray = new String[messages.length-1];
-        myView.reportError(messages[0], tags.toArray(tagArray));
+        if (myView!= null) {
+            e.printStackTrace();
+            myView.reportError(messages[0], tags.toArray(tagArray));
+        }
     }
 
     private void processInvalidMove(IMove move) {
