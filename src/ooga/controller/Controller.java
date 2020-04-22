@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import ooga.cardtable.*;
 import ooga.data.XMLException;
+import ooga.data.XMLValidator;
 import ooga.data.factories.PhaseMachineFactory;
 import ooga.data.factories.LayoutFactory;
 import ooga.data.factories.StyleFactory;
@@ -112,6 +113,7 @@ public class Controller extends Application {
             myStyleFile = new File(DEFAULT_STYLE_FILE);
             return StyleFactory.createStyle(myStyleFile);
         } catch (Exception e) {
+            reportError(e);
             myStyleFile = new File(BACKUP_STYLE_FILE);
             return StyleFactory.createStyle(myStyleFile, DEFAULT_STYLE_FILE);
         }

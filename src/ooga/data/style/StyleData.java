@@ -1,7 +1,5 @@
 package ooga.data.style;
 
-import ooga.data.XMLWriter;
-
 import java.util.Map;
 
 /**

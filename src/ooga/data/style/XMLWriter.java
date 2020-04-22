@@ -1,5 +1,7 @@
-package ooga.data;
+package ooga.data.style;
 
+import ooga.data.XMLException;
+import ooga.data.XMLHelper;
 import ooga.data.factories.Factory;
 import ooga.data.factories.StyleFactory;
 import ooga.data.style.IStyle;
