@@ -128,8 +128,6 @@ public class Controller extends Application {
         String[] tagArray = new String[messages.length-1];
         if (myView!= null) {
             myView.reportError(messages[0], tags.toArray(tagArray));
-        } else {
-            e.printStackTrace();
         }
     }
 
