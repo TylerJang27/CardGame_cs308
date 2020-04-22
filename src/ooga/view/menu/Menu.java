@@ -71,7 +71,7 @@ public class Menu {
     skins.getItems().addAll(supportedSkins.getString("supported").split(","));
     skins.setValue(defaultTheme);
     skins.valueProperty().addListener(new ChangeListener<String>() {
-      @Override @SuppressWarnings("unchecked")
+      @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue,
                           String newValue) {
         themeLambda.setValue(newValue);
