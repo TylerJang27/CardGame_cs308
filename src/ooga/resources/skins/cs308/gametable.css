@@ -50,7 +50,7 @@
 }
 
 .message{
-    -fx-text-fill: red;
+    -fx-text-fill: white;
     -fx-padding: 10px;
     -fx-font-family: "Arial Black";
 }

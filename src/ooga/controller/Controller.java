@@ -30,9 +30,10 @@ public class Controller extends Application {
     private static final String BACKUP_STYLE_FILE = "data/default_style_orig.xml";
 
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";
-    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";
-    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_2.xml";
+    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_2.xml";
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_3.xml";
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_4.xml";
 
     private static final String WIN = "win";
     private static final String LOSS = "loss";
