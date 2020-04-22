@@ -28,12 +28,12 @@ public class Menu {
   private Scene myScene;
 
   private String myGame;
-  private View.ChangeValue myThemeLambda;
 
   public Menu(String appName, ResourceBundle supportedLangs, ResourceBundle supportedSkins, View.ChangeValue themeLambda, View.ChangeValue languageLambda, String defaultTheme, String defaultLanguage, double screenHeight, double screenWidth){
 
     myGameProperty = new SimpleStringProperty();
     Dictionary.getInstance().addReference(CHOICES);
+    Dictionary.getInstance().setLanguage(defaultLanguage);
 
     myBorderPane = new BorderPane();
 
@@ -98,7 +98,6 @@ public class Menu {
     options.prefHeightProperty().bind(myBorderPane.heightProperty());
 
     ResourceBundle games = ResourceBundle.getBundle("ooga.resources.languages.games."+defaultLanguage);
-
     for(String game : games.keySet()){
       addOption(game,options);
     }
