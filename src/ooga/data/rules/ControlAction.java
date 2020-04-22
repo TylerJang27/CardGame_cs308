@@ -10,14 +10,14 @@ import ooga.cardtable.IPlayer;
 public class ControlAction implements IControlAction {
 
     IPhaseArrow myArrow;
-    int myVal;
+    double myVal;
 
     /**
      * Constructor for ControlAction, taking in an IPhaseArrow and point value.
      * @param arrow     an IPhaseArrow representing the phase change that should occur.
      * @param pointVal  a point value to award a player.
      */
-    public ControlAction(IPhaseArrow arrow, int pointVal) {
+    public ControlAction(IPhaseArrow arrow, double pointVal) {
         myArrow = arrow;
         myVal = pointVal;
     }
@@ -30,7 +30,9 @@ public class ControlAction implements IControlAction {
      */
     @Override
     public IPhaseArrow execute(IPlayer player) {
-        //TODO: ADJUST POINTS HERE
+        if (player != null) {
+            player.setScore(player.getScore() + myVal);
+        }
         return myArrow;
     }
 }

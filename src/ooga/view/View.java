@@ -4,9 +4,12 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
@@ -17,6 +20,7 @@ import ooga.data.style.IStyle;
 import ooga.view.gamescreen.GameScreen;
 import ooga.view.menu.Menu;
 
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -42,8 +46,9 @@ public class View implements ExternalAPI {
     }
 
     private TriggerMove getMove;
+    private Runnable restarter;
 
-    private String myTheme = "Duke"; // fixme decide on a default and implement
+    private String myTheme = "Duke";
     private String myLanguage = "English";
 
     private Stage myStage;
@@ -56,11 +61,12 @@ public class View implements ExternalAPI {
     private static final double DEFAULT_HEIGHT = 500;
 
 
-    public View(Controller.GiveMove giveMove, IStyle style){
+    public View(Controller.GiveMove giveMove, Runnable restart, IStyle style){
+        restarter = restart;
 
         ChangeValue getTheme = (String theme) -> {
             myTheme = theme;
-            myStyle.setTableSkinPath(theme);
+            myStyle.setTheme(theme);
         };
 
         ChangeValue getLanguage = (String language) -> {
@@ -72,8 +78,8 @@ public class View implements ExternalAPI {
 
         myStyle = style;
 
-        if (myStyle.getTableSkinPath() != null) {
-            myTheme = myStyle.getTableSkinPath();
+        if (myStyle.getTheme() != null) {
+            myTheme = myStyle.getTheme();
         }
         if (myStyle.getLanguage() != null) {
             myLanguage = myStyle.getLanguage();
@@ -129,7 +135,8 @@ public class View implements ExternalAPI {
         Button restartButton = new Button(currentMessages.getString("restart"));
         restartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                System.out.println("View 114: Call lambda to notify backend");
+                restarter.run();
+                // System.out.println("View 114: Call lambda to notify backend");
             }
         });
 
@@ -141,6 +148,19 @@ public class View implements ExternalAPI {
 
     }
 
+
+    public void displayMessage(String key, List<String> args){
+        // fixme im horribly inefficient
+        // TODO: implement messages with args
+        ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
+        String message = currentMessages.getString(key);
+        Text text = new Text(message);
+        Pane messagePane = new Pane();
+        messagePane.getChildren().add(text);
+        Scene messageScene = new Scene(messagePane);
+        Stage popUp = new Stage();
+        popUp.setScene(messageScene);
+    }
 
     /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
@@ -191,6 +211,9 @@ public class View implements ExternalAPI {
     }
 
     public void reportError(String key, String... formats){
+        //try translate
+        //catch use the original arguments
+        //pop up the errors
         //TODO
         System.out.println("error received of type: " + key);
     }
@@ -203,7 +226,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setScores(Map<Integer, Double> playerScores) {
-        myGameScreen.updateScore(playerScores.get(0));
+        myGameScreen.updateScore(playerScores.get(1));
     }
 
 

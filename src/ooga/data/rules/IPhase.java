@@ -28,9 +28,10 @@ public interface IPhase {
      * Executes the given move, checking its logic against available IMasterRules and processing its changes.
      *
      * @param move the IMove to validate
+     * @param player    the player to add points to
      * @return an IPhaseArrow representing the necessary phase update
      */
-    IPhaseArrow executeMove(IMove move); //TODO: UPDATE API CHANGES
+    IPhaseArrow executeMove(IMove move, IPlayer player); //TODO: UPDATE API CHANGES
 
     /**
      * Retrieves the list of available rules for an IPhase.

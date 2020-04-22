@@ -27,7 +27,7 @@ public class DisplayCell {
     private DisplayTable.MyDragInterface myDragLambda;
     private DisplayTable.MyClickInterface myClickLambda;
 
-    public DisplayCell(DisplayTable.MyDragInterface dragLambda, DisplayTable.MyClickInterface clickLambda, ICell cell, Map<String, String> cardNameToFileName, Pair<NumberBinding, NumberBinding>location, NumberBinding height, NumberBinding width, double offset) {
+    public DisplayCell(DisplayTable.MyDragInterface dragLambda, DisplayTable.MyClickInterface clickLambda, ICell cell, String skinType, Pair<NumberBinding, NumberBinding>location, NumberBinding height, NumberBinding width, double offset) {
         myDragLambda = dragLambda;
         myClickLambda = clickLambda;
         myCell = cell;
@@ -35,9 +35,9 @@ public class DisplayCell {
         if(myCell.getDeck().peek() != null) {
 
             if (myCell.getDeck().peek().isFaceUp()) {
-                myImageView = new ImageView(new Image(cardNameToFileName.get(myCell.getDeck().peek().getName())));
+                myImageView = new ImageView(new Image("/ooga/resources/decks/standard/"+skinType+"/"+myCell.getDeck().peek().getName()+".png"));
             } else {
-                myImageView = new ImageView(new Image(cardNameToFileName.get("faceDown")));
+                myImageView = new ImageView(new Image("/ooga/resources/decks/standard/"+skinType+"/faceDown.png"));
                 myImageView.getStyleClass().add("cardskin");
             }
 
@@ -66,7 +66,7 @@ public class DisplayCell {
             }
             Point2D offsetAmount = offsetDirToAmount.get(dir);
             Pair<NumberBinding, NumberBinding> childOffset = new Pair<>(myImageView.translateXProperty().add(offsetAmount.getX()),myImageView.translateYProperty().add(offsetAmount.getY()));
-            DisplayCell childDisplayCell = new DisplayCell(myDragLambda, myClickLambda, childCell, cardNameToFileName, childOffset, height, width, offset);
+            DisplayCell childDisplayCell = new DisplayCell(myDragLambda, myClickLambda, childCell, skinType, childOffset, height, width, offset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
         }
     }

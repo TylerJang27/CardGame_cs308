@@ -408,7 +408,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D1,U</card>
+                    <card>D1,U,none</card>
                     <card>Rd,U</card>
                 </init_cards>
             </cell>
@@ -416,7 +416,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D2,U</card>
+                    <card>D2,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,U</card>
                 </init_cards>
@@ -425,7 +425,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D3,U</card>
+                    <card>D3,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,U</card>
@@ -435,7 +435,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D4,U</card>
+                    <card>D4,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -446,7 +446,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D5,U</card>
+                    <card>D5,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -458,7 +458,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D6,U</card>
+                    <card>D6,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -471,7 +471,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D7,U</card>
+                    <card>D7,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -584,15 +584,15 @@
                         <donor_dest>
                             <destination>d</destination>
                             <num_cards>south</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>preserve</offset>
+                            <flip>south</flip>
                             <except>hand</except>
                             <except>club</except>
                             <except>heart</except>
                             <except>spade</except>
                             <except>diamond</except>
-                            <shuffle>n</shuffle>
-                            <direction>0</direction>
-                            <offset>preserve</offset>
-                            <flip>south</flip>
                         </donor_dest>
                         <!-- points included in the tag below-->
                         <next_phase phase="check_eog">0</next_phase>
@@ -608,7 +608,7 @@
                         </receiver>
                         <mover>
                             <direction>u</direction>
-                            <value>*</value>
+                            <value>1</value>
                             <color>*</color>
                             <suit>=</suit>
                             <num_cards>*</num_cards>
@@ -643,12 +643,12 @@
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
-                            <except>hand</except>
                             <num_cards>south</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>preserve</offset>
                             <flip>south</flip>
+                            <except>hand</except>
                         </donor_dest>
                         <next_phase phase = "check_eog">0</next_phase>
                     </action>
@@ -753,20 +753,20 @@
                     <receive_rule>
                         <condition category="action">
                             <!-- somehow check that all these are empty -->
-                            <num_cards>0</num_cards>
+                            <num_cards>1</num_cards>
                         </condition>
                         <condition category="hand">
                             <!-- somehow check that all these are empty -->
-                            <num_cards>0</num_cards>
+                            <num_cards>1</num_cards>
                         </condition>
                         <condition category="deck">
                             <!-- somehow check that all these are empty -->
-                            <num_cards>0</num_cards>
+                            <num_cards>1</num_cards>
                         </condition>
                     </receive_rule>
                     <action>
                         <!-- go to end of game -->
-                        <next_phase phase="end_of_game"></next_phase>
+                        <next_phase phase="win"></next_phase>
                     </action>
                 </rule>
                 <rule category="">
@@ -782,7 +782,7 @@
                 </rule>
             </rules>
         </phase>
-        <phase name="end_of_game">
+        <phase name="win">
             <phase_type>manual</phase_type>
             <valid_donors/>
             <rules>
@@ -790,7 +790,7 @@
                     <option>
                         <action>
                             <!-- display end of game screen -->
-                            <next_phase phase = "end_of_game"></next_phase>
+                            <next_phase phase = "win"></next_phase>
                         </action>
                     </option>
                 </rule>

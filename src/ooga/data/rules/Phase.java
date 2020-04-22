@@ -72,16 +72,17 @@ public class Phase implements IPhase {
     /**
      * Executes the given move, checking its logic against available IMasterRules and processing its changes.
      *
-     * @param move the IMove to validate
-     * @return an IPhaseArrow representing the necessary phase update
+     * @param move      the IMove to validate
+     * @param player    the player to add points to
+     * @return          an IPhaseArrow representing the necessary phase update
      */
     @Override
-    public IPhaseArrow executeMove(IMove move) {
+    public IPhaseArrow executeMove(IMove move, IPlayer player) {
         IMasterRule ruleToExecute = identifyMove(move);
         if (ruleToExecute != null) {
             if (!isAuto) {
-                myGameState = ruleToExecute.executeMove(move); //TODO: ADD GAME STATE FUNCTIONALITY
-                IPhaseArrow ab = ruleToExecute.executeAutoActions(null, move);
+                myGameState = ruleToExecute.executeMove(move);
+                IPhaseArrow ab = ruleToExecute.executeAutoActions(player, move);
                 return ab; //TODO: ADD PLAYER HERE
             }
         }
@@ -110,6 +111,9 @@ public class Phase implements IPhase {
         IPhaseArrow lastArrow = new PhaseArrow(myName, "", myName);
         for (IMasterRule rule : myRules) {
             lastArrow = rule.executeAutoActions(player, move);
+            if (lastArrow != null) {
+                return lastArrow;
+            }
         }
         return lastArrow;
     }
