@@ -480,4 +480,172 @@
             </cell>
         </group>
     </cell_groups>
+    <phases>
+        <phase name="first_card">
+            <phase_type></phase_type>
+            <valid_donors>
+                <category></category>
+            </valid_donors>
+            <rules>
+                <rule category="___">
+                    <receive_rule>
+                        <receiver>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
+                            <suit>*</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>*</is_faceup>
+                            <name>*</name>
+                        </receiver>
+                        <mover></mover>
+                        <donor></donor>
+                        <condition category="___">
+                    </receive_rule>
+                    <action>
+                        <receiver_dest>
+                            <destination></destination>
+                            <num_cards></num_cards>
+                            <except></except>
+                            <shuffle></shuffle>
+                            <direction></direction>
+                            <offset></offset>
+                            <flip></flip>
+                        </receiver_dest>
+                        <mover_dest></mover_dest>
+                        <donor_dest></donor_dest>
+                        <next_phase phase="___"></next_phase>
+                    </action>
+                </rule>
+            </rules>
+        </phase>
+        <phase name="second_card">
+            <phase_type></phase_type>
+            <valid_donors>
+                <category></category>
+            </valid_donors>
+            <rules>
+                <rule category="___">
+                    <receive_rule>
+                        <receiver>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
+                            <suit>*</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>*</is_faceup>
+                            <name>*</name>
+                        </receiver>
+                        <mover></mover>
+                        <donor></donor>
+                        <condition category="___">
+                    </receive_rule>
+                    <action>
+                        <receiver_dest>
+                            <destination></destination>
+                            <num_cards></num_cards>
+                            <except></except>
+                            <shuffle></shuffle>
+                            <direction></direction>
+                            <offset></offset>
+                            <flip></flip>
+                        </receiver_dest>
+                        <mover_dest></mover_dest>
+                        <donor_dest></donor_dest>
+                        <next_phase phase="___"></next_phase>
+                    </action>
+                </rule>
+            </rules>
+        </phase>
+        <phase name="combine">
+            <phase_type></phase_type>
+            <valid_donors>
+                <category></category>
+            </valid_donors>
+            <rules>
+                <rule category="___">
+                    <receive_rule>
+                        <receiver>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
+                            <suit>*</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>*</is_faceup>
+                            <name>*</name>
+                        </receiver>
+                        <mover></mover>
+                        <donor></donor>
+                        <condition category="___">
+                    </receive_rule>
+                    <action>
+                        <receiver_dest>
+                            <destination></destination>
+                            <num_cards></num_cards>
+                            <except></except>
+                            <shuffle></shuffle>
+                            <direction></direction>
+                            <offset></offset>
+                            <flip></flip>
+                        </receiver_dest>
+                        <mover_dest></mover_dest>
+                        <donor_dest></donor_dest>
+                        <next_phase phase="___"></next_phase>
+                    </action>
+                </rule>
+            </rules>
+        </phase>
+        <phase name="validate">
+            <phase_type></phase_type>
+            <valid_donors>
+                <category></category>
+            </valid_donors>
+            <rules>
+                <rule category="___">
+                    <receive_rule>
+                        <receiver>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
+                            <suit>*</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>*</is_faceup>
+                            <name>*</name>
+                        </receiver>
+                        <mover></mover>
+                        <donor></donor>
+                        <condition category="___">
+                    </receive_rule>
+                    <action>
+                        <receiver_dest>
+                            <destination></destination>
+                            <num_cards></num_cards>
+                            <except></except>
+                            <shuffle></shuffle>
+                            <direction></direction>
+                            <offset></offset>
+                            <flip></flip>
+                        </receiver_dest>
+                        <mover_dest></mover_dest>
+                        <donor_dest></donor_dest>
+                        <next_phase phase="___"></next_phase>
+                    </action>
+                </rule>
+            </rules>
+        </phase>
+        <phase name="win">
+            <phase_type>manual</phase_type>
+            <valid_donors/>
+            <rules>
+                <rule category="default">
+                    <option>
+                        <action>
+                            <!-- display end of game screen -->
+                            <next_phase phase = "win"></next_phase>
+                        </action>
+                    </option>
+                </rule>
+            </rules>
+        </phase>
+    </phases>
 </data>
