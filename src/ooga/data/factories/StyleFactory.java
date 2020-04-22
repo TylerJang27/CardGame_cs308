@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 public class StyleFactory implements Factory {
 
     public static String STYLE_TYPE = IStyle.DATA_TYPE;
-    public static String STYLE_XSD = "src/ooga/data/style/style_schema.xsd";
+    public static String STYLE_XSD = "src/ooga/data/factories/style_schema.xsd";
 
     private static String WORD = "word";
     private static String NUMBER = "number";

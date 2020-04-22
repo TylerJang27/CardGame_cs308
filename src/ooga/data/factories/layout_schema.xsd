@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="data">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="game">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string"/>
+                        </xs:simpleType>
+                </xs:element>
+                <xs:element name="attributes">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="players">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:int"/>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="screen_height">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:int"/>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="card_width">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:int"/>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="card_height">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:int"/>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:any minOccurs="0" processContents="lax" maxOccurs="3"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="cards">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="card">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string"/>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:any minOccurs="0" processContents="lax" maxOccurs="500"/>                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="card_map">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="start">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string"/>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="extension">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string"/>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="cells">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="cell">
+                                <xs:complexType>
+                                    <xs:all>
+                                        <xs:element name="x_val">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string"/>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="y_val">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string"/>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                    </xs:all>
+                                    <xs:attribute name="name" type="xs:string" use="required"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:any minOccurs="0" processContents="lax" maxOccurs="500"/>                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:all>
+            <xs:attribute name="type" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

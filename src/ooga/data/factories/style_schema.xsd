@@ -10,8 +10,7 @@
                 <xs:element name="table" type="xs:string"/>
                 <xs:element name="dark" type="xs:int"/>
             </xs:all>
-            <xs:attribute name="type" type="xs:string" use="required">
-            </xs:attribute>
+            <xs:attribute name="type" type="xs:string" use="required"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>
