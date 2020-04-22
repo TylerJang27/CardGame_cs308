@@ -17,7 +17,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ooga.view.View;
 
-@SuppressWarnings("all")
 public class Menu {
   private static final Insets MARGINS = new Insets(305,20,20,20);
 
