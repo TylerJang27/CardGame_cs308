@@ -91,7 +91,6 @@ public class View implements ExternalAPI {
         if (myStyle.getLanguage() != null) {
             myLanguage = myStyle.getLanguage();
         }
-
         myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
 
         myStage = new Stage();
@@ -126,7 +125,7 @@ public class View implements ExternalAPI {
             }
         });
 
-        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, restartButton, myMenu.getGame(), currentMessages.getString("score"));
+        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, restartButton, myMenu.getGame(), currentMessages.getString("score"), myLanguage);
         myStage.setScene(myGameScreen.getScene());
 
         myStage.minHeightProperty().bind(Bindings.multiply(myGameScreen.getDisplayTable().getPane().widthProperty(),layout.getScreenRatio()));
