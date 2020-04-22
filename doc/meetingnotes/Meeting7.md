@@ -1,6 +1,8 @@
 # Meeting #7
 Present: Maverick, Andrew, Sarah, Tyler
+
 Date: 4/18/20
+
 Team Name: Solitaire Confinement (Team 52 Pickup)
 
 ### Agenda
