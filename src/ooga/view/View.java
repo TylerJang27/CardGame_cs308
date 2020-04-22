@@ -142,7 +142,8 @@ public class View implements ExternalAPI {
         System.out.println("reported");
         ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
         String displayMessage = translateAndFormat(key, args, currentMessages);
-        System.out.println(displayMessage);
+        myGameScreen.displayMessage(displayMessage);
+        /*System.out.println(displayMessage);
         Text text = new Text(displayMessage);
         Pane messagePane = new Pane();
         HBox textHolder = new HBox();
@@ -151,7 +152,7 @@ public class View implements ExternalAPI {
         Scene messageScene = new Scene(messagePane);
         Stage popUp = new Stage();
         popUp.setScene(messageScene);
-        popUp.show();
+        popUp.show();*/
     }
 
     /**
