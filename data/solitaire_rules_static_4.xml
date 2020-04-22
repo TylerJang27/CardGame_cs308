@@ -790,7 +790,7 @@
                     </receive_rule>
                     <action>
                         <!-- go to end of game -->
-                        <next_phase phase="lol">500.0</next_phase>
+                        <next_phase phase="bad phase">500.0</next_phase>
                     </action>
                 </rule>
                 <rule category="">
