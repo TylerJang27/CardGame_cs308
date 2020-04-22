@@ -71,15 +71,12 @@ public class Menu {
     skins.getItems().addAll(supportedSkins.getString("supported").split(","));
     skins.setValue(defaultTheme);
     skins.valueProperty().addListener(new ChangeListener<String>() {
-      @Override
+      @Override @SuppressWarnings("unchecked")
       public void changed(ObservableValue<? extends String> observable, String oldValue,
                           String newValue) {
         themeLambda.setValue(newValue);
         myScene.getStylesheets().clear();
-        try{
-          myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue.toLowerCase()+"/mainmenu.css").toExternalForm());
-        } catch (Exception e) {
-        }
+        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue.toLowerCase()+"/mainmenu.css").toExternalForm());
       }
     });
 
