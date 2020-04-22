@@ -107,7 +107,7 @@ public class Menu {
   private void setTopBorder(String appName) {
     StackPane gameNamePane = new StackPane();
     Text gameName = new Text(appName);
-    gameName.getStyleClass().add("title");
+    //gameName.getStyleClass().add("title");
     gameNamePane.getChildren().add(gameName);
     gameNamePane.getStyleClass().add("titleborder");
     myBorderPane.setTop(gameNamePane);

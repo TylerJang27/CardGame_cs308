@@ -49,5 +49,4 @@
 
 .button:hover {
     -fx-background-color: linear-gradient(#0D334A, #040C23);
-    -fx-text-fill: #FFFFFF;
 }
