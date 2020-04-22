@@ -53,8 +53,11 @@
 
 .list-cell{
     -fx-text-fill: #FFFFFF;
-    -fx-text-background-color: #FFFFFF;
+    -fx-text-background-color: #000000;
+    -fx-background-color: #000000;
 }
+
 .list-cell:hover{
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: #C9C9C9;
+    -fx-background-color: #000FFF;
 }
