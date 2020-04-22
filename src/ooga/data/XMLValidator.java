@@ -36,10 +36,9 @@ public class XMLValidator {
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(new File(xmlPath)));
         } catch (IOException | SAXException e) {
-            System.out.println("Exception: " + e.getMessage());
+            //System.out.println("Exception: " + e.getMessage());
             return false;
         }
-        System.out.println("we validated it!");
         return true;
     }
 

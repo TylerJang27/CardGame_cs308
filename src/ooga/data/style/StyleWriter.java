@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  *
  * @author Andrew Krier, Tyler Jang
  */
-public class XMLWriter {
+public class StyleWriter {
 
     private static String WORD = "word";
     private static String NUMBER = "number";
