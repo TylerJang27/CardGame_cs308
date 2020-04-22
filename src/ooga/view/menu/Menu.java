@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ooga.view.View;
 
+@SuppressWarnings("cast")
 public class Menu {
   private static final Insets MARGINS = new Insets(305,20,20,20);
 
@@ -71,7 +72,7 @@ public class Menu {
     skins.getItems().addAll(supportedSkins.getString("supported").split(","));
     skins.setValue(defaultTheme);
     skins.valueProperty().addListener(new ChangeListener<String>() {
-      @Override @SuppressWarnings("unchecked")
+      @Override
       public void changed(ObservableValue<? extends String> observable, String oldValue,
                           String newValue) {
         themeLambda.setValue(newValue);
