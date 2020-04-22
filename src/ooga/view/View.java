@@ -60,7 +60,12 @@ public class View implements ExternalAPI {
     private static final double DEFAULT_WIDTH = 650;
     private static final double DEFAULT_HEIGHT = 500;
 
-
+    /**
+     * Constructs an instance of View
+     * @param giveMove lambda which will be called when a user makes a move on the game table
+     * @param restart runnable which will be executed when a user hits restart on game table
+     * @param style is updated to reflect user's language and theme preferences so they can be reloaded
+     */
     public View(Controller.GiveMove giveMove, Runnable restart, IStyle style){
         restarter = restart;
 
@@ -84,27 +89,6 @@ public class View implements ExternalAPI {
         if (myStyle.getLanguage() != null) {
             myLanguage = myStyle.getLanguage();
         }
-
-        myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
-
-        myStage = new Stage();
-        myStage.setScene(myMenu.getScene());
-        myStage.getIcons().add(new Image(APPLICATION_ICON));
-        myStage.setTitle(APPLICATION_NAME);
-        myStage.show();
-    }
-
-    public View(Controller.GiveMove giveMove){
-
-        ChangeValue getLanguage = (String language) -> {
-            myLanguage = language;
-        };
-
-        ChangeValue getTheme = (String theme) -> {
-            myTheme = theme;
-        };
-
-        getMove = giveMove::sendMove;
 
         myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
 
