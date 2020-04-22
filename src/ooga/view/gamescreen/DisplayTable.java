@@ -18,7 +18,8 @@ public class DisplayTable {
 
     private NumberBinding myCardHeight;
     private NumberBinding myCardWidth;
-    private double myCardOffset;
+    private double faceUpCardOffset;
+    private double faceDownCardOffset;
     private Map<String, Pair<NumberBinding, NumberBinding>> myCellNameToLocation;
 
     @FunctionalInterface
@@ -52,7 +53,8 @@ public class DisplayTable {
 
         myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
         myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
-        myCardOffset = layout.getUpOffsetRatio()*screenWidth;
+        faceUpCardOffset = layout.getUpOffsetRatio()*screenWidth;
+        faceDownCardOffset = layout.getDownOffsetRatio()*screenWidth;
 
         myCellNameToLocation = new HashMap<>();
         Map<String, ICoordinate> locations = layout.getCellLayout();
@@ -165,7 +167,7 @@ public class DisplayTable {
 
     private DisplayCell makeDisplayCell(String key, ICell cell) {
         Pair<NumberBinding, NumberBinding> location = myCellNameToLocation.get(key);
-        return new DisplayCell(getDraggedCell, getClickedCell, cell, mySkinType, location, myCardHeight, myCardWidth, myCardOffset);
+        return new DisplayCell(getDraggedCell, getClickedCell, cell, mySkinType, location, myCardHeight, myCardWidth, faceDownCardOffset, faceUpCardOffset);
     }
 
     private void drawDisplayCells(List<DisplayCell> DisplayCellData) {

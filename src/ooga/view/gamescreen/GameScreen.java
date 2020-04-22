@@ -19,7 +19,7 @@ public class GameScreen {
 
     private Scene myScene;
 
-    public GameScreen(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, Button restartButton, String game, String scoreLabel) {
+    public GameScreen(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, Button restartButton, String game, String scoreLabel, String language) {
 
         // Current default is standard, can change
         String skinType = "classic";
@@ -32,7 +32,7 @@ public class GameScreen {
         }
 
         myDisplayTable = new DisplayTable(moveLambda, (Layout) layout, 650, skinType);
-        myDashboard = new Dashboard(backButton, restartButton, scoreLabel);
+        myDashboard = new Dashboard(backButton, restartButton, scoreLabel, ResourceBundle.getBundle("ooga.resources.languages.messages."+language), game);
         myHeader = new Header(game);
 
         myBorderPane = new BorderPane();

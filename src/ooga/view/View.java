@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -20,6 +21,7 @@ import ooga.data.style.IStyle;
 import ooga.view.gamescreen.GameScreen;
 import ooga.view.menu.Menu;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -60,7 +62,12 @@ public class View implements ExternalAPI {
     private static final double DEFAULT_WIDTH = 650;
     private static final double DEFAULT_HEIGHT = 500;
 
-
+    /**
+     * Constructs an instance of View
+     * @param giveMove lambda which will be called when a user makes a move on the game table
+     * @param restart runnable which will be executed when a user hits restart on game table
+     * @param style is updated to reflect user's language and theme preferences so they can be reloaded
+     */
     public View(Controller.GiveMove giveMove, Runnable restart, IStyle style){
         restarter = restart;
 
@@ -84,28 +91,6 @@ public class View implements ExternalAPI {
         if (myStyle.getLanguage() != null) {
             myLanguage = myStyle.getLanguage();
         }
-
-        myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
-
-        myStage = new Stage();
-        myStage.setScene(myMenu.getScene());
-        myStage.getIcons().add(new Image(APPLICATION_ICON));
-        myStage.setTitle(APPLICATION_NAME);
-        myStage.show();
-    }
-
-    public View(Controller.GiveMove giveMove){
-
-        ChangeValue getLanguage = (String language) -> {
-            myLanguage = language;
-        };
-
-        ChangeValue getTheme = (String theme) -> {
-            myTheme = theme;
-        };
-
-        getMove = giveMove::sendMove;
-
         myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
 
         myStage = new Stage();
@@ -140,7 +125,7 @@ public class View implements ExternalAPI {
             }
         });
 
-        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, restartButton, myMenu.getGame(), currentMessages.getString("score"));
+        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, restartButton, myMenu.getGame(), currentMessages.getString("score"), myLanguage);
         myStage.setScene(myGameScreen.getScene());
 
         myStage.minHeightProperty().bind(Bindings.multiply(myGameScreen.getDisplayTable().getPane().widthProperty(),layout.getScreenRatio()));
@@ -148,18 +133,52 @@ public class View implements ExternalAPI {
 
     }
 
+    public void displayMessage(String key) {
+        displayMessage(key, new ArrayList<>());
+    }
 
     public void displayMessage(String key, List<String> args){
         // fixme im horribly inefficient
-        // TODO: implement messages with args
+        System.out.println("reported");
         ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
-        String message = currentMessages.getString(key);
-        Text text = new Text(message);
+        String displayMessage = translateAndFormat(key, args, currentMessages);
+        System.out.println(displayMessage);
+        Text text = new Text(displayMessage);
         Pane messagePane = new Pane();
-        messagePane.getChildren().add(text);
+        HBox textHolder = new HBox();
+        textHolder.getChildren().add(text);
+        messagePane.getChildren().add(textHolder);
         Scene messageScene = new Scene(messagePane);
         Stage popUp = new Stage();
         popUp.setScene(messageScene);
+        popUp.show();
+    }
+
+    /**
+     * Translates a String key and its replacements args and formats them. If a translation or format is not found, the original language or key is displayed.
+     *
+     * @param key               the String containing the formatting elements
+     * @param args              the List of Strings containing elements to insert
+     * @param currentMessages   the ResourceBundle with which to translate
+     * @return                  the properly translated and formatted String
+     */
+    private String translateAndFormat(String key, List<String> args, ResourceBundle currentMessages) {
+        List<String> argsTranslated = new ArrayList<>();
+        for (String s:args) {
+            try {
+                argsTranslated.add(currentMessages.getString(s));
+            } catch (Exception e) {
+                argsTranslated.add(s);
+            }
+        }
+        String message = currentMessages.getString(key);
+        String displayMessage = message;
+        try {
+            displayMessage=String.format(message, argsTranslated);
+        } catch (Exception e) {
+            displayMessage = message;
+        }
+        return displayMessage;
     }
 
     /**
