@@ -37,13 +37,13 @@
                 </xs:element>
                 <xs:element name="cards">
                     <xs:complexType>
-                        <xs:sequence>
+                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
                             <xs:element name="card">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string"/>
                                 </xs:simpleType>
                             </xs:element>
-                            <xs:any minOccurs="0" processContents="lax" maxOccurs="500"/>                        </xs:sequence>
+                        </xs:sequence>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="card_map">
@@ -64,7 +64,7 @@
                 </xs:element>
                 <xs:element name="cells">
                     <xs:complexType>
-                        <xs:sequence>
+                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
                             <xs:element name="cell">
                                 <xs:complexType>
                                     <xs:all>
@@ -82,7 +82,7 @@
                                     <xs:attribute name="name" type="xs:string" use="required"/>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:any minOccurs="0" processContents="lax" maxOccurs="500"/>                        </xs:sequence>
+                        </xs:sequence>
                     </xs:complexType>
                 </xs:element>
             </xs:all>
