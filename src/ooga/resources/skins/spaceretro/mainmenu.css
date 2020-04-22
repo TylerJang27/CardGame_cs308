@@ -53,5 +53,9 @@
 
 .list-cell{
     -fx-text-fill: #FFFFFF;
+    -fx-background-color: #FFFFFF;
+}
+
+.list-cell:hover{
     -fx-text-background-color: #FFFFFF;
 }
