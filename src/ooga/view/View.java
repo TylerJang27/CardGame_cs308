@@ -139,7 +139,6 @@ public class View implements ExternalAPI {
 
     public void displayMessage(String key, List<String> args){
         // fixme im horribly inefficient
-        System.out.println("reported");
         ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
         String displayMessage = translateAndFormat(key, args, currentMessages);
         myGameScreen.displayMessage(displayMessage);
@@ -230,12 +229,24 @@ public class View implements ExternalAPI {
         return null;
     }
 
-    public void reportError(String key, String... formats){
-        //try translate
-        //catch use the original arguments
-        //pop up the errors
-        //TODO
-        System.out.println("error received of type: " + key);
+    /**
+     * report an error where the key is the key to a error message in a properties file and the formats are the error-specific information
+     * @param key
+     * @param formats
+     */
+    @Override
+    public void reportError(String key, List<String> formats){
+        ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
+        String displayMessage = translateAndFormat(key, formats, currentMessages);
+        Text text = new Text(displayMessage);
+        Pane messagePane = new Pane();
+        HBox textHolder = new HBox();
+        textHolder.getChildren().add(text);
+        messagePane.getChildren().add(textHolder);
+        Scene messageScene = new Scene(messagePane);
+        Stage popUp = new Stage();
+        popUp.setScene(messageScene);
+        popUp.show();
     }
 
 
