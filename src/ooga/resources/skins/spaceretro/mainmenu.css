@@ -58,6 +58,6 @@
 }
 
 .list-cell:hover{
-    -fx-text-background-color: #E084E0;
-    -fx-background-color: #000FFF;
+    -fx-text-background-color: #EFE1EF;
+    -fx-background-color: #E084E0;
 }
