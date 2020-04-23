@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+
+
 /**
  * This ActionFactory implements Factory and constructs an ICardAction using the createAction() method.
  * These ICardActions govern where cards should move if an IMove is considered valid.
@@ -33,6 +35,7 @@ public class ActionFactory implements Factory {
     private static final String SHUFFLE = PhaseFactory.SHUFFLE;
     private static final String OFFSET = PhaseFactory.OFFSET;
     private static final String FLIP = PhaseFactory.FLIP;
+    private static final String YES = PhaseFactory.YES;
 
     private static final String M = PhaseFactory.M;
     private static final String D = PhaseFactory.D;
@@ -223,7 +226,7 @@ public class ActionFactory implements Factory {
             return moverCell.apply(move);
         } else if (destination.equals(RESOURCES.getString(D))) {
             return donorCell.apply(move);
-        } else {
+        } else {                                                    //TODO: ADD IN FUNCTIONALITY FOR NAMED CELL MEMORY
             return recipientCell.apply(move);
         }
     }
@@ -335,6 +338,10 @@ public class ActionFactory implements Factory {
         if (shuffle.equalsIgnoreCase(RESOURCES.getString(REVERSE))) {
             for (Map.Entry<IOffset, ICell> entry : currCell.getAllChildren().entrySet()) {
                 entry.getValue().getDeck().reverse();
+            }
+        } else if (shuffle.equalsIgnoreCase(RESOURCES.getString(YES))) {
+            for (Map.Entry<IOffset, ICell> entry : currCell.getAllChildren().entrySet()) {
+                entry.getValue().getDeck().shuffle();
             }
         }
     }
