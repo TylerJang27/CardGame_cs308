@@ -10,10 +10,14 @@ public class Table implements ITable {
 
   private IPhaseMachine machine;
   private IGameState lastState;
+  private List<IPlayer> players;
+  private IPlayer currentPlayer; //TODO: MAKE WATERTIGHT
 
   public Table() {
     machine = null;
     lastState = GameState.WAITING;
+    players = List.of(new Player());
+    currentPlayer = players.get(0);
   }
 
   public Table(IPhaseMachine mach) {
@@ -22,8 +26,18 @@ public class Table implements ITable {
   }
 
   @Override
+  public IPlayer getCurrentPlayer() {
+    return currentPlayer;
+  }
+
+  @Override
   public void setPhaseMachine(IPhaseMachine mach) {
     machine = mach;
+  }
+
+  @Override
+  public void restartGame() {
+    machine.restartGame();
   }
 
   @Override
@@ -34,6 +48,7 @@ public class Table implements ITable {
 
   @Override
   public IGameState update(IMove move) {
+    machine.setCurrentPlayer(currentPlayer);
     lastState = machine.update(move);
     return lastState;
   }

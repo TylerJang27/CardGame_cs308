@@ -6,9 +6,13 @@ import ooga.data.rules.IPhaseMachine;
 
 public interface ITable {
 
-  void setPhaseMachine(IPhaseMachine machine);
+    IPlayer getCurrentPlayer(); //TODO: ADD TO API CHANGES
 
-  void setCellList(List<ICell> cellList);
+    void setPhaseMachine(IPhaseMachine machine);
+
+    void restartGame(); //TODO: ADD TO API CHANGES
+
+    void setCellList(List<ICell> cellList);
 
   /**
    * Updates the table based on the move. Returns true if move was valid, false otherwise

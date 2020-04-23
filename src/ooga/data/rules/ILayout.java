@@ -4,9 +4,14 @@ import ooga.data.style.ICoordinate;
 
 import java.util.Map;
 
+/**
+ * This interface stores layout information to be passed to the view for display.
+ *
+ * @author Andrew Krier, Tyler Jang
+ */
 public interface ILayout {
 
-    public static final String DATA_TYPE = "layout";
+    String DATA_TYPE = "layout";
 
     /**
      * Gives a map of all the cells in a game

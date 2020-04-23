@@ -1,79 +1,94 @@
 package ooga.data.rules;
 
-import java.util.List;
-import java.util.Map;
-
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
 import ooga.cardtable.IPlayer;
 
+import java.util.List;
+import java.util.Map;
+
 /**
- * Gets Phase rules for each cell Gives Table cells with rules implemented Gives Table state machine
+ * Gets Phase rules for each cell. Gives Table cells with rules implemented Gives Table state machine
  * to process turns/winning/etc.
+ *
+ * @author Maverick Chung, Tyler Jang
  */
 public interface IPhase {
 
-  /**
-   * Retrieves whether the current phase is automatic, in which it proceeds to the next phase on its own.
-   *
-   * @return whether phase is automatic
-   */
-  boolean isAutomatic();
+    /**
+     * Retrieves whether the current phase is automatic, in which it proceeds to the next phase on its own.
+     *
+     * @return whether phase is automatic
+     */
+    boolean isAutomatic();
 
-  /**
-   * Associates a move with the rule it invokes
-   *
-   * @param move the user's movement of cards
-   * @return the rules associated with the move
-   */
-  //IMasterRule identifyMove(IMove move);
+    //IMasterRule identifyMove(IMove move);
 
-  IPhaseArrow executeMove(IMove move);
+    /**
+     * Executes the given move, checking its logic against available IMasterRules and processing its changes.
+     *
+     * @param move the IMove to validate
+     * @param player    the player to add points to
+     * @return an IPhaseArrow representing the necessary phase update
+     */
+    IPhaseArrow executeMove(IMove move, IPlayer player); //TODO: UPDATE API CHANGES
 
-  /**
-   * Retrieves the list of available rules for a phase
-   *
-   * @return the list of rules
-   */
-  List<IMasterRule> getRuleList();
+    /**
+     * Retrieves the list of available rules for an IPhase.
+     *
+     * @return the list of rules
+     */
+    List<IMasterRule> getRuleList();
 
-  IPhaseArrow executeAutomaticActions(IPlayer player, IMove move);
+    /**
+     * Executes the automatic and control actions for the IPhase.
+     *
+     * @param player the IPlayer to update
+     * @param move   the previous IMove
+     * @return the IPhaseArrow referring to the appropriate phase change.
+     */
+    IPhaseArrow executeAutomaticActions(IPlayer player, IMove move); //TODO: UPDATE API CHANGES
 
-  Map<String, ICell> getMyCellMap();
+    /**
+     * Retrieves the ICell Map stored by this IPhase.
+     *
+     * @return the Map of String ICell names to ICells
+     */
+    Map<String, ICell> getMyCellMap(); //TODO: UPDATE API CHANGES
 
-  Map<String, ICellGroup> getMyCellGroupMap();
+    /**
+     * Retrieves the ICellGroup Map stored by this IPhase.
+     *
+     * @return the Map of String ICellGroup names to ICellGroups
+     */
+    Map<String, ICellGroup> getMyCellGroupMap(); //TODO: UPDATE API CHANGES
 
-  /**
-   * Retrieves the map of available rules to lists of generic card actions that result
-   *
-   * @return a map of rules to action lists
-   */
-  //Map<IMasterRule, List<ICardAction>> getConditionalActions();
+    //Map<IMasterRule, List<ICardAction>> getConditionalActions();
 
-  /**
-   * Retrieves the card actions that progress automatically at the start of a phase
-   *
-   * @return a list of automatic card actions
-   */
+    //List<ICardAction> getAutoActions();
 
-  //List<ICardAction> getAutoActions();
+    //IGameState executeAutomaticActions();
 
-  /**
-   * Executes the automatic actions for the phase and returns the GameState
-   *
-   * @return the updated GameState for the frontend
-   */
-  //IGameState executeAutomaticActions();
+    /**
+     * Retrieves the name of the IPhase.
+     *
+     * @return the IPhase's name
+     */
+    String getMyName(); //TODO: UPDATE API CHANGES
 
-  String getMyName();
+    //String getNextPhaseName(IMove move);
 
-  //String getNextPhaseName(IMove move);
+    //void setCellList(List<ICell> cells);
 
-  //void setCellList(List<ICell> cells);
+    //void addRule(IMasterRule rule, List<ICardAction> actions, String nextPhase);
 
-  //void addRule(IMasterRule rule, List<ICardAction> actions, String nextPhase);
+    //void setAutoActions(List<ICardAction> actions);
 
-  //void setAutoActions(List<ICardAction> actions);
-
-  boolean isValidDonor(ICell cell); //TODO: ADD TO API CHANGES
+    /**
+     * Returns whether or not the ICell in question is a valid donor based on the rules of the IPhase.
+     *
+     * @param cell the ICell to validate
+     * @return whether or not cell is a valid donor
+     */
+    boolean isValidDonor(ICell cell); //TODO: ADD TO API CHANGES
 }

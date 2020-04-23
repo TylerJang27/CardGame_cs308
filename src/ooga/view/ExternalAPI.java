@@ -16,7 +16,7 @@ public interface ExternalAPI {
      * @param key
      * @param formats
      */
-    void reportError(String key, String... formats);
+    void reportError(String key, List<String> formats); //TODO: ADD TO API CHANGES
     /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
      * to the front end from the back end. This is done by sending a list of cell objects which
@@ -80,14 +80,6 @@ public interface ExternalAPI {
      @return a map from the clicked on object to the released on object of the user's action
      */
     IMove getUserInput();
-
-
-    /**
-     * Sets the style of the game, including color of table, location of menu/its display elements,
-     * font type, font size, text colors, margins, etc.
-     */
-    void setStyle(IStyle style);
-
 
     /**
      * Sets the locations of all cell types and the framework for creating new cell locations if applicable.

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<data type = "style">
-    <language>english</language>
-    <cards>card_path</cards>
-    <table>table_path</table>
-    <dark>0</dark>
-    <difficulty>3</difficulty>
-    <sound>1</sound>
-</data>
