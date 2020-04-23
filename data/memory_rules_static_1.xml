@@ -507,7 +507,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>AS,D</card>
                 </init_cards>
             </cell>
             <cell name="41">
@@ -515,7 +515,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>AC,D</card>
                 </init_cards>
             </cell>
             <cell name="51">
@@ -523,7 +523,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>2D,D</card>
                 </init_cards>
             </cell>
             <cell name="61">
@@ -531,7 +531,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>2H,D</card>
                 </init_cards>
             </cell>
             <cell name="12">
@@ -539,7 +539,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>2C,D</card>
                 </init_cards>
             </cell>
             <cell name="22">
@@ -547,7 +547,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>2S,D</card>
                 </init_cards>
             </cell>
             <cell name="32">
@@ -1004,7 +1004,7 @@
                 <rule category="">
                     <receive_rule>
                         <condition category="all">
-                            <num_cards>1</num_cards>
+                            <num_cards>0</num_cards>
                         </condition>
                     </receive_rule>
                     <action>

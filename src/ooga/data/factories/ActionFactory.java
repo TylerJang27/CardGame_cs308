@@ -127,6 +127,8 @@ public class ActionFactory implements Factory {
         } else if (destination.equals(RESOURCES.getString(D))) {
             return donorCell.apply(move);
         } else if (allMap.containsKey(destination)) {
+            System.out.println("Destination: " + destination);
+            System.out.println("Map Destination Leaf: " + allMap.get(destination).findLeaf().getName());
             return allMap.get(destination).findLeaf(); //note the leaf
         } else {
             return recipientCell.apply(move);
@@ -345,7 +347,8 @@ public class ActionFactory implements Factory {
             if (offsetFromParent != null) {
                 currCell.getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
             }
-            recipientCell.apply(move).addCell(off, currCell);
+
+            destination.addCell(off, currCell);
         }
     }
 }
