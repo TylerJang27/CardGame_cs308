@@ -3,6 +3,7 @@ import ooga.cardtable.ICell;
 import ooga.cardtable.IDeck;
 import ooga.data.XMLException;
 import ooga.data.XMLHelper;
+import ooga.data.XMLValidator;
 import ooga.data.rules.*;
 import org.w3c.dom.Element;
 
@@ -24,6 +25,8 @@ public class PhaseMachineFactory implements Factory {
     private static final String RESOURCES = "ooga.resources";
     public static final String RESOURCE_PACKAGE = RESOURCES + "." + RULES + "_";
 
+    private static final String RULES_XSD = "src/ooga/data/factories/rules_schema.xsd";
+
     public static final String START = "INIT_PHASE";
 
     /**
@@ -33,18 +36,21 @@ public class PhaseMachineFactory implements Factory {
      * @return an IPhaseMachine implementation built and initialized based on the rules XML
      */
     public static IPhaseMachine createPhaseMachine(File dataFile) {
-        try {
-            Element root = XMLHelper.getRootAndCheck(dataFile, RULES_TYPE, INVALID_ERROR);
-            ISettings settings = SettingsFactory.createSettings(root);
-            IDeck deck = DeckFactory.createDeck(root);
-            Map<String, ICellGroup> cellGroups = CellGroupFactory.createCellGroups(root);
-            Map<String, ICell> allBaseCells = getAllCells(cellGroups);
-            Map<String, IPhase> phases = PhaseFactory.createPhases(root, cellGroups, allBaseCells);
+        if(XMLValidator.validateXMLSchema(RULES_XSD, dataFile.getPath())) {
+            try {
+                Element root = XMLHelper.getRootAndCheck(dataFile, RULES_TYPE, INVALID_ERROR);
+                ISettings settings = SettingsFactory.createSettings(root);
+                IDeck deck = DeckFactory.createDeck(root);
+                Map<String, ICellGroup> cellGroups = CellGroupFactory.createCellGroups(root);
+                Map<String, ICell> allBaseCells = getAllCells(cellGroups);
+                Map<String, IPhase> phases = PhaseFactory.createPhases(root, cellGroups, allBaseCells);
 
-            return new PhaseMachine(phases, START, settings, deck);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new XMLException(e, Factory.MISSING_ERROR + "," + RULES_TYPE);
+                return new PhaseMachine(phases, START, settings, deck);
+            } catch (Exception e) {
+                throw new XMLException(e, Factory.MISSING_ERROR + "," + RULES_TYPE);
+            }
+        } else {
+            throw new XMLException(Factory.INVALID_ERROR);
         }
     }
 
@@ -54,7 +60,7 @@ public class PhaseMachineFactory implements Factory {
      * @param cellGroupMap a Map of cell group names to cell groups
      * @return a Map of cell names to cells
      */
-    private static Map<String, ICell> getAllCells(Map<String, ICellGroup> cellGroupMap) {
+    protected static Map<String, ICell> getAllCells(Map<String, ICellGroup> cellGroupMap) {
         Map<String, ICell> allBaseCells = new HashMap<>();
         for (Map.Entry<String, ICellGroup> e : cellGroupMap.entrySet()) {
             allBaseCells.putAll(e.getValue().getCellMap());

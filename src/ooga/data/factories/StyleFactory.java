@@ -2,6 +2,7 @@ package ooga.data.factories;
 
 import ooga.data.XMLException;
 import ooga.data.XMLHelper;
+import ooga.data.XMLValidator;
 import ooga.data.style.IStyle;
 import ooga.data.style.StyleData;
 import org.w3c.dom.Element;
@@ -25,6 +26,7 @@ import java.util.ResourceBundle;
 public class StyleFactory implements Factory {
 
     public static String STYLE_TYPE = IStyle.DATA_TYPE;
+    public static String STYLE_XSD = "src/ooga/data/factories/style_schema.xsd";
 
     private static String WORD = "word";
     private static String NUMBER = "number";
@@ -42,14 +44,30 @@ public class StyleFactory implements Factory {
      * @throws XMLException if the file is not considered valid due to its root element or file ending
      */
     public static IStyle createStyle(File dataFile) {
-        try {
-            Element root = XMLHelper.getRootAndCheck(dataFile, STYLE_TYPE, INVALID_ERROR);
+        return createStyle(dataFile, dataFile.getPath());
+    }
 
-            Map<String, String> stringSettings = XMLHelper.readStringSettings(root, WORD_RESOURCES);
-            Map<String, Integer> numberSettings = XMLHelper.readNumberSettings(root, NUMBER_RESOURCES);
-            return new StyleData(dataFile.getPath(), stringSettings, numberSettings);
-        } catch (Exception e) {
-            throw new XMLException(e, Factory.MISSING_ERROR + "," + STYLE_TYPE);
+    /**
+     * Builds and returns an IStyle from a styling XML. Requirements for style XML can be found in ___.
+     *
+     * @param dataFile    file from which to read configuration
+     * @param destination String for the destination to save the file
+     * @return an IStyle with all of its configuration information stored
+     * @throws XMLException if the file is not considered valid due to its root element or file ending
+     */
+    public static IStyle createStyle(File dataFile, String destination) {
+        if (XMLValidator.validateXMLSchema(STYLE_XSD, dataFile.getPath())) {
+            try {
+                Element root = XMLHelper.getRootAndCheck(dataFile, STYLE_TYPE, INVALID_ERROR);
+
+                Map<String, String> stringSettings = XMLHelper.readStringSettings(root, WORD_RESOURCES);
+                Map<String, Integer> numberSettings = XMLHelper.readNumberSettings(root, NUMBER_RESOURCES);
+                return new StyleData(destination, stringSettings, numberSettings);
+            } catch (Exception e) {
+                throw new XMLException(e, Factory.MISSING_ERROR + "," + STYLE_TYPE);
+            }
+        } else {
+            throw new XMLException((Factory.INVALID_ERROR));
         }
     }
 }

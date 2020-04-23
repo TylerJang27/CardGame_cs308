@@ -608,15 +608,15 @@
                         <donor_dest>
                             <destination>d</destination>
                             <num_cards>south</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>preserve</offset>
+                            <flip>south</flip>
                             <except>hand</except>
                             <except>club</except>
                             <except>heart</except>
                             <except>spade</except>
                             <except>diamond</except>
-                            <shuffle>n</shuffle>
-                            <direction>0</direction>
-                            <offset>preserve</offset>
-                            <flip>south</flip>
                         </donor_dest>
                         <!-- points included in the tag below-->
                         <next_phase phase="check_eog">10.0</next_phase>
@@ -667,12 +667,12 @@
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
-                            <except>hand</except>
                             <num_cards>south</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>preserve</offset>
                             <flip>south</flip>
+                            <except>hand</except>
                         </donor_dest>
                         <next_phase phase = "check_eog">20.0</next_phase>
                     </action>
@@ -700,7 +700,7 @@
                             <suit>*</suit>
                             <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
-                            <category>hand</category>
+                            <name>hand</name>
                         </donor>
                     </receive_rule>
                     <action>
@@ -737,6 +737,7 @@
                             <suit>*</suit>
                             <num_cards>*</num_cards>
                             <is_faceup>n</is_faceup>
+                            <name>deck</name>
                         </mover>
                         <donor>
                             <direction>*</direction>
@@ -745,7 +746,7 @@
                             <suit>*</suit>
                             <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
-                            <category>deck</category>
+                            <name>deck</name>
                         </donor>
                     </receive_rule>
                     <action>

@@ -1,5 +1,7 @@
-package ooga.data;
+package ooga.data.style;
 
+import ooga.data.XMLException;
+import ooga.data.XMLHelper;
 import ooga.data.factories.Factory;
 import ooga.data.factories.StyleFactory;
 import ooga.data.style.IStyle;
@@ -22,7 +24,7 @@ import java.util.ResourceBundle;
  *
  * @author Andrew Krier, Tyler Jang
  */
-public class XMLWriter {
+public class StyleWriter {
 
     private static String WORD = "word";
     private static String NUMBER = "number";
@@ -83,7 +85,7 @@ public class XMLWriter {
      */
     private static void addStyle(Document document, Element root, IStyle style) {
         Map<String, String> vals = Map.of(
-                WORD_RESOURCES.getString(LANGUAGE), style.getLanguage(),
+                WORD_RESOURCES.getString(LANGUAGE), makeCamelCase(style.getLanguage().toLowerCase()),
                 WORD_RESOURCES.getString(CARDS), style.getCardSkinPath(),
                 WORD_RESOURCES.getString(TABLE), style.getTheme(),
                 NUMBER_RESOURCES.getString(DARK), "" + (style.getDarkMode() ? 1 : 0),
@@ -93,6 +95,20 @@ public class XMLWriter {
             Element e = document.createElement(entry.getKey());
             e.appendChild(document.createTextNode(entry.getValue()));
             root.appendChild(e);
+        }
+    }
+
+    /**
+     * Converts a String into a capital first letter and lowercase remaining letters.
+     *
+     * @param s the String to convert
+     * @return the original String, all lowercase except the first letter
+     */
+    private static String makeCamelCase(String s) {
+        if (s.length() > 1) {
+            return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+        } else {
+            return s.toUpperCase();
         }
     }
 }

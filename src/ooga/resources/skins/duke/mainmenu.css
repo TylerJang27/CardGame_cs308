@@ -49,3 +49,14 @@
 .button:hover {
     -fx-background-color: linear-gradient(#000FFF , #D8DBFF  );
 }
+
+.list-cell{
+    -fx-text-fill: #FFFFFF;
+    -fx-text-background-color: #000000;
+    -fx-background-color: #000000;
+}
+
+.list-cell:hover{
+    -fx-text-background-color: #D8DBFF;
+    -fx-background-color: #000FFF;
+}

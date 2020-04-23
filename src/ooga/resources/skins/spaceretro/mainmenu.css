@@ -48,5 +48,16 @@
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(#E084E0, #EFE1EF);
+    -fx-background-color: linear-gradient(#006e82, #0098b3);
+}
+
+.list-cell{
+    -fx-text-fill: #FFFFFF;
+    -fx-text-background-color: #000000;
+    -fx-background-color: #000000;
+}
+
+.list-cell:hover{
+    -fx-text-background-color: #613754;
+    -fx-background-color: #613754;
 }

@@ -10,7 +10,6 @@ import ooga.data.factories.StyleFactory;
 import ooga.data.rules.IPhaseMachine;
 
 import ooga.data.style.IStyle;
-import ooga.view.ExternalAPI;
 import ooga.view.View;
 
 import java.io.File;
@@ -27,8 +26,13 @@ public class Controller extends Application {
 
     // TODO: Put the file here
     private static final String DEFAULT_STYLE_FILE = "data/default_style.xml";
-    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";
-    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_2.xml";
+    private static final String BACKUP_STYLE_FILE = "data/default_style_orig.xml";
+
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";           //default
+    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";    //fixed cards, demo
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_2.xml";  //almost win state
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_3.xml";  //xsd error
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_4.xml";  //runtime phase error
 
     private static final String WIN = "win";
     private static final String LOSS = "loss";
@@ -65,37 +69,38 @@ public class Controller extends Application {
     @Override
     public void start(Stage mainStage) {
         GiveMove gm = (IMove move) -> {
-            //System.out.println("Controller has move");
-            //System.out.println(move.getDonor().getName());
-            //System.out.println(move.getMover().getName());
-            //System.out.println(move.getRecipient().getName());
+            System.out.println("Controller has move");
+            System.out.println("donor " + move.getDonor().getName());
+            System.out.println("mover " + move.getMover().getName());
+            System.out.println("receiver" + move.getRecipient().getName());
             try {
                 lastState = myTable.update(move);
                 if (lastState.equals(GameState.WIN)) {
-                    myView.reportError(WIN);
+                    myView.displayMessage(WIN);
                 } else if (lastState.equals(GameState.INVALID)) {
-                    myView.reportError(INVALID);
+                    myView.displayMessage(INVALID);
                 } else if (lastState.equals(GameState.LOSS)) {
-                    myView.reportError(LOSS);
+                    myView.displayMessage(LOSS);
                 }
+                myView.setScores(Map.of(1, myTable.getCurrentPlayer().getScore()));
+                myCurrentCells = myTable.getCellData();
+                for (String i : myCurrentCells.keySet()) {
+                    if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
+                        myChangedCells.put(i, myCurrentCells.get(i));
+                        myPreviousCells.remove(i);
+                    }
+                }
+                processInvalidMove(move);
+                myView.setUpdatesToCellData(myChangedCells);
+                myPreviousCells = myCurrentCells;
+                myChangedCells.clear();
             } catch (XMLException e) {
                 reportError(e);
             }
-            myView.setScores(Map.of(1, myTable.getCurrentPlayer().getScore()));
-            myCurrentCells = myTable.getCellData();
-            for (String i : myCurrentCells.keySet()) {
-                if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
-                    myChangedCells.put(i, myCurrentCells.get(i));
-                }
-            }
-            processInvalidMove(move);
-            myView.setUpdatesToCellData(myChangedCells);
-            myPreviousCells = myCurrentCells;
-            myChangedCells.clear();
             //myView.setCellData(Map.copyOf(myTable.getCellData()));
         };
-        myStyleFile = new File(DEFAULT_STYLE_FILE);
-        myStyle = StyleFactory.createStyle(myStyleFile);
+
+        myStyle = extractStyle();
         myView = new View(gm, ()->{
             myTable.restartGame();
             myCurrentCells = myTable.getCellData();
@@ -104,21 +109,33 @@ public class Controller extends Application {
         initializeHandlers(myView);
     }
 
+    private IStyle extractStyle() {
+        try {
+            myStyleFile = new File(DEFAULT_STYLE_FILE);
+            return StyleFactory.createStyle(myStyleFile);
+        } catch (Exception e) {
+            reportError(e);
+            myStyleFile = new File(BACKUP_STYLE_FILE);
+            return StyleFactory.createStyle(myStyleFile, DEFAULT_STYLE_FILE);
+        }
+    }
+
     private void reportError(Exception e) {
         String[] messages = e.getMessage().split(",");
         List<String> tags = new ArrayList<>();
         for (int k = 1; k < messages.length; k ++) {
             tags.add(messages[k]);
         }
-        String[] tagArray = new String[messages.length-1];
-        myView.reportError(messages[0], tags.toArray(tagArray));
+        if (myView!= null) {
+            myView.reportError(messages[0], tags);
+        }
     }
 
     private void processInvalidMove(IMove move) {
-        if (myChangedCells.size() == 0) {
+        if (myChangedCells.isEmpty()) {
             List<ICell> resetters = List.of(move.getRecipient(), move.getMover(), move.getDonor());
             for (ICell c: resetters) {
-                c=c.findHead();
+                c=myCurrentCells.get(c.findHead().getName());
                 if (c != null) {
                     myChangedCells.put(c.getName(), c);
                 }
@@ -152,19 +169,17 @@ public class Controller extends Application {
         myRuleFile = new File(DEFAULT_RULE_FILE);
         try {
             myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
+            myTable = new Table(myCurrentPhaseMachine);
+            myCellMap = myTable.getCellData();
+            File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
+
+            myView.setLayout(LayoutFactory.createLayout(f));
+            myView.setCellData(myCellMap);
+            myPreviousCells = myCellMap;
+            //myView.setCellData(Map.copyOf(myTable.getCellData()));
         } catch (XMLException e) {
-            e.printStackTrace();
             reportError(e);
         }
-        myTable = new Table(myCurrentPhaseMachine);
-        myCellMap = myTable.getCellData();
-        File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
-
-
-        myView.setLayout(LayoutFactory.createLayout(f));
-        myView.setCellData(myCellMap);
-        myPreviousCells = myCellMap;
-        //myView.setCellData(Map.copyOf(myTable.getCellData()));
     }
 
     private void newMove() {

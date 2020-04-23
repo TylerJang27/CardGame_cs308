@@ -408,7 +408,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D1,U</card>
+                    <card>D1,U,none</card>
                     <card>Rd,U</card>
                 </init_cards>
             </cell>
@@ -416,7 +416,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D2,U</card>
+                    <card>D2,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,U</card>
                 </init_cards>
@@ -425,7 +425,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D3,U</card>
+                    <card>D3,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,U</card>
@@ -435,7 +435,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D4,U</card>
+                    <card>D4,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -446,7 +446,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D5,U</card>
+                    <card>D5,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -458,7 +458,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D6,U</card>
+                    <card>D6,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -471,7 +471,7 @@
                 <fan>south</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D7,U</card>
+                    <card>D7,U,none</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
                     <card>Rd,D</card>
@@ -584,18 +584,18 @@
                         <donor_dest>
                             <destination>d</destination>
                             <num_cards>south</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>preserve</offset>
+                            <flip>south</flip>
                             <except>hand</except>
                             <except>club</except>
                             <except>heart</except>
                             <except>spade</except>
                             <except>diamond</except>
-                            <shuffle>n</shuffle>
-                            <direction>0</direction>
-                            <offset>preserve</offset>
-                            <flip>south</flip>
                         </donor_dest>
                         <!-- points included in the tag below-->
-                        <next_phase phase="check_eog">0</next_phase>
+                        <next_phase phase="check_eog">10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="suits">
@@ -638,19 +638,19 @@
                             <num_cards>1</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
-                            <offset>none</offset>
+                            <offset>0</offset>
                             <flip>y</flip>
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
-                            <except>hand</except>
                             <num_cards>south</num_cards>
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>preserve</offset>
                             <flip>south</flip>
+                            <except>hand</except>
                         </donor_dest>
-                        <next_phase phase = "check_eog">0</next_phase>
+                        <next_phase phase = "check_eog">20.0</next_phase>
                     </action>
                 </rule>
                 <rule category="deck">
@@ -676,7 +676,7 @@
                             <suit>*</suit>
                             <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
-                            <category>hand</category>
+                            <name>hand</name>
                         </donor>
                     </receive_rule>
                     <action>
@@ -695,7 +695,7 @@
                             <offset>none</offset>
                             <flip>n</flip>
                         </mover_dest>
-                        <next_phase phase="check_eog"></next_phase>
+                        <next_phase phase="check_eog">-10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="hand">
@@ -713,6 +713,7 @@
                             <suit>*</suit>
                             <num_cards>*</num_cards>
                             <is_faceup>n</is_faceup>
+                            <name>deck</name>
                         </mover>
                         <donor>
                             <direction>*</direction>
@@ -721,7 +722,7 @@
                             <suit>*</suit>
                             <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
-                            <category>deck</category>
+                            <name>deck</name>
                         </donor>
                     </receive_rule>
                     <action>
@@ -740,7 +741,7 @@
                             <offset>0</offset>
                             <flip>none</flip>
                         </mover_dest>
-                        <next_phase phase = "check_eog">0</next_phase>
+                        <next_phase phase = "check_eog">0.0</next_phase>
                     </action>
                 </rule>
             </rules>
@@ -757,16 +758,16 @@
                         </condition>
                         <condition category="hand">
                             <!-- somehow check that all these are empty -->
-                            <num_cards>1</num_cards>
+                            <num_cards>0</num_cards>
                         </condition>
                         <condition category="deck">
                             <!-- somehow check that all these are empty -->
-                            <num_cards>1</num_cards>
+                            <num_cards>0</num_cards>
                         </condition>
                     </receive_rule>
                     <action>
                         <!-- go to end of game -->
-                        <next_phase phase="win"></next_phase>
+                        <next_phase phase="win">500.0</next_phase>
                     </action>
                 </rule>
                 <rule category="">

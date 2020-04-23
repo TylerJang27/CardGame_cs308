@@ -1,7 +1,5 @@
 package ooga.data.style;
 
-import ooga.data.XMLWriter;
-
 import java.util.Map;
 
 /**
@@ -170,6 +168,6 @@ public class StyleData implements IStyle {
      * Saves the settings to an XML file
      */
     public void saveSettings() {
-        XMLWriter.writeStyle(defaultFilePath, this);
+        StyleWriter.writeStyle(defaultFilePath, this);
     }
 }

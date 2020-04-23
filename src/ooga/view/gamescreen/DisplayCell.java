@@ -20,14 +20,15 @@ public class DisplayCell {
 
     private ImageView myImageView;
 
-    private Map<Offset, Point2D> offsetDirToAmount;
+    private Map<Offset, Point2D> faceUpOffsetDirToAmount;
+    private Map<Offset, Point2D> faceDownOffsetDirToAmount;
 
     private Point2D lastXY = null;
 
     private DisplayTable.MyDragInterface myDragLambda;
     private DisplayTable.MyClickInterface myClickLambda;
 
-    public DisplayCell(DisplayTable.MyDragInterface dragLambda, DisplayTable.MyClickInterface clickLambda, ICell cell, Map<String, String> cardNameToFileName, Pair<NumberBinding, NumberBinding>location, NumberBinding height, NumberBinding width, double offset) {
+    public DisplayCell(DisplayTable.MyDragInterface dragLambda, DisplayTable.MyClickInterface clickLambda, ICell cell, String skinType, Pair<NumberBinding, NumberBinding>location, NumberBinding height, NumberBinding width, double faceDownOffset, double faceUpOffset) {
         myDragLambda = dragLambda;
         myClickLambda = clickLambda;
         myCell = cell;
@@ -35,9 +36,9 @@ public class DisplayCell {
         if(myCell.getDeck().peek() != null) {
 
             if (myCell.getDeck().peek().isFaceUp()) {
-                myImageView = new ImageView(new Image(cardNameToFileName.get(myCell.getDeck().peek().getName())));
+                myImageView = new ImageView(new Image("/ooga/resources/decks/standard/"+skinType+"/"+myCell.getDeck().peek().getName()+".png"));
             } else {
-                myImageView = new ImageView(new Image(cardNameToFileName.get("faceDown")));
+                myImageView = new ImageView(new Image("/ooga/resources/decks/standard/"+skinType+"/faceDown.png"));
                 myImageView.getStyleClass().add("cardskin");
             }
 
@@ -57,16 +58,23 @@ public class DisplayCell {
             enableClick(myImageView);
         }
 
-        offsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -offset), Offset.SOUTH, new Point2D(0,offset), Offset.EAST, new Point2D(offset, 0),Offset.WEST, new Point2D(-offset,0), Offset.NORTHEAST, new Point2D(offset,-offset), Offset.SOUTHEAST, new Point2D(offset,offset), Offset.NORTHWEST, new Point2D(-offset,-offset), Offset.SOUTHWEST, new Point2D(-offset,offset));
+        faceDownOffsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -faceDownOffset), Offset.SOUTH, new Point2D(0,faceDownOffset), Offset.EAST, new Point2D(faceDownOffset, 0),Offset.WEST, new Point2D(-faceDownOffset,0), Offset.NORTHEAST, new Point2D(faceDownOffset,-faceDownOffset), Offset.SOUTHEAST, new Point2D(faceDownOffset,faceDownOffset), Offset.NORTHWEST, new Point2D(-faceDownOffset,-faceDownOffset), Offset.SOUTHWEST, new Point2D(-faceDownOffset,faceDownOffset));
+        faceUpOffsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -faceUpOffset), Offset.SOUTH, new Point2D(0,faceUpOffset), Offset.EAST, new Point2D(faceUpOffset, 0),Offset.WEST, new Point2D(-faceUpOffset,0), Offset.NORTHEAST, new Point2D(faceUpOffset,-faceUpOffset), Offset.SOUTHEAST, new Point2D(faceUpOffset,faceUpOffset), Offset.NORTHWEST, new Point2D(-faceUpOffset,-faceUpOffset), Offset.SOUTHWEST, new Point2D(-faceUpOffset,faceUpOffset));
+
 
         for (IOffset dir: myCell.getAllChildren().keySet()) {
             Cell childCell = (Cell) myCell.getAllChildren().get(dir);
             if (dir == Offset.NONE) {
                 continue;
             }
-            Point2D offsetAmount = offsetDirToAmount.get(dir);
+            Point2D offsetAmount;
+            if (myCell.getDeck().peek().isFaceUp()) {
+                offsetAmount = faceUpOffsetDirToAmount.get(dir);
+            } else {
+                offsetAmount = faceDownOffsetDirToAmount.get(dir);
+            }
             Pair<NumberBinding, NumberBinding> childOffset = new Pair<>(myImageView.translateXProperty().add(offsetAmount.getX()),myImageView.translateYProperty().add(offsetAmount.getY()));
-            DisplayCell childDisplayCell = new DisplayCell(myDragLambda, myClickLambda, childCell, cardNameToFileName, childOffset, height, width, offset);
+            DisplayCell childDisplayCell = new DisplayCell(myDragLambda, myClickLambda, childCell, skinType, childOffset, height, width, faceDownOffset, faceUpOffset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
         }
     }
@@ -124,14 +132,18 @@ public class DisplayCell {
     }
 
     private void moveAll(DisplayCell selectedCell, Point2D initDragToXY) {
-        if (!selectedCell.getCell().isFixed()) { // TODO: allows for cards to be draggable while children are not, necessary?
+        if (!selectedCell.getCell().isFixed()) {
             moveChildTo(selectedCell,initDragToXY);
         }
         for (Offset dir: selectedCell.getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
                 continue;
             }
-            moveAll(selectedCell.getAllChildren().get(dir), initDragToXY.add(offsetDirToAmount.get(dir)));
+            if (this.myCell.getDeck().peek().isFaceUp()) {
+                moveAll(selectedCell.getAllChildren().get(dir), initDragToXY.add(faceUpOffsetDirToAmount.get(dir)));
+            } else {
+                moveAll(selectedCell.getAllChildren().get(dir), initDragToXY.add(faceDownOffsetDirToAmount.get(dir)));
+            }
         }
     }
 
