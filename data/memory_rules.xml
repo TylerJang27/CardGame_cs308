@@ -491,7 +491,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>AH,D</card>
+                    <card>Rd,D</card>
                 </init_cards>
             </cell>
             <cell name="21">
@@ -499,7 +499,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>AD,D</card>
+                    <card>Rd,D</card>
                 </init_cards>
             </cell>
             <cell name="31">
@@ -943,7 +943,7 @@
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>none</offset>
-                            <flip>y</flip>
+                            <flip>*</flip>
                         </receiver_dest>
                         <mover_dest>
                             <destination>remove</destination>
@@ -956,9 +956,30 @@
                         <donor_dest>
                             <destination>d</destination>
                             <num_cards>*</num_cards>
-                            <flip>y</flip>
+                            <flip>*</flip>
                         </donor_dest>
-                        <next_phase phase="validate"></next_phase>
+                        <next_phase phase="validate">10.0</next_phase>
+                    </action>
+                </rule>
+                <rule category="all">
+                    <receive_rule>
+                        <mover>
+                            <num_cards>*</num_cards>
+                            <direction>d</direction>
+                            <value>0</value>
+                            <color>=</color>
+                            <suit>=</suit>
+                            <is_faceup>y</is_faceup>
+                        </mover>
+                    </receive_rule>
+                    <action>
+                        <receiver_dest>
+                            <destination>r</destination>
+                        </receiver_dest>
+                        <mover_dest>
+                            <destination>m</destination>
+                        </mover_dest>
+                        <next_phase phase="combine"></next_phase>
                     </action>
                 </rule>
                 <rule category="all">
@@ -990,7 +1011,7 @@
                             <offset>none</offset>
                             <flip>n</flip>
                         </mover_dest>
-                        <next_phase phase="validate"></next_phase>
+                        <next_phase phase="validate">-10.0</next_phase>
                     </action>
                 </rule>
             </rules>
@@ -1008,7 +1029,7 @@
                         </condition>
                     </receive_rule>
                     <action>
-                        <next_phase phase="win"></next_phase>
+                        <next_phase phase="win">500.0</next_phase>
                     </action>
                 </rule>
                 <rule category="">

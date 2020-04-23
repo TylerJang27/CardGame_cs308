@@ -555,7 +555,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>3D,D</card>
                 </init_cards>
             </cell>
             <cell name="42">
@@ -563,7 +563,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>3H,D</card>
                 </init_cards>
             </cell>
             <cell name="52">
@@ -571,7 +571,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>3C,D</card>
                 </init_cards>
             </cell>
             <cell name="62">
@@ -579,7 +579,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>3S,D</card>
                 </init_cards>
             </cell>
             <cell name="13">
@@ -587,7 +587,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>4D,D</card>
                 </init_cards>
             </cell>
             <cell name="23">
@@ -595,7 +595,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>4H,D</card>
                 </init_cards>
             </cell>
             <cell name="33">
@@ -603,7 +603,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>4C,D</card>
                 </init_cards>
             </cell>
             <cell name="43">
@@ -611,7 +611,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>4S,D</card>
                 </init_cards>
             </cell>
             <cell name="53">
@@ -619,7 +619,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>5D,D</card>
                 </init_cards>
             </cell>
             <cell name="63">
@@ -627,7 +627,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>5H,D</card>
                 </init_cards>
             </cell>
             <cell name="14">
@@ -635,7 +635,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>5C,D</card>
                 </init_cards>
             </cell>
             <cell name="24">
@@ -643,7 +643,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>5S,D</card>
                 </init_cards>
             </cell>
             <cell name="34">
@@ -651,7 +651,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>6D,D</card>
                 </init_cards>
             </cell>
             <cell name="44">
@@ -659,7 +659,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>6H,D</card>
                 </init_cards>
             </cell>
             <cell name="54">
@@ -667,7 +667,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>6C,D</card>
                 </init_cards>
             </cell>
             <cell name="64">
@@ -675,7 +675,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>6S,D</card>
                 </init_cards>
             </cell>
             <cell name="15">
@@ -683,7 +683,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>7D,D</card>
                 </init_cards>
             </cell>
             <cell name="25">
@@ -691,7 +691,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>7H,D</card>
                 </init_cards>
             </cell>
             <cell name="35">
@@ -699,7 +699,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>7C,D</card>
                 </init_cards>
             </cell>
             <cell name="45">
@@ -707,7 +707,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>7S,D</card>
                 </init_cards>
             </cell>
             <cell name="55">
@@ -715,7 +715,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>8D,D</card>
                 </init_cards>
             </cell>
             <cell name="65">
@@ -723,7 +723,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>8H,D</card>
                 </init_cards>
             </cell>
             <cell name="16">
@@ -731,7 +731,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>8C,D</card>
                 </init_cards>
             </cell>
             <cell name="26">
@@ -739,7 +739,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>8S,D</card>
                 </init_cards>
             </cell>
             <cell name="36">
@@ -747,7 +747,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>9D,D</card>
                 </init_cards>
             </cell>
             <cell name="46">
@@ -755,7 +755,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>9H,D</card>
                 </init_cards>
             </cell>
             <cell name="56">
@@ -763,7 +763,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>9C,D</card>
                 </init_cards>
             </cell>
             <cell name="66">
@@ -771,7 +771,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U</card>
-                    <card>Rd,D</card>
+                    <card>9S,D</card>
                 </init_cards>
             </cell>
         </group>
@@ -943,7 +943,7 @@
                             <shuffle>n</shuffle>
                             <direction>0</direction>
                             <offset>none</offset>
-                            <flip>y</flip>
+                            <flip>*</flip>
                         </receiver_dest>
                         <mover_dest>
                             <destination>remove</destination>
@@ -956,9 +956,30 @@
                         <donor_dest>
                             <destination>d</destination>
                             <num_cards>*</num_cards>
-                            <flip>y</flip>
+                            <flip>*</flip>
                         </donor_dest>
-                        <next_phase phase="validate"></next_phase>
+                        <next_phase phase="validate">10.0</next_phase>
+                    </action>
+                </rule>
+                <rule category="all">
+                    <receive_rule>
+                        <mover>
+                            <num_cards>*</num_cards>
+                            <direction>d</direction>
+                            <value>0</value>
+                            <color>=</color>
+                            <suit>=</suit>
+                            <is_faceup>y</is_faceup>
+                        </mover>
+                    </receive_rule>
+                    <action>
+                        <receiver_dest>
+                            <destination>r</destination>
+                        </receiver_dest>
+                        <mover_dest>
+                            <destination>m</destination>
+                        </mover_dest>
+                        <next_phase phase="combine"></next_phase>
                     </action>
                 </rule>
                 <rule category="all">
@@ -990,7 +1011,7 @@
                             <offset>none</offset>
                             <flip>n</flip>
                         </mover_dest>
-                        <next_phase phase="validate"></next_phase>
+                        <next_phase phase="validate">-10.0</next_phase>
                     </action>
                 </rule>
             </rules>
@@ -1004,11 +1025,11 @@
                 <rule category="">
                     <receive_rule>
                         <condition category="all">
-                            <num_cards>0</num_cards>
+                            <num_cards>1</num_cards>
                         </condition>
                     </receive_rule>
                     <action>
-                        <next_phase phase="win"></next_phase>
+                        <next_phase phase="win">500.0</next_phase>
                     </action>
                 </rule>
                 <rule category="">

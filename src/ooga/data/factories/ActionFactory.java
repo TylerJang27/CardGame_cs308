@@ -302,7 +302,7 @@ public class ActionFactory implements Factory {
             for (ICell c : currCell.getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
                     ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
-                    if (cardToFlip.isFaceUp()) {
+                    if (cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
                         cardToFlip.flip();
                     }
                 }
