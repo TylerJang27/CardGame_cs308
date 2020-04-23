@@ -51,7 +51,7 @@ public class DisplayTable {
         myPane = new Pane();
 
 
-        myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
+        myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.widthProperty());
         myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
         faceUpCardOffset = layout.getUpOffsetRatio()*screenWidth;
         faceDownCardOffset = layout.getDownOffsetRatio()*screenWidth;
