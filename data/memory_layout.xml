@@ -3,7 +3,7 @@
     <game>Memory</game>
     <attributes>
         <players>1</players>
-        <screen_height>150</screen_height>
+        <screen_height>135</screen_height>
         <card_width>10</card_width>
         <card_height>14</card_height>
         <face_down_offset>2</face_down_offset>

@@ -60,7 +60,7 @@ public class DisplayTable {
         Map<String, ICoordinate> locations = layout.getCellLayout();
         for(String key : locations.keySet()){
             NumberBinding x = Bindings.divide(Bindings.multiply(myPane.widthProperty(),locations.get(key).getX()),100);
-            NumberBinding y = Bindings.divide(Bindings.multiply(myPane.heightProperty(),locations.get(key).getY()),100);
+            NumberBinding y = Bindings.divide(Bindings.multiply(myPane.widthProperty(),locations.get(key).getY()),100);
             myCellNameToLocation.put(key,new Pair<>(x,y));
         }
 
