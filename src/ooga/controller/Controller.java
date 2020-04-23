@@ -69,10 +69,10 @@ public class Controller extends Application {
     @Override
     public void start(Stage mainStage) {
         GiveMove gm = (IMove move) -> {
-            //System.out.println("Controller has move");
-            //System.out.println(move.getDonor().getName());
-            //System.out.println(move.getMover().getName());
-            //System.out.println(move.getRecipient().getName());
+            System.out.println("Controller has move");
+            System.out.println("donor " + move.getDonor().getName());
+            System.out.println("mover " + move.getMover().getName());
+            System.out.println("receiver" + move.getRecipient().getName());
             try {
                 lastState = myTable.update(move);
                 if (lastState.equals(GameState.WIN)) {
