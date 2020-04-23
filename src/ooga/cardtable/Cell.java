@@ -484,7 +484,7 @@ public class Cell implements ICell {
       IOffset offset = Offset.values()[k];
       ICell offsetCell = curr.getAllChildren().get(offset);
 
-      if (offsetCell != null && !offset.getOffset().equals(Offset.NONE.getOffset())) {
+      if (offsetCell != null && !offset.equals(Offset.NONE)) {
         findLeafHelper(offsetCell, steps + 1, tracker);
       }
     }
