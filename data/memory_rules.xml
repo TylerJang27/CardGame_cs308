@@ -5,7 +5,7 @@
         <layout>data/memory_layout.xml</layout>
     </settings>
     <deck>
-        <deck_name>reduced52</deck_name>
+        <deck_name>reduced36</deck_name>
         <shuffle>yes</shuffle>
         <card>
             <name>AC</name>
@@ -223,6 +223,266 @@
             <color>black</color>
             <suit>s</suit>
         </card>
+
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
+        <card>
+            <name>D1</name>
+            <value>14</value>
+            <color>green</color>
+            <suit>c</suit>
+            <fixed>true</fixed>
+        </card>
     </deck>
     <cell_groups>
         <group category="all">
@@ -230,20 +490,23 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>Rd,D</card>
+                    <card>D1,U</card>
+                    <card>AH,D</card>
                 </init_cards>
             </cell>
             <cell name="21">
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>Rd,D</card>
+                    <card>D1,U</card>
+                    <card>AD,D</card>
                 </init_cards>
             </cell>
             <cell name="31">
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -251,6 +514,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -258,6 +522,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -265,6 +530,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -272,6 +538,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -279,6 +546,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -286,6 +554,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -293,6 +562,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -300,6 +570,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -307,6 +578,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -314,6 +586,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -321,6 +594,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -328,6 +602,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -335,6 +610,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -342,6 +618,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -349,6 +626,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -356,6 +634,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -363,6 +642,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -370,6 +650,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -377,6 +658,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -384,6 +666,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -391,6 +674,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -398,6 +682,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -405,6 +690,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -412,6 +698,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -419,6 +706,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -426,6 +714,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -433,6 +722,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -440,6 +730,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -447,6 +738,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -454,6 +746,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -461,6 +754,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -468,6 +762,7 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
@@ -475,19 +770,29 @@
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
+                    <card>D1,U</card>
                     <card>Rd,D</card>
+                </init_cards>
+            </cell>
+        </group>
+        <group category="done">
+            <cell name="remove">
+                <fan>none</fan>
+                <rotation>0</rotation>
+                <init_cards>
+                    <card>D1,U</card>
                 </init_cards>
             </cell>
         </group>
     </cell_groups>
     <phases>
         <phase name="first_card">
-            <phase_type></phase_type>
+            <phase_type>manual</phase_type>
             <valid_donors>
-                <category></category>
+                <category>all</category>
             </valid_donors>
             <rules>
-                <rule category="___">
+                <rule category="all">
                     <receive_rule>
                         <receiver>
                             <direction>*</direction>
@@ -495,37 +800,63 @@
                             <color>*</color>
                             <suit>*</suit>
                             <num_cards>*</num_cards>
-                            <is_faceup>*</is_faceup>
+                            <is_faceup>n</is_faceup>
                             <name>*</name>
                         </receiver>
-                        <mover></mover>
-                        <donor></donor>
-                        <condition category="___">
+                        <mover>
+                            <direction>d</direction>
+                            <value>0</value>
+                            <color>=</color>
+                            <suit>=</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>*</is_faceup>
+                            <name>*</name>
+                        </mover>
+                        <donor>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
+                            <suit>*</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>*</is_faceup>
+                            <name>*</name>
+                        </donor>
                     </receive_rule>
                     <action>
                         <receiver_dest>
-                            <destination></destination>
-                            <num_cards></num_cards>
-                            <except></except>
-                            <shuffle></shuffle>
-                            <direction></direction>
-                            <offset></offset>
-                            <flip></flip>
+                            <destination>r</destination>
+                            <num_cards>none</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>none</offset>
                         </receiver_dest>
-                        <mover_dest></mover_dest>
-                        <donor_dest></donor_dest>
-                        <next_phase phase="___"></next_phase>
+                        <mover_dest>
+                            <destination>r</destination>
+                            <num_cards>none</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>none</offset>
+                            <flip>none</flip>
+                        </mover_dest>
+                        <donor_dest>
+                            <destination>r</destination>
+                            <num_cards>1</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>none</offset>
+                        </donor_dest>
+                        <next_phase phase="second_card"></next_phase>
                     </action>
                 </rule>
             </rules>
         </phase>
         <phase name="second_card">
-            <phase_type></phase_type>
+            <phase_type>manual</phase_type>
             <valid_donors>
-                <category></category>
+                <category>all</category>
             </valid_donors>
             <rules>
-                <rule category="___">
+                <rule category="all">
                     <receive_rule>
                         <receiver>
                             <direction>*</direction>
@@ -533,102 +864,161 @@
                             <color>*</color>
                             <suit>*</suit>
                             <num_cards>*</num_cards>
-                            <is_faceup>*</is_faceup>
+                            <is_faceup>n</is_faceup>
                             <name>*</name>
                         </receiver>
-                        <mover></mover>
-                        <donor></donor>
-                        <condition category="___">
+                        <mover>
+                            <direction>d</direction>
+                            <value>0</value>
+                            <color>=</color>
+                            <suit>=</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>*</is_faceup>
+                            <name>*</name>
+                        </mover>
+                        <donor>
+                            <direction>*</direction>
+                            <value>*</value>
+                            <color>*</color>
+                            <suit>*</suit>
+                            <num_cards>*</num_cards>
+                            <is_faceup>*</is_faceup>
+                            <name>*</name>
+                        </donor>
                     </receive_rule>
                     <action>
                         <receiver_dest>
-                            <destination></destination>
-                            <num_cards></num_cards>
-                            <except></except>
-                            <shuffle></shuffle>
-                            <direction></direction>
-                            <offset></offset>
-                            <flip></flip>
+                            <destination>r</destination>
+                            <num_cards>none</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>none</offset>
                         </receiver_dest>
-                        <mover_dest></mover_dest>
-                        <donor_dest></donor_dest>
-                        <next_phase phase="___"></next_phase>
+                        <mover_dest>
+                            <destination>r</destination>
+                            <num_cards>none</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>none</offset>
+                            <flip>none</flip>
+                        </mover_dest>
+                        <donor_dest>
+                            <destination>r</destination>
+                            <num_cards>1</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>none</offset>
+                        </donor_dest>
+                        <next_phase phase="combine"></next_phase>
                     </action>
                 </rule>
             </rules>
         </phase>
         <phase name="combine">
-            <phase_type></phase_type>
+            <phase_type>manual</phase_type>
             <valid_donors>
-                <category></category>
+                <category>all</category>
             </valid_donors>
             <rules>
-                <rule category="___">
+                <rule category="all">
                     <receive_rule>
                         <receiver>
-                            <direction>*</direction>
-                            <value>*</value>
-                            <color>*</color>
-                            <suit>*</suit>
-                            <num_cards>*</num_cards>
-                            <is_faceup>*</is_faceup>
-                            <name>*</name>
+                            <num_cards>2</num_cards>
+                            <is_faceup>y</is_faceup>
                         </receiver>
-                        <mover></mover>
-                        <donor></donor>
-                        <condition category="___">
+                        <mover>
+                            <num_cards>2</num_cards>
+                            <direction>d</direction>
+                            <value>0</value>
+                            <color>=</color>
+                            <suit>!</suit>
+                            <is_faceup>y</is_faceup>
+                        </mover>
+                        <donor/>
                     </receive_rule>
                     <action>
                         <receiver_dest>
-                            <destination></destination>
-                            <num_cards></num_cards>
-                            <except></except>
-                            <shuffle></shuffle>
-                            <direction></direction>
-                            <offset></offset>
-                            <flip></flip>
+                            <destination>r</destination>
+                            <num_cards>*</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>none</offset>
+                            <flip>y</flip>
                         </receiver_dest>
-                        <mover_dest></mover_dest>
-                        <donor_dest></donor_dest>
-                        <next_phase phase="___"></next_phase>
+                        <mover_dest>
+                            <destination>r</destination>
+                            <num_cards>t</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>none</offset>
+                            <flip>y</flip>
+                        </mover_dest>
+                        <donor_dest>
+                            <destination>d</destination>
+                            <num_cards>*</num_cards>
+                            <flip>y</flip>
+                        </donor_dest>
+                        <next_phase phase="validate"></next_phase>
+                    </action>
+                </rule>
+                <rule category="all">
+                    <receive_rule>
+                        <receiver>
+                            <num_cards>2</num_cards>
+                            <is_faceup>y</is_faceup>
+                        </receiver>
+                        <mover>
+                            <num_cards>2</num_cards>
+                            <is_faceup>y</is_faceup>
+                        </mover>
+                        <donor/>
+                    </receive_rule>
+                    <action>
+                        <receiver_dest>
+                            <destination>r</destination>
+                            <num_cards>none</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>none</offset>
+                            <flip>n</flip>
+                        </receiver_dest>
+                        <mover_dest>
+                            <destination>d</destination>
+                            <num_cards>none</num_cards>
+                            <shuffle>n</shuffle>
+                            <direction>0</direction>
+                            <offset>none</offset>
+                            <flip>n</flip>
+                        </mover_dest>
+                        <next_phase phase="validate"></next_phase>
                     </action>
                 </rule>
             </rules>
         </phase>
         <phase name="validate">
-            <phase_type></phase_type>
+            <phase_type>auto</phase_type>
             <valid_donors>
                 <category></category>
             </valid_donors>
             <rules>
-                <rule category="___">
+                <rule category="">
                     <receive_rule>
-                        <receiver>
-                            <direction>*</direction>
-                            <value>*</value>
-                            <color>*</color>
-                            <suit>*</suit>
-                            <num_cards>*</num_cards>
-                            <is_faceup>*</is_faceup>
-                            <name>*</name>
-                        </receiver>
-                        <mover></mover>
-                        <donor></donor>
-                        <condition category="___">
+                        <condition category="all">
+                            <num_cards>0</num_cards>
+                        </condition>
                     </receive_rule>
                     <action>
-                        <receiver_dest>
-                            <destination></destination>
-                            <num_cards></num_cards>
-                            <except></except>
-                            <shuffle></shuffle>
-                            <direction></direction>
-                            <offset></offset>
-                            <flip></flip>
-                        </receiver_dest>
-                        <mover_dest></mover_dest>
-                        <donor_dest></donor_dest>
-                        <next_phase phase="___"></next_phase>
+                        <next_phase phase="win"></next_phase>
+                    </action>
+                </rule>
+                <rule category="">
+                    <receive_rule>
+                        <condition category="all">
+
+                        </condition>
+                    </receive_rule>
+                    <action>
+                        <next_phase phase="first_card"></next_phase>
                     </action>
                 </rule>
             </rules>
