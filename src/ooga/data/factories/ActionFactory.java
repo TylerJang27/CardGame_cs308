@@ -17,8 +17,6 @@ import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-
-
 /**
  * This ActionFactory implements Factory and constructs an ICardAction using the createAction() method.
  * These ICardActions govern where cards should move if an IMove is considered valid.
@@ -55,10 +53,10 @@ public class ActionFactory implements Factory {
     /**
      * Builds and returns an IAction built for an IMasterRule from a rules XML. Requirements for rules XML can be found in ___.
      *
-     * @param e         the Element from which IRules are built
-     * @param ruleName  the String name of the IMasterRule
+     * @param e            the Element from which IRules are built
+     * @param ruleName     the String name of the IMasterRule
      * @param cellGroupMap a Map of String ICellGroup names to ICellGroups
-     * @return          an ICardAction built for this IMasterRule
+     * @return an ICardAction built for this IMasterRule
      */
     public static ICardAction createAction(Element e, String ruleName, Map<String, ICellGroup> cellGroupMap) {
         Function<IMove, ICell> moverCell = (IMove move) -> move.getMover();
@@ -73,9 +71,9 @@ public class ActionFactory implements Factory {
                 if (!excepted) {
                     ICell updatedCurrCell = extractCellsToMove(e, currCell, move);
                     ICell destination = extractDestinationBehavior(e, moverCell, donorCell, recipientCell, move, cellGroupMap);
-                    IOffset off = extractOffsetBehavior(e, updatedCurrCell, move);
-                    extractRotationBehavior(e, updatedCurrCell, move);
-                    extractFlipBehavior(e, updatedCurrCell, move);
+                    IOffset off = extractOffsetBehavior(e, updatedCurrCell);
+                    extractRotationBehavior(e, updatedCurrCell);
+                    extractFlipBehavior(e, updatedCurrCell);
                     extractShuffleBehavior(e, updatedCurrCell);
                     applyDestinationBehavior(recipientCell, updatedCurrCell, move, destination, off);
                 }
@@ -88,31 +86,12 @@ public class ActionFactory implements Factory {
     }
 
     /**
-     * Extracts whether or not this current ICell should be excepted from the action behavior
-     *
-     * @param e         the Element from which IRules are built
-     * @param currCell  a Function to retrieve the current cell
-     * @param move      the IMove from which to extract behavior
-     * @return          a Boolean representing whether or not the ICell should be excepted
-     */
-    private static Boolean extractExceptBehavior(Element e, Function<IMove, ICell> currCell, IMove move) {
-        NodeList excepts = e.getElementsByTagName(RESOURCES.getString(EXCEPT));
-        for (int k = 0; k < excepts.getLength(); k++) {
-            Node exceptedCell = excepts.item(k);
-            if (exceptedCell.getTextContent().equalsIgnoreCase(currCell.apply(move).findHead().getName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Extracts the ICell that should be moved for a given IAction.
      *
-     * @param e         the Element from which IRules are built
-     * @param currCell  a Function to retrieve the current cell
-     * @param move      the IMove from which to extract behavior
-     * @return          the ICell representing all cells to be moved
+     * @param e        the Element from which IRules are built
+     * @param currCell a Function to retrieve the current cell
+     * @param move     the IMove from which to extract behavior
+     * @return the ICell representing all cells to be moved
      */
     private static ICell extractCellsToMove(Element e, Function<IMove, ICell> currCell, IMove move) {
         String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).toUpperCase();
@@ -130,12 +109,37 @@ public class ActionFactory implements Factory {
     }
 
     /**
+     * Extracts the destination for the ICell being moved.
+     *
+     * @param e             the Element from which IRules are built
+     * @param moverCell     the Function representing the mover from the IMove
+     * @param donorCell     the Function representing the donor from the IMove
+     * @param recipientCell the Function representing the recipient from the IMove
+     * @param move          the IMove being processed
+     * @param cellGroupMap  a Map of String ICellGroup names to ICellGroups
+     * @return the ICell to which the ICell in question should move
+     */
+    private static ICell extractDestinationBehavior(Element e, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell, IMove move, Map<String, ICellGroup> cellGroupMap) {
+        String destination = XMLHelper.getTextValue(e, RESOURCES.getString(DESTINATION));
+        Map<String, ICell> allMap = PhaseMachineFactory.getAllCells(cellGroupMap);
+        if (destination.equals(RESOURCES.getString(M))) {
+            return moverCell.apply(move);
+        } else if (destination.equals(RESOURCES.getString(D))) {
+            return donorCell.apply(move);
+        } else if (allMap.containsKey(destination)) {
+            return allMap.get(destination).findLeaf(); //note the leaf
+        } else {
+            return recipientCell.apply(move);
+        }
+    }
+
+    /**
      * Extracts the ICell to be moved based on an offset condition.
      *
-     * @param currCell  a Function to retrieve the current cell
-     * @param move      the IMove from which to extract behavior
-     * @param offset  a String representing the direction of cards to read from
-     * @return          the ICell representing all cells to be moved
+     * @param currCell a Function to retrieve the current cell
+     * @param move     the IMove from which to extract behavior
+     * @param offset   a String representing the direction of cards to read from
+     * @return the ICell representing all cells to be moved
      */
     private static ICell extractOffsetCells(Function<IMove, ICell> currCell, IMove move, String offset) {
         ICell cellToMove;
@@ -147,32 +151,11 @@ public class ActionFactory implements Factory {
     }
 
     /**
-     * Extracts the ICell to be moved based on a bottom condition.
-     *
-     * @param currCell  a Function to retrieve the current cell
-     * @param move      the IMove from which to extract behavior
-     * @return          the ICell representing all cells to be moved
-     */
-    private static ICell extractBottomFromCells(Function<IMove, ICell> currCell, IMove move) {
-        ICell cellToMove;
-        cellToMove = currCell.apply(move).copy((ICell c) -> {
-            if (!c.getDeck().peek().isFixed()) {
-                return (c.getDeck().getBottomCard());
-            }
-            return null;
-        });
-        if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
-            currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
-        }
-        return cellToMove;
-    }
-
-    /**
      * Extracts the ICell to be moved based on a top condition.
      *
-     * @param currCell  a Function to retrieve the current cell
-     * @param move      the IMove from which to extract behavior
-     * @return          the ICell representing all cells to be moved
+     * @param currCell a Function to retrieve the current cell
+     * @param move     the IMove from which to extract behavior
+     * @return the ICell representing all cells to be moved
      */
     private static ICell extractTopFromCells(Function<IMove, ICell> currCell, IMove move) {
         ICell cellToMove;
@@ -189,12 +172,33 @@ public class ActionFactory implements Factory {
     }
 
     /**
+     * Extracts the ICell to be moved based on a bottom condition.
+     *
+     * @param currCell a Function to retrieve the current cell
+     * @param move     the IMove from which to extract behavior
+     * @return the ICell representing all cells to be moved
+     */
+    private static ICell extractBottomFromCells(Function<IMove, ICell> currCell, IMove move) {
+        ICell cellToMove;
+        cellToMove = currCell.apply(move).copy((ICell c) -> {
+            if (!c.getDeck().peek().isFixed()) {
+                return (c.getDeck().getBottomCard());
+            }
+            return null;
+        });
+        if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
+            currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
+        }
+        return cellToMove;
+    }
+
+    /**
      * Extracts the ICell to be moved based on a number of cards condition.
      *
-     * @param currCell  a Function to retrieve the current cell
-     * @param move      the IMove from which to extract behavior
-     * @param numCards  a String representing the number of ICards to move
-     * @return          the ICell representing all cells to be moved
+     * @param currCell a Function to retrieve the current cell
+     * @param move     the IMove from which to extract behavior
+     * @param numCards a String representing the number of ICards to move
+     * @return the ICell representing all cells to be moved
      */
     private static ICell extractQuantityfromCell(Function<IMove, ICell> currCell, IMove move, String numCards) {
         ICell cellToMove = new Cell("");
@@ -213,61 +217,50 @@ public class ActionFactory implements Factory {
     }
 
     /**
-     * Extracts the destination for the ICell being moved.
+     * Extracts and applies the shuffle behavior to be applied to the currCell and its children after moving.
      *
-     * @param e                 the Element from which IRules are built
-     * @param moverCell         the Function representing the mover from the IMove
-     * @param donorCell         the Function representing the donor from the IMove
-     * @param recipientCell     the Function representing the recipient from the IMove
-     * @param move              the IMove being processed
-     * @param cellGroupMap a Map of String ICellGroup names to ICellGroups
-     * @return                  the ICell to which the ICell in question should move
+     * @param e        the Element from which IRules are built
+     * @param currCell the current ICell after moving
      */
-    private static ICell extractDestinationBehavior(Element e, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell, IMove move, Map<String, ICellGroup> cellGroupMap) {
-        String destination = XMLHelper.getTextValue(e, RESOURCES.getString(DESTINATION));
-        Map<String, ICell> allMap = PhaseMachineFactory.getAllCells(cellGroupMap);
-        if (destination.equals(RESOURCES.getString(M))) {
-            return moverCell.apply(move);
-        } else if (destination.equals(RESOURCES.getString(D))) {
-            return donorCell.apply(move);
-        } else if (allMap.containsKey(destination)) {
-            return allMap.get(destination).findLeaf(); //note the leaf
-        } else {
-            return recipientCell.apply(move);
+    private static void extractShuffleBehavior(Element e, ICell currCell) {
+        String shuffle = XMLHelper.getTextValue(e, RESOURCES.getString(SHUFFLE));
+        if (shuffle.equalsIgnoreCase(RESOURCES.getString(REVERSE))) {
+            for (Map.Entry<IOffset, ICell> entry : currCell.getAllChildren().entrySet()) {
+                entry.getValue().getDeck().reverse();
+            }
+        } else if (shuffle.equalsIgnoreCase(RESOURCES.getString(YES))) {
+            for (Map.Entry<IOffset, ICell> entry : currCell.getAllChildren().entrySet()) {
+                entry.getValue().getDeck().shuffle();
+            }
         }
     }
 
     /**
-     * Applies the move from the currCell to the destination.
+     * Extracts and applies the rotation to be applied to the ICell.
      *
-     * @param recipientCell     the Function representing the recipient from the IMove
-     * @param currCell          the current ICell being moved
-     * @param move              the IMove being processed
-     * @param destination       the destination of the currCell
-     * @param off               the IOffset to be applied from the destination
+     * @param e        the Element from which IRules are built
+     * @param currCell the current ICell being moved
      */
-    private static void applyDestinationBehavior(Function<IMove, ICell> recipientCell, ICell currCell, IMove move, ICell destination, IOffset off) {
-        if (!destination.findHead().getName().equalsIgnoreCase(currCell.findHead().getName())) {
-            IOffset offsetFromParent = null;
-            if (currCell.getParent() != null) {
-                offsetFromParent = currCell.getOffsetFromParent();
+    private static void extractRotationBehavior(Element e, ICell currCell) {
+        String turn = XMLHelper.getTextValue(e, RESOURCES.getString(DIRECTION));
+        if (!TRUE_CHECKS.contains(turn)) {
+            Double angle = Double.parseDouble(turn);
+            for (ICell c : currCell.getAllCells()) {
+                for (int k = 0; k < c.getDeck().size(); k++) {
+                    c.getDeck().peekCardAtIndex(k).rotate(angle);
+                }
             }
-            if (offsetFromParent != null) {
-                currCell.getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
-            }
-            recipientCell.apply(move).addCell(off, currCell);
         }
     }
 
     /**
      * Extracts the IOffset for the ICardAction.
      *
-     * @param e             the Element from which IRules are built
-     * @param currCell      the current ICell being moved
-     * @param move          the IMove being processed
-     * @return              the IOffset to be applied from the destination
+     * @param e        the Element from which IRules are built
+     * @param currCell the current ICell being moved
+     * @return the IOffset to be applied from the destination
      */
-    private static IOffset extractOffsetBehavior(Element e, ICell currCell, IMove move) {
+    private static IOffset extractOffsetBehavior(Element e, ICell currCell) {
         String offset = XMLHelper.getTextValue(e, RESOURCES.getString(OFFSET));
         IOffset off;
         if (Offset.validOffsets.contains(offset)) {
@@ -281,32 +274,12 @@ public class ActionFactory implements Factory {
     }
 
     /**
-     * Extracts and applies the rotation to be applied to the ICell.
-     *
-     * @param e             the Element from which IRules are built
-     * @param currCell      the current ICell being moved
-     * @param move          the IMove being processed
-     */
-    private static void extractRotationBehavior(Element e, ICell currCell, IMove move) {
-        String turn = XMLHelper.getTextValue(e, RESOURCES.getString(DIRECTION));
-        if (!TRUE_CHECKS.contains(turn)) {
-            Double angle = Double.parseDouble(turn);
-            for (ICell c : currCell.getAllCells()) {
-                for (int k = 0; k < c.getDeck().size(); k++) {
-                    c.getDeck().peekCardAtIndex(k).rotate(angle);
-                }
-            }
-        }
-    }
-
-    /**
      * Extracts and applies the flipping to the ICell.
      *
-     * @param e             the Element from which IRules are built
-     * @param currCell      the current ICell being moved
-     * @param move          the IMove being processed
+     * @param e        the Element from which IRules are built
+     * @param currCell the current ICell being moved
      */
-    private static void extractFlipBehavior(Element e, ICell currCell, IMove move) {
+    private static void extractFlipBehavior(Element e, ICell currCell) {
         String flip = XMLHelper.getTextValue(e, RESOURCES.getString(FLIP));
         if (Offset.validOffsets.contains(flip.toLowerCase()) &&
                 currCell.getAllChildren().containsKey(Offset.valueOf(flip.toUpperCase()))) {
@@ -336,21 +309,43 @@ public class ActionFactory implements Factory {
     }
 
     /**
-     * Extracts and applies the shuffle behavior to be applied to the currCell and its children after moving.
-     * @param e             the Element from which IRules are built
-     * @param currCell      the current ICell after moving
+     * Extracts whether or not this current ICell should be excepted from the action behavior
+     *
+     * @param e        the Element from which IRules are built
+     * @param currCell a Function to retrieve the current cell
+     * @param move     the IMove from which to extract behavior
+     * @return a Boolean representing whether or not the ICell should be excepted
      */
-    private static void extractShuffleBehavior(Element e, ICell currCell) {
-        String shuffle = XMLHelper.getTextValue(e, RESOURCES.getString(SHUFFLE));
-        if (shuffle.equalsIgnoreCase(RESOURCES.getString(REVERSE))) {
-            for (Map.Entry<IOffset, ICell> entry : currCell.getAllChildren().entrySet()) {
-                entry.getValue().getDeck().reverse();
-            }
-        } else if (shuffle.equalsIgnoreCase(RESOURCES.getString(YES))) {
-            for (Map.Entry<IOffset, ICell> entry : currCell.getAllChildren().entrySet()) {
-                entry.getValue().getDeck().shuffle();
+    private static Boolean extractExceptBehavior(Element e, Function<IMove, ICell> currCell, IMove move) {
+        NodeList excepts = e.getElementsByTagName(RESOURCES.getString(EXCEPT));
+        for (int k = 0; k < excepts.getLength(); k++) {
+            Node exceptedCell = excepts.item(k);
+            if (exceptedCell.getTextContent().equalsIgnoreCase(currCell.apply(move).findHead().getName())) {
+                return true;
             }
         }
+        return false;
     }
 
+    /**
+     * Applies the move from the currCell to the destination.
+     *
+     * @param recipientCell the Function representing the recipient from the IMove
+     * @param currCell      the current ICell being moved
+     * @param move          the IMove being processed
+     * @param destination   the destination of the currCell
+     * @param off           the IOffset to be applied from the destination
+     */
+    private static void applyDestinationBehavior(Function<IMove, ICell> recipientCell, ICell currCell, IMove move, ICell destination, IOffset off) {
+        if (!destination.findHead().getName().equalsIgnoreCase(currCell.findHead().getName())) {
+            IOffset offsetFromParent = null;
+            if (currCell.getParent() != null) {
+                offsetFromParent = currCell.getOffsetFromParent();
+            }
+            if (offsetFromParent != null) {
+                currCell.getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
+            }
+            recipientCell.apply(move).addCell(off, currCell);
+        }
+    }
 }
