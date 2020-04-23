@@ -45,10 +45,10 @@
             <xs:sequence>
                 <xs:element name="settings">
                     <xs:complexType>
-                        <xs:sequence>
+                        <xs:all>
                             <xs:element name="players" type="xs:int"/>
                             <xs:element name="layout" type="xs:string"/>
-                        </xs:sequence>
+                        </xs:all>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="deck">

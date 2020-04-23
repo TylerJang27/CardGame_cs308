@@ -16,7 +16,7 @@ public interface ExternalAPI {
      * @param key
      * @param formats
      */
-    void reportError(String key, String... formats);
+    void reportError(String key, List<String> formats); //TODO: ADD TO API CHANGES
     /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
      * to the front end from the back end. This is done by sending a list of cell objects which

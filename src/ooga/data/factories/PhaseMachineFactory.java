@@ -47,7 +47,6 @@ public class PhaseMachineFactory implements Factory {
 
                 return new PhaseMachine(phases, START, settings, deck);
             } catch (Exception e) {
-                e.printStackTrace();
                 throw new XMLException(e, Factory.MISSING_ERROR + "," + RULES_TYPE);
             }
         } else {
@@ -61,7 +60,7 @@ public class PhaseMachineFactory implements Factory {
      * @param cellGroupMap a Map of cell group names to cell groups
      * @return a Map of cell names to cells
      */
-    private static Map<String, ICell> getAllCells(Map<String, ICellGroup> cellGroupMap) {
+    protected static Map<String, ICell> getAllCells(Map<String, ICellGroup> cellGroupMap) {
         Map<String, ICell> allBaseCells = new HashMap<>();
         for (Map.Entry<String, ICellGroup> e : cellGroupMap.entrySet()) {
             allBaseCells.putAll(e.getValue().getCellMap());

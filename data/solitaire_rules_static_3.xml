@@ -3,7 +3,6 @@
     <settings>
         <!-- should just be a file name so that we can process it properly and send to the front end -->
         <players>1</players>
-        <layout>data/solitaire_layout.xml</layout>
     </settings>
     <deck>
         <!-- should either be custom held here, or point to a file to retrieve from -->

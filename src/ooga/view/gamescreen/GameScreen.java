@@ -33,7 +33,7 @@ public class GameScreen {
 
         myDisplayTable = new DisplayTable(moveLambda, (Layout) layout, 650, skinType);
         myDashboard = new Dashboard(backButton, restartButton, scoreLabel, ResourceBundle.getBundle("ooga.resources.languages.messages."+language), game);
-        myHeader = new Header(game);
+        myHeader = new Header();
 
         myBorderPane = new BorderPane();
         myBorderPane.setTop(myHeader.getPane());
@@ -44,6 +44,8 @@ public class GameScreen {
         myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+theme.toLowerCase()+"/gametable.css").toExternalForm()); //
 
     }
+
+    public void displayMessage(String text){myHeader.playMessage(text);}
 
     public void updateScore(double score) {
         myDashboard.updateScore(score);

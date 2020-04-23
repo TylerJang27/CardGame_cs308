@@ -48,3 +48,9 @@
 .button:hover {
     -fx-background-color: linear-gradient(#000FFF , #D8DBFF  );
 }
+
+.message{
+    -fx-text-fill: white;
+    -fx-padding: 10px;
+    -fx-font-family: "Arial Black";
+}

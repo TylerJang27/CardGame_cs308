@@ -676,7 +676,7 @@
                             <suit>*</suit>
                             <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
-                            <category>hand</category>
+                            <name>hand</name>
                         </donor>
                     </receive_rule>
                     <action>
@@ -713,6 +713,7 @@
                             <suit>*</suit>
                             <num_cards>*</num_cards>
                             <is_faceup>n</is_faceup>
+                            <name>deck</name>
                         </mover>
                         <donor>
                             <direction>*</direction>
@@ -721,7 +722,7 @@
                             <suit>*</suit>
                             <num_cards>*</num_cards>
                             <is_faceup>*</is_faceup>
-                            <category>deck</category>
+                            <name>deck</name>
                         </donor>
                     </receive_rule>
                     <action>
