@@ -127,8 +127,6 @@ public class ActionFactory implements Factory {
         } else if (destination.equals(RESOURCES.getString(D))) {
             return donorCell.apply(move);
         } else if (allMap.containsKey(destination)) {
-            System.out.println("Destination: " + destination);
-            System.out.println("Map Destination Leaf: " + allMap.get(destination).findLeaf().getName());
             return allMap.get(destination).findLeaf(); //note the leaf
         } else {
             return recipientCell.apply(move);
