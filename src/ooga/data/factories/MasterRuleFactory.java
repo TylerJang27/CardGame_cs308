@@ -72,7 +72,7 @@ public class MasterRuleFactory implements Factory {
                 List<IRule> allRules = getAllRules(cellGroupMap, ruleName, ruleNode, autoRules);
 
                 List<IControlAction> controlActionList = new ArrayList<>();
-                List<ICardAction> cardActionList = getCardandControlActions(phaseName, ruleNode, ruleName, controlActionList);
+                List<ICardAction> cardActionList = getCardandControlActions(phaseName, ruleNode, ruleName, controlActionList, cellGroupMap);
 
                 IMasterRule masterRule = new MasterRule(allRules, autoRules, cardActionList, controlActionList);
                 masterRuleNames.add(ruleName);
@@ -94,9 +94,10 @@ public class MasterRuleFactory implements Factory {
      * @param ruleNode          the Node corresponding to the IMasterRule
      * @param ruleName          the String name of the IMasterRule
      * @param controlActionList a List of IControlActions that will be processed upon successful validation of an IMasterRule
+     * @param cellGroupMap      a Map of String ICellGroup names to ICellGroups
      * @return                  a List of ICardActions that will be processed upon successful validation of an IMasterRule
      */
-    private static List<ICardAction> getCardandControlActions(String phaseName, Element ruleNode, String ruleName, List<IControlAction> controlActionList) {
+    private static List<ICardAction> getCardandControlActions(String phaseName, Element ruleNode, String ruleName, List<IControlAction> controlActionList, Map<String, ICellGroup> cellGroupMap) {
         List<ICardAction> cardActionList = new ArrayList<>();
         NodeList actionList = ruleNode.getElementsByTagName(RESOURCES.getString(ACTION));               //TODO: REFACTOR FROM HERE TO AN ACTION FACTORY
         for (int j = 0; j < actionList.getLength(); j++) {
@@ -104,7 +105,7 @@ public class MasterRuleFactory implements Factory {
 
             NodeList allActions = actionHeadNode.getChildNodes();
 
-            getCardActions(ruleName, cardActionList, allActions);
+            getCardActions(ruleName, cardActionList, allActions, cellGroupMap);
 
             Node phaseAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(NEXT_PHASE));
             try {
@@ -133,19 +134,20 @@ public class MasterRuleFactory implements Factory {
      * @param ruleName          the name of the rule being created
      * @param cardActionList    the List of ICardActions being added to
      * @param allActions        the NodeList being parsed from
+     * @param cellGroupMap a Map of String ICellGroup names to ICellGroups
      */
-    private static void getCardActions(String ruleName, List<ICardAction> cardActionList, NodeList allActions) {
+    private static void getCardActions(String ruleName, List<ICardAction> cardActionList, NodeList allActions, Map<String, ICellGroup> cellGroupMap) {
         Node recAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(RECEIVER_DESTINATION));
         if (recAction != null) {
-            cardActionList.add(ActionFactory.createAction((Element) recAction, ruleName + R));
+            cardActionList.add(ActionFactory.createAction((Element) recAction, ruleName + R, cellGroupMap));
         }
         Node movAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(MOVER_DESTINATION));
         if (movAction != null) {
-            cardActionList.add(ActionFactory.createAction((Element) movAction, ruleName + M));
+            cardActionList.add(ActionFactory.createAction((Element) movAction, ruleName + M, cellGroupMap));
         }
         Node donAction = XMLHelper.getNodeByName(allActions, RESOURCES.getString(DONOR_DESTINATION));
         if (donAction != null) {
-            cardActionList.add(ActionFactory.createAction((Element) donAction, ruleName + D));
+            cardActionList.add(ActionFactory.createAction((Element) donAction, ruleName + D, cellGroupMap));
         }
     }
 

@@ -5,6 +5,7 @@ import ooga.data.XMLException;
 import ooga.data.XMLHelper;
 import ooga.data.rules.CardAction;
 import ooga.data.rules.ICardAction;
+import ooga.data.rules.ICellGroup;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -56,9 +57,10 @@ public class ActionFactory implements Factory {
      *
      * @param e         the Element from which IRules are built
      * @param ruleName  the String name of the IMasterRule
+     * @param cellGroupMap a Map of String ICellGroup names to ICellGroups
      * @return          an ICardAction built for this IMasterRule
      */
-    public static ICardAction createAction(Element e, String ruleName) {
+    public static ICardAction createAction(Element e, String ruleName, Map<String, ICellGroup> cellGroupMap) {
         Function<IMove, ICell> moverCell = (IMove move) -> move.getMover();
         Function<IMove, ICell> donorCell = (IMove move) -> move.getDonor();
         Function<IMove, ICell> recipientCell = (IMove move) -> move.getRecipient();
@@ -70,7 +72,7 @@ public class ActionFactory implements Factory {
                 Boolean excepted = extractExceptBehavior(e, currCell, move);
                 if (!excepted) {
                     ICell updatedCurrCell = extractCellsToMove(e, currCell, move);
-                    ICell destination = extractDestinationBehavior(e, moverCell, donorCell, recipientCell, move);
+                    ICell destination = extractDestinationBehavior(e, moverCell, donorCell, recipientCell, move, cellGroupMap);
                     IOffset off = extractOffsetBehavior(e, updatedCurrCell, move);
                     extractRotationBehavior(e, updatedCurrCell, move);
                     extractFlipBehavior(e, updatedCurrCell, move);
@@ -218,15 +220,19 @@ public class ActionFactory implements Factory {
      * @param donorCell         the Function representing the donor from the IMove
      * @param recipientCell     the Function representing the recipient from the IMove
      * @param move              the IMove being processed
+     * @param cellGroupMap a Map of String ICellGroup names to ICellGroups
      * @return                  the ICell to which the ICell in question should move
      */
-    private static ICell extractDestinationBehavior(Element e, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell, IMove move) {
+    private static ICell extractDestinationBehavior(Element e, Function<IMove, ICell> moverCell, Function<IMove, ICell> donorCell, Function<IMove, ICell> recipientCell, IMove move, Map<String, ICellGroup> cellGroupMap) {
         String destination = XMLHelper.getTextValue(e, RESOURCES.getString(DESTINATION));
+        Map<String, ICell> allMap = PhaseMachineFactory.getAllCells(cellGroupMap);
         if (destination.equals(RESOURCES.getString(M))) {
             return moverCell.apply(move);
         } else if (destination.equals(RESOURCES.getString(D))) {
             return donorCell.apply(move);
-        } else {                                                    //TODO: ADD IN FUNCTIONALITY FOR NAMED CELL MEMORY
+        } else if (allMap.containsKey(destination)) {
+            return allMap.get(destination).findLeaf(); //note the leaf
+        } else {
             return recipientCell.apply(move);
         }
     }
@@ -302,7 +308,8 @@ public class ActionFactory implements Factory {
      */
     private static void extractFlipBehavior(Element e, ICell currCell, IMove move) {
         String flip = XMLHelper.getTextValue(e, RESOURCES.getString(FLIP));
-        if (Offset.validOffsets.contains(flip.toLowerCase()) && currCell.getAllChildren().containsKey(Offset.valueOf(flip.toUpperCase()))) {
+        if (Offset.validOffsets.contains(flip.toLowerCase()) &&
+                currCell.getAllChildren().containsKey(Offset.valueOf(flip.toUpperCase()))) {
             ICard cardToFlip = currCell.getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek();
             if (cardToFlip != null && !cardToFlip.isFaceUp()) {
                 cardToFlip.flip();

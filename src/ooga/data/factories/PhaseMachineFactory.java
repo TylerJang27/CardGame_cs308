@@ -60,7 +60,7 @@ public class PhaseMachineFactory implements Factory {
      * @param cellGroupMap a Map of cell group names to cell groups
      * @return a Map of cell names to cells
      */
-    private static Map<String, ICell> getAllCells(Map<String, ICellGroup> cellGroupMap) {
+    protected static Map<String, ICell> getAllCells(Map<String, ICellGroup> cellGroupMap) {
         Map<String, ICell> allBaseCells = new HashMap<>();
         for (Map.Entry<String, ICellGroup> e : cellGroupMap.entrySet()) {
             allBaseCells.putAll(e.getValue().getCellMap());
