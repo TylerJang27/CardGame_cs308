@@ -300,7 +300,7 @@ public class ActionFactory implements Factory {
             for (ICell c : currCell.getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
                     ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
-                    if (cardToFlip.isFaceUp()) {
+                    if (cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
                         cardToFlip.flip();
                     }
                 }
@@ -345,7 +345,8 @@ public class ActionFactory implements Factory {
             if (offsetFromParent != null) {
                 currCell.getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
             }
-            recipientCell.apply(move).addCell(off, currCell);
+
+            destination.addCell(off, currCell);
         }
     }
 }

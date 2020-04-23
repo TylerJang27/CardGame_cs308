@@ -25,11 +25,14 @@ import java.util.Map;
 public class Controller extends Application {
 
     // TODO: Put the file here
+
+
     private static final String DEFAULT_STYLE_FILE = "data/default_style.xml";
     private static final String BACKUP_STYLE_FILE = "data/default_style_orig.xml";
 
-    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";           //default
-    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";    //fixed cards, demo
+    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";           //default
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";  //fixed cards, demo
+    //private static final String DEFAULT_RULE_FILE = "data/memory_rules.xml";       //memory debugging
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_2.xml";  //almost win state
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_3.xml";  //xsd error
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_4.xml";  //runtime phase error
@@ -69,10 +72,10 @@ public class Controller extends Application {
     @Override
     public void start(Stage mainStage) {
         GiveMove gm = (IMove move) -> {
-            System.out.println("Controller has move");
-            System.out.println("donor " + move.getDonor().getName());
-            System.out.println("mover " + move.getMover().getName());
-            System.out.println("receiver" + move.getRecipient().getName());
+            //System.out.println("Controller has move");
+            //System.out.println("donor " + move.getDonor().getName());
+            //System.out.println("mover " + move.getMover().getName());
+            //System.out.println("receiver" + move.getRecipient().getName());
             try {
                 lastState = myTable.update(move);
                 if (lastState.equals(GameState.WIN)) {
