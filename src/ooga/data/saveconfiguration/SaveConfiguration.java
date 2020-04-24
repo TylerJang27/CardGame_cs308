@@ -1,4 +1,4 @@
-package ooga.data.factories.saveconfiguration;
+package ooga.data.saveconfiguration;
 
 import ooga.cardtable.Cell;
 import ooga.cardtable.ICell;
@@ -88,5 +88,15 @@ public class SaveConfiguration implements ISaveConfiguration {
             cellMap.put(e.getKey(), Cell.fromStorageString(e.getValue()));
         }
         return cellMap;
+    }
+
+    @Override
+    /**
+     * Writes the SaveConfiguration information to the given filepath.
+     *
+     * @param filepath  the String representing where the file should be saved
+     */
+    public void writeConfiguration(String filepath) {
+        SaveConfigurationWriter.writeSave(filepath, this);
     }
 }

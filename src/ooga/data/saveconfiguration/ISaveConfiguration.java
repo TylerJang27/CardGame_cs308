@@ -1,4 +1,4 @@
-package ooga.data.factories.saveconfiguration;
+package ooga.data.saveconfiguration;
 
 import ooga.cardtable.ICell;
 
@@ -10,6 +10,8 @@ import java.util.Map;
  * @author Tyler Jang
  */
 public interface ISaveConfiguration {
+
+    String DATA_TYPE = "save";
 
     /**
      * Retrieves the name of the game that was stored.
@@ -45,4 +47,11 @@ public interface ISaveConfiguration {
      * @return a Map of String ICell names to ICells
      */
     Map<String, ICell> getCellMap();
+
+    /**
+     * Writes the SaveConfiguration information to the given filepath.
+     *
+     * @param filepath  the String representing where the file should be saved
+     */
+    void writeConfiguration(String filepath);
 }
