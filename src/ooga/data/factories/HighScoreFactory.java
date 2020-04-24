@@ -23,7 +23,7 @@ import java.util.Map;
 public class HighScoreFactory implements Factory {
 
     public static String DATA_TYPE = IHighScores.DATA_TYPE;
-    public static String SCORE_XSD = "src/ooga/data/factories/score_schema.xsd";
+    public static String SCORE_XSD = "src/ooga/data/factories/schemas/score_schema.xsd";
 
     /**
      * Builds and returns an IHighScore from a scoring XML. Requirements for scoring XML can be found in ___.
@@ -56,6 +56,7 @@ public class HighScoreFactory implements Factory {
                     Node scoreNode = scoreNodes.item(k);
                     try {
                         scoreMap.put(scoreNode.getNodeName(), Double.parseDouble(scoreNode.getTextContent()));
+                        System.out.println(scoreNode.getNodeName() + ", " + Double.parseDouble(scoreNode.getTextContent()));
                     } catch (NumberFormatException | DOMException e) {
                         scoreMap.put(scoreNode.getNodeName(), 0.0);
                     }

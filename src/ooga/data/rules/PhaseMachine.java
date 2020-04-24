@@ -281,4 +281,30 @@ public class PhaseMachine implements IPhaseMachine {
     public ISettings getSettings() {
         return mySettings;
     }
+
+    /**
+     * Sets the data in the cells from a load.
+     *
+     * @param cellMap the Map of String ICell names to ICells to load
+     */
+    @Override
+    public void setCellData(Map<String, ICell> cellMap) {
+        for (Map.Entry<String, ICell> e: currentPhase.getMyCellMap().entrySet()) {
+            for (int k = 0; k < Offset.values().length; k ++) {
+                IOffset off = Offset.values()[k];
+                e.getValue().removeCellAtOffset(off);
+            }
+            e.getValue().addCell(Offset.NONE, cellMap.get(e.getKey()));
+        }
+    }
+
+    /**
+     * Sets the phase from a load.
+     *
+     * @param phase the name of the phase to load in
+     */
+    @Override
+    public void setPhase(String phase) {
+        currentPhase = phases.get(phase);
+    }
 }

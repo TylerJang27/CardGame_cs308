@@ -50,7 +50,7 @@ public class HighScore implements IHighScores {
      */
     @Override
     public double getScore(String name) {
-        return myScoreMap.get(name.toLowerCase());
+        return myScoreMap.getOrDefault(name.toLowerCase(), Double.MIN_VALUE);
     }
 
     /**

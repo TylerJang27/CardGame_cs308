@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 public class DeckFactory implements Factory {
     private static final String RESOURCE_PACKAGE = PhaseMachineFactory.RESOURCE_PACKAGE;
     private static final String DECK = "deck";
-    private static final ResourceBundle resources = ResourceBundle.getBundle(RESOURCE_PACKAGE + DECK);
+    private static final ResourceBundle RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + DECK);
 
     private static final String DECK_PATH = "DeckPath";
     private static final String DECK_NAME = "DeckName";
@@ -46,7 +46,7 @@ public class DeckFactory implements Factory {
         try {
             Node deck = root.getElementsByTagName(DECK).item(0);
             if (deck.hasChildNodes()) {
-                String pathToDeck = resources.getString(DECK_PATH);
+                String pathToDeck = RESOURCES.getString(DECK_PATH);
                 String deckPath = XMLHelper.getTextValue((Element) deck, pathToDeck);
                 if (!deckPath.equals("")) {
                     return findStoredDeck(deckPath);
@@ -87,9 +87,9 @@ public class DeckFactory implements Factory {
      */
     private static IDeck buildDeck(Node node) {
         Element deck = (Element) node;
-        String shuffle = XMLHelper.getTextValue(deck, resources.getString(SHUFFLE));
-        String deckName = XMLHelper.getTextValue(deck, resources.getString(DECK_NAME));
-        NodeList nodeList = deck.getElementsByTagName(resources.getString(CARD));
+        String shuffle = XMLHelper.getTextValue(deck, RESOURCES.getString(SHUFFLE));
+        String deckName = XMLHelper.getTextValue(deck, RESOURCES.getString(DECK_NAME));
+        NodeList nodeList = deck.getElementsByTagName(RESOURCES.getString(CARD));
 
         List<ICard> cardList = new ArrayList<>();
         for (int k = 0; k < nodeList.getLength(); k++) {
@@ -110,12 +110,12 @@ public class DeckFactory implements Factory {
      * @return      a fully built ICard implementation
      */
     private static ICard buildCard(Node node) {
-        String cardName = Factory.getVal(node, NAME, resources);
-        Integer val = Integer.parseInt(Factory.getVal(node, VALUE, resources));
-        IColor color = new Color(Factory.getVal(node, COLOR, resources));
-        ISuit suit = new Suit(Factory.getVal(node, SUIT, resources), color);
+        String cardName = Factory.getVal(node, NAME, RESOURCES);
+        Integer val = Integer.parseInt(Factory.getVal(node, VALUE, RESOURCES));
+        IColor color = new Color(Factory.getVal(node, COLOR, RESOURCES));
+        ISuit suit = new Suit(Factory.getVal(node, SUIT, RESOURCES), color);
         IValue value = new Value(val + suit.getName(), val);
-        String fixed = XMLHelper.getTextValue((Element) node, resources.getString(FIXED));
+        String fixed = XMLHelper.getTextValue((Element) node, RESOURCES.getString(FIXED));
         boolean isFixed = false;
         if (fixed != null && !fixed.isEmpty() && fixed.equalsIgnoreCase(YES)) {
             isFixed = true;

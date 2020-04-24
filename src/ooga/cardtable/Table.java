@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import ooga.data.rules.IPhaseMachine;
+import ooga.data.saveconfiguration.ISaveConfiguration;
+import ooga.data.saveconfiguration.SaveConfiguration;
 
 public class Table implements ITable {
 
@@ -66,5 +68,21 @@ public class Table implements ITable {
       ret.put(e.getKey(), e.getValue().copy());
     }
     return ret;
+  }
+
+  @Override
+  public ISaveConfiguration getSaveData(String gameName, String rulePath) {
+    String phase = machine.getCurrentPhase().getMyName();
+    Double score = currentPlayer.getScore();
+    Map<String, String> cellBuilder = new HashMap<>();
+    for (Map.Entry<String, ICell> e: getCellData().entrySet()) {
+      cellBuilder.put(e.getKey(), e.getValue().toStorageString());
+    }
+    return new SaveConfiguration(gameName, rulePath, phase, score, cellBuilder);
+  }
+
+  @Override
+  public void loadFromSaveData(ISaveConfiguration saveData) {
+    
   }
 }
