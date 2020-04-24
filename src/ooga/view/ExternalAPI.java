@@ -9,12 +9,13 @@ import ooga.data.style.ILayout;
 import java.util.Map;
 
 public interface ExternalAPI {
+    public int createGame(String gameName);
 
-    /**
-     * report an error where the key is the key to a error message in a properties file and the formats are the error-specific information
-     * @param key
-     * @param formats
-     */
+        /**
+         * report an error where the key is the key to a error message in a properties file and the formats are the error-specific information
+         * @param key
+         * @param formats
+         */
     void reportError(String key, List<String> formats); //TODO: ADD TO API CHANGES
     /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
@@ -23,7 +24,7 @@ public interface ExternalAPI {
      *
      * @param cellData
      */
-    void setCellData(Map<String,ICell> cellData);
+    void setCellData(int gameID, Map<String,ICell> cellData);
 
     /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
@@ -32,13 +33,13 @@ public interface ExternalAPI {
      *
      * @param cellData
      */
-    void setUpdatesToCellData(Map<String,ICell> cellData);
+    void setUpdatesToCellData(int gameID, Map<String,ICell> cellData);
 
     /**
      * Sets score of players to be displayed
      * @param playerScores maps playerID to total score
      */
-    void setScores(Map<Integer, Double> playerScores);
+    void setScores(int gameID, Map<Integer, Double> playerScores);
 
     /**
      * If triggered by player move, please call setCellData() first so that the most recent arrangement
@@ -83,6 +84,6 @@ public interface ExternalAPI {
     /**
      * Sets the locations of all cell types and the framework for creating new cell locations if applicable.
      */
-    void setLayout(ILayout layout);
+    void setLayout(int gameID, ILayout layout);
 
 }

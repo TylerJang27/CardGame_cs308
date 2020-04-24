@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class StyleData implements IStyle {
 
-    private String defaultFilePath;
+    private String saveFilePath;
 
     private String myLanguage;
     private String myCards;
@@ -27,8 +27,15 @@ public class StyleData implements IStyle {
     private static final String DIFFICULTY = "difficulty";
     private static final String SOUND = "sound";
 
+    /**
+     * The Constructor for StyleData, setting the appropriate settings and save location.
+     *
+     * @param xmlFile           the location to which the file should be saved
+     * @param wordSettings      a Map of String word setting types to their String values
+     * @param numberSettings    A Map of String number setting types to their Integer values
+     */
     public StyleData(String xmlFile, Map<String, String> wordSettings, Map<String, Integer> numberSettings) {
-        defaultFilePath = xmlFile;
+        saveFilePath = xmlFile;
         myLanguage = wordSettings.get(LANGUAGE);
         myCards = wordSettings.get(CARDS);
         myTable = wordSettings.get(TABLE);
@@ -168,7 +175,7 @@ public class StyleData implements IStyle {
      * Saves the settings to an XML file
      */
     public void saveSettings() {
-        StyleWriter.writeStyle(defaultFilePath, this);
+        StyleWriter.writeStyle(saveFilePath, this);
     }
 
     /**
