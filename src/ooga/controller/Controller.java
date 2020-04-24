@@ -49,28 +49,25 @@ public class Controller extends Application {
 
     private View myView;
     private String currentGame;
-    private IMove myCurrentMove;
-    private ITable myTable;
-    private IStyle myStyle;
     private IHighScores myScores;
-    private File myStyleFile;
     private File myScoresFile;
-    private File myRuleFile;
-    private File myLayoutFile;
     private IGameState lastState;
     private IPhaseMachine myCurrentPhaseMachine;
-    private Map<String, ICell> myCellMap;
     private Map<String, ICell> myCurrentCells;
     private Map<String, ICell> myPreviousCells;
     private Map<String, ICell> myChangedCells = new HashMap<>();
+    private Map<Integer, ITable> myTables;
 
     @FunctionalInterface
     public
     interface GiveMove {
-        void sendMove(IMove move);
+        void sendMove(IMove move, int gameID);
     }
 
-    public Controller() { super(); }
+    public Controller() {
+        super();
+        myTables = new HashMap<>();
+    }
 
     /**
      * Called at the beginning of the application
@@ -80,24 +77,20 @@ public class Controller extends Application {
      */
     @Override
     public void start(Stage mainStage) {
-        GiveMove gm = (IMove move) -> {
-            //System.out.println("Controller has move");
-            //System.out.println("donor " + move.getDonor().getName());
-            //System.out.println("mover " + move.getMover().getName());
-            //System.out.println("receiver" + move.getRecipient().getName());
+        GiveMove gm = (move, gameID) -> {
             try {
-                lastState = myTable.update(move);
+                lastState = myTables.get(gameID).update(move);
                 if (lastState.equals(GameState.WIN)) {
-                    myView.displayMessage(WIN);
+                    myView.displayMessage(gameID,WIN);
                 } else if (lastState.equals(GameState.INVALID)) {
-                    myView.displayMessage(INVALID);
+                    myView.displayMessage(gameID,INVALID);
                 } else if (lastState.equals(GameState.LOSS)) {
-                    myView.displayMessage(LOSS);
+                    myView.displayMessage(gameID,LOSS);
                 }
-                Double score = myTable.getCurrentPlayer().getScore();
-                myView.setScores(Map.of(1, score));
+                Double score = myTables.get(gameID).getCurrentPlayer().getScore();
+                myView.setScores(gameID,Map.of(1, score));
                 updateHighScores(currentGame, score);
-                myCurrentCells = myTable.getCellData();
+                myCurrentCells = myTables.get(gameID).getCellData();
                 for (String i : myCurrentCells.keySet()) {
                     if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
                         myChangedCells.put(i, myCurrentCells.get(i));
@@ -105,7 +98,7 @@ public class Controller extends Application {
                     }
                 }
                 processInvalidMove(move);
-                myView.setUpdatesToCellData(myChangedCells);
+                myView.setUpdatesToCellData(gameID,myChangedCells);
                 myPreviousCells = myCurrentCells;
                 myChangedCells.clear();
             } catch (XMLException e) {
@@ -114,17 +107,18 @@ public class Controller extends Application {
             //myView.setCellData(Map.copyOf(myTable.getCellData()));
         };
 
-        myStyle = extractStyle();
+        IStyle myStyle = extractStyle();
         myScores = extractScores();
-        myView = new View(gm, ()->{
-            myTable.restartGame();
-            myCurrentCells = myTable.getCellData();
-            myView.setUpdatesToCellData(myCurrentCells); },
-                myStyle);
+        myView = new View(gm, (int gameID)->{
+            myTables.get(gameID).restartGame();
+            myCurrentCells = myTables.get(gameID).getCellData();
+            myView.setUpdatesToCellData(gameID,myCurrentCells); },
+            myStyle);
         initializeHandlers(myView);
     }
 
     private IStyle extractStyle() {
+        File myStyleFile;
         try {
             myStyleFile = new File(DEFAULT_STYLE_FILE);
             return StyleFactory.createStyle(myStyleFile);
@@ -148,7 +142,7 @@ public class Controller extends Application {
 
     private void updateHighScores(String currentGame, Double score) {
         if (myScores.getScore(currentGame) < score) {
-            myScores.setScore(currentGame, score);
+            //myScores.setScore(currentGame, score); FIXME: creates error
             //myView.setHighScore(myScores.getScore(currentGame)); //TODO: MARIUSZ display it please
         }
     }
@@ -203,18 +197,20 @@ public class Controller extends Application {
         String ruleFile = "data/" + gameName + "_rules.xml";
         //ruleFile = "data/solitaire_rules_static_2.xml";  //almost win state
 
-        myRuleFile = new File(ruleFile);
+        File myRuleFile = new File(ruleFile);
         try {
+            int gameID = myView.createGame(gameName);
             myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
-            myTable = new Table(myCurrentPhaseMachine);
-            myCellMap = myTable.getCellData();
+            ITable table = new Table(myCurrentPhaseMachine);
+            Map<String, ICell> myCellMap = table.getCellData();
             File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
 
             //fixme
-            myView.setLayout(0,LayoutFactory.createLayout(f));
-            myView.setCellData(myCellMap);
+            myView.setLayout(gameID,LayoutFactory.createLayout(f));
+            myView.setCellData(gameID, myCellMap);
             //myView.setHighScore(myScores.getScore(currentGame));  //TODO: MARIUSZ display it please
             myPreviousCells = myCellMap;
+            myTables.put(gameID,table);
             //myView.setCellData(Map.copyOf(myTable.getCellData()));
         } catch (XMLException e) {
             reportError(e);
@@ -222,13 +218,14 @@ public class Controller extends Application {
     }
 
     private void newMove() {
-        myCurrentMove = getMove();
+        IMove myCurrentMove = getMove();
         try {
-            myTable.update(myCurrentMove);
+            //FIXME
+            //myTable.update(myCurrentMove);
         } catch (XMLException e) {
             reportError(e);
         }
-        myView.setCellData(Map.copyOf(myTable.getCellData()));
+        //myView.setCellData(Map.copyOf(myTable.getCellData()));
     }
 
     private IMove getMove() {
