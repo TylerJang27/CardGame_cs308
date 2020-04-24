@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public class Deck implements IDeck {
 
@@ -26,6 +27,27 @@ public class Deck implements IDeck {
     } else {
       return false;
     }
+  }
+
+  @Override
+  public String toStorageString() {
+    String ret = getName()+"[";
+    for (ICard c: cards) {
+      ret += c.toStorageString()+"*";
+    }
+    return ret.substring(0, ret.length()-1)+"]";
+  }
+
+  public static IDeck fromStorageString(String input) {
+    if (input == null) return null;
+    String nm = input.split("\\[")[0];
+    input = input.replaceFirst(Pattern.quote(nm), "");
+    input = input.substring(1, input.length()-1);
+    List<ICard> newCards = new ArrayList<>();
+    for (String s: input.split("\\*")){
+      newCards.add(Card.fromStorageString(s));
+    }
+    return new Deck(nm, newCards);
   }
 
   @Override

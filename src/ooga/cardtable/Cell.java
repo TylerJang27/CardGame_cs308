@@ -1,12 +1,12 @@
 package ooga.cardtable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 public class Cell implements ICell {
 
@@ -36,8 +36,8 @@ public class Cell implements ICell {
   /**
    * Return all the ICells represented by the name for either a group or an individual cell.
    *
-   * @param name  the query
-   * @return      a List of ICells matching the name
+   * @param name the query
+   * @return a List of ICells matching the name
    */
   @Override
   public List<ICell> getCellsbyName(String name) {
@@ -51,8 +51,8 @@ public class Cell implements ICell {
   /**
    * Returns whether or not the name is contained by getCellsByName() for this name.
    *
-   * @param name  the query
-   * @return      whether or not the name is relevant
+   * @param name the query
+   * @return whether or not the name is relevant
    */
   @Override
   public boolean isInGroup(String name) {
@@ -116,7 +116,6 @@ public class Cell implements ICell {
 
   @Override
   public IOffset getOffsetFromParent() {
-    //System.out.println(parent.getAllChildren());
     if (parent == null) {
       return Offset.NONE;
     }
@@ -329,7 +328,8 @@ public class Cell implements ICell {
       return this;
     }
     ICell temp = this;
-    while (temp.getAllChildren().keySet().contains(offset)) { //TODO: VERIFY THIS DOESN'T SKIP EMPTIES
+    while (temp.getAllChildren().keySet()
+        .contains(offset)) { //TODO: VERIFY THIS DOESN'T SKIP EMPTIES
       temp = temp.getAllChildren().get(offset);
     }
     return temp;
@@ -354,6 +354,7 @@ public class Cell implements ICell {
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE) {
         if (!e.getValue().equals(c.getAllChildren().get(e.getKey()))) {
+          System.out.println(e);
           return false;
         }
       }
@@ -361,6 +362,7 @@ public class Cell implements ICell {
     for (Entry<IOffset, ICell> e : c.getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE) {
         if (!e.getValue().equals(getAllChildren().get(e.getKey()))) {
+          System.out.println("2 "+e);
           return false;
         }
       }
@@ -427,7 +429,7 @@ public class Cell implements ICell {
     if (name.equals(nm)) {
       return this;
     }
-    for (Entry<IOffset, ICell> e: getAllChildren().entrySet()) {
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE) {
         if (e.getValue().getName().toLowerCase().contains(nm)) {
           ICell ret = e.getValue().findNamedCell(nm);
@@ -453,14 +455,15 @@ public class Cell implements ICell {
       //System.out.println("filling in the rest");
       ICell ret = this;
       for (int i = 1; i < names.length; i++) {
-        setCellAtOffset(Offset.valueOf(names[i].toUpperCase()), new Cell(getName()+","+names[i]));
+        setCellAtOffset(Offset.valueOf(names[i].toUpperCase()),
+            new Cell(getName() + "," + names[i]));
         ret = ret.getAllChildren().get(Offset.valueOf(names[i].toUpperCase()));
       }
       return ret;
     }
-    String[] restNames = new String[names.length-1];
+    String[] restNames = new String[names.length - 1];
     for (int i = 1; i < names.length; i++) {
-      restNames[i-1] = names[i];
+      restNames[i - 1] = names[i];
     }
     return next.followNamespace(String.join(",", restNames));
   }
@@ -488,6 +491,65 @@ public class Cell implements ICell {
         findLeafHelper(offsetCell, steps + 1, tracker);
       }
     }
+  }
+
+  @Override
+  public String toStorageString() {
+    String ret = getName() + "$";
+    ret += getDeck().toStorageString() + "$";
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        ret += "{" + e.getKey().getOffset() + ":" + e.getValue().toStorageString() + "}";
+      }
+    }
+    return ret;
+  }
+
+  public static ICell fromStorageString(String input) { //fixme add to API?
+    String nm = input.split("\\$")[0];
+    IDeck d = Deck.fromStorageString(input.split("\\$")[1]);
+    Cell ret = new Cell(nm, d);
+    String brace = getFirstBraces(input);
+    while (brace != null) {
+      input = input.replaceFirst(Pattern.quote(brace), "");
+      brace = brace.substring(1, brace.length() - 1);
+      //System.out.println("brace: "+brace);
+      String offStr = brace.split(":")[0];
+      Offset off = Offset.valueOf(offStr.toUpperCase());
+      String nextBrace = brace.replaceFirst(Pattern.quote(offStr), "");
+      ret.setCellAtOffset(off, fromStorageString(nextBrace));
+      brace = getFirstBraces(input);
+    }
+    return ret;
+  }
+
+  private static String getFirstBraces(String input) {
+    //System.out.println("brace input: "+input);
+    int start = 0;
+    while (input.charAt(start) != '{') {
+      if (++start >= input.length()) {
+        //System.out.println("bad start");
+        return null;
+      }
+    }
+    int end = start;
+    int counter = 1;
+    while (counter > 0) {
+      if (++end >= input.length()) {
+        //System.out.println("bad end");
+        return null;
+      }
+      char c = input.charAt(end);
+      if (c == '{') {
+        counter++;
+      }
+      if (c == '}') {
+        counter--;
+      }
+      //System.out.println("counter: "+counter+" "+c);
+    }
+    //System.out.println("braces: "+input.substring(start, end+1));
+    return input.substring(start, end+1);
   }
 
 }
