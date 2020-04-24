@@ -1,5 +1,6 @@
 package ooga.view;
 
+import java.util.HashMap;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
 import ooga.controller.Controller;
+import ooga.controller.Controller.GiveMove;
 import ooga.data.style.ILayout;
 import ooga.data.style.Layout;
 import ooga.data.style.IStyle;
@@ -49,22 +51,28 @@ public class View implements ExternalAPI {
         public void setValue(String newValue);
     }
 
-    private TriggerMove getMove;
-    private Runnable restarter;
+    private GiveMove getMove;
+    private Restart restarter;
 
     private String myTheme = "Duke";
     private String myLanguage = "English";
 
     private Stage myStage;
     private Menu myMenu;
-    private GameScreen myGameScreen;
 
     private IStyle myStyle;
     private int myGameIndex;
     private TabPane myTabPane;
+    private Map<Integer, GameScreen> myGameIdToGame;
 
     private static final double DEFAULT_WIDTH = 650;
     private static final double DEFAULT_HEIGHT = 500;
+
+    @FunctionalInterface
+    public
+    interface Restart {
+        void execute(int gameID);
+    }
 
     /**
      * Constructs an instance of View
@@ -72,7 +80,8 @@ public class View implements ExternalAPI {
      * @param restart runnable which will be executed when a user hits restart on game table
      * @param style is updated to reflect user's language and theme preferences so they can be reloaded
      */
-    public View(Controller.GiveMove giveMove, Runnable restart, IStyle style){
+    public View(Controller.GiveMove giveMove, Restart restart, IStyle style){
+        myGameIdToGame = new HashMap<>();
         myGameIndex = 0;
 
         restarter = restart;
@@ -87,7 +96,7 @@ public class View implements ExternalAPI {
             myStyle.setLanguage(language);
         };
 
-        getMove = giveMove::sendMove;
+        getMove = giveMove;
 
         myStyle = style;
 
@@ -111,7 +120,7 @@ public class View implements ExternalAPI {
     }
 
     public int createGame(String gameName){
-        return 0;
+        return myGameIndex++;
     }
 
     /**
@@ -136,28 +145,30 @@ public class View implements ExternalAPI {
         Button restartButton = new Button(currentMessages.getString("restart"));
         restartButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                restarter.run();
+                restarter.execute(gameID);
                 // System.out.println("View 114: Call lambda to notify backend");
             }
         });
 
-        myGameScreen = new GameScreen(getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, restartButton, myMenu.getGame(), currentMessages.getString("score"), myLanguage);
-        myStage.setScene(myGameScreen.getScene());
+        GameScreen gameScreen = new GameScreen(gameID,getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, restartButton, myMenu.getGame(), currentMessages.getString("score"), myLanguage);
+        myGameIdToGame.put(gameID,gameScreen);
 
-        myStage.minHeightProperty().bind(Bindings.multiply(myGameScreen.getDisplayTable().getPane().widthProperty(),layout.getScreenRatio()));
-        myStage.minWidthProperty().bind(Bindings.divide(myGameScreen.getDisplayTable().getPane().heightProperty(),layout.getScreenRatio()));
+        Tab newTab = new Tab("game",gameScreen.getDisplayTable().getPane());
+        myTabPane.getTabs().add(newTab);
+        //myStage.minHeightProperty().bind(Bindings.multiply(myGameScreen.getDisplayTable().getPane().widthProperty(),layout.getScreenRatio()));
+        //myStage.minWidthProperty().bind(Bindings.divide(myGameScreen.getDisplayTable().getPane().heightProperty(),layout.getScreenRatio()));
 
     }
 
-    public void displayMessage(String key) {
-        displayMessage(key, new ArrayList<>());
+    public void displayMessage(int gameID, String key) {
+        displayMessage(gameID, key, new ArrayList<>());
     }
 
-    public void displayMessage(String key, List<String> args){
+    public void displayMessage(int gameID, String key, List<String> args){
         // fixme im horribly inefficient
         ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
         String displayMessage = translateAndFormat(key, args, currentMessages);
-        myGameScreen.displayMessage(displayMessage);
+        myGameIdToGame.get(gameID).displayMessage(displayMessage);
         /*System.out.println(displayMessage);
         Text text = new Text(displayMessage);
         Pane messagePane = new Pane();
@@ -205,14 +216,14 @@ public class View implements ExternalAPI {
      * @param cellData
      */
     @Override
-    public void setCellData(Map<String,ICell> cellData) {
-        myGameScreen.initializeTable(cellData);
+    public void setCellData(int gameID, Map<String,ICell> cellData) {
+        myGameIdToGame.get(gameID).initializeTable(cellData);
     }
 
 
     @Override
-    public void setUpdatesToCellData(Map<String,ICell> cellData) {
-        myGameScreen.updateTable(cellData);
+    public void setUpdatesToCellData(int gameID, Map<String,ICell> cellData) {
+        myGameIdToGame.get(gameID).updateTable(cellData);
     }
 
 
@@ -272,8 +283,8 @@ public class View implements ExternalAPI {
      * @param playerScores maps playerID to total score
      */
     @Override
-    public void setScores(Map<Integer, Double> playerScores) {
-        myGameScreen.updateScore(playerScores.get(1));
+    public void setScores(int gameID, Map<Integer, Double> playerScores) {
+        myGameIdToGame.get(gameID).updateScore(playerScores.get(1));
     }
 
 
