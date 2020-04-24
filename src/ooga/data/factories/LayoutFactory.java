@@ -3,8 +3,8 @@ package ooga.data.factories;
 import ooga.data.XMLException;
 import ooga.data.XMLHelper;
 import ooga.data.XMLValidator;
-import ooga.data.rules.ILayout;
-import ooga.data.rules.Layout;
+import ooga.data.style.ILayout;
+import ooga.data.style.Layout;
 import ooga.data.style.Coordinate;
 import ooga.data.style.ICoordinate;
 import org.w3c.dom.Element;
@@ -27,7 +27,7 @@ public class LayoutFactory implements Factory {
     private static String LAYOUT_TYPE = ILayout.DATA_TYPE;
     private static String INVALID_ERROR = "INVALID_FILE";
 
-    private static final String LAYOUT_XSD = "src/ooga/data/factories/layout_schema.xsd";
+    private static final String LAYOUT_XSD = "src/ooga/data/factories/schemas/layout_schema.xsd";
 
     private static final String RESOURCES = "ooga.resources";
     private static final String RESOURCE_PACKAGE = RESOURCES + "." + "layout_word";

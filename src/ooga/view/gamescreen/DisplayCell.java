@@ -15,6 +15,8 @@ import ooga.cardtable.Offset;
 
 public class DisplayCell {
 
+    private static final String DEFAULT_SKIN_TYPE = "classic";
+
     private Map<Offset, DisplayCell> myDisplayChildren = new HashMap<>();
     private ICell myCell;
 
@@ -34,9 +36,13 @@ public class DisplayCell {
         myCell = cell;
 
         if(myCell.getDeck().peek() != null) {
-
+            System.out.println("an image!");
             if (myCell.getDeck().peek().isFaceUp()) {
-                myImageView = new ImageView(new Image("/ooga/resources/decks/standard/"+skinType+"/"+myCell.getDeck().peek().getName()+".png"));
+                try {
+                    myImageView = new ImageView(new Image("/ooga/resources/decks/standard/" + skinType + "/" + myCell.getDeck().peek().getName() + ".png"));
+                } catch (Exception e) {
+                    myImageView = new ImageView(new Image("/ooga/resources/decks/standard/" + DEFAULT_SKIN_TYPE + "/" + myCell.getDeck().peek().getName() + ".png"));
+                }
             } else {
                 myImageView = new ImageView(new Image("/ooga/resources/decks/standard/"+skinType+"/faceDown.png"));
                 myImageView.getStyleClass().add("cardskin");

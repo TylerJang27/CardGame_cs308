@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data type="score">
+    <game name="solitaire">
+        <entry>
+            <name>Mariusz</name>
+            <score>120</score>
+        </entry>
+        <entry>
+            <name>Mariusz</name>
+            <score>110</score>
+        </entry>
+        <entry>
+            <name>Mariusz</name>
+            <score>105</score>
+        </entry>
+    </game>
+    <game name="memory">
+        <entry>
+            <name>Mariusz</name>
+            <score>120</score>
+        </entry>
+        <entry>
+            <name>Mariusz</name>
+            <score>110</score>
+        </entry>
+        <entry>
+            <name>Mariusz</name>
+            <score>105</score>
+        </entry>
+    </game>
+</data>

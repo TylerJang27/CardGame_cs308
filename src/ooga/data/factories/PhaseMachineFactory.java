@@ -25,7 +25,7 @@ public class PhaseMachineFactory implements Factory {
     private static final String RESOURCES = "ooga.resources";
     public static final String RESOURCE_PACKAGE = RESOURCES + "." + RULES + "_";
 
-    private static final String RULES_XSD = "src/ooga/data/factories/rules_schema.xsd";
+    private static final String RULES_XSD = "src/ooga/data/factories/schemas/rules_schema.xsd";
 
     public static final String START = "INIT_PHASE";
 

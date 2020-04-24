@@ -415,13 +415,13 @@ public class Cell implements ICell {
   }
 
   @Override
-  public ICell copy(Function<ICell, ICard> cardGetter) {
+  public ICell extract(Function<ICell, ICard> cardGetter) {
     ICell ret = new Cell(name);
-    ret.getDeck().addDeck(new Deck());
+    //ret.getDeck().addDeck(new Deck());
     ret.getDeck().addCard(cardGetter.apply(this));
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE) {
-        ret.setCellAtOffset(e.getKey(), e.getValue().copy(cardGetter));
+        ret.setCellAtOffset(e.getKey(), e.getValue().extract(cardGetter));
       }
     }
     return ret;
@@ -523,6 +523,7 @@ public class Cell implements ICell {
       ret.setCellAtOffset(off, fromStorageString(nextBrace));
       brace = getFirstBraces(input);
     }
+    ret.updateParentage();
     return ret;
   }
 

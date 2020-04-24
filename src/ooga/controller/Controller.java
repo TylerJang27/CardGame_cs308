@@ -4,11 +4,11 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import ooga.cardtable.*;
 import ooga.data.XMLException;
-import ooga.data.factories.PhaseMachineFactory;
-import ooga.data.factories.LayoutFactory;
-import ooga.data.factories.StyleFactory;
+import ooga.data.factories.*;
+import ooga.data.highscore.IHighScores;
 import ooga.data.rules.IPhaseMachine;
 
+import ooga.data.saveconfiguration.ISaveConfiguration;
 import ooga.data.style.IStyle;
 import ooga.view.View;
 
@@ -24,11 +24,12 @@ import java.util.Map;
  */
 public class Controller extends Application {
 
-    // TODO: Put the file here
-
-
     private static final String DEFAULT_STYLE_FILE = "data/default_style.xml";
     private static final String BACKUP_STYLE_FILE = "data/default_style_orig.xml";
+
+    private static final String DEFAULT_SCORE_FILE = "data/default_score.xml";
+    private static final String BACKUP_SCORE_FILE = "data/default_score_orig.xml";
+
 
     private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";           //default
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";  //fixed cards, demo
@@ -42,26 +43,30 @@ public class Controller extends Application {
     private static final String INVALID = "invalid";
 
     private View myView;
-    private IMove myCurrentMove;
-    private ITable myTable;
-    private IStyle myStyle;
-    private File myStyleFile;
+    private IHighScores myScores;
+    private File myScoresFile;
     private File myRuleFile;
-    private File myLayoutFile;
     private IGameState lastState;
     private IPhaseMachine myCurrentPhaseMachine;
-    private Map<String, ICell> myCellMap;
     private Map<String, ICell> myCurrentCells;
     private Map<String, ICell> myPreviousCells;
     private Map<String, ICell> myChangedCells = new HashMap<>();
+    private Map<Integer, ITable> myTables;
+    private Map<Integer, File> myRuleFiles;
+    private Map<Integer, String> myGameNames;
 
     @FunctionalInterface
     public
     interface GiveMove {
-        void sendMove(IMove move);
+        void sendMove(IMove move, int gameID);
     }
 
-    public Controller() { super(); }
+    public Controller() {
+        super();
+        myTables = new HashMap<>();
+        myRuleFiles = new HashMap<>();
+        myGameNames = new HashMap<>();
+    }
 
     /**
      * Called at the beginning of the application
@@ -71,22 +76,20 @@ public class Controller extends Application {
      */
     @Override
     public void start(Stage mainStage) {
-        GiveMove gm = (IMove move) -> {
-            //System.out.println("Controller has move");
-            //System.out.println("donor " + move.getDonor().getName());
-            //System.out.println("mover " + move.getMover().getName());
-            //System.out.println("receiver" + move.getRecipient().getName());
+        GiveMove gm = (move, gameID) -> {
             try {
-                lastState = myTable.update(move);
+                lastState = myTables.get(gameID).update(move);
                 if (lastState.equals(GameState.WIN)) {
-                    myView.displayMessage(WIN);
+                    myView.displayMessage(gameID,WIN);
                 } else if (lastState.equals(GameState.INVALID)) {
-                    myView.displayMessage(INVALID);
+                    myView.displayMessage(gameID,INVALID);
                 } else if (lastState.equals(GameState.LOSS)) {
-                    myView.displayMessage(LOSS);
+                    myView.displayMessage(gameID,LOSS);
                 }
-                myView.setScores(Map.of(1, myTable.getCurrentPlayer().getScore()));
-                myCurrentCells = myTable.getCellData();
+                Double score = myTables.get(gameID).getCurrentPlayer().getScore();
+                myView.setScores(gameID,Map.of(1, score));
+                updateHighScores(myGameNames.get(gameID), score);
+                myCurrentCells = myTables.get(gameID).getCellData();
                 for (String i : myCurrentCells.keySet()) {
                     if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
                         myChangedCells.put(i, myCurrentCells.get(i));
@@ -94,25 +97,26 @@ public class Controller extends Application {
                     }
                 }
                 processInvalidMove(move);
-                myView.setUpdatesToCellData(myChangedCells);
+                myView.setUpdatesToCellData(gameID,myChangedCells);
                 myPreviousCells = myCurrentCells;
                 myChangedCells.clear();
             } catch (XMLException e) {
                 reportError(e);
             }
-            //myView.setCellData(Map.copyOf(myTable.getCellData()));
         };
 
-        myStyle = extractStyle();
-        myView = new View(gm, ()->{
-            myTable.restartGame();
-            myCurrentCells = myTable.getCellData();
-            myView.setUpdatesToCellData(myCurrentCells); },
-                myStyle);
+        IStyle myStyle = extractStyle();
+        myScores = extractScores();
+        myView = new View(gm, (int gameID)->{
+            myTables.get(gameID).restartGame();
+            myCurrentCells = myTables.get(gameID).getCellData();
+            myView.setUpdatesToCellData(gameID,myCurrentCells); },
+            myStyle);
         initializeHandlers(myView);
     }
 
     private IStyle extractStyle() {
+        File myStyleFile;
         try {
             myStyleFile = new File(DEFAULT_STYLE_FILE);
             return StyleFactory.createStyle(myStyleFile);
@@ -123,7 +127,27 @@ public class Controller extends Application {
         }
     }
 
+    private IHighScores extractScores() {
+        try {
+            myScoresFile = new File(DEFAULT_SCORE_FILE);
+            return HighScoreFactory.createScores(myScoresFile);
+        } catch (Exception e) {
+            reportError(e);
+            myScoresFile = new File(BACKUP_SCORE_FILE);
+            return HighScoreFactory.createScores(myScoresFile, DEFAULT_SCORE_FILE);
+        }
+    }
+
+    private void updateHighScores(String currentGame, Double score) {
+        if (myScores.getScore(currentGame) == Double.MIN_VALUE || myScores.getScore(currentGame) < score) {
+            myScores.setScore(currentGame, score);
+            //myView.setHighScore(myScores.getScore(currentGame)); //TODO: MARIUSZ display it please
+        }
+    }
+
     private void reportError(Exception e) {
+        e.printStackTrace();
+
         String[] messages = e.getMessage().split(",");
         List<String> tags = new ArrayList<>();
         for (int k = 1; k < messages.length; k ++) {
@@ -146,42 +170,58 @@ public class Controller extends Application {
         }
     }
 
+    private void saveGame(int gameID, String destination) { //TODO: PROCESS ON FRONTEND @MARIUSZ
+        ISaveConfiguration saveData = myTables.get(gameID).getSaveData(myGameNames.get(gameID), myRuleFiles.get(gameID).getPath());
+        saveData.writeConfiguration(destination);
+    }
+
+    private void loadGame(String loadFile) { //TODO: PROCESS ON FRONTEND @MARIUSZ
+        try {
+            ISaveConfiguration load = SaveConfigurationFactory.createSave(new File(loadFile));
+            IPhaseMachine pm = PhaseMachineFactory.createPhaseMachine(new File(load.getRulePath()));
+            pm.setCellData(load.getCellMap());
+            pm.setPhase(load.getCurrentPhase());
+            ITable table = new Table(pm);
+            table.getCurrentPlayer().setScore(load.getScore());
+            //currentGame = load.getGameName(); TODO: Big fixes
+            myCurrentPhaseMachine = pm;
+            //myTable = table; TODO: FIX!!
+            //TODO: SHOULD THIS BE LOADED INTO THE VIEW IN TERMS OF THE CELL DATA AND SUCH?
+        } catch (XMLException e) {
+            reportError(e);
+        }
+    }
+
     //TODO: REPLACE WITH LOGIC REGARDING METHODS AT THE BOTTOM
     private void initializeHandlers(View v) {
-        //input is string gamename
         v.listenForGameChoice((a,b,gameName) -> startTable(gameName));
-        //() -> newMove());
-        /*v.setHandlers((String game) -> createEngine(game), //Consumer
-                (String rules) -> setHouseRules(rules), //Consumer
-                (int diff) -> setDifficulty(diff), //Consumer
-                (IMove move) -> processMove(move), //Function
-                (String cell) -> getCell(cell)); //Function/Supplier
-                */
-        /*View.setHandlers(Consumer engineStart, Consumer ruleSet,  ....);
-            myFunction = move;
-
-
-        MOUSE.setOnClickAndDrag(event -> move.execute(new Move(event.getX, event.getY)));
-            */
     }
 
     private void startTable(String gameName) {
-        // TODO: process gamename string to a file path
-        //System.out.println(gameName);
-        // TODO: Give game name somehow, figure out who's building the phase machine
-        String ruleFile = "data/" + gameName + "_rules.xml";
-        //ruleFile = "data/solitaire_rules_static_2.xml";  //almost win state
 
-        myRuleFile = new File(ruleFile);
+        String ruleFile = "data/" + gameName + "_rules.xml";
         try {
+            myRuleFile = new File(ruleFile);
+        } catch (Exception e) {
+            reportError(e);
+            myRuleFile = new File(DEFAULT_RULE_FILE);
+        }
+
+        try {
+            int gameID = myView.createGame(gameName);
+            myGameNames.put(gameID,gameName);
+            myRuleFiles.put(gameID,myRuleFile);
             myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
-            myTable = new Table(myCurrentPhaseMachine);
-            myCellMap = myTable.getCellData();
+            ITable table = new Table(myCurrentPhaseMachine);
+            Map<String, ICell> myCellMap = table.getCellData();
             File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
 
-            myView.setLayout(LayoutFactory.createLayout(f));
-            myView.setCellData(myCellMap);
+            //fixme
+            myView.setLayout(gameID,LayoutFactory.createLayout(f));
+            myView.setCellData(gameID, myCellMap);
+            //myView.setHighScore(myScores.getScore(currentGame));  //TODO: MARIUSZ display it please
             myPreviousCells = myCellMap;
+            myTables.put(gameID,table);
             //myView.setCellData(Map.copyOf(myTable.getCellData()));
         } catch (XMLException e) {
             reportError(e);
@@ -189,13 +229,14 @@ public class Controller extends Application {
     }
 
     private void newMove() {
-        myCurrentMove = getMove();
+        IMove myCurrentMove = getMove();
         try {
-            myTable.update(myCurrentMove);
+            //FIXME
+            //myTable.update(myCurrentMove);
         } catch (XMLException e) {
             reportError(e);
         }
-        myView.setCellData(Map.copyOf(myTable.getCellData()));
+        //myView.setCellData(Map.copyOf(myTable.getCellData()));
     }
 
     private IMove getMove() {

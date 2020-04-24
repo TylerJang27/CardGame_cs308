@@ -23,7 +23,6 @@ public class Menu {
   private static final String CHOICES = "ooga.resources.languages.games";
 
   private BorderPane myBorderPane;
-  private Stage myStage;
   private StringProperty myGameProperty;
   private Scene myScene;
 
@@ -40,14 +39,10 @@ public class Menu {
     setTopBorder(appName);
     setCenter(defaultLanguage);
     setBottomBorder(supportedLangs, supportedSkins, defaultTheme, defaultLanguage, themeLambda, languageLambda);
-
-    myScene = new Scene(myBorderPane,screenWidth,screenHeight);
-    myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+defaultTheme.toLowerCase()+"/mainmenu.css").toExternalForm()); //
-
   }
 
-  public Scene getScene() {
-    return myScene;
+  public Pane getScene() {
+    return myBorderPane;
   }
 
   public String getGame() {
@@ -75,8 +70,6 @@ public class Menu {
       public void changed(ObservableValue<? extends String> observable, String oldValue,
                           String newValue) {
         themeLambda.setValue(newValue);
-        myScene.getStylesheets().clear();
-        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue.toLowerCase()+"/mainmenu.css").toExternalForm());
       }
     });
 
