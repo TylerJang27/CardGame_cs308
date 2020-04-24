@@ -19,5 +19,14 @@ def generateLayout():
     print('<yval>'+str(16+12*r)+'</yval>')
     print('</cell>')
     
+def backerCards():
+    for i in range(53):
+        print("<card><name>D1</name><value>14</value><color>green</color><suit>c</suit><fixed>y</fixed></card>")
     
-generateLayout()
+def mainCells():
+    for i in range(52):
+        s = '<cell name="{:}"><fan>none</fan><rotation>0</rotation><init_cards>'
+        s += '<card>D1,U</card><card>Rd,D</card></init_cards></cell>'
+        print(s.format(i))
+    
+mainCells()
