@@ -170,8 +170,9 @@ public class Card implements ICard {
       return false;
     }
     Card c = (Card) other;
-    return name.equals(c.name) && faceup == c.faceup && orientation == c.orientation &&
-        attributes.equals(c.attributes);
+    return  name.equals(c.name) && faceup == c.faceup && orientation == c.orientation &&
+        getSuit().equals(c.getSuit()) && getValue().equals((c.getValue()));
+        //attributes.keySet().equals(c.attributes.keySet()); //fixme add in generic attributes
   }
 
   @Override

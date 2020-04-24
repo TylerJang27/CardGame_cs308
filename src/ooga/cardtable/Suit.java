@@ -65,7 +65,8 @@ public class Suit implements ISuit {
       return false;
     }
     Suit s = (Suit) other;
-    return name.equals(s.name) && Arrays.equals(color, ((Suit) other).color);
+    //return name.equals(s.name) && Arrays.equals(color, ((Suit) other).color);
+    return name.equals(s.name) && myColorName.equals(s.myColorName);
   }
 
   @Override

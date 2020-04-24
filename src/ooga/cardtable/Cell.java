@@ -354,6 +354,7 @@ public class Cell implements ICell {
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE) {
         if (!e.getValue().equals(c.getAllChildren().get(e.getKey()))) {
+          System.out.println(e);
           return false;
         }
       }
@@ -361,6 +362,7 @@ public class Cell implements ICell {
     for (Entry<IOffset, ICell> e : c.getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE) {
         if (!e.getValue().equals(getAllChildren().get(e.getKey()))) {
+          System.out.println("2 "+e);
           return false;
         }
       }
