@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import ooga.cardtable.ICell;
+import ooga.controller.Controller.GiveMove;
 import ooga.data.style.Layout;
 import ooga.view.View;
 
@@ -17,9 +18,7 @@ public class GameScreen {
     private Header myHeader;
     private BorderPane myBorderPane;
 
-    private Scene myScene;
-
-    public GameScreen(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, Button restartButton, String game, String scoreLabel, String language) {
+    public GameScreen(int gameID, GiveMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, Button restartButton, String game, String scoreLabel, String language) {
 
         // Current default is standard, can change
         String skinType = "classic";
@@ -31,7 +30,7 @@ public class GameScreen {
             }
         }
 
-        myDisplayTable = new DisplayTable(moveLambda, (Layout) layout, 650, skinType);
+        myDisplayTable = new DisplayTable(gameID,moveLambda, (Layout) layout, 650, skinType);
         myDashboard = new Dashboard(backButton, restartButton, scoreLabel, ResourceBundle.getBundle("ooga.resources.languages.messages."+language), game);
         myHeader = new Header();
 
@@ -40,8 +39,8 @@ public class GameScreen {
         myBorderPane.setCenter(myDisplayTable.getPane());
         myBorderPane.setBottom(myDashboard.getPane());
 
-        myScene = new Scene(myBorderPane,650,500);
-        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+theme.toLowerCase()+"/gametable.css").toExternalForm()); //
+        //myScene = new Scene(myBorderPane,650,500);
+        //myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+theme.toLowerCase()+"/gametable.css").toExternalForm()); //
 
     }
 
@@ -57,10 +56,6 @@ public class GameScreen {
 
     public void updateTable(Map<String, ICell> cellData) {
         myDisplayTable.updateTheseCells(cellData);
-    }
-
-    public Scene getScene() {
-        return myScene;
     }
 
     public DisplayTable getDisplayTable() {
