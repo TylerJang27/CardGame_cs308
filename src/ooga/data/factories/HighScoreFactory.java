@@ -32,8 +32,8 @@ public class HighScoreFactory implements Factory {
      * @return an IHighScore with all of its configuration information stored
      * @throws XMLException if the file is not considered valid due to its root element or file ending
      */
-    public static IHighScores createIHighScore(File dataFile) {
-        return createIHighScore(dataFile, dataFile.getPath());
+    public static IHighScores createScores(File dataFile) {
+        return createScores(dataFile, dataFile.getPath());
     }
 
     /**
@@ -44,7 +44,7 @@ public class HighScoreFactory implements Factory {
      * @return an IHighScore with all of its configuration information stored
      * @throws XMLException if the file is not considered valid due to its root element or file ending
      */
-    public static IHighScores createIHighScore(File dataFile, String destination) {
+    public static IHighScores createScores(File dataFile, String destination) {
         if (XMLValidator.validateXMLSchema(SCORE_XSD, dataFile.getPath())) {
             try {
                 Element root = XMLHelper.getRootAndCheck(dataFile, DATA_TYPE, INVALID_ERROR);
