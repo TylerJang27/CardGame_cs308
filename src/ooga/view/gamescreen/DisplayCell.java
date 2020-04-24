@@ -36,7 +36,7 @@ public class DisplayCell {
         myCell = cell;
 
         if(myCell.getDeck().peek() != null) {
-
+            System.out.println("an image!");
             if (myCell.getDeck().peek().isFaceUp()) {
                 try {
                     myImageView = new ImageView(new Image("/ooga/resources/decks/standard/" + skinType + "/" + myCell.getDeck().peek().getName() + ".png"));
