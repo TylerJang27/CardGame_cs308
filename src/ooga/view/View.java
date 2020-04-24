@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -58,6 +60,7 @@ public class View implements ExternalAPI {
     private GameScreen myGameScreen;
 
     private IStyle myStyle;
+    private int myGameIndex;
 
     private static final double DEFAULT_WIDTH = 650;
     private static final double DEFAULT_HEIGHT = 500;
@@ -69,6 +72,8 @@ public class View implements ExternalAPI {
      * @param style is updated to reflect user's language and theme preferences so they can be reloaded
      */
     public View(Controller.GiveMove giveMove, Runnable restart, IStyle style){
+        myGameIndex = 0;
+
         restarter = restart;
 
         ChangeValue getTheme = (String theme) -> {
@@ -92,12 +97,19 @@ public class View implements ExternalAPI {
             myLanguage = myStyle.getLanguage();
         }
         myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
-
+        TabPane tabPane = new TabPane();
+        Tab menuTab = new Tab("Menu",myMenu.getScene());
+        tabPane.getTabs().add(menuTab);
+        Scene myScene = new Scene(tabPane,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme.toLowerCase()+"/mainmenu.css").toExternalForm()); //
         myStage = new Stage();
-        myStage.setScene(myMenu.getScene());
+        myStage.setScene(myScene);
         myStage.getIcons().add(new Image(APPLICATION_ICON));
         myStage.setTitle(APPLICATION_NAME);
         myStage.show();
+    }
+    public int createGame(String gameName){
+
     }
 
     /**
@@ -106,15 +118,17 @@ public class View implements ExternalAPI {
      * @param layout
      */
     @Override
-    public void setLayout(ILayout layout) {
+    public void setLayout(int gameID, ILayout layout) {
 
         Button backButton = new Button();
         backButton.setGraphic(new ImageView(new Image("/ooga/resources/backarrow.png", 20, 20, false, false)));
+        /*
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 myStage.setScene(myMenu.getScene());
             }
         });
+         */
 
         ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
         Button restartButton = new Button(currentMessages.getString("restart"));
