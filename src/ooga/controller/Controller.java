@@ -45,6 +45,7 @@ public class Controller extends Application {
     private View myView;
     private IHighScores myScores;
     private File myScoresFile;
+    private File myRuleFile;
     private IGameState lastState;
     private IPhaseMachine myCurrentPhaseMachine;
     private Map<String, ICell> myCurrentCells;
@@ -102,7 +103,6 @@ public class Controller extends Application {
             } catch (XMLException e) {
                 reportError(e);
             }
-            //myView.setCellData(Map.copyOf(myTable.getCellData()));
         };
 
         IStyle myStyle = extractStyle();
@@ -194,31 +194,19 @@ public class Controller extends Application {
 
     //TODO: REPLACE WITH LOGIC REGARDING METHODS AT THE BOTTOM
     private void initializeHandlers(View v) {
-        //input is string gamename
         v.listenForGameChoice((a,b,gameName) -> startTable(gameName));
-        //() -> newMove());
-        /*v.setHandlers((String game) -> createEngine(game), //Consumer
-                (String rules) -> setHouseRules(rules), //Consumer
-                (int diff) -> setDifficulty(diff), //Consumer
-                (IMove move) -> processMove(move), //Function
-                (String cell) -> getCell(cell)); //Function/Supplier
-                */
-        /*View.setHandlers(Consumer engineStart, Consumer ruleSet,  ....);
-            myFunction = move;
-
-
-        MOUSE.setOnClickAndDrag(event -> move.execute(new Move(event.getX, event.getY)));
-            */
     }
 
     private void startTable(String gameName) {
-        // TODO: process gamename string to a file path
-        //System.out.println(gameName);
-        // TODO: Give game name somehow, figure out who's building the phase machine
-        String ruleFile = "data/" + gameName + "_rules.xml";
-        //ruleFile = "data/solitaire_rules_static_2.xml";  //almost win state
 
-        File myRuleFile = new File(ruleFile);
+        String ruleFile = "data/" + gameName + "_rules.xml";
+        try {
+            myRuleFile = new File(ruleFile);
+        } catch (Exception e) {
+            reportError(e);
+            myRuleFile = new File(DEFAULT_RULE_FILE);
+        }
+
         try {
             int gameID = myView.createGame(gameName);
             myGameNames.put(gameID,gameName);
