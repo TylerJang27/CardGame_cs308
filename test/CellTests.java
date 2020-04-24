@@ -1,10 +1,10 @@
-import ooga.cardtable.Card;
-import ooga.cardtable.Cell;
+
 import ooga.cardtable.ICell;
 import ooga.cardtable.Offset;
 import ooga.cardtable.Suit;
 import ooga.cardtable.Value;
 import org.junit.jupiter.api.*;
+import ooga.cardtable.*; //fixme this has to be a wildcard for some reason
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CellTests {
@@ -108,5 +108,28 @@ public class CellTests {
     System.out.println(b);
 
     assertEquals(a,b);
+  }
+
+  @Test
+  public void stringConversionTest() {
+    Cell a = new Cell("a");
+    Cell b = new Cell("b");
+    Suit s1 = new Suit("Hearts", new int[] {255,0,0});
+    Value v1 = new Value("Ace", 1);
+    Value v2 = new Value("Two", 2);
+    Card c1 = new Card(s1, v1);
+    Card c2 = new Card(s1, v2);
+
+    b.addCard(Offset.NONE, c1);
+    b.addCard(Offset.SOUTH, c2);
+    ICell temp = b;
+    for (int i = 0; i < 10; i++) {
+      temp = temp.getAllChildren().get(Offset.SOUTH);
+      temp.addCard(Offset.SOUTH, c2);
+    }
+    System.out.println(b.toStorageString());
+    a = (Cell) Cell.fromStorageString(b.toStorageString());
+
+    assertEquals(b,a);
   }
 }

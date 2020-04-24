@@ -62,6 +62,7 @@ public class Card implements ICard {
   }
 
   public static ICard fromStorageString(String input) {
+    if (input == null) return null;
     String[] info = input.split(Pattern.quote(sep));
     String nm = info[0];
     boolean fc = Boolean.parseBoolean(info[1]);

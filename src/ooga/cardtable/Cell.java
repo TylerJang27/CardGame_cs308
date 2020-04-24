@@ -511,17 +511,22 @@ public class Cell implements ICell {
     while (brace != null) {
       input = input.replaceFirst(Pattern.quote(brace), "");
       brace = brace.substring(1, brace.length() - 1);
-      Offset off = Offset.valueOf(brace.split(":")[0].toUpperCase());
-      ret.setCellAtOffset(off, fromStorageString(brace.split(":")[1]));
+      //System.out.println("brace: "+brace);
+      String offStr = brace.split(":")[0];
+      Offset off = Offset.valueOf(offStr.toUpperCase());
+      String nextBrace = brace.replaceFirst(Pattern.quote(offStr), "");
+      ret.setCellAtOffset(off, fromStorageString(nextBrace));
       brace = getFirstBraces(input);
     }
     return ret;
   }
 
   private static String getFirstBraces(String input) {
+    //System.out.println("brace input: "+input);
     int start = 0;
     while (input.charAt(start) != '{') {
       if (++start >= input.length()) {
+        //System.out.println("bad start");
         return null;
       }
     }
@@ -529,6 +534,7 @@ public class Cell implements ICell {
     int counter = 1;
     while (counter > 0) {
       if (++end >= input.length()) {
+        //System.out.println("bad end");
         return null;
       }
       char c = input.charAt(end);
@@ -538,7 +544,9 @@ public class Cell implements ICell {
       if (c == '}') {
         counter--;
       }
+      //System.out.println("counter: "+counter+" "+c);
     }
+    //System.out.println("braces: "+input.substring(start, end+1));
     return input.substring(start, end+1);
   }
 

@@ -39,6 +39,7 @@ public class Deck implements IDeck {
   }
 
   public static IDeck fromStorageString(String input) {
+    if (input == null) return null;
     String nm = input.split("\\[")[0];
     input = input.replaceFirst(Pattern.quote(nm), "");
     input = input.substring(1, input.length()-1);
