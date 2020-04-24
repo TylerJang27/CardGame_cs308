@@ -9,13 +9,21 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class tests the IStyle interface as it is used with StyleData, StyleFactory, and StyleWriter.
+ * This class ensures that appropriate exceptions are thrown, that equivalent IStyle implementations are equal, and that writing and reading from XML files produce equivalent results.
+ *
+ * @author Tyler Jang
+ */
 public class StyleTest {
 
     private static final String TEST_DIRECTORY = "test/ooga/data/factories/style/";
 
+    /**
+     * Tests the createStyle() method in StyleFactory to ensure that IStyle implementations are created correctly.
+     */
     @Test
     public void testCreateStyle() {
         //original test
@@ -59,6 +67,9 @@ public class StyleTest {
         assertThrows(XMLException.class, () -> actualStyle5.run());
     }
 
+    /**
+     * Tests that the accessors of IStyle produce the correct outputs after writing to an XML file.
+     */
     @Test
     public void testStyleAccessor() {
         Map<String, String> wordSettings1 = Map.of("language", "english", "cards", "card_path", "table", "CS308");
@@ -108,6 +119,9 @@ public class StyleTest {
         assertEquals(actualStyle2b.getSound(), true);
     }
 
+    /**
+     * Tests that StyleWriter works correctly and produces the correct XML that can then be read to produce an equivalent result.
+     */
     @Test
     public void testStyleWriter() {
         Map<String, String> wordSettings1 = Map.of("language", "english", "cards", "card_path", "table", "CS308");
@@ -130,5 +144,8 @@ public class StyleTest {
         assertEquals(expectedStyle1, writtenStyle1);
         assertEquals(expectedStyle4, writtenStyle2);
         assertEquals(actualStyle6, writtenStyle3);
+        assertNotEquals(writtenStyle1, writtenStyle2);
+        assertNotEquals(writtenStyle1, writtenStyle3);
+        assertEquals(writtenStyle2, writtenStyle3);
     }
 }
