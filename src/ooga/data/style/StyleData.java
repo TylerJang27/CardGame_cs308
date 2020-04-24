@@ -185,7 +185,7 @@ public class StyleData implements IStyle {
                     getDarkMode() == styleData.getDarkMode() &&
                     getSound() == styleData.getSound() &&
                     getCardSkinPath().equals(styleData.getCardSkinPath()) &&
-                    getLanguage().equals(styleData.getLanguage()) &&
+                    getLanguage().equalsIgnoreCase(styleData.getLanguage()) &&
                     getTheme().equals(styleData.getTheme());
         }
         return false;
