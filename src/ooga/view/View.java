@@ -90,7 +90,8 @@ public class View implements ExternalAPI {
         ChangeValue getTheme = (String theme) -> {
             myTheme = theme;
             myStyle.setTheme(theme);
-            myScene.getStylesheets().add("")
+            myScene.getStylesheets().clear();
+            myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+theme.toLowerCase()+"/mainmenu.css").toExternalForm());
         };
 
         ChangeValue getLanguage = (String language) -> {

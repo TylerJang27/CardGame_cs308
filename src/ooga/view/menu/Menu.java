@@ -70,8 +70,6 @@ public class Menu {
       public void changed(ObservableValue<? extends String> observable, String oldValue,
                           String newValue) {
         themeLambda.setValue(newValue);
-        myScene.getStylesheets().clear();
-        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue.toLowerCase()+"/mainmenu.css").toExternalForm());
       }
     });
 
