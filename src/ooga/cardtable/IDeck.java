@@ -1,5 +1,7 @@
 package ooga.cardtable;
 
+import java.util.function.Function;
+
 public interface IDeck {
 
   void shuffle();
@@ -37,4 +39,6 @@ public interface IDeck {
   boolean isFixed(); //TODO: ADD TO API CHANGES
 
   String toStorageString();
+
+    IDeck copy(Function<ICard, Boolean> cardFunction);
 }

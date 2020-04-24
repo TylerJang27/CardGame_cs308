@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 public class Deck implements IDeck {
@@ -157,9 +158,21 @@ public class Deck implements IDeck {
 
   @Override
   public IDeck copy() {
-    List<ICard> c = new ArrayList<>();
+    return this.copy((ICard c) -> true);
+    /*List<ICard> c = new ArrayList<>();
     for (ICard card: cards) {
       c.add(card.copy());
+    }
+    return new Deck(myName, c);*/
+  }
+
+  @Override
+  public IDeck copy(Function<ICard, Boolean> cardFunction) {
+    List<ICard> c = new ArrayList<>();
+    for (ICard card: cards) {
+      if (cardFunction.apply(card)) {
+        c.add(card.copy());
+      }
     }
     return new Deck(myName, c);
   }
