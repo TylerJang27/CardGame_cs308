@@ -77,5 +77,25 @@ class SaveConfigurationTest {
         assertEquals(game, loaded.getGameName());
         assertEquals(score, loaded.getScore());
         assertEquals(rulePath, loaded.getRulePath());
+
+        Map<String, ICell> cellMap2 = Map.of("a", cellMap.get("a").copy());
+        cellMap2.get("a").addCell(Offset.NONE, cellMap.get("b").copy());
+        cellMap2.get("a").addCell(Offset.EAST, cellMap.get("c").copy());
+        cellMap2.get("a").addCell(Offset.SOUTH, cellMap.get("d").copy());
+
+        Map<String, String> cellMapBuilder2 = new HashMap<>();
+        for (Map.Entry<String, ICell> c: cellMap2.entrySet()) {
+            cellMapBuilder2.put(c.getKey(), c.getValue().toStorageString());
+        }
+        ISaveConfiguration saveConfiguration2 = new SaveConfiguration(game.toUpperCase(), rulePath, phaseName.toUpperCase(), score+10.0, cellMapBuilder2);
+
+        SaveConfigurationWriter.writeSave(TEST_DIRECTORY + "save2.xml", saveConfiguration2);
+        ISaveConfiguration loaded2 = SaveConfigurationFactory.createSave(new File(TEST_DIRECTORY + "save2.xml"));
+
+        assertEquals(cellMap2, loaded2.getCellMap());
+        assertEquals(phaseName.toUpperCase(), loaded2.getCurrentPhase());
+        assertEquals(game.toUpperCase(), loaded2.getGameName());
+        assertEquals(score+10.0, loaded2.getScore());
+        assertEquals(rulePath, loaded2.getRulePath());
     }
 }
