@@ -164,7 +164,7 @@ public class CellTests {
     b.addCard(Offset.NONE, c1);
     b.addCard(Offset.SOUTH, c2);
     ICell temp = b;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 20; i++) {
       temp = temp.getAllChildren().get(Offset.SOUTH);
       temp.addCard(Offset.SOUTH, c2);
     }
