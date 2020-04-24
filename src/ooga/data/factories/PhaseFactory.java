@@ -46,7 +46,6 @@ public class PhaseFactory implements Factory {
     protected static final String NUMBER_CARDS = "NumberCards";
     protected static final String IS_FACEUP = "IsFaceup";
     protected static final String DONOR = "Donor";
-    protected static final String ALL_STAR = "*";
     protected static final String ACTION = "Action";
     protected static final String RECEIVER_DESTINATION = "ReceiverDestination";
     protected static final String DESTINATION = "Destination";
