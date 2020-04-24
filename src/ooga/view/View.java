@@ -153,7 +153,7 @@ public class View implements ExternalAPI {
         GameScreen gameScreen = new GameScreen(gameID,getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, restartButton, myMenu.getGame(), currentMessages.getString("score"), myLanguage);
         myGameIdToGame.put(gameID,gameScreen);
 
-        Tab newTab = new Tab("game",gameScreen.getDisplayTable().getPane());
+        Tab newTab = new Tab("game",gameScreen.getNode());
         myTabPane.getTabs().add(newTab);
         //myStage.minHeightProperty().bind(Bindings.multiply(myGameScreen.getDisplayTable().getPane().widthProperty(),layout.getScreenRatio()));
         //myStage.minWidthProperty().bind(Bindings.divide(myGameScreen.getDisplayTable().getPane().heightProperty(),layout.getScreenRatio()));

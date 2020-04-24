@@ -1,5 +1,6 @@
 package ooga.view.gamescreen;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -56,6 +57,10 @@ public class GameScreen {
 
     public void updateTable(Map<String, ICell> cellData) {
         myDisplayTable.updateTheseCells(cellData);
+    }
+
+    public Node getNode(){
+        return myBorderPane;
     }
 
     public DisplayTable getDisplayTable() {
