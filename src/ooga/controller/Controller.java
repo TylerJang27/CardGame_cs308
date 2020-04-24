@@ -96,7 +96,7 @@ public class Controller extends Application {
                 }
                 Double score = myTable.getCurrentPlayer().getScore();
                 myView.setScores(Map.of(1, score));
-                updateHighScores(currentGame, scores);
+                updateHighScores(currentGame, score);
                 myCurrentCells = myTable.getCellData();
                 for (String i : myCurrentCells.keySet()) {
                     if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
