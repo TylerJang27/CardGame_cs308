@@ -255,7 +255,7 @@
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>1</num_cards>
-                            <offset>east</offset>
+                            <offset>south</offset>
                             <flip_up>*</flip_up>
                         </mover_dest>
                         <next_phase phase="reset1">10.0</next_phase>
@@ -279,7 +279,7 @@
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>1</num_cards>
-                            <offset>east</offset>
+                            <offset>south</offset>
                             <flip_up>*</flip_up>
                         </mover_dest>
                         <next_phase phase="reset1">-10.0</next_phase>
@@ -303,7 +303,7 @@
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>1</num_cards>
-                            <offset>east</offset>
+                            <offset>south</offset>
                             <flip_up>*</flip_up>
                         </mover_dest>
                         <next_phase phase="reset1">10.0</next_phase>
@@ -327,7 +327,7 @@
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>1</num_cards>
-                            <offset>east</offset>
+                            <offset>south</offset>
                             <flip_up>*</flip_up>
                         </mover_dest>
                         <next_phase phase="reset1">0.0</next_phase>
