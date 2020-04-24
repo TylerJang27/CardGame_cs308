@@ -45,7 +45,6 @@ public class HighScoreWriter implements Writer {
      */
     private static void addScores(Document document, Element root, IHighScores scores) {
         for (String s: scores.getSavedGames()) {
-            System.out.println("game: " + s + " score: " + scores.getScore(s));
         }
         for (String s: scores.getSavedGames()) {
             try {

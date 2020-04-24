@@ -70,6 +70,7 @@ public class PhaseFactory implements Factory {
     protected static final String NO = "No";
     protected static final String LESS_THAN = "Less";
     protected static final String GREATER_THAN = "Greater";
+    protected static final String RANDOM = "Random";
 
     protected static final String TOP = "Top";
     protected static final String BOTTOM = "Bottom";

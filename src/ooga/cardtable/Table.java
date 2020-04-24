@@ -40,6 +40,7 @@ public class Table implements ITable {
   @Override
   public void restartGame() {
     machine.restartGame();
+    currentPlayer.setScore(0.0);
   }
 
   @Override
