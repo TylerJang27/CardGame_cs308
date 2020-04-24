@@ -4,13 +4,12 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import ooga.cardtable.*;
 import ooga.data.XMLException;
-import ooga.data.factories.HighScoreFactory;
-import ooga.data.factories.PhaseMachineFactory;
-import ooga.data.factories.LayoutFactory;
-import ooga.data.factories.StyleFactory;
+import ooga.data.factories.*;
 import ooga.data.highscore.IHighScores;
 import ooga.data.rules.IPhaseMachine;
 
+import ooga.data.rules.PhaseMachine;
+import ooga.data.saveconfiguration.ISaveConfiguration;
 import ooga.data.style.IStyle;
 import ooga.view.View;
 
@@ -173,6 +172,28 @@ public class Controller extends Application {
                     myChangedCells.put(c.getName(), c);
                 }
             }
+        }
+    }
+
+    private void saveGame(String destination) { //TODO: PROCESS ON FRONTEND @MARIUSZ
+        ISaveConfiguration saveData = myTable.getSaveData(currentGame, myRuleFile.getPath());
+        saveData.writeConfiguration(destination);
+    }
+
+    private void loadGame(String loadFile) { //TODO: PROCESS ON FRONTEND @MARIUSZ
+        try {
+            ISaveConfiguration load = SaveConfigurationFactory.createSave(new File(loadFile));
+            IPhaseMachine pm = PhaseMachineFactory.createPhaseMachine(new File(load.getRulePath()));
+            pm.setCellData(load.getCellMap());
+            pm.setPhase(load.getCurrentPhase());
+            ITable table = new Table(pm);
+            table.getCurrentPlayer().setScore(load.getScore());
+            currentGame = load.getGameName();
+            myCurrentPhaseMachine = pm;
+            myTable = table;
+            //TODO: SHOULD THIS BE LOADED INTO THE VIEW IN TERMS OF THE CELL DATA AND SUCH?
+        } catch (XMLException e) {
+            reportError(e);
         }
     }
 

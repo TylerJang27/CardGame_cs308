@@ -113,4 +113,18 @@ public interface IPhaseMachine {
      * @return the settings for the game
      */
     ISettings getSettings(); //TODO: ADD TO API CHANGES
+
+    /**
+     * Sets the data in the cells from a load.
+     *
+     * @param cellMap the Map of String ICell names to ICells to load
+     */
+    void setCellData(Map<String, ICell> cellMap); //TODO: ADD TO API CHANGES
+
+    /**
+     * Sets the phase from a load.
+     *
+     * @param phase the name of the phase to load in
+     */
+    void setPhase(String phase); //TODO: ADD TO API CHANGES
 }

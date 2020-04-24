@@ -3,6 +3,7 @@ package ooga.cardtable;
 import java.util.List;
 import java.util.Map;
 import ooga.data.rules.IPhaseMachine;
+import ooga.data.saveconfiguration.ISaveConfiguration;
 
 public interface ITable {
 
@@ -25,5 +26,10 @@ public interface ITable {
   IGameState getGameState();
 
   Map<String, ICell> getCellData();
+
+  ISaveConfiguration getSaveData(String gameName, String rulePath);
+  //TODO: ADD TO API CHANGES
+
+    void loadFromSaveData(ISaveConfiguration saveData);
 
 }
