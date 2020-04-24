@@ -10,12 +10,13 @@ import ooga.data.style.IStyle;
 import java.util.Map;
 
 public interface ExternalAPI {
+    public int createGame(String gameName);
 
-    /**
-     * report an error where the key is the key to a error message in a properties file and the formats are the error-specific information
-     * @param key
-     * @param formats
-     */
+        /**
+         * report an error where the key is the key to a error message in a properties file and the formats are the error-specific information
+         * @param key
+         * @param formats
+         */
     void reportError(String key, List<String> formats); //TODO: ADD TO API CHANGES
     /**
      * setCellData() is called regularly by the Controller to pass the correct state of the board
@@ -84,6 +85,6 @@ public interface ExternalAPI {
     /**
      * Sets the locations of all cell types and the framework for creating new cell locations if applicable.
      */
-    void setLayout(ILayout layout);
+    void setLayout(int gameID, ILayout layout);
 
 }
