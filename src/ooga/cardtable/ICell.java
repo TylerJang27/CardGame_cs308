@@ -64,4 +64,6 @@ public interface ICell extends Cellular {
 
   boolean isFixed(); //TODO: ADD TO API CHANGES
 
+  String toStorageString();
+
 }

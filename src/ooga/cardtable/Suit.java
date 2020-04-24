@@ -1,6 +1,7 @@
 package ooga.cardtable;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class Suit implements ISuit {
 
@@ -8,6 +9,7 @@ public class Suit implements ISuit {
   private String name;
   private IColor myColor;
   private String myColorName;
+  private static String sep = ";;";
 
   //TODO: CAN WE CHANGE THIS TO AN ICOLOR
   public Suit(String nm, IColor color) {
@@ -38,6 +40,18 @@ public class Suit implements ISuit {
   @Override
   public String getType() {
     return "suit";
+  }
+
+  @Override
+  public String toStorageString() { //fixme switch to icolor
+    return name+sep+myColorName;
+  }
+
+  public static ISuit fromStorageString(String input) {
+    String[] info = input.split(Pattern.quote(sep));
+    String nm = info[0];
+    String cnm = info[1];
+    return new Suit(nm, new Color(cnm));
   }
 
   @Override

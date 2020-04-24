@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 public class Card implements ICard {
+
+  private static String sep = "~~";
 
   private String name;
   private boolean faceup;
@@ -49,6 +52,30 @@ public class Card implements ICard {
   @Override
   public boolean isFixed() {
     return isFixed;
+  }
+
+  @Override
+  public String toStorageString() {
+    String ret = name+sep+faceup+sep+orientation+sep+isFixed+sep;
+    ret += getSuit().toStorageString()+sep+getValue().toStorageString();
+    return ret;
+  }
+
+  public static ICard fromStorageString(String input) {
+    String[] info = input.split(Pattern.quote(sep));
+    String nm = info[0];
+    boolean fc = Boolean.parseBoolean(info[1]);
+    double ori = Double.parseDouble(info[2]);
+    boolean fx = Boolean.parseBoolean(info[3]);
+    ISuit s = Suit.fromStorageString(info[4]);
+    IValue v = Value.fromStorageString(info[5]);
+    ICard ret = new Card(nm, s, v);
+    ret.setFixed(fx);
+    if (fc) {
+      ret.flip();
+    }
+    ret.rotate(ori);
+    return ret;
   }
 
   private void setAttributes(Map<IAttribute, Boolean> attr) {
