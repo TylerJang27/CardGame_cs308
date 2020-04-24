@@ -35,4 +35,6 @@ public interface IDeck {
   IDeck copy();
 
   boolean isFixed(); //TODO: ADD TO API CHANGES
+
+  String toStorageString();
 }

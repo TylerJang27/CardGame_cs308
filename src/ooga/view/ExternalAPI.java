@@ -1,11 +1,10 @@
 package ooga.view;
 
 import java.util.List;
-import ooga.cardtable.Cell;
+
 import ooga.cardtable.ICell;
 import ooga.cardtable.IMove;
-import ooga.data.rules.ILayout;
-import ooga.data.style.IStyle;
+import ooga.data.style.ILayout;
 
 import java.util.Map;
 

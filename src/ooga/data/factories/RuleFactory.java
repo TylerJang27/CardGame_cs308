@@ -36,6 +36,8 @@ public class RuleFactory implements Factory {
     private static final String NOT = PhaseFactory.NOT;
     private static final String SAME = PhaseFactory.SAME;
     private static final String YES = PhaseFactory.YES;
+    private static final String GREATER_THAN = PhaseFactory.GREATER_THAN;
+    private static final String LESS_THAN = PhaseFactory.LESS_THAN;
 
     private static final List<String> TRUE_CHECKS = MasterRuleFactory.TRUE_CHECKS;
 
@@ -139,15 +141,31 @@ public class RuleFactory implements Factory {
         Function<IMove, Boolean> valueChecker;
         String valueText = XMLHelper.getTextValue(e, RESOURCES.getString(VALUE));
         if (!TRUE_CHECKS.contains(valueText)) {
-            try {
-                Integer value = Integer.parseInt(valueText);
+            if (valueText.equalsIgnoreCase(RESOURCES.getString(LESS_THAN))) {
                 valueChecker = (IMove move) -> {
                     int currNumber = currCell.apply(move).getDeck().peek().getValue().getNumber();
                     int recNumber = recipientCell.apply(move).getDeck().peek().getValue().getNumber();
-                    return currNumber - value == recNumber;
+                    return currNumber < recNumber;
                 };
                 conditions.add(valueChecker);
-            } catch (NumberFormatException ex) {
+            } else if (valueText.equalsIgnoreCase(RESOURCES.getString(GREATER_THAN))) {
+                valueChecker = (IMove move) -> {
+                    int currNumber = currCell.apply(move).getDeck().peek().getValue().getNumber();
+                    int recNumber = recipientCell.apply(move).getDeck().peek().getValue().getNumber();
+                    return currNumber > recNumber;
+                };
+                conditions.add(valueChecker);
+            } else {
+                try {
+                    Integer value = Integer.parseInt(valueText);
+                    valueChecker = (IMove move) -> {
+                        int currNumber = currCell.apply(move).getDeck().peek().getValue().getNumber();
+                        int recNumber = recipientCell.apply(move).getDeck().peek().getValue().getNumber();
+                        return currNumber - value == recNumber;
+                    };
+                    conditions.add(valueChecker);
+                } catch (NumberFormatException ex) {
+                }
             }
         }
     }

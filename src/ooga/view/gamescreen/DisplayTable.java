@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 import ooga.cardtable.*;
-import ooga.data.rules.Layout;
+import ooga.data.style.Layout;
 import ooga.data.style.ICoordinate;
 import ooga.view.View;
 

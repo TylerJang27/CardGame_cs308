@@ -1,4 +1,4 @@
-package ooga.data.rules;
+package ooga.data.style;
 
 import ooga.data.style.ICoordinate;
 
