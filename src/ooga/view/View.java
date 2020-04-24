@@ -61,6 +61,7 @@ public class View implements ExternalAPI {
 
     private IStyle myStyle;
     private int myGameIndex;
+    private TabPane myTabPane;
 
     private static final double DEFAULT_WIDTH = 650;
     private static final double DEFAULT_HEIGHT = 500;
@@ -97,10 +98,10 @@ public class View implements ExternalAPI {
             myLanguage = myStyle.getLanguage();
         }
         myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
-        TabPane tabPane = new TabPane();
+        myTabPane = new TabPane();
         Tab menuTab = new Tab("Menu",myMenu.getScene());
-        tabPane.getTabs().add(menuTab);
-        Scene myScene = new Scene(tabPane,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+        myTabPane.getTabs().add(menuTab);
+        Scene myScene = new Scene(myTabPane,DEFAULT_WIDTH,DEFAULT_HEIGHT);
         myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme.toLowerCase()+"/mainmenu.css").toExternalForm()); //
         myStage = new Stage();
         myStage.setScene(myScene);
@@ -108,8 +109,9 @@ public class View implements ExternalAPI {
         myStage.setTitle(APPLICATION_NAME);
         myStage.show();
     }
-    public int createGame(String gameName){
 
+    public int createGame(String gameName){
+        return 0;
     }
 
     /**
