@@ -8,7 +8,6 @@ import ooga.data.factories.*;
 import ooga.data.highscore.IHighScores;
 import ooga.data.rules.IPhaseMachine;
 
-import ooga.data.rules.PhaseMachine;
 import ooga.data.saveconfiguration.ISaveConfiguration;
 import ooga.data.style.IStyle;
 import ooga.view.View;
@@ -24,9 +23,6 @@ import java.util.Map;
  * @author Andrew Krier, Tyler Jang
  */
 public class Controller extends Application {
-
-    // TODO: Put the file here
-
 
     private static final String DEFAULT_STYLE_FILE = "data/default_style.xml";
     private static final String BACKUP_STYLE_FILE = "data/default_style_orig.xml";
@@ -55,7 +51,6 @@ public class Controller extends Application {
     private File myStyleFile;
     private File myScoresFile;
     private File myRuleFile;
-    private File myLayoutFile;
     private IGameState lastState;
     private IPhaseMachine myCurrentPhaseMachine;
     private Map<String, ICell> myCellMap;
@@ -153,6 +148,8 @@ public class Controller extends Application {
     }
 
     private void reportError(Exception e) {
+        e.printStackTrace();
+
         String[] messages = e.getMessage().split(",");
         List<String> tags = new ArrayList<>();
         for (int k = 1; k < messages.length; k ++) {

@@ -61,11 +61,11 @@ public class Phase implements IPhase {
      * @return the relevant IMasterRule or null
      */
     private IMasterRule identifyMove(IMove move) {
-        //System.out.println("Phase: " + getMyName());
+        System.out.println("Phase: " + getMyName());
         for (IMasterRule r : myRules) {
-            //System.out.println("Checking Rule:");
+            System.out.println("Checking Rule:");
             if (r.checkValidMove(move)) {
-                //System.out.println("Rule is true");
+                System.out.println("Rule is true");
                 return r;
             }
         }

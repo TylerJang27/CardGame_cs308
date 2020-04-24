@@ -56,7 +56,6 @@ public class HighScoreFactory implements Factory {
                     Node scoreNode = scoreNodes.item(k);
                     try {
                         scoreMap.put(scoreNode.getNodeName(), Double.parseDouble(scoreNode.getTextContent()));
-                        System.out.println(scoreNode.getNodeName() + ", " + Double.parseDouble(scoreNode.getTextContent()));
                     } catch (NumberFormatException | DOMException e) {
                         scoreMap.put(scoreNode.getNodeName(), 0.0);
                     }

@@ -34,6 +34,7 @@ public class ActionFactory implements Factory {
     private static final String OFFSET = PhaseFactory.OFFSET;
     private static final String FLIP = PhaseFactory.FLIP;
     private static final String YES = PhaseFactory.YES;
+    private static final String RANDOM = PhaseFactory.RANDOM;
 
     private static final String M = PhaseFactory.M;
     private static final String D = PhaseFactory.D;
@@ -73,8 +74,8 @@ public class ActionFactory implements Factory {
                     IOffset off = extractOffsetBehavior(e, updatedCurrCell);
                     extractRotationBehavior(e, updatedCurrCell);
                     extractFlipBehavior(e, updatedCurrCell);
-                    extractShuffleBehavior(e, updatedCurrCell);
                     applyDestinationBehavior(recipientCell, updatedCurrCell, move, destination, off);
+                    extractShuffleBehavior(e, updatedCurrCell);
                 }
             };
             actions.add(cardAction);
@@ -102,6 +103,8 @@ public class ActionFactory implements Factory {
             return extractTopFromCells(currCell, move);
         } else if (numCards.equalsIgnoreCase(RESOURCES.getString(BOTTOM))) {
             return extractBottomFromCells(currCell, move);
+        } else if (numCards.equalsIgnoreCase(RESOURCES.getString(RANDOM))) {
+            return extractRandomFromCells(currCell, move);
         } else {
             return extractQuantityfromCell(currCell, move, numCards);
         }
@@ -158,9 +161,10 @@ public class ActionFactory implements Factory {
      */
     private static ICell extractTopFromCells(Function<IMove, ICell> currCell, IMove move) {
         ICell cellToMove;
-        cellToMove = currCell.apply(move).copy((ICell c) -> {
+        cellToMove = currCell.apply(move).extract((ICell c) -> {
             if (!c.getDeck().peek().isFixed()) {
-                return c.getDeck().getNextCard();
+                ICard card = c.getDeck().getNextCard();
+                return card;
             }
             return null;
         });
@@ -179,9 +183,31 @@ public class ActionFactory implements Factory {
      */
     private static ICell extractBottomFromCells(Function<IMove, ICell> currCell, IMove move) {
         ICell cellToMove;
-        cellToMove = currCell.apply(move).copy((ICell c) -> {
+        cellToMove = currCell.apply(move).extract((ICell c) -> {
             if (!c.getDeck().peek().isFixed()) {
                 return (c.getDeck().getBottomCard());
+            }
+            return null;
+        });
+        if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
+            currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
+        }
+        return cellToMove;
+    }
+
+    /**
+     * Extracts the ICell to be moved based on a random condition.
+     *
+     * @param currCell a Function to retrieve the current cell
+     * @param move     the IMove from which to extract behavior
+     * @return the ICell representing all cells to be moved
+     */
+    private static ICell extractRandomFromCells(Function<IMove, ICell> currCell, IMove move) {
+        ICell cellToMove;
+        cellToMove = currCell.apply(move).extract((ICell c) -> {
+            if (!c.getDeck().peek().isFixed()) {
+                ICard card = c.getDeck().getRandomCard();
+                return card;
             }
             return null;
         });
@@ -229,7 +255,10 @@ public class ActionFactory implements Factory {
             }
         } else if (shuffle.equalsIgnoreCase(RESOURCES.getString(YES))) {
             for (Map.Entry<IOffset, ICell> entry : currCell.getAllChildren().entrySet()) {
+                System.out.println("shuffling");
+                System.out.println(entry.getValue().getDeck().peek());
                 entry.getValue().getDeck().shuffle();
+                System.out.println(entry.getValue().getDeck().peek());
             }
         }
     }
@@ -288,6 +317,15 @@ public class ActionFactory implements Factory {
             }
         } else if (flip.equals(RESOURCES.getString(YES))) {
             for (ICell c : currCell.getAllCells()) {
+                for (int k = 0; k < c.getDeck().size(); k++) {
+                    ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
+                    if (!cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
+                        cardToFlip.flip();
+                    }
+                }
+            }
+        } else if (flip.equals(RESOURCES.getString(ALL))) {
+            for (ICell c : currCell.findHead().getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
                     ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
                     if (!cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
