@@ -6,4 +6,6 @@ public interface IAttribute {
 
   String getType();
 
+  String toStorageString();
+
 }

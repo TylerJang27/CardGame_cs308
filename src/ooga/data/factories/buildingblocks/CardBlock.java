@@ -119,4 +119,9 @@ public class CardBlock implements ICardBlock {
     public boolean isFixed() {
         return myCard.isFixed();
     }
+
+    @Override
+    public String toStorageString() { //fixme added by maverick to make compile
+        return getCard().toStorageString();
+    }
 }

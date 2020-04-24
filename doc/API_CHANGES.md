@@ -26,3 +26,6 @@ better serve the front end's needs for displaying the full game from the layout 
 4/15/2020:
 * MC - Added the copy method to ICell, IDeck, ICard
 * MC - Added the findNamedCell and followNamespace methods to ICell
+
+4/23/2020: 
+* MC - Added toStorageString method to ICell, IDeck, ICard, IAttribute
