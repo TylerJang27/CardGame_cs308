@@ -96,7 +96,7 @@ public class ActionFactory implements Factory {
     private static ICell extractCellsToMove(Element e, Function<IMove, ICell> currCell, IMove move) {
         String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).toUpperCase();
         if (numCards.equals(RESOURCES.getString(ALL))) {
-            return currCell.apply(move);
+            return currCell.apply(move).copy((ICard c)->!c.isFixed());
         } else if (Offset.validOffsets.contains(numCards)) {
             return extractOffsetCells(currCell, move, numCards);
         } else if (numCards.equalsIgnoreCase(RESOURCES.getString(TOP))) {

@@ -401,7 +401,21 @@ public class Cell implements ICell {
 
   @Override
   public ICell copy() {
-    IDeck d = getDeck().copy();
+    return this.copy((ICard c)->true);
+    /*IDeck d = getDeck().copy();
+    ICell ret = new Cell(name, d);
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        ret.setCellAtOffset(e.getKey(), e.getValue().copy());
+      }
+    }
+    return ret;*/
+  }
+
+
+  @Override
+  public ICell copy(Function<ICard, Boolean> cardFunction) {
+    IDeck d = getDeck().copy(cardFunction);
     ICell ret = new Cell(name, d);
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE) {
