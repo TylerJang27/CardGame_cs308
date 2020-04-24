@@ -335,28 +335,6 @@
                 </rule>
             </rules>
         </phase>
-        <phase name="flip">
-            <phase_type>manual</phase_type>
-            <valid_donors>
-                <category>center</category>
-            </valid_donors>
-            <rules>
-                <rule category="center">
-                    <validation>
-                        <receiver>
-                            <num_cards>3</num_cards>
-                            <is_faceup>n</is_faceup>
-                        </receiver>
-                    </validation>
-                    <action>
-                        <receiver_dest>
-                            <flip_up>y</flip_up>
-                        </receiver_dest>
-                        <next_phase phase="reset1"></next_phase>
-                    </action>
-                </rule>
-            </rules>
-        </phase>
         <phase name="reset1">
             <phase_type>manual</phase_type>
             <valid_donors>
