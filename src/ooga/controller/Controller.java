@@ -146,7 +146,7 @@ public class Controller extends Application {
     }
 
     private void updateHighScores(String currentGame, Double score) {
-        if (myScores.getScore(currentGame) < score) {
+        if (myScores.getScore(currentGame) == Double.MIN_VALUE || myScores.getScore(currentGame) < score) {
             myScores.setScore(currentGame, score);
             //myView.setHighScore(myScores.getScore(currentGame)); //TODO: MARIUSZ display it please
         }
