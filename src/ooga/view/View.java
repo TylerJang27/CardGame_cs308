@@ -58,10 +58,11 @@ public class View implements ExternalAPI {
     private String myLanguage = "English";
 
     private Stage myStage;
+    private Scene myScene;
     private Menu myMenu;
 
     private IStyle myStyle;
-    private int myGameIndex;
+    private int myGameIndex;;
     private TabPane myTabPane;
     private Map<Integer, GameScreen> myGameIdToGame;
 
@@ -89,6 +90,7 @@ public class View implements ExternalAPI {
         ChangeValue getTheme = (String theme) -> {
             myTheme = theme;
             myStyle.setTheme(theme);
+            myScene.getStylesheets().add("")
         };
 
         ChangeValue getLanguage = (String language) -> {
@@ -110,7 +112,7 @@ public class View implements ExternalAPI {
         myTabPane = new TabPane();
         Tab menuTab = new Tab("Menu",myMenu.getScene());
         myTabPane.getTabs().add(menuTab);
-        Scene myScene = new Scene(myTabPane,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+        myScene = new Scene(myTabPane,DEFAULT_WIDTH,DEFAULT_HEIGHT);
         myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme.toLowerCase()+"/mainmenu.css").toExternalForm()); //
         myStage = new Stage();
         myStage.setScene(myScene);

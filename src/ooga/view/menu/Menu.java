@@ -39,9 +39,6 @@ public class Menu {
     setTopBorder(appName);
     setCenter(defaultLanguage);
     setBottomBorder(supportedLangs, supportedSkins, defaultTheme, defaultLanguage, themeLambda, languageLambda);
-
-    //myScene = new Scene(myBorderPane,screenWidth,screenHeight);
-
   }
 
   public Pane getScene() {
