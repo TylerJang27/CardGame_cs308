@@ -779,6 +779,7 @@
       <phase_type>manual</phase_type>
       <valid_donors>
         <category>all</category>
+        <category>done</category>
       </valid_donors>
       <rules>
         <rule category="done">
@@ -821,6 +822,58 @@
               <shuffle>n</shuffle>
               <rotation>0</rotation>
               <offset>east</offset>
+              <flip_up>y</flip_up>
+            </mover_dest>
+            <donor_dest>
+              <destination>d</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+            </donor_dest>
+            <next_phase phase="check"></next_phase>
+          </action>
+        </rule>
+        <rule category="all">
+          <validation>
+            <receiver>
+              <value>*</value>
+              <color>green</color>
+              <suit>*</suit>
+              <num_cards>*</num_cards>
+              <is_faceup>*</is_faceup>
+              <name>*</name>
+            </receiver>
+            <mover>
+              <color>*</color>
+              <suit>*</suit>
+              <num_cards>1</num_cards>
+              <is_faceup>*</is_faceup>
+              <name>*</name>
+            </mover>
+            <donor>
+              <value>*</value>
+              <color>*</color>
+              <suit>*</suit>
+              <num_cards>*</num_cards>
+              <is_faceup>*</is_faceup>
+              <name>*</name>
+            </donor>
+          </validation>
+          <action>
+            <receiver_dest>
+              <destination>r</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+            </receiver_dest>
+            <mover_dest>
+              <destination>r</destination>
+              <num_cards>1</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
               <flip_up>y</flip_up>
             </mover_dest>
             <donor_dest>

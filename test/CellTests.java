@@ -3,7 +3,7 @@ import ooga.cardtable.Offset;
 import ooga.cardtable.Suit;
 import ooga.cardtable.Value;
 import org.junit.jupiter.api.*;
-import ooga.cardtable.*; //fixme this has to be a wildcard for some reason
+import ooga.cardtable.*; //fixme this has to be wildcard for some reason, can't import card or cell
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CellTests {
