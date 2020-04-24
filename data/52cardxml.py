@@ -9,14 +9,14 @@ def generateLayout():
     for r in range(4):
         for c in range(13):
             print('<cell name="'+str(r*13+c)+'">')
-            print('<xval>'+str(5+7*c)+'</xval>')
-            print('<yval>'+str(16+12*r)+'</yval>')
+            print('<x_val>'+str(5+7*c)+'</x_val>')
+            print('<y_val>'+str(16+12*r)+'</y_val>')
             print('</cell>')
     r = 4
     c = 0
     print('<cell name="'+str(r*13+c)+'">')
-    print('<xval>'+str(5+7*c)+'</xval>')
-    print('<yval>'+str(16+12*r)+'</yval>')
+    print('<x_val>'+str(5+7*c)+'</x_val>')
+    print('<y_val>'+str(16+12*r)+'</y_val>')
     print('</cell>')
     
 def backerCards():
@@ -29,4 +29,4 @@ def mainCells():
         s += '<card>D1,U</card><card>Rd,D</card></init_cards></cell>'
         print(s.format(i))
     
-mainCells()
+generateLayout()
