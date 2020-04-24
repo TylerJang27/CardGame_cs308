@@ -24,9 +24,6 @@ import java.util.Map;
  */
 public class Controller extends Application {
 
-    // TODO: Put the file here
-
-
     private static final String DEFAULT_STYLE_FILE = "data/default_style.xml";
     private static final String BACKUP_STYLE_FILE = "data/default_style_orig.xml";
 
@@ -72,10 +69,6 @@ public class Controller extends Application {
     @Override
     public void start(Stage mainStage) {
         GiveMove gm = (IMove move) -> {
-            //System.out.println("Controller has move");
-            //System.out.println("donor " + move.getDonor().getName());
-            //System.out.println("mover " + move.getMover().getName());
-            //System.out.println("receiver" + move.getRecipient().getName());
             try {
                 lastState = myTable.update(move);
                 if (lastState.equals(GameState.WIN)) {
@@ -100,7 +93,6 @@ public class Controller extends Application {
             } catch (XMLException e) {
                 reportError(e);
             }
-            //myView.setCellData(Map.copyOf(myTable.getCellData()));
         };
 
         myStyle = extractStyle();
@@ -148,31 +140,18 @@ public class Controller extends Application {
 
     //TODO: REPLACE WITH LOGIC REGARDING METHODS AT THE BOTTOM
     private void initializeHandlers(View v) {
-        //input is string gamename
         v.listenForGameChoice((a,b,gameName) -> startTable(gameName));
-        //() -> newMove());
-        /*v.setHandlers((String game) -> createEngine(game), //Consumer
-                (String rules) -> setHouseRules(rules), //Consumer
-                (int diff) -> setDifficulty(diff), //Consumer
-                (IMove move) -> processMove(move), //Function
-                (String cell) -> getCell(cell)); //Function/Supplier
-                */
-        /*View.setHandlers(Consumer engineStart, Consumer ruleSet,  ....);
-            myFunction = move;
-
-
-        MOUSE.setOnClickAndDrag(event -> move.execute(new Move(event.getX, event.getY)));
-            */
     }
 
     private void startTable(String gameName) {
-        // TODO: process gamename string to a file path
-        //System.out.println(gameName);
-        // TODO: Give game name somehow, figure out who's building the phase machine
-        String ruleFile = "data/" + gameName + "_rules.xml";
-        //ruleFile = "data/solitaire_rules_static_2.xml";  //almost win state
 
-        myRuleFile = new File(ruleFile);
+        String ruleFile = "data/" + gameName + "_rules.xml";
+        try {
+            myRuleFile = new File(ruleFile);
+        } catch (Exception e) {
+            reportError(e);
+            myRuleFile = new File(DEFAULT_RULE_FILE);
+        }
         try {
             myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
             myTable = new Table(myCurrentPhaseMachine);
@@ -182,7 +161,6 @@ public class Controller extends Application {
             myView.setLayout(LayoutFactory.createLayout(f));
             myView.setCellData(myCellMap);
             myPreviousCells = myCellMap;
-            //myView.setCellData(Map.copyOf(myTable.getCellData()));
         } catch (XMLException e) {
             reportError(e);
         }
