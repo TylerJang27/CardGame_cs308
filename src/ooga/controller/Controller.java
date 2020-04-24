@@ -173,7 +173,7 @@ public class Controller extends Application {
     }
 
     private void saveGame(int gameID, String destination) { //TODO: PROCESS ON FRONTEND @MARIUSZ
-        ISaveConfiguration saveData = myTables.get(gameID).getSaveData(myGameNames.get(gameID), myRuleFiles.get(gameID));
+        ISaveConfiguration saveData = myTables.get(gameID).getSaveData(myGameNames.get(gameID), myRuleFiles.get(gameID).getPath());
         saveData.writeConfiguration(destination);
     }
 
