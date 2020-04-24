@@ -100,4 +100,12 @@ public interface IStyle {
      */
     void saveSettings();
 
+    /**
+     * Returns whether or not an IStyle implementation is equal to this.
+     *
+     * @param o the object to compare
+     * @return  whether or not the objects are equal
+     */
+    @Override
+    boolean equals(Object o);
 }

@@ -170,4 +170,24 @@ public class StyleData implements IStyle {
     public void saveSettings() {
         StyleWriter.writeStyle(defaultFilePath, this);
     }
+
+    /**
+     * Returns whether or not an IStyle implementation is equal to this.
+     *
+     * @param o the object to compare
+     * @return  whether or not the objects are equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof StyleData) {
+            StyleData styleData = (StyleData)o;
+            return getDifficulty() == styleData.getDifficulty() &&
+                    getDarkMode() == styleData.getDarkMode() &&
+                    getSound() == styleData.getSound() &&
+                    getCardSkinPath().equals(styleData.getCardSkinPath()) &&
+                    getLanguage().equals(styleData.getLanguage()) &&
+                    getTheme().equals(styleData.getTheme());
+        }
+        return false;
+    }
 }

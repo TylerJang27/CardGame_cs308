@@ -36,7 +36,7 @@ public class PhaseFactory implements Factory {
     protected static final String CATEGORY = "Category";
     protected static final String RULES = "Rules";
     protected static final String RULE = "Rule";
-    protected static final String RECEIVE_RULE = "ReceiveRule";
+    protected static final String VALIDATION = "Validation";
     protected static final String RECEIVER = "Receiver";
     protected static final String MOVER = "Mover";
     protected static final String DIRECTION = "Direction";
@@ -59,13 +59,12 @@ public class PhaseFactory implements Factory {
     protected static final String NEXT_PHASE = "NextPhase";
     protected static final String DONOR_DESTINATION = "DonorDestination";
     protected static final String CONDITION = "Condition";
+    protected static final String ROTATION = "Rotation";
 
     protected static final String R = "R";
     protected static final String M = "M";
     protected static final String D = "D";
     protected static final String C = "C";
-    protected static final String UP = "Up";
-    protected static final String DOWN = "Down";
     protected static final String NOT = "Not";
     protected static final String SAME = "Same";
     protected static final String YES = "Yes";

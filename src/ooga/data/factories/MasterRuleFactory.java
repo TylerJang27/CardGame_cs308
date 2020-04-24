@@ -26,7 +26,7 @@ public class MasterRuleFactory implements Factory {
     private static final String PHASE = PhaseFactory.PHASE;
     private static final String CATEGORY = PhaseFactory.CATEGORY;
     private static final String RULE = PhaseFactory.RULE;
-    private static final String RECEIVE_RULE = PhaseFactory.RECEIVE_RULE;
+    private static final String VALIDATION = PhaseFactory.VALIDATION;
     private static final String RECEIVER = PhaseFactory.RECEIVER;
     private static final String MOVER = PhaseFactory.MOVER;
     private static final String DONOR = PhaseFactory.DONOR;
@@ -162,7 +162,7 @@ public class MasterRuleFactory implements Factory {
      * @return              a List of all the IRules for receivers, movers, and donors
      */
     private static List<IRule> getAllRules(Map<String, ICellGroup> cellGroupMap, String ruleName, Element ruleNode, List<IRule> autoRules) {
-        NodeList receiverRuleNodeList = ruleNode.getElementsByTagName(RESOURCES.getString(RECEIVE_RULE));
+        NodeList receiverRuleNodeList = ruleNode.getElementsByTagName(RESOURCES.getString(VALIDATION));
         List<IRule> allRules = new ArrayList<>();
         for (int j = 0; j < receiverRuleNodeList.getLength(); j++) {
             Element receiverRuleNode = (Element) receiverRuleNodeList.item(j);

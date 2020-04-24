@@ -169,8 +169,10 @@ public class Controller extends Application {
         // TODO: process gamename string to a file path
         //System.out.println(gameName);
         // TODO: Give game name somehow, figure out who's building the phase machine
-        String rulefile = "data/" + gameName + "_rules.xml";
-        myRuleFile = new File(rulefile);
+        String ruleFile = "data/" + gameName + "_rules.xml";
+        //ruleFile = "data/solitaire_rules_static_2.xml";  //almost win state
+
+        myRuleFile = new File(ruleFile);
         try {
             myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
             myTable = new Table(myCurrentPhaseMachine);

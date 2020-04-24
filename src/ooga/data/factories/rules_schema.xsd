@@ -4,7 +4,6 @@
     <xs:group name="rules">
         <xs:all>
             <xs:element name="num_cards" minOccurs="0"/>
-            <xs:element name="direction" minOccurs="0"/>
             <xs:element name="value" minOccurs="0"/>
             <xs:element name="color" minOccurs="0"/>
             <xs:element name="suit" minOccurs="0"/>
@@ -19,9 +18,9 @@
             <xs:element name="destination" minOccurs="0"/>
             <xs:element name="num_cards" minOccurs="0"/>
             <xs:element name="shuffle" minOccurs="0"/>
-            <xs:element name="direction" minOccurs="0"/>
+            <xs:element name="rotation" minOccurs="0"/>
             <xs:element name="offset" minOccurs="0"/>
-            <xs:element name="flip" minOccurs="0"/>
+            <xs:element name="flip_up" minOccurs="0"/>
             <xs:element name="except" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:group>
@@ -121,7 +120,7 @@
                                                     <xs:element name="rule" minOccurs="1" maxOccurs="unbounded">
                                                         <xs:complexType>
                                                             <xs:sequence>
-                                                                <xs:element name="receive_rule" minOccurs="0" maxOccurs="unbounded">
+                                                                <xs:element name="validation" minOccurs="0" maxOccurs="unbounded">
                                                                     <xs:complexType>
                                                                         <xs:sequence>
                                                                             <xs:element name="receiver" minOccurs="0" maxOccurs="unbounded">
