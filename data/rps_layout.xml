@@ -6,8 +6,8 @@
         <screen_height>100</screen_height>
         <card_width>10</card_width>
         <card_height>14</card_height>
-        <face_down_offset>10</face_down_offset>
-        <face_up_offset>10</face_up_offset>
+        <face_down_offset>14</face_down_offset>
+        <face_up_offset>14</face_up_offset>
     </attributes>
     <cards>
         <card>rock</card>
