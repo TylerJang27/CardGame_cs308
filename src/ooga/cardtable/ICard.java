@@ -29,4 +29,6 @@ public interface ICard {
   void setFixed(boolean fixed); //TODO: ADD TO API CHANGES
 
   boolean isFixed(); //TODO: ADD TO API CHANGES
+
+  String toStorageString();
 }

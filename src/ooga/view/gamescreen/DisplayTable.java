@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 import ooga.cardtable.*;
-import ooga.data.rules.Layout;
+import ooga.data.style.Layout;
 import ooga.data.style.ICoordinate;
 import ooga.view.View;
 
@@ -51,7 +51,7 @@ public class DisplayTable {
         myPane = new Pane();
 
 
-        myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
+        myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.widthProperty());
         myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
         faceUpCardOffset = layout.getUpOffsetRatio()*screenWidth;
         faceDownCardOffset = layout.getDownOffsetRatio()*screenWidth;
@@ -60,7 +60,7 @@ public class DisplayTable {
         Map<String, ICoordinate> locations = layout.getCellLayout();
         for(String key : locations.keySet()){
             NumberBinding x = Bindings.divide(Bindings.multiply(myPane.widthProperty(),locations.get(key).getX()),100);
-            NumberBinding y = Bindings.divide(Bindings.multiply(myPane.heightProperty(),locations.get(key).getY()),100);
+            NumberBinding y = Bindings.divide(Bindings.multiply(myPane.widthProperty(),locations.get(key).getY()),100);
             myCellNameToLocation.put(key,new Pair<>(x,y));
         }
 

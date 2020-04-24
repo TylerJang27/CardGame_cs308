@@ -28,14 +28,12 @@ public class DeckFactory implements Factory {
     private static final String DECK_NAME = "DeckName";
     private static final String CARD = "Card";
     private static final String SHUFFLE = "Shuffle";
-    private static final String YES = "yes";
-    private static final String DEFAULT_SHUFFLE = YES;
+    private static final String YES = "y";
     private static final String NAME = "Name";
     private static final String VALUE = "Value";
     private static final String COLOR = "Color";
     private static final String SUIT = "Suit";
     private static final String FIXED = "Fixed";
-    private static final String TRUE = "True";
 
     /**
      * Builds and returns an IDeck built from a rules XML. Requirements for rules XML can be found in ____.
@@ -99,7 +97,7 @@ public class DeckFactory implements Factory {
             cardList.add(buildCard(n));
         }
         IDeck myDeck = new Deck(deckName, cardList);
-        if (shuffle.equalsIgnoreCase(YES) || (shuffle.equals("") && DEFAULT_SHUFFLE.equalsIgnoreCase(YES))) {
+        if (shuffle.equalsIgnoreCase(YES)) {
             myDeck.shuffle();
         }
         return myDeck;
@@ -119,7 +117,7 @@ public class DeckFactory implements Factory {
         IValue value = new Value(val + suit.getName(), val);
         String fixed = XMLHelper.getTextValue((Element) node, resources.getString(FIXED));
         boolean isFixed = false;
-        if (fixed != null && !fixed.isEmpty() && fixed.equalsIgnoreCase(TRUE)) {
+        if (fixed != null && !fixed.isEmpty() && fixed.equalsIgnoreCase(YES)) {
             isFixed = true;
         }
         ICard c = new Card(cardName, suit, value);

@@ -27,17 +27,17 @@ public class RuleFactory implements Factory {
     private static final String NAME = PhaseFactory.NAME;
     private static final String CATEGORY = PhaseFactory.CATEGORY;
     private static final String RULES = PhaseFactory.RULES;
-    private static final String DIRECTION = PhaseFactory.DIRECTION;
     private static final String VALUE = PhaseFactory.VALUE;
     private static final String COLOR = PhaseFactory.COLOR;
     private static final String SUIT = PhaseFactory.SUIT;
     private static final String NUMBER_CARDS = PhaseFactory.NUMBER_CARDS;
     private static final String IS_FACEUP = PhaseFactory.IS_FACEUP;
 
-    private static final String DOWN = PhaseFactory.DOWN;
     private static final String NOT = PhaseFactory.NOT;
     private static final String SAME = PhaseFactory.SAME;
     private static final String YES = PhaseFactory.YES;
+    private static final String GREATER_THAN = PhaseFactory.GREATER_THAN;
+    private static final String LESS_THAN = PhaseFactory.LESS_THAN;
 
     private static final List<String> TRUE_CHECKS = MasterRuleFactory.TRUE_CHECKS;
 
@@ -120,9 +120,12 @@ public class RuleFactory implements Factory {
         Function<IMove, Boolean> valueChecker;
         String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).strip();
         if (!TRUE_CHECKS.contains(numCards)) {
-            Integer value = Integer.parseInt(numCards);
-            valueChecker = (IMove move) -> currCell.apply(move).getTotalSize() == value;
-            conditions.add(valueChecker);
+            try {
+                Integer value = Integer.parseInt(numCards);
+                valueChecker = (IMove move) -> currCell.apply(move).getTotalSize() == value;
+                conditions.add(valueChecker);
+            } catch (NumberFormatException ex) {
+            }
         }
     }
 
@@ -136,21 +139,34 @@ public class RuleFactory implements Factory {
      */
     private static void extractValueCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
-        String direction = XMLHelper.getTextValue(e, RESOURCES.getString(DIRECTION));
         String valueText = XMLHelper.getTextValue(e, RESOURCES.getString(VALUE));
-        if (!TRUE_CHECKS.contains(valueText) && !TRUE_CHECKS.contains(direction)) {
-            Integer value;
-            if (direction.equals(RESOURCES.getString(DOWN))) {
-                value = -1 * Integer.parseInt(valueText);
+        if (!TRUE_CHECKS.contains(valueText)) {
+            if (valueText.equalsIgnoreCase(RESOURCES.getString(LESS_THAN))) {
+                valueChecker = (IMove move) -> {
+                    int currNumber = currCell.apply(move).getDeck().peek().getValue().getNumber();
+                    int recNumber = recipientCell.apply(move).getDeck().peek().getValue().getNumber();
+                    return currNumber < recNumber;
+                };
+                conditions.add(valueChecker);
+            } else if (valueText.equalsIgnoreCase(RESOURCES.getString(GREATER_THAN))) {
+                valueChecker = (IMove move) -> {
+                    int currNumber = currCell.apply(move).getDeck().peek().getValue().getNumber();
+                    int recNumber = recipientCell.apply(move).getDeck().peek().getValue().getNumber();
+                    return currNumber > recNumber;
+                };
+                conditions.add(valueChecker);
             } else {
-                value = Integer.parseInt(valueText);
+                try {
+                    Integer value = Integer.parseInt(valueText);
+                    valueChecker = (IMove move) -> {
+                        int currNumber = currCell.apply(move).getDeck().peek().getValue().getNumber();
+                        int recNumber = recipientCell.apply(move).getDeck().peek().getValue().getNumber();
+                        return currNumber - value == recNumber;
+                    };
+                    conditions.add(valueChecker);
+                } catch (NumberFormatException ex) {
+                }
             }
-            valueChecker = (IMove move) -> {
-                int currNumber = currCell.apply(move).getDeck().peek().getValue().getNumber();
-                int recNumber = recipientCell.apply(move).getDeck().peek().getValue().getNumber();
-                return currNumber - value == recNumber;
-            };
-            conditions.add(valueChecker);
         }
     }
 
@@ -213,7 +229,6 @@ public class RuleFactory implements Factory {
         if (!TRUE_CHECKS.contains(faceUp)) {
             if (faceUp.equalsIgnoreCase(RESOURCES.getString(YES))) {
                 valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().isFaceUp());
-
             } else {
                 valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peek().isFaceUp());
             }

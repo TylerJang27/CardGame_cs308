@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import ooga.cardtable.ICell;
-import ooga.data.rules.Layout;
+import ooga.data.style.Layout;
 import ooga.view.View;
 
 import java.util.Map;

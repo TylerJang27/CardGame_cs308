@@ -26,8 +26,7 @@ import java.util.function.Function;
 public class ActionFactory implements Factory {
     private static final ResourceBundle RESOURCES = PhaseFactory.RESOURCES;
 
-
-    private static final String DIRECTION = PhaseFactory.DIRECTION;
+    private static final String ROTATION = PhaseFactory.ROTATION;
     private static final String NUMBER_CARDS = PhaseFactory.NUMBER_CARDS;
     private static final String ACTION = PhaseFactory.ACTION;
     private static final String DESTINATION = PhaseFactory.DESTINATION;
@@ -242,7 +241,7 @@ public class ActionFactory implements Factory {
      * @param currCell the current ICell being moved
      */
     private static void extractRotationBehavior(Element e, ICell currCell) {
-        String turn = XMLHelper.getTextValue(e, RESOURCES.getString(DIRECTION));
+        String turn = XMLHelper.getTextValue(e, RESOURCES.getString(ROTATION));
         if (!TRUE_CHECKS.contains(turn)) {
             Double angle = Double.parseDouble(turn);
             for (ICell c : currCell.getAllCells()) {
@@ -284,14 +283,14 @@ public class ActionFactory implements Factory {
         if (Offset.validOffsets.contains(flip.toLowerCase()) &&
                 currCell.getAllChildren().containsKey(Offset.valueOf(flip.toUpperCase()))) {
             ICard cardToFlip = currCell.getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek();
-            if (cardToFlip != null && !cardToFlip.isFaceUp()) {
+            if (cardToFlip != null && !cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
                 cardToFlip.flip();
             }
-        } else if (flip.equals(RESOURCES.getString(ALL))) {
+        } else if (flip.equals(RESOURCES.getString(YES))) {
             for (ICell c : currCell.getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
                     ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
-                    if (!cardToFlip.isFaceUp()) {
+                    if (!cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
                         cardToFlip.flip();
                     }
                 }
@@ -300,7 +299,7 @@ public class ActionFactory implements Factory {
             for (ICell c : currCell.getAllCells()) {
                 for (int k = 0; k < c.getDeck().size(); k++) {
                     ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
-                    if (cardToFlip.isFaceUp()) {
+                    if (cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
                         cardToFlip.flip();
                     }
                 }
@@ -345,7 +344,8 @@ public class ActionFactory implements Factory {
             if (offsetFromParent != null) {
                 currCell.getParent().removeCellAtOffset(offsetFromParent); //fixme commented by maverick
             }
-            recipientCell.apply(move).addCell(off, currCell);
+
+            destination.addCell(off, currCell);
         }
     }
 }
