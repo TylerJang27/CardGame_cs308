@@ -647,7 +647,7 @@
                             <offset>preserve</offset>
                         </donor_dest>
                         <!-- points included in the tag below-->
-                        <next_phase phase="1decktostage">0</next_phase>
+                        <next_phase phase="check_eog1">0</next_phase>
                     </action>
                 </rule>
                 <rule category="battle">
@@ -682,7 +682,7 @@
                             <offset>preserve</offset>
                         </donor_dest>
                         <!-- points included in the tag below-->
-                        <next_phase phase="1decktostage">0</next_phase>
+                        <next_phase phase="check_eog1">0</next_phase>
                     </action>
                 </rule>
                 <rule category="battle">
@@ -710,7 +710,7 @@
                             <offset>preserve</offset>
                         </donor_dest>
                         <!-- points included in the tag below-->
-                        <next_phase phase="1decktostage">0</next_phase>
+                        <next_phase phase="check_eog1">0</next_phase>
                     </action>
                 </rule>
             </rules>
