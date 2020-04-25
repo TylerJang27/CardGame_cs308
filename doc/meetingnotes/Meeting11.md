@@ -28,18 +28,18 @@ Team Name: Solitaire Confinement (Team 52 Pickup)
     * Refactor/remove magic values
     * 
 * Maverick
-    * Memoization
+    * Memoization                                       DONE
     * More games
     * Cell refactor (and make CellHelper)
     * 
 * Tyler
     * Debug save/load games                             DONE
-    * Add extra win/lose state for rps
+    * Add extra win/lose state for rps                  DONE
     * Rewrite JUnits for scores                         DONE
     * Refactor factories (action/rule)
     * New game (Conquest)
     * Update XSD for High Scores                        DONE   
-    * Restart game--score
+    * Restart game--score                               DONE
     * 
 * Andrew
     * War
