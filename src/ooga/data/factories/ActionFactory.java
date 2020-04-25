@@ -333,36 +333,38 @@ public class ActionFactory implements Factory {
      */
     private static void extractFlipBehavior(Element e, ICell currCell) {
         String flip = XMLHelper.getTextValue(e, RESOURCES.getString(FLIP));
-        IOffset off = Offset.valueOf(flip.toUpperCase());
-        if (Offset.validOffsets.contains(flip.toLowerCase()) && currCell.getAllChildren().containsKey(off)) {
-            ICard cardToFlip = currCell.getPeak(off).getDeck().peek();
-            if (cardToFlip != null && !cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
-                cardToFlip.flip();
-            }
-        } else if (flip.equals(RESOURCES.getString(YES))) {
-            for (ICell c : currCell.getAllCells()) {
-                for (int k = 0; k < c.getDeck().size(); k++) {
-                    ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
-                    if (!cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
-                        cardToFlip.flip();
+        if (!flip.isEmpty()) {
+            IOffset off = Offset.valueOf(flip.toUpperCase());
+            if (Offset.validOffsets.contains(flip.toLowerCase()) && currCell.getAllChildren().containsKey(off)) {
+                ICard cardToFlip = currCell.getPeak(off).getDeck().peek();
+                if (cardToFlip != null && !cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
+                    cardToFlip.flip();
+                }
+            } else if (flip.equals(RESOURCES.getString(YES))) {
+                for (ICell c : currCell.getAllCells()) {
+                    for (int k = 0; k < c.getDeck().size(); k++) {
+                        ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
+                        if (!cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
+                            cardToFlip.flip();
+                        }
                     }
                 }
-            }
-        } else if (flip.equals(RESOURCES.getString(ALL))) {
-            for (ICell c : currCell.findHead().getAllCells()) {
-                for (int k = 0; k < c.getDeck().size(); k++) {
-                    ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
-                    if (!cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
-                        cardToFlip.flip();
+            } else if (flip.equals(RESOURCES.getString(ALL))) {
+                for (ICell c : currCell.findHead().getAllCells()) {
+                    for (int k = 0; k < c.getDeck().size(); k++) {
+                        ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
+                        if (!cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
+                            cardToFlip.flip();
+                        }
                     }
                 }
-            }
-        } else if (flip.equals(RESOURCES.getString(NO))) {
-            for (ICell c : currCell.getAllCells()) {
-                for (int k = 0; k < c.getDeck().size(); k++) {
-                    ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
-                    if (cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
-                        cardToFlip.flip();
+            } else if (flip.equals(RESOURCES.getString(NO))) {
+                for (ICell c : currCell.getAllCells()) {
+                    for (int k = 0; k < c.getDeck().size(); k++) {
+                        ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
+                        if (cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
+                            cardToFlip.flip();
+                        }
                     }
                 }
             }
