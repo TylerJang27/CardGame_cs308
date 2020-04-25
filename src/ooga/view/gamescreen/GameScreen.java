@@ -13,6 +13,7 @@ import ooga.view.View;
 import java.util.Map;
 import java.util.ResourceBundle;
 import ooga.view.View.SaveGame;
+import ooga.view.menu.Dictionary;
 
 public class GameScreen {
     private static final String SKIN_TYPE = "classic";
@@ -37,7 +38,8 @@ public class GameScreen {
         };
 
         myDisplayTable = new DisplayTable(gameID,moveLambda, (Layout) layout, 650, skinType);
-        myDashboard = new Dashboard(restartButton, scoreLabel, ResourceBundle.getBundle("ooga.resources.languages.messages."+language), game, dashboardSave);
+        Dictionary.getInstance().addReference("ooga.resources.languages.messages");
+        myDashboard = new Dashboard(restartButton, scoreLabel, game, dashboardSave);
         myHeader = new Header();
 
         myBorderPane = new BorderPane();
