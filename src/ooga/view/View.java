@@ -10,8 +10,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Consumer;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,7 +27,6 @@ import ooga.controller.Controller;
 import ooga.controller.Controller.GiveMove;
 import ooga.data.style.ILayout;
 import ooga.data.style.IStyle;
-import ooga.data.style.Layout;
 import ooga.view.gamescreen.GameScreen;
 import ooga.view.highscores.HighScoresDisplay;
 import ooga.view.highscores.HighScoresManager;
@@ -46,6 +43,14 @@ public class View implements ExternalAPI {
     private static final String DEFAULT_THEME = "Duke";
     private static final String DEFAULT_LANGUAGE = "English";
     private static final String MESSAGES_DICTIONARY_PATH = "ooga.resources.languages.messages";
+    private static final String SCORE = "score";
+    public static final String RESTART = "restart";
+    public static final String MENU = "Menu";
+    public static final String HIGH_SCORES = "High_Scores";
+    public static final String SKINS_PACKAGE = "/ooga/resources/skins/";
+    public static final String MAINMENU_CSS = "/mainmenu.css";
+    public static final String GAMETABLE_CSS = "/gametable.css";
+    public static final int FIRST = 1;
 
     @FunctionalInterface
     public interface SaveGame{
@@ -97,83 +102,22 @@ public class View implements ExternalAPI {
         myGameIdToGameName = new HashMap<>();
 
         Dictionary.getInstance().addReference(MESSAGES_DICTIONARY_PATH);
-
         mySaveGame = gameSave;
-
         myHighScoresManager = new HighScoresManager();
-
         myGameIdToGame = new HashMap<>();
         myGameIndex = 0;
 
         restarter = restart;
-
-        ChangeValue getTheme = (String theme) -> {
-            myTheme = theme;
-            myStyle.setTheme(theme);
-            myScene.getStylesheets().clear();
-            myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+theme.toLowerCase()+"/mainmenu.css").toExternalForm());
-        };
-
-        ChangeValue getLanguage = (String language) -> {
-            myLanguage = language;
-            myStyle.setLanguage(language);
-        };
-
         getMove = giveMove;
+        getStyle(style);
 
-        myStyle = style;
+        EventHandler<MouseEvent> handler = getHighScoreHandler();
 
-        if (myStyle.getTheme() != null) {
-            myTheme = myStyle.getTheme();
-        }
-        if (myStyle.getLanguage() != null) {
-            myLanguage = myStyle.getLanguage();
-        }
-        myTabPane = new TabPane();
+        myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getThemeLambda(), getLanguageLambda(), myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH,handler, gameLoad);
 
-        EventHandler<MouseEvent> handler = event -> {
-            Tab highScoresTab = new Tab();
-            highScoresTab.textProperty().bind(Dictionary.getInstance().get("High_Scores"));
-            highScoresTab.setContent(new HighScoresDisplay(myHighScoresManager).getNode());
-            myTabPane.getTabs().add(highScoresTab);
-        };
-
-        myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH,handler, gameLoad);
-        Tab menuTab = new Tab();
-        menuTab.textProperty().bind(Dictionary.getInstance().get("Menu"));
-        menuTab.setContent(myMenu.getScene());
-
-        myTabPane.getTabs().add(menuTab);
-        myTabPane.getSelectionModel().selectedItemProperty().addListener(
-            (observable, oldValue, newValue) -> {
-                if (myGameTabs.contains(newValue)) {
-                    setGameCSS();
-                } else {
-                    setMenuCSS();
-                }
-            });
-        myScene = new Scene(myTabPane);
-        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme.toLowerCase()+"/mainmenu.css").toExternalForm()); //
-        Stage myStage = new Stage();
-        myStage.setScene(myScene);
-        myStage.getIcons().add(new Image(APPLICATION_ICON));
-        myStage.setTitle(APPLICATION_NAME);
-        myStage.show();
+        makeTabPane();
+        displayScene();
     }
-    private void setGameCSS(){
-        myScene.getStylesheets().clear();
-        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme.toLowerCase()+"/gametable.css").toExternalForm());
-    }
-    private void setMenuCSS(){
-        myScene.getStylesheets().clear();
-        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme.toLowerCase()+"/mainmenu.css").toExternalForm());
-    }
-
-    public int createGame(String gameName){
-        myGameIdToGameName.put(myGameIndex,gameName);
-        return myGameIndex++;
-    }
-
     /**
      * Sets the locations of all cell types and the framework for creating new cell locations if applicable.
      *
@@ -182,11 +126,9 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setLayout(int gameID, ILayout layout) {
-
-        ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
         Button restartButton = makeRestartButton(gameID);
 
-        GameScreen gameScreen = new GameScreen(gameID,getMove, layout, DEFAULT_WIDTH, myTheme, restartButton, myMenu.getGame(), currentMessages.getString("score"), myLanguage,mySaveGame);
+        GameScreen gameScreen = new GameScreen(gameID,getMove, layout, DEFAULT_WIDTH, myTheme, restartButton, myMenu.getGame(), Dictionary.getInstance().get(SCORE).getValue(), myLanguage,mySaveGame);
         myGameIdToGame.put(gameID,gameScreen);
 
         Tab newTab = new Tab();
@@ -201,10 +143,8 @@ public class View implements ExternalAPI {
 
     private Button makeRestartButton(int gameID) {
         Button restartButton = new Button();
-        restartButton.textProperty().bind(Dictionary.getInstance().get("restart"));
-        restartButton.setOnAction(e -> {
-            restarter.execute(gameID);
-        });
+        restartButton.textProperty().bind(Dictionary.getInstance().get(RESTART));
+        restartButton.setOnAction(e -> restarter.execute(gameID));
         return restartButton;
     }
 
@@ -325,7 +265,7 @@ public class View implements ExternalAPI {
      */
     @Override
     public void setScores(int gameID, Map<Integer, Double> playerScores) {
-        myGameIdToGame.get(gameID).updateScore(playerScores.get(1));
+        myGameIdToGame.get(gameID).updateScore(playerScores.get(FIRST));
     }
 
 
@@ -357,6 +297,83 @@ public class View implements ExternalAPI {
     @Override
     public void playerStatusUpdate(Map<Integer, Boolean> playerOutcomes, Map<Integer, Integer> playerScores) {
 
+    }
+
+    private void displayScene() {
+        myScene = new Scene(myTabPane);
+        myScene.getStylesheets().add(getClass().getResource(SKINS_PACKAGE+myTheme.toLowerCase()+MAINMENU_CSS).toExternalForm()); //
+        Stage myStage = new Stage();
+        myStage.setScene(myScene);
+        myStage.getIcons().add(new Image(APPLICATION_ICON));
+        myStage.setTitle(APPLICATION_NAME);
+        myStage.show();
+    }
+
+    private void makeTabPane() {
+        myTabPane = new TabPane();
+        Tab menuTab = new Tab();
+        menuTab.textProperty().bind(Dictionary.getInstance().get(MENU));
+        menuTab.setContent(myMenu.getScene());
+
+        myTabPane.getTabs().add(menuTab);
+        myTabPane.getSelectionModel().selectedItemProperty().addListener(
+            (observable, oldValue, newValue) -> {
+                if (myGameTabs.contains(newValue)) {
+                    setGameCSS();
+                } else {
+                    setMenuCSS();
+                }
+            });
+    }
+
+    private EventHandler<MouseEvent> getHighScoreHandler() {
+        return event -> {
+            Tab highScoresTab = new Tab();
+            highScoresTab.textProperty().bind(Dictionary.getInstance().get(HIGH_SCORES));
+            highScoresTab.setContent(new HighScoresDisplay(myHighScoresManager).getNode());
+            myTabPane.getTabs().add(highScoresTab);
+        };
+    }
+
+    private void getStyle(IStyle style) {
+        myStyle = style;
+        if (myStyle.getTheme() != null) {
+            myTheme = myStyle.getTheme();
+        }
+        if (myStyle.getLanguage() != null) {
+            myLanguage = myStyle.getLanguage();
+        }
+    }
+
+    private ChangeValue getLanguageLambda() {
+        return (String language) -> {
+            myLanguage = language;
+            myStyle.setLanguage(language);
+        };
+    }
+
+    private ChangeValue getThemeLambda() {
+        return (String theme) -> {
+            myTheme = theme;
+            myStyle.setTheme(theme);
+            myScene.getStylesheets().clear();
+            myScene.getStylesheets().add(getClass().getResource(
+                SKINS_PACKAGE +theme.toLowerCase()+ MAINMENU_CSS).toExternalForm());
+        };
+    }
+
+    private void setGameCSS(){
+        myScene.getStylesheets().clear();
+        myScene.getStylesheets().add(getClass().getResource(SKINS_PACKAGE+myTheme.toLowerCase()+ GAMETABLE_CSS).toExternalForm());
+    }
+    private void setMenuCSS(){
+        myScene.getStylesheets().clear();
+        myScene.getStylesheets().add(getClass().getResource(SKINS_PACKAGE+myTheme.toLowerCase()+MAINMENU_CSS).toExternalForm());
+    }
+
+    public int createGame(String gameName){
+        myGameIdToGameName.put(myGameIndex,gameName);
+        return myGameIndex++;
     }
 
 }
