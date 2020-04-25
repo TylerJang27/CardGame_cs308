@@ -49,7 +49,11 @@ public class HighScoreWriter implements Writer {
         for (String s: scores.getSavedGames()) {
             try {
                 Element e = document.createElement(s);
-                e.appendChild(document.createTextNode("" + scores.getScore(s)));
+                for(Double score : scores.getScore(s)){
+                    Element singleScore = document.createElement("score");
+                    singleScore.appendChild(document.createTextNode(""+score));
+                    e.appendChild(singleScore);
+                }
                 root.appendChild(e);
             } catch (Exception e) {
             }
