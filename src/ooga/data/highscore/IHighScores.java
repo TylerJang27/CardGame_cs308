@@ -1,5 +1,6 @@
 package ooga.data.highscore;
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -29,7 +30,7 @@ public interface IHighScores { //TODO: ADD TO API CHANGES
      * @param name the name of the game being queried
      * @return
      */
-    double getScore(String name);
+    Collection<Double> getScore(String name);
 
     /**
      * Replaces a score if already present, or adds a new score for a given game.

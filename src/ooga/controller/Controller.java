@@ -78,17 +78,18 @@ public class Controller extends Application {
     public void start(Stage mainStage) {
         GiveMove gm = (move, gameID) -> {
             try {
+                Double score = myTables.get(gameID).getCurrentPlayer().getScore();
                 lastState = myTables.get(gameID).update(move);
                 if (lastState.equals(GameState.WIN)) {
                     myView.displayMessage(gameID,WIN);
+                    updateHighScores(myGameNames.get(gameID), score);
                 } else if (lastState.equals(GameState.INVALID)) {
                     myView.displayMessage(gameID,INVALID);
                 } else if (lastState.equals(GameState.LOSS)) {
                     myView.displayMessage(gameID,LOSS);
+                    updateHighScores(myGameNames.get(gameID), score);
                 }
-                Double score = myTables.get(gameID).getCurrentPlayer().getScore();
                 myView.setScores(gameID,Map.of(1, score));
-                updateHighScores(myGameNames.get(gameID), score);
                 myCurrentCells = myTables.get(gameID).getCellData();
                 for (String i : myCurrentCells.keySet()) {
                     if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
@@ -112,6 +113,9 @@ public class Controller extends Application {
             myCurrentCells = myTables.get(gameID).getCellData();
             myView.setUpdatesToCellData(gameID,myCurrentCells); },
             myStyle);
+        for(String key : myScores.getSavedGames()){
+            myView.updateHighScores(key,myScores.getScore(key));
+        }
         initializeHandlers(myView);
     }
 
@@ -139,10 +143,8 @@ public class Controller extends Application {
     }
 
     private void updateHighScores(String currentGame, Double score) {
-        if (myScores.getScore(currentGame) == Double.MIN_VALUE || myScores.getScore(currentGame) < score) {
-            myScores.setScore(currentGame, score);
-            //myView.setHighScore(myScores.getScore(currentGame)); //TODO: MARIUSZ display it please
-        }
+        myScores.setScore(currentGame, score);
+        myView.updateHighScores(currentGame,myScores.getScore(currentGame));
     }
 
     private void reportError(Exception e) {

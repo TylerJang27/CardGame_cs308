@@ -28,7 +28,7 @@ public class Menu {
 
   private String myGame;
 
-  public Menu(String appName, ResourceBundle supportedLangs, ResourceBundle supportedSkins, View.ChangeValue themeLambda, View.ChangeValue languageLambda, String defaultTheme, String defaultLanguage, double screenHeight, double screenWidth){
+  public Menu(String appName, ResourceBundle supportedLangs, ResourceBundle supportedSkins, View.ChangeValue themeLambda, View.ChangeValue languageLambda, String defaultTheme, String defaultLanguage, double screenHeight, double screenWidth,EventHandler<MouseEvent> highScoresHandler){
 
     myGameProperty = new SimpleStringProperty();
     Dictionary.getInstance().addReference(CHOICES);
@@ -38,7 +38,7 @@ public class Menu {
 
     setTopBorder(appName);
     setCenter(defaultLanguage);
-    setBottomBorder(supportedLangs, supportedSkins, defaultTheme, defaultLanguage, themeLambda, languageLambda);
+    setBottomBorder(supportedLangs, supportedSkins, defaultTheme, defaultLanguage, themeLambda, languageLambda,highScoresHandler);
   }
 
   public Pane getScene() {
@@ -49,7 +49,7 @@ public class Menu {
     return myGame;
   }
 
-  private void setBottomBorder(ResourceBundle supportedLangs, ResourceBundle supportedSkins, String defaultTheme, String defaultLanguage, View.ChangeValue themeLambda, View.ChangeValue languageLambda) {
+  private void setBottomBorder(ResourceBundle supportedLangs, ResourceBundle supportedSkins, String defaultTheme, String defaultLanguage, View.ChangeValue themeLambda, View.ChangeValue languageLambda,EventHandler<MouseEvent> highScoreHandler) {
     ComboBox<String> languages = new ComboBox<>();
     languages.getItems().addAll(supportedLangs.getString("supported").split(","));
     languages.setValue(defaultLanguage);
@@ -72,9 +72,11 @@ public class Menu {
         themeLambda.setValue(newValue);
       }
     });
+    Button highScoresButton = new Button("high scores");
+    highScoresButton.setOnMouseClicked(highScoreHandler);
 
     HBox dashboard = new HBox();
-    dashboard.getChildren().addAll(languages, skins);
+    dashboard.getChildren().addAll(languages, skins,highScoresButton);
     dashboard.getStyleClass().add("border");
     dashboard.getStyleClass().add("dashboard");
 

@@ -1,16 +1,23 @@
 package ooga.data.highscore;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Set;
 
 /**
  * This class stores HighScore information to later write it to XML files.
  *
- * @author Tyler Jang
+ * @author Tyler Jang Mariusz Derezinski-Choo
  */
 public class HighScore implements IHighScores {
 
-    private Map<String, Double> myScoreMap;
+    private Map<String, PriorityQueue<Double>> myScoreMap;
     private String saveFilePath;
 
     /**
@@ -19,9 +26,16 @@ public class HighScore implements IHighScores {
      * @param xmlFile           the location to which the file should be saved
      * @param scores a Map of String game names to Double high scores
      */
-    public HighScore(String xmlFile, Map<String, Double> scores) {
+    public HighScore(String xmlFile, Map<String, List<Double>> scores) {
+        myScoreMap = new HashMap<>();
         saveFilePath = xmlFile;
-        myScoreMap = scores;
+        for(String key : scores.keySet()){
+            List<Double> gameScores = scores.get(key);
+            Collections.sort(gameScores);
+            PriorityQueue<Double> gameQueue = new PriorityQueue<>();
+            gameQueue.addAll(gameScores);
+            myScoreMap.put(key,gameQueue);
+        }
     }
 
     /**
@@ -42,15 +56,9 @@ public class HighScore implements IHighScores {
         HighScoreWriter.writeScores(saveFilePath, this);
     }
 
-    /**
-     * Retrieves the score associated with a particular game.
-     *
-     * @param name the name of the game being queried
-     * @return
-     */
     @Override
-    public double getScore(String name) {
-        return myScoreMap.getOrDefault(name.toLowerCase(), Double.MIN_VALUE);
+    public Collection<Double> getScore(String name) {
+        return myScoreMap.getOrDefault(name,new PriorityQueue<>());
     }
 
     /**
@@ -61,7 +69,12 @@ public class HighScore implements IHighScores {
      */
     @Override
     public void setScore(String name, double score) {
-        myScoreMap.put(name.toLowerCase(), score);
+        myScoreMap.putIfAbsent(name.toLowerCase(), new PriorityQueue<>());
+        PriorityQueue<Double> scores = myScoreMap.get(name.toLowerCase());
+        scores.offer(score);
+        while(scores.size() > 50){
+            scores.poll();
+        }
         saveScores();
     }
 }
