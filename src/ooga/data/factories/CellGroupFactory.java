@@ -119,7 +119,6 @@ public class CellGroupFactory implements Factory {
         }
     }
 
-    //TODO: POSSIBLY CHANGE THIS OFFSET CONSTRUCTION SO THAT IT IS PART OF THE CARD TAG ITSELF DURING INIITIALIZATION PARSING
     /**
      * Extracts the IOffset for the cell, otherwise Offset.NONE.
      *

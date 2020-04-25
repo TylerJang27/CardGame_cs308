@@ -146,9 +146,8 @@ public class Deck implements IDeck {
   }
 
   @Override
-  //TODO: HULLOO
   public ICard getCardByName(
-      String name) { //TODO: MAKE SURE THIS WORKS WITH THE OFFSET AS I WANT IT TO
+      String name) {
     for (ICard c : cards) {
       if (c.getName().equals(name)) {
         //System.out.println("searched name: " + c.getName());

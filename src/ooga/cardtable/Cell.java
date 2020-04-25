@@ -106,7 +106,7 @@ public class Cell implements ICell {
 
   @Override
   public void initializeCards(IDeck mainDeck) {
-    if (cellDeckBuilder != null) {//TODO: DOUBLE CHECK THIS WORKS
+    if (cellDeckBuilder != null) {
       ICell toAdd = cellDeckBuilder.apply(mainDeck);
       this.children = toAdd.getAllChildren();
       this.deck = toAdd.getDeck();
@@ -219,7 +219,7 @@ public class Cell implements ICell {
     if (cell == null || cell.isEmpty()) {
       return;
     }
-    ICell recipient = this; //TODO: HEAD
+    ICell recipient = this;
     if (offset != Offset.NONE) {
       recipient = getAllChildren().get(offset);
     }
@@ -310,7 +310,7 @@ public class Cell implements ICell {
       return this;
     }
     ICell temp = this;
-    while (temp.getAllChildren().containsKey(offset)) { //TODO: VERIFY THIS DOESN'T SKIP EMPTY
+    while (temp.getAllChildren().containsKey(offset)) {
       temp = temp.getAllChildren().get(offset);
     }
     return temp;

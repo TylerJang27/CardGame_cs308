@@ -11,7 +11,6 @@ import ooga.cardtable.IMove;
  */
 public interface IPhaseMachine {
 
-  //TODO: potentially also add deck stuff here
   /**
    * Gives a map of phase names to phases
    *

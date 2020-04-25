@@ -85,7 +85,7 @@ public class Phase implements IPhase {
         if (ruleToExecute != null && !isAuto) {
             myGameState = ruleToExecute.executeMove(move);
             IPhaseArrow ab = ruleToExecute.executeAutoActions(player, move);
-            return ab; //TODO: ADD PLAYER HERE
+            return ab;
         }
         return null;
     }

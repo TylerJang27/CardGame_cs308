@@ -24,8 +24,6 @@ public class Layout implements ILayout {
     private double downOffsetRatio;
     private double upOffsetRatio;
 
-    // TODO: Check if frontend wants card height relative to screen or card width
-
     private static final String PLAYERS = "players";
     private static final String SCREEN_HEIGHT = "screen_height";
     private static final String CARD_WIDTH = "card_width";
@@ -72,8 +70,6 @@ public class Layout implements ILayout {
     public Map<String, ICoordinate> getCellLayout() {
         return Map.copyOf(cellLayout);
     }
-
-    // TODO: Add all of these to the External API and give them documentation
 
     /**
      * Gives number of players allowed in this game

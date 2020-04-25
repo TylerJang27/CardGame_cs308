@@ -22,7 +22,6 @@ public class Card implements ICard {
     orientation = 0;
   }
 
-  //TODO: TO MAVERICK, PLZ EXPLAIN (FROM TYLER AND ANDREW)
   public Card(String name, ISuit s, IValue v) {
     this(name);
     attributes = new HashMap<>();
