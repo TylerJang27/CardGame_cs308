@@ -16,7 +16,7 @@ import ooga.cardtable.Move;
 import ooga.cardtable.Offset;
 import ooga.controller.Controller.GiveMove;
 import ooga.data.style.ICoordinate;
-import ooga.data.style.Layout;
+import ooga.data.style.ILayout;
 
 public class DisplayTable {
     private static final double DECIMAL_TO_PERCENT = 100;
@@ -52,7 +52,7 @@ public class DisplayTable {
 
     String mySkinType;
 
-    public DisplayTable(int gameID, GiveMove moveLambda, Layout layout, double screenWidth, String skinType) {
+    public DisplayTable(int gameID, GiveMove moveLambda, ILayout layout, double screenWidth, String skinType) {
 
         mySkinType = skinType;
         myPane = new Pane();
@@ -71,18 +71,26 @@ public class DisplayTable {
             myCellNameToLocation.put(key,new Pair<>(x,y));
         }
 
+        initializeDraggedCell(gameID, moveLambda);
+
+        initializeClickedCell(gameID, moveLambda);
+
+    }
+
+    private void initializeDraggedCell(int gameID, GiveMove moveLambda) {
         getDraggedCell = (DisplayCell selectedCell) -> {
             myMovedDisplayCell = selectedCell;
             if(checkMove()) {
                 moveLambda.sendMove(myMove,gameID);
             }
         };
+    }
 
+    private void initializeClickedCell(int gameID, GiveMove moveLambda) {
         getClickedCell = (DisplayCell selectedCell) -> {
             IMove clickMove = new Move(selectedCell.getCell(), selectedCell.getCell(), selectedCell.getCell());
             moveLambda.sendMove(clickMove,gameID);
         };
-
     }
 
     private boolean checkMove() {
@@ -128,15 +136,15 @@ public class DisplayTable {
     }
 
     public void updateTheseCells(Map<String,ICell> cellData) {
-        clearTheseCells(cellData); // removes given cells + all children from pane and active list of display cells
-        List<DisplayCell> displayCellData = makeDisplayCells(cellData); // converts cells to display cells
-        drawDisplayCells(displayCellData); // draws display cells just created by adding them to pane and list of active cells
+        clearTheseCells(cellData);
+        List<DisplayCell> displayCellData = makeDisplayCells(cellData);
+        drawDisplayCells(displayCellData);
     }
 
     private void clearTheseCells(Map<String,ICell> cellData) {
         List<DisplayCell> copyDisplayCellData = new ArrayList<>(myDisplayCellData);
-        for (ICell c : cellData.values()) { // for every cell that needs to change
-            for (DisplayCell dc : copyDisplayCellData) { // find its current display cell
+        for (ICell c : cellData.values()) {
+            for (DisplayCell dc : copyDisplayCellData) {
                 if (c.getName().equals(dc.getCell().getName())) {
                     clearDisplayCell(dc);
                     break;
@@ -147,13 +155,12 @@ public class DisplayTable {
     }
 
     private void clearDisplayCell(DisplayCell dc) {
-        myDisplayCellData.remove(dc);  // remove the display cell + all its children from the list of active display cells
+        myDisplayCellData.remove(dc);
         if (dc.getImageView()==null) {
             // do nothing
-            //FIXME
         } else {
             dc.getImageView().setImage(null);
-            myPane.getChildren().remove(dc.getImageView()); // remove the display cell +  all its children from the screen
+            myPane.getChildren().remove(dc.getImageView());
         }
         for (IOffset dir: dc.getCell().getAllChildren().keySet()) {
             if (dir == Offset.NONE) {
