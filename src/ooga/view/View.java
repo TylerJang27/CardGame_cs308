@@ -2,6 +2,7 @@ package ooga.view;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.function.Consumer;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -51,6 +52,11 @@ public class View implements ExternalAPI {
     }
 
     @FunctionalInterface
+    public interface SaveGame{
+        public void saveGame(int gameID, String fname);
+    }
+
+    @FunctionalInterface
     public interface ChangeValue {
         public void setValue(String newValue);
     }
@@ -70,6 +76,7 @@ public class View implements ExternalAPI {
     private int myGameIndex;;
     private TabPane myTabPane;
     private Map<Integer, GameScreen> myGameIdToGame;
+    private SaveGame mySaveGame;
 
     private static final double DEFAULT_WIDTH = 650;
     private static final double DEFAULT_HEIGHT = 500;
@@ -86,7 +93,9 @@ public class View implements ExternalAPI {
      * @param restart runnable which will be executed when a user hits restart on game table
      * @param style is updated to reflect user's language and theme preferences so they can be reloaded
      */
-    public View(Controller.GiveMove giveMove, Restart restart, IStyle style){
+    public View(Controller.GiveMove giveMove, Restart restart, IStyle style, SaveGame gameSave, Consumer<String> gameLoad){
+        mySaveGame = gameSave;
+
         myHighScoresManager = new HighScoresManager();
 
         myGameIdToGame = new HashMap<>();
@@ -126,10 +135,10 @@ public class View implements ExternalAPI {
             }
         };
 
-        myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH,handler);
+        myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH,handler, gameLoad);
         Tab menuTab = new Tab("Menu",myMenu.getScene());
         myTabPane.getTabs().add(menuTab);
-        myScene = new Scene(myTabPane,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+        myScene = new Scene(myTabPane);
         myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme.toLowerCase()+"/mainmenu.css").toExternalForm()); //
         myStage = new Stage();
         myStage.setScene(myScene);
@@ -150,16 +159,6 @@ public class View implements ExternalAPI {
     @Override
     public void setLayout(int gameID, ILayout layout) {
 
-        Button backButton = new Button();
-        backButton.setGraphic(new ImageView(new Image("/ooga/resources/backarrow.png", 20, 20, false, false)));
-        /*
-        backButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                myStage.setScene(myMenu.getScene());
-            }
-        });
-         */
-
         ResourceBundle currentMessages = ResourceBundle.getBundle(MESSAGES+myLanguage);
         Button restartButton = new Button(currentMessages.getString("restart"));
         restartButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -169,7 +168,7 @@ public class View implements ExternalAPI {
             }
         });
 
-        GameScreen gameScreen = new GameScreen(gameID,getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, backButton, restartButton, myMenu.getGame(), currentMessages.getString("score"), myLanguage);
+        GameScreen gameScreen = new GameScreen(gameID,getMove, (Layout) layout, DEFAULT_WIDTH, myTheme, restartButton, myMenu.getGame(), currentMessages.getString("score"), myLanguage,mySaveGame);
         myGameIdToGame.put(gameID,gameScreen);
 
         Tab newTab = new Tab("game",gameScreen.getNode());

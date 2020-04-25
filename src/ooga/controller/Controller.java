@@ -1,5 +1,6 @@
 package ooga.controller;
 
+import java.util.function.Consumer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import ooga.cardtable.*;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import ooga.view.View.SaveGame;
 
 /**
  *
@@ -108,11 +110,19 @@ public class Controller extends Application {
 
         IStyle myStyle = extractStyle();
         myScores = extractScores();
+
+        SaveGame processGameSave = (gameID, fileName) -> {
+            saveGame(gameID, fileName);
+        };
+        Consumer<String> loadGame = (fileName) -> {
+            loadGame(fileName);
+        };
+
         myView = new View(gm, (int gameID)->{
             myTables.get(gameID).restartGame();
             myCurrentCells = myTables.get(gameID).getCellData();
             myView.setUpdatesToCellData(gameID,myCurrentCells); },
-            myStyle);
+            myStyle, processGameSave,loadGame);
         for(String key : myScores.getSavedGames()){
             myView.updateHighScores(key,myScores.getScore(key));
         }
@@ -172,23 +182,25 @@ public class Controller extends Application {
         }
     }
 
-    private void saveGame(int gameID, String destination) { //TODO: PROCESS ON FRONTEND @MARIUSZ
+    private void saveGame(int gameID, String destination) {
         ISaveConfiguration saveData = myTables.get(gameID).getSaveData(myGameNames.get(gameID), myRuleFiles.get(gameID).getPath());
         saveData.writeConfiguration(destination);
     }
 
     private void loadGame(String loadFile) { //TODO: PROCESS ON FRONTEND @MARIUSZ
         try {
+            System.out.println(loadFile);
             ISaveConfiguration load = SaveConfigurationFactory.createSave(new File(loadFile));
             IPhaseMachine pm = PhaseMachineFactory.createPhaseMachine(new File(load.getRulePath()));
             pm.setCellData(load.getCellMap());
             pm.setPhase(load.getCurrentPhase());
             ITable table = new Table(pm);
             table.getCurrentPlayer().setScore(load.getScore());
-            //currentGame = load.getGameName(); TODO: Big fixes
             myCurrentPhaseMachine = pm;
-            //myTable = table; TODO: FIX!!
-            //TODO: SHOULD THIS BE LOADED INTO THE VIEW IN TERMS OF THE CELL DATA AND SUCH?
+            int gameID = myView.createGame(load.getGameName());
+            myGameNames.put(gameID, load.getGameName());
+            myRuleFiles.put(gameID, new File(loadFile));
+            attatchView(gameID, table);
         } catch (XMLException e) {
             reportError(e);
         }
@@ -215,19 +227,22 @@ public class Controller extends Application {
             myRuleFiles.put(gameID,myRuleFile);
             myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
             ITable table = new Table(myCurrentPhaseMachine);
-            Map<String, ICell> myCellMap = table.getCellData();
-            File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
 
-            //fixme
-            myView.setLayout(gameID,LayoutFactory.createLayout(f));
-            myView.setCellData(gameID, myCellMap);
-            //myView.setHighScore(myScores.getScore(currentGame));  //TODO: MARIUSZ display it please
-            myPreviousCells = myCellMap;
-            myTables.put(gameID,table);
+            attatchView(gameID, table);
             //myView.setCellData(Map.copyOf(myTable.getCellData()));
         } catch (XMLException e) {
             reportError(e);
         }
+    }
+
+    private void attatchView(int gameID, ITable table) {
+        Map<String, ICell> myCellMap = table.getCellData();
+        File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
+
+        myView.setLayout(gameID, LayoutFactory.createLayout(f));
+        myView.setCellData(gameID, myCellMap);
+        myPreviousCells = myCellMap;
+        myTables.put(gameID,table);
     }
 
     private void newMove() {

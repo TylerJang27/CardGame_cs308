@@ -1,5 +1,6 @@
 package ooga.view.gamescreen;
 
+import java.util.function.Consumer;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,28 +12,32 @@ import ooga.view.View;
 
 import java.util.Map;
 import java.util.ResourceBundle;
+import ooga.view.View.SaveGame;
 
 public class GameScreen {
+    private static final String SKIN_TYPE = "classic";
+    private static final String CARD_RESOURCE_BUNDLE = "ooga.resources.decks.supportedthemes";
+    private static final ResourceBundle DEFAULT_CARD_BUNDLE = ResourceBundle.getBundle(CARD_RESOURCE_BUNDLE);
 
     private DisplayTable myDisplayTable;
     private Dashboard myDashboard;
     private Header myHeader;
     private BorderPane myBorderPane;
 
-    public GameScreen(int gameID, GiveMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, Button restartButton, String game, String scoreLabel, String language) {
-
-        // Current default is standard, can change
-        String skinType = "classic";
-        ResourceBundle cardskins = ResourceBundle.getBundle("ooga.resources.decks.supportedthemes");
-        for (String the : cardskins.getString("standard").split(",")) {
+    public GameScreen(int gameID, GiveMove moveLambda, Layout layout, double screenWidth, String theme, Button restartButton, String game, String scoreLabel, String language, SaveGame saveGame) {
+        String skinType = SKIN_TYPE;
+        for (String the : DEFAULT_CARD_BUNDLE.getString("standard").split(",")) {
             if (theme.toLowerCase().equals(the.toLowerCase())) {
                 skinType = theme;
                 break;
             }
         }
+        Consumer<String> dashboardSave = fileName -> {
+            saveGame.saveGame(gameID, fileName);
+        };
 
         myDisplayTable = new DisplayTable(gameID,moveLambda, (Layout) layout, 650, skinType);
-        myDashboard = new Dashboard(backButton, restartButton, scoreLabel, ResourceBundle.getBundle("ooga.resources.languages.messages."+language), game);
+        myDashboard = new Dashboard(restartButton, scoreLabel, ResourceBundle.getBundle("ooga.resources.languages.messages."+language), game, dashboardSave);
         myHeader = new Header();
 
         myBorderPane = new BorderPane();

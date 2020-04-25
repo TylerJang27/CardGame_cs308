@@ -56,16 +56,19 @@ public class HighScoreFactory implements Factory {
 
                 for (int k = 0; k < scoreNodes.getLength(); k ++) {
                     Node scoreNode = scoreNodes.item(k);
-                    List<Double> gameScoreList = new ArrayList<>();
-                    try {
-                        NodeList scores = scoreNode.getChildNodes();
-                        for(int i = 0; i < scores.getLength(); i++){
-                            Node score = scores.item(i);
-                            gameScoreList.add(Double.parseDouble(score.getTextContent()));
+
+                    if(! scoreNode.getNodeName().equals("#text")) {
+                        List<Double> gameScoreList = new ArrayList<>();
+                        try {
+                            NodeList scores = scoreNode.getChildNodes();
+                            for (int i = 0; i < scores.getLength(); i++) {
+                                Node score = scores.item(i);
+                                gameScoreList.add(Double.parseDouble(score.getTextContent()));
+                            }
+                            scoreMap.put(scoreNode.getNodeName(), gameScoreList);
+                        } catch (NumberFormatException | DOMException e) {
+                            scoreMap.put(scoreNode.getNodeName(), new ArrayList<>());
                         }
-                        scoreMap.put(scoreNode.getNodeName(),gameScoreList);
-                    } catch (NumberFormatException | DOMException e) {
-                        scoreMap.put(scoreNode.getNodeName(), new ArrayList<>());
                     }
                 }
 

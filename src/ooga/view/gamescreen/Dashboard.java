@@ -1,17 +1,23 @@
 package ooga.view.gamescreen;
 
+import java.io.File;
+import java.util.function.Consumer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 import java.util.ResourceBundle;
 
 public class Dashboard {
+    private static final String SCORE = "score";
 
     private Pane myPane;
     private HBox myBox;
@@ -23,7 +29,7 @@ public class Dashboard {
     private Text myInstructions;
     private Stage myPopUp;
 
-    public Dashboard(Button backButton, Button restartButton, String scoreLabel, ResourceBundle messages, String game) {
+    public Dashboard(Button restartButton, String scoreLabel, ResourceBundle messages, String game, Consumer<String> saveConsumer) {
         myMessages = messages;
         myPane = new Pane();
         myBox = new HBox();
@@ -32,7 +38,7 @@ public class Dashboard {
         myScoreLabel = scoreLabel;
         myScoreDisplay = new Text();
         myScoreDisplay.setText(myScoreLabel+" "+myScore);
-        myScoreDisplay.getStyleClass().add("score");
+        myScoreDisplay.getStyleClass().add(SCORE);
 
         myInstructions = new Text();
         HBox textholder = new HBox();
@@ -51,9 +57,20 @@ public class Dashboard {
             }
         });
         //messages.getString(game+"_insns");
+        Button saveButton = new Button("Save");
+        saveButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Save File");
+                fileChooser.getExtensionFilters().add(new ExtensionFilter("XML File","*.xml"));
+                File saveFile = fileChooser.showSaveDialog(new Stage());
+                saveConsumer.accept(saveFile.getPath());
+            }
+        });
 
         myBox.getStyleClass().add("dashboard");
-        myBox.getChildren().addAll(backButton, restartButton, instructionsButton, myScoreDisplay);
+        myBox.getChildren().addAll(restartButton, instructionsButton, myScoreDisplay,saveButton);
 
         myPane.getStyleClass().add("dashboard");
         myPane.getChildren().add(myBox);
