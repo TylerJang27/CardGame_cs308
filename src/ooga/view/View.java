@@ -1,5 +1,6 @@
 package ooga.view;
 
+import java.util.Collection;
 import java.util.HashMap;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
@@ -11,6 +12,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -23,6 +25,8 @@ import ooga.data.style.ILayout;
 import ooga.data.style.Layout;
 import ooga.data.style.IStyle;
 import ooga.view.gamescreen.GameScreen;
+import ooga.view.highscores.HighScoresDisplay;
+import ooga.view.highscores.HighScoresManager;
 import ooga.view.menu.Menu;
 
 import java.util.ArrayList;
@@ -60,6 +64,7 @@ public class View implements ExternalAPI {
     private Stage myStage;
     private Scene myScene;
     private Menu myMenu;
+    private HighScoresManager myHighScoresManager;
 
     private IStyle myStyle;
     private int myGameIndex;;
@@ -82,6 +87,8 @@ public class View implements ExternalAPI {
      * @param style is updated to reflect user's language and theme preferences so they can be reloaded
      */
     public View(Controller.GiveMove giveMove, Restart restart, IStyle style){
+        myHighScoresManager = new HighScoresManager();
+
         myGameIdToGame = new HashMap<>();
         myGameIndex = 0;
 
@@ -109,8 +116,17 @@ public class View implements ExternalAPI {
         if (myStyle.getLanguage() != null) {
             myLanguage = myStyle.getLanguage();
         }
-        myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH);
         myTabPane = new TabPane();
+
+        EventHandler<MouseEvent> handler = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Tab highScoresTab = new Tab("High Scores",new HighScoresDisplay(myHighScoresManager).getNode());
+                myTabPane.getTabs().add(highScoresTab);
+            }
+        };
+
+        myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH,handler);
         Tab menuTab = new Tab("Menu",myMenu.getScene());
         myTabPane.getTabs().add(menuTab);
         myScene = new Scene(myTabPane,DEFAULT_WIDTH,DEFAULT_HEIGHT);
@@ -209,6 +225,9 @@ public class View implements ExternalAPI {
             displayMessage = message;
         }
         return displayMessage;
+    }
+    public void updateHighScores(String gameType, Collection<Double> scores){
+        myHighScoresManager.addScore(gameType, scores);
     }
 
     /**
