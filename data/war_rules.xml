@@ -443,7 +443,7 @@
         </group>
         <group category="battle">
             <cell name="court">
-                <fan>east</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D3,U,none</card>
@@ -628,7 +628,8 @@
                     <action>
                         <receiver_dest>
                             <destination>hold1</destination>
-                            <num_cards>*</num_cards>
+                            <num_cards>h</num_cards>
+                            <collapse>y</collapse>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
                             <offset>none</offset>
@@ -647,7 +648,7 @@
                             <offset>preserve</offset>
                         </donor_dest>
                         <!-- points included in the tag below-->
-                        <next_phase phase="1decktostage">0</next_phase>
+                        <next_phase phase="check_eog1">0</next_phase>
                     </action>
                 </rule>
                 <rule category="battle">
@@ -663,7 +664,8 @@
                     <action>
                         <receiver_dest>
                             <destination>hold2</destination>
-                            <num_cards>*</num_cards>
+                            <num_cards>h</num_cards>
+                            <collapse>y</collapse>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
                             <offset>none</offset>
@@ -682,7 +684,7 @@
                             <offset>preserve</offset>
                         </donor_dest>
                         <!-- points included in the tag below-->
-                        <next_phase phase="1decktostage">0</next_phase>
+                        <next_phase phase="check_eog1">0</next_phase>
                     </action>
                 </rule>
                 <rule category="battle">
@@ -710,7 +712,7 @@
                             <offset>preserve</offset>
                         </donor_dest>
                         <!-- points included in the tag below-->
-                        <next_phase phase="1decktostage">0</next_phase>
+                        <next_phase phase="check_eog1">0</next_phase>
                     </action>
                 </rule>
             </rules>
