@@ -504,14 +504,14 @@
                             <num_cards>none</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>none</offset>
+                            <offset>preserve</offset>
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>t</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>none</offset>
+                            <offset>preserve</offset>
                             <flip_up>y</flip_up>
                         </mover_dest>
                         <donor_dest>
@@ -588,14 +588,14 @@
                             <num_cards>none</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>none</offset>
+                            <offset>preserve</offset>
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>t</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>none</offset>
+                            <offset>east</offset>
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
@@ -631,14 +631,14 @@
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>none</offset>
+                            <offset>east</offset>
                         </receiver_dest>
                         <mover_dest>
                             <destination>hold1</destination>
                             <num_cards>t</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>none</offset>
+                            <offset>east</offset>
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
@@ -666,14 +666,49 @@
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>none</offset>
+                            <offset>west</offset>
                         </receiver_dest>
                         <mover_dest>
                             <destination>hold2</destination>
                             <num_cards>t</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>none</offset>
+                            <offset>west</offset>
+                        </mover_dest>
+                        <donor_dest>
+                            <destination>d</destination>
+                            <shuffle>n</shuffle>
+                            <rotation>0</rotation>
+                            <offset>preserve</offset>
+                        </donor_dest>
+                        <!-- points included in the tag below-->
+                        <next_phase phase="1decktostage">0</next_phase>
+                    </action>
+                </rule>
+                <rule category="battle">
+                    <validation>
+                        <receiver></receiver>
+                        <mover>
+                            <value>0</value>
+                        </mover>
+                        <donor>
+                            <name>stage2</name>
+                        </donor>
+                    </validation>
+                    <action>
+                        <receiver_dest>
+                            <destination>r</destination>
+                            <num_cards>*</num_cards>
+                            <shuffle>n</shuffle>
+                            <rotation>0</rotation>
+                            <offset>preserve</offset>
+                        </receiver_dest>
+                        <mover_dest>
+                            <destination>r</destination>
+                            <num_cards>t</num_cards>
+                            <shuffle>n</shuffle>
+                            <rotation>0</rotation>
+                            <offset>preserve</offset>
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>

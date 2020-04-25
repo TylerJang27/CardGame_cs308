@@ -669,13 +669,13 @@
                         </donor>
                     </validation>
                     <action>
-                        <receiver_dest>
+                        <!--receiver_dest>
                             <destination>r</destination>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
                             <offset>none</offset>
-                        </receiver_dest>
+                        </receiver_dest-->
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>*</num_cards>
