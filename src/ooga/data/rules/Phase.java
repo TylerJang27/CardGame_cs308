@@ -82,12 +82,10 @@ public class Phase implements IPhase {
     @Override
     public IPhaseArrow executeMove(IMove move, IPlayer player) {
         IMasterRule ruleToExecute = identifyMove(move);
-        if (ruleToExecute != null) {
-            if (!isAuto) {
-                myGameState = ruleToExecute.executeMove(move);
-                IPhaseArrow ab = ruleToExecute.executeAutoActions(player, move);
-                return ab; //TODO: ADD PLAYER HERE
-            }
+        if (ruleToExecute != null && !isAuto) {
+            myGameState = ruleToExecute.executeMove(move);
+            IPhaseArrow ab = ruleToExecute.executeAutoActions(player, move);
+            return ab; //TODO: ADD PLAYER HERE
         }
         return null;
     }

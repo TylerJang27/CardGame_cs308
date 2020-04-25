@@ -7,7 +7,7 @@
     <card_width>5</card_width>
     <card_height>7</card_height>
     <face_down_offset>1</face_down_offset>
-    <face_up_offset>2</face_up_offset>
+    <face_up_offset>1</face_up_offset>
   </attributes>
   <cards>
     <card>AC</card>
@@ -332,7 +332,7 @@
       <y_val>39</y_val>
     </cell>
     <cell name="52">
-      <x_val>7</x_val>
+      <x_val>49</x_val>
       <y_val>51</y_val>
     </cell>
   </cells>

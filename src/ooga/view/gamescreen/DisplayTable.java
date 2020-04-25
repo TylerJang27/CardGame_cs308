@@ -136,18 +136,21 @@ public class DisplayTable {
             for (DisplayCell dc : copyDisplayCellData) { // find its current display cell
                 if (c.getName().equals(dc.getCell().getName())) {
                     clearDisplayCell(dc);
+                    break;
                 }
             }
         }
+        copyDisplayCellData.clear();
     }
 
     private void clearDisplayCell(DisplayCell dc) {
         myDisplayCellData.remove(dc);  // remove the display cell + all its children from the list of active display cells
-        if (dc.getImageView().equals(null)) {
+        if (dc.getImageView()==null) {
             System.out.println("I'm broken, help");
             System.out.println(myDisplayCellData.size());
             System.out.println(myPane.getChildren().size());
         } else {
+            dc.getImageView().setImage(null);
             myPane.getChildren().remove(dc.getImageView()); // remove the display cell +  all its children from the screen
         }
         for (IOffset dir: dc.getCell().getAllChildren().keySet()) {
@@ -187,7 +190,7 @@ public class DisplayTable {
             if (dir == Offset.NONE) {
                 continue;
             }
-            drawDisplayCell(rootDispCell.getAllChildren().get((Offset) dir));
+            drawDisplayCell(rootDispCell.getAllChildren().get(dir));
         }
     }
 
