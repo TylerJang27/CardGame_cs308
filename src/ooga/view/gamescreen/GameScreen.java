@@ -1,17 +1,14 @@
 package ooga.view.gamescreen;
 
+import java.util.Map;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import ooga.cardtable.ICell;
 import ooga.controller.Controller.GiveMove;
 import ooga.data.style.Layout;
-import ooga.view.View;
-
-import java.util.Map;
-import java.util.ResourceBundle;
 import ooga.view.View.SaveGame;
 import ooga.view.menu.Dictionary;
 
@@ -37,7 +34,7 @@ public class GameScreen {
             saveGame.saveGame(gameID, fileName);
         };
 
-        myDisplayTable = new DisplayTable(gameID,moveLambda, (Layout) layout, 650, skinType);
+        myDisplayTable = new DisplayTable(gameID,moveLambda, layout, 650, skinType);
         Dictionary.getInstance().addReference("ooga.resources.languages.messages");
         myDashboard = new Dashboard(restartButton, scoreLabel, game, dashboardSave);
         myHeader = new Header();

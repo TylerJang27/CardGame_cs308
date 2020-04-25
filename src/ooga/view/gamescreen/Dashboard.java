@@ -24,6 +24,7 @@ public class Dashboard {
     private static final String SAVE = "Save";
     private static final String SAVE_WINDOW_TITLE = "savefilechoosertitle";
     private static final String XML_FILE = "XMLFile";
+    private static final String XML_EXTENSION = "*.xml";
 
     private Pane myPane;
     private HBox myBox;
@@ -63,7 +64,7 @@ public class Dashboard {
         saveButton.setOnMouseClicked(click -> {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.titleProperty().bind(Dictionary.getInstance().get(SAVE_WINDOW_TITLE));
-                fileChooser.getExtensionFilters().add(new ExtensionFilter(Dictionary.getInstance().get(XML_FILE).getValue(),"*.xml"));
+                fileChooser.getExtensionFilters().add(new ExtensionFilter(Dictionary.getInstance().get(XML_FILE).getValue(),XML_EXTENSION));
                 File saveFile = fileChooser.showSaveDialog(new Stage());
                 saveConsumer.accept(saveFile.getPath());
         });
