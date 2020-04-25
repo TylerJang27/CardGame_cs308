@@ -140,7 +140,7 @@ public class View implements ExternalAPI {
 
         Tab newTab = new Tab();
         newTab.getStyleClass().addAll(GAME_CSS);
-        newTab.textProperty().bind(Dictionary.getInstance().get(myGameIdToGameName.get(gameID)));
+        newTab.textProperty().bind(Dictionary.getInstance().get(myGameIdToGameName.get(gameID).toLowerCase()));
         newTab.setContent(gameScreen.getNode());
         myGameTabs.add(newTab);
         myTabToRatio.put(newTab,layout.getScreenRatio());
