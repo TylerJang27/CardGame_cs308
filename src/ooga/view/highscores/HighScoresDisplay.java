@@ -2,35 +2,28 @@ package ooga.view.highscores;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
 import ooga.view.KeyPreservingStringProperty;
+import ooga.view.menu.Dictionary;
 
 public class HighScoresDisplay {
+  private static final String INDEX = "Index";
+  private static final String SCORES = "Scores";
 
-  private HighScoresManager myManager;
   private Node myNode;
 
   public HighScoresDisplay(HighScoresManager manager){
-    myManager = manager;
     TableView<Double> view = new TableView<>();
     view.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-    TableColumn<Double, String> indexCol = new TableColumn<>("Index");
+    TableColumn<Double, String> indexCol = new TableColumn<>();
+    indexCol.textProperty().bind(Dictionary.getInstance().get(INDEX));
     indexCol.setCellFactory(col -> {
       TableCell<Double, String> cell = new TableCell<>();
       cell.textProperty().bind(Bindings.createStringBinding(() -> {
@@ -45,41 +38,32 @@ public class HighScoresDisplay {
     view.getColumns().add(indexCol);
 
 
-    TableColumn<Double, String> col = new TableColumn<>("Scores");
+    TableColumn<Double, String> col = new TableColumn<>();
+    col.textProperty().bind(Dictionary.getInstance().get(SCORES));
+
     col.setCellValueFactory(
-        new Callback<CellDataFeatures<Double, String>, ObservableValue<String>>() {
-          @Override
-          public ObservableValue<String> call(CellDataFeatures<Double, String> param) {
-            return new SimpleStringProperty(Double.toString(param.getValue()));
-          }
-        });
+        param -> new SimpleStringProperty(Double.toString(param.getValue())));
     view.getColumns().add(col);
-    ObservableList<Double> scores = manager.getGameHighScores("memory");
-    view.setItems(scores);
 
     ComboBox<KeyPreservingStringProperty> gameChoices = new ComboBox<>();
     gameChoices.setItems(manager.getGames());
-    gameChoices.setConverter(new StringConverter<KeyPreservingStringProperty>() {
+    gameChoices.setConverter(new StringConverter<>() {
       @Override
       public String toString(KeyPreservingStringProperty object) {
-        if(object != null) {
+        if (object != null) {
           return object.valueProperty().getValue();
         }
         return null;
       }
+
       @Override
       public KeyPreservingStringProperty fromString(String string) {
-        System.out.println("here!");
         return null;
       }
     });
-    gameChoices.valueProperty().addListener(new ChangeListener<KeyPreservingStringProperty>() {
-      @Override
-      public void changed(ObservableValue<? extends KeyPreservingStringProperty> observable,
-          KeyPreservingStringProperty oldValue, KeyPreservingStringProperty newValue) {
-        String newKey = newValue.getKey();
-        view.setItems(manager.getGameHighScores(newKey));
-      }
+    gameChoices.valueProperty().addListener((observable, oldValue, newValue) -> {
+      String newKey = newValue.getKey();
+      view.setItems(manager.getGameHighScores(newKey));
     });
     gameChoices.getSelectionModel().selectFirst();
 

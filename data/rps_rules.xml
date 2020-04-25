@@ -397,6 +397,7 @@
                             <name>cpu</name>
                         </receiver>
                         <mover>
+                            <name>center</name>
                             <value>*</value>
                             <color>*</color>
                             <suit>*</suit>
