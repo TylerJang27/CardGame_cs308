@@ -57,7 +57,7 @@ public class HighScoreFactory implements Factory {
                 for (int k = 0; k < scoreNodes.getLength(); k ++) {
                     Node scoreNode = scoreNodes.item(k);
 
-                    if(! scoreNode.getNodeName().equals("#text")) {
+                    if(! scoreNode.getNodeName().equals(Factory.BLANK_TEXT)) {
                         List<Double> gameScoreList = new ArrayList<>();
                         try {
                             NodeList scores = scoreNode.getChildNodes();
