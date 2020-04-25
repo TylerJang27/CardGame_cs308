@@ -13,8 +13,8 @@ def generateLayout():
             print('<y_val>'+str(3+12*r)+'</y_val>')
             print('</cell>')
     r = 4
-    c = 0
-    print('<cell name="'+str(r*13+c)+'">')
+    c = 6
+    print('<cell name="'+str(52)+'">')
     print('<x_val>'+str(7+7*c)+'</x_val>')
     print('<y_val>'+str(3+12*r)+'</y_val>')
     print('</cell>')
