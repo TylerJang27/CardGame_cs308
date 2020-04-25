@@ -72,8 +72,10 @@ public class PhaseMachine implements IPhaseMachine {
      */
     private void cycleAutomatic() {
         if (currentPhase.isAutomatic()) {
+            System.out.println("This is my phase (auto): " + currentPhase.getMyName());
             IPhaseArrow arrow = currentPhase.executeAutomaticActions(currentPlayer, lastMove);
             moveToNextPhase(arrow);
+            System.out.println("This is my phase (after arrow): " + currentPhase.getMyName());
         }
     }
 
