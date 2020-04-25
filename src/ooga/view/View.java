@@ -145,6 +145,7 @@ public class View implements ExternalAPI {
         myGameTabs.add(newTab);
         myTabToRatio.put(newTab,layout.getScreenRatio());
         myTabPane.getTabs().add(newTab);
+        myTabPane.getSelectionModel().select(newTab);
         //myStage.minHeightProperty().bind(Bindings.multiply(myGameScreen.getDisplayTable().getPane().widthProperty(),layout.getScreenRatio()));
         //myStage.minWidthProperty().bind(Bindings.divide(myGameScreen.getDisplayTable().getPane().heightProperty(),layout.getScreenRatio()));
 
