@@ -40,9 +40,10 @@ Team Name: Solitaire Confinement (Team 52 Pickup)
     * New game (Conquest)
     * Update XSD for High Scores                        DONE   
     * Restart game--score                               DONE
+    * README.md
     * 
 * Andrew
-    * War
+    * War                                               DONE
     * JUnit Tests
     * Refactor Controller
     * Refactor the data directory
