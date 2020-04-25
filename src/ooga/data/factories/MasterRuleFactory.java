@@ -102,7 +102,7 @@ public class MasterRuleFactory implements Factory {
      */
     private static List<ICardAction> getCardandControlActions(String phaseName, Element ruleNode, String ruleName, List<IControlAction> controlActionList, Map<String, ICellGroup> cellGroupMap) {
         List<ICardAction> cardActionList = new ArrayList<>();
-        NodeList actionList = ruleNode.getElementsByTagName(RESOURCES.getString(ACTION));               //TODO: REFACTOR FROM HERE TO AN ACTION FACTORY
+        NodeList actionList = ruleNode.getElementsByTagName(RESOURCES.getString(ACTION));
         for (int j = 0; j < actionList.getLength(); j++) {
             Element actionHeadNode = (Element) actionList.item(j);
 

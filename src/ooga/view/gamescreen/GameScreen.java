@@ -10,7 +10,6 @@ import ooga.cardtable.ICell;
 import ooga.controller.Controller.GiveMove;
 import ooga.data.style.Layout;
 import ooga.view.View.SaveGame;
-import ooga.view.menu.Dictionary;
 
 public class GameScreen {
     private static final String SKIN_TYPE = "classic";
@@ -41,7 +40,7 @@ public class GameScreen {
         myBorderPane = new BorderPane();
         myBorderPane.setTop(myHeader.getPane());
         myBorderPane.setCenter(myDisplayTable.getPane());
-        myBorderPane.setBottom(myDashboard.getPane());
+        myBorderPane.setBottom(myDashboard.getNode());
 
         //myScene = new Scene(myBorderPane,650,500);
         //myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+theme.toLowerCase()+"/gametable.css").toExternalForm()); //

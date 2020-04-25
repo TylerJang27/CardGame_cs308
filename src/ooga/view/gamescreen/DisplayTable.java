@@ -71,18 +71,26 @@ public class DisplayTable {
             myCellNameToLocation.put(key,new Pair<>(x,y));
         }
 
+        initializeDraggedCell(gameID, moveLambda);
+
+        initializeClickedCell(gameID, moveLambda);
+
+    }
+
+    private void initializeDraggedCell(int gameID, GiveMove moveLambda) {
         getDraggedCell = (DisplayCell selectedCell) -> {
             myMovedDisplayCell = selectedCell;
             if(checkMove()) {
                 moveLambda.sendMove(myMove,gameID);
             }
         };
+    }
 
+    private void initializeClickedCell(int gameID, GiveMove moveLambda) {
         getClickedCell = (DisplayCell selectedCell) -> {
             IMove clickMove = new Move(selectedCell.getCell(), selectedCell.getCell(), selectedCell.getCell());
             moveLambda.sendMove(clickMove,gameID);
         };
-
     }
 
     private boolean checkMove() {
@@ -150,7 +158,6 @@ public class DisplayTable {
         myDisplayCellData.remove(dc);  // remove the display cell + all its children from the list of active display cells
         if (dc.getImageView()==null) {
             // do nothing
-            //FIXME
         } else {
             dc.getImageView().setImage(null);
             myPane.getChildren().remove(dc.getImageView()); // remove the display cell +  all its children from the screen

@@ -13,7 +13,7 @@ public class Table implements ITable {
   private IPhaseMachine machine;
   private IGameState lastState;
   private List<IPlayer> players;
-  private IPlayer currentPlayer; //TODO: MAKE WATERTIGHT
+  private IPlayer currentPlayer;
 
   public Table() {
     machine = null;

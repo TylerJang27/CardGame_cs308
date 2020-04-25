@@ -10,7 +10,7 @@ import java.util.function.Function;
  *
  * @author Tyler Jang
  */
-public class Rule implements IRule { //TODO: ADD DOCUMENTATION
+public class Rule implements IRule {
 
     String myName;
     List<Function<IMove, Boolean>> myConditions;

@@ -28,8 +28,6 @@ public class LayoutDummy extends Layout {
     private double downOffsetRatio = 0.02;
     private double upOffsetRatio = 0.04;
 
-    // TODO: Check if frontend wants card height relative to screen or card width
-
     private static final String PLAYERS = "players";
     private static final String SCREEN_HEIGHT = "screen_height";
     private static final String CARD_WIDTH = "card_width";
