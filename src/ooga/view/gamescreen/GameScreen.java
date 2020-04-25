@@ -15,6 +15,9 @@ import java.util.ResourceBundle;
 import ooga.view.View.SaveGame;
 
 public class GameScreen {
+    private static final String SKIN_TYPE = "classic";
+    private static final String CARD_RESOURCE_BUNDLE = "ooga.resources.decks.supportedthemes";
+    private static final ResourceBundle DEFAULT_CARD_BUNDLE = ResourceBundle.getBundle(CARD_RESOURCE_BUNDLE);
 
     private DisplayTable myDisplayTable;
     private Dashboard myDashboard;
@@ -22,11 +25,8 @@ public class GameScreen {
     private BorderPane myBorderPane;
 
     public GameScreen(int gameID, GiveMove moveLambda, Layout layout, double screenWidth, String theme, Button restartButton, String game, String scoreLabel, String language, SaveGame saveGame) {
-
-        // Current default is standard, can change
-        String skinType = "classic";
-        ResourceBundle cardskins = ResourceBundle.getBundle("ooga.resources.decks.supportedthemes");
-        for (String the : cardskins.getString("standard").split(",")) {
+        String skinType = SKIN_TYPE;
+        for (String the : DEFAULT_CARD_BUNDLE.getString("standard").split(",")) {
             if (theme.toLowerCase().equals(the.toLowerCase())) {
                 skinType = theme;
                 break;

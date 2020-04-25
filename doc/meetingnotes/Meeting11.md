@@ -21,7 +21,7 @@ Team Name: Solitaire Confinement (Team 52 Pickup)
 * Mariusz
     * Themes for game tables (css)
     * Changing themes/languages of pre-created games
-    * Save and Load buttons (check with Tyler)
+    * Save and Load buttons (check with Tyler) done
     * Other assorted layouts (check for layouts)
     * JUnit Tests
     * 

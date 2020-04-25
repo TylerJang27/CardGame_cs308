@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.util.ResourceBundle;
 
 public class Dashboard {
+    private static final String SCORE = "score";
 
     private Pane myPane;
     private HBox myBox;
@@ -37,7 +38,7 @@ public class Dashboard {
         myScoreLabel = scoreLabel;
         myScoreDisplay = new Text();
         myScoreDisplay.setText(myScoreLabel+" "+myScore);
-        myScoreDisplay.getStyleClass().add("score");
+        myScoreDisplay.getStyleClass().add(SCORE);
 
         myInstructions = new Text();
         HBox textholder = new HBox();
