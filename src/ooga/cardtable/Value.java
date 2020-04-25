@@ -55,7 +55,7 @@ public class Value implements IValue {
 
   @Override
   public boolean equals(Object other) {
-    return other instanceof Value &&
+    return other.getClass() == this.getClass() &&
         name.equals(((Value) other).name) &&
         number == ((Value) other).number &&
         symbol == ((Value) other).symbol;
