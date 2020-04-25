@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data type="rule">
     <settings>
-        <!-- should just be a file name so that we can process it properly and send to the front end -->
         <players>1</players>
-        <layout>data/solitaire_layout.xml</layout>
+        <layout>data/solitaire/solitaire_layout.xml</layout>
     </settings>
     <deck>
-        <!-- should either be custom held here, or point to a file to retrieve from -->
         <deck_name>pack52</deck_name>
         <shuffle>y</shuffle>
         <card>
@@ -409,7 +407,7 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D1,U,none</card>
-                    <card>KH,U</card>
+                    <card>2H,U</card>
                 </init_cards>
             </cell>
             <cell name="2">
@@ -417,7 +415,8 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D2,U,none</card>
-                    <card>KS,U</card>
+                    <card>3S,D</card>
+                    <card>AH,U</card>
                 </init_cards>
             </cell>
             <cell name="3">
@@ -425,7 +424,9 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D3,U,none</card>
-                    <card>KD,U</card>
+                    <card>KD,D</card>
+                    <card>4H,D</card>
+                    <card>AS,U</card>
                 </init_cards>
             </cell>
             <cell name="4">
@@ -433,7 +434,10 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D4,U,none</card>
-                    <card>KC,U</card>
+                    <card>0S,D</card>
+                    <card>JH,D</card>
+                    <card>QC,D</card>
+                    <card>4S,U</card>
                 </init_cards>
             </cell>
             <cell name="5">
@@ -441,6 +445,11 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D5,U,none</card>
+                    <card>7H,D</card>
+                    <card>7S,D</card>
+                    <card>8H,D</card>
+                    <card>8C,D</card>
+                    <card>9H,U</card>
                 </init_cards>
             </cell>
             <cell name="6">
@@ -448,6 +457,12 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D6,U,none</card>
+                    <card>AD,D</card>
+                    <card>KC,D</card>
+                    <card>KS,D</card>
+                    <card>0D,D</card>
+                    <card>2D,D</card>
+                    <card>2C,U</card>
                 </init_cards>
             </cell>
             <cell name="7">
@@ -455,6 +470,13 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D7,U,none</card>
+                    <card>6H,D</card>
+                    <card>JS,D</card>
+                    <card>JC,D</card>
+                    <card>2H,D</card>
+                    <card>5H,D</card>
+                    <card>6D,D</card>
+                    <card>2C,U</card>
                 </init_cards>
             </cell>
         </group>
@@ -464,18 +486,6 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>DC,U</card>
-                    <card>AC,U</card>
-                    <card>2C,U</card>
-                    <card>3C,U</card>
-                    <card>4C,U</card>
-                    <card>5C,U</card>
-                    <card>6C,U</card>
-                    <card>7C,U</card>
-                    <card>8C,U</card>
-                    <card>9C,U</card>
-                    <card>0C,U</card>
-                    <card>JC,U</card>
-                    <card>QC,U</card>
                 </init_cards>
             </cell>
             <cell name="diamond">
@@ -483,18 +493,6 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>DD,U</card>
-                    <card>AD,U</card>
-                    <card>2D,U</card>
-                    <card>3D,U</card>
-                    <card>4D,U</card>
-                    <card>5D,U</card>
-                    <card>6D,U</card>
-                    <card>7D,U</card>
-                    <card>8D,U</card>
-                    <card>9D,U</card>
-                    <card>0D,U</card>
-                    <card>JD,U</card>
-                    <card>QD,U</card>
                 </init_cards>
             </cell>
             <cell name="heart">
@@ -502,18 +500,6 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>DH,U</card>
-                    <card>AH,U</card>
-                    <card>2H,U</card>
-                    <card>3H,U</card>
-                    <card>4H,U</card>
-                    <card>5H,U</card>
-                    <card>6H,U</card>
-                    <card>7H,U</card>
-                    <card>8H,U</card>
-                    <card>9H,U</card>
-                    <card>0H,U</card>
-                    <card>JH,U</card>
-                    <card>QH,U</card>
                 </init_cards>
             </cell>
             <cell name="spade">
@@ -521,18 +507,6 @@
                 <rotation>0</rotation>
                 <init_cards>
                     <card>DS,U</card>
-                    <card>AS,U</card>
-                    <card>2S,U</card>
-                    <card>3S,U</card>
-                    <card>4S,U</card>
-                    <card>5S,U</card>
-                    <card>6S,U</card>
-                    <card>7S,U</card>
-                    <card>8S,U</card>
-                    <card>9S,U</card>
-                    <card>0S,U</card>
-                    <card>JS,U</card>
-                    <card>QS,U</card>
                 </init_cards>
             </cell>
         </group>
@@ -613,15 +587,11 @@
                             <except>spade</except>
                             <except>diamond</except>
                         </donor_dest>
-                        <!-- points included in the tag below-->
                         <next_phase phase="check_eog">10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="suits">
                     <validation>
-                        <!-- put regex here -->
-                        <!-- value(Up/Down, #) color(=/!)
-                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
                             <num_cards/>
                         </receiver>
@@ -672,9 +642,6 @@
                 </rule>
                 <rule category="deck">
                     <validation>
-                        <!-- put regex here -->
-                        <!-- value(Up/Down, #) color(=/!)
-                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
                             <num_cards>0</num_cards>
                         </receiver>
@@ -715,9 +682,6 @@
                 </rule>
                 <rule category="hand">
                     <validation>
-                        <!-- put regex here -->
-                        <!-- value(Up/Down, #) color(=/!)
-                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
                             <num_cards></num_cards>
                         </receiver>
@@ -766,31 +730,25 @@
                 <rule category="">
                     <validation>
                         <condition category="action">
-                            <!-- somehow check that all these are empty -->
                             <num_cards>1</num_cards>
                         </condition>
                         <condition category="hand">
-                            <!-- somehow check that all these are empty -->
                             <num_cards>0</num_cards>
                         </condition>
                         <condition category="deck">
-                            <!-- somehow check that all these are empty -->
                             <num_cards>0</num_cards>
                         </condition>
                     </validation>
                     <action>
-                        <!-- go to end of game -->
                         <next_phase phase="win">500.0</next_phase>
                     </action>
                 </rule>
                 <rule category="">
                     <validation>
                         <condition category="action">
-                            <!-- somehow check that all these are empty -->
                         </condition>
                     </validation>
                     <action>
-                        <!-- go to player turn -->
                         <next_phase phase = "play"></next_phase>
                     </action>
                 </rule>
