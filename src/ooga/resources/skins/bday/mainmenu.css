@@ -95,3 +95,6 @@
 .cardskin{
     -fx-image: url(mememan.jpg);
 }
+.tab{
+    -fx-background-color: #E0FF16;
+}
