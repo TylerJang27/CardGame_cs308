@@ -96,13 +96,6 @@ public class Controller extends Application {
         initializeHandlers(myView);
     }
 
-    private void restartAndUpdateGame(int gameID) {
-        myTables.get(gameID).restartGame();
-        myCurrentCells = myTables.get(gameID).getCellData();
-        myView.setUpdatesToCellData(gameID,myCurrentCells);
-        myView.setScores(gameID, Map.of(1, myTables.get(gameID).getCurrentPlayer().getScore()));
-    }
-
     private void processMove(IMove move, int gameID) {
         try {
             Double score = getAndUpdateScoreForGame(move, gameID);
@@ -123,17 +116,40 @@ public class Controller extends Application {
         }
     }
 
+    private void processInvalidMove(IMove move) {
+        if (myChangedCells.isEmpty()) {
+            List<ICell> resetters = List.of(move.getRecipient(), move.getMover(), move.getDonor());
+            for (ICell c: resetters) {
+                c=myCurrentCells.get(c.findHead().getName());
+                if (c != null) {
+                    myChangedCells.put(c.getName(), c);
+                }
+            }
+        }
+    }
+
+    private void restartAndUpdateGame(int gameID) {
+        myTables.get(gameID).restartGame();
+        myCurrentCells = myTables.get(gameID).getCellData();
+        myView.setUpdatesToCellData(gameID,myCurrentCells);
+        myView.setScores(gameID, Map.of(1, myTables.get(gameID).getCurrentPlayer().getScore()));
+    }
+
     private Double getAndUpdateScoreForGame(IMove move, int gameID) {
         Double score = myTables.get(gameID).getCurrentPlayer().getScore();
-        lastState = myTables.get(gameID).update(move);
-        if (lastState.equals(GameState.WIN)) {
-            myView.displayMessage(gameID,WIN);
-            updateHighScores(myGameNames.get(gameID), score);
-        } else if (lastState.equals(GameState.INVALID)) {
-            myView.displayMessage(gameID,INVALID);
-        } else if (lastState.equals(GameState.LOSS)) {
-            myView.displayMessage(gameID,LOSS);
-            updateHighScores(myGameNames.get(gameID), score);
+        try {
+            lastState = myTables.get(gameID).update(move);
+            if (lastState.equals(GameState.WIN)) {
+                myView.displayMessage(gameID, WIN);
+                updateHighScores(myGameNames.get(gameID), score);
+            } else if (lastState.equals(GameState.INVALID)) {
+                myView.displayMessage(gameID, INVALID);
+            } else if (lastState.equals(GameState.LOSS)) {
+                myView.displayMessage(gameID, LOSS);
+                updateHighScores(myGameNames.get(gameID), score);
+            }
+        } catch (Exception e) {
+            reportError(e);
         }
         return score;
     }
@@ -163,7 +179,11 @@ public class Controller extends Application {
 
     private void updateHighScores(String currentGame, Double score) {
         myScores.setScore(currentGame, score);
-        myView.updateHighScores(currentGame,myScores.getScore(currentGame));
+        try {
+            myView.updateHighScores(currentGame, myScores.getScore(currentGame));
+        } catch (Exception e){
+            reportError(e);
+        }
     }
 
     private void reportError(Exception e) {
@@ -176,18 +196,6 @@ public class Controller extends Application {
         }
         if (myView!= null) {
             myView.reportError(messages[0], tags);
-        }
-    }
-
-    private void processInvalidMove(IMove move) {
-        if (myChangedCells.isEmpty()) {
-            List<ICell> resetters = List.of(move.getRecipient(), move.getMover(), move.getDonor());
-            for (ICell c: resetters) {
-                c=myCurrentCells.get(c.findHead().getName());
-                if (c != null) {
-                    myChangedCells.put(c.getName(), c);
-                }
-            }
         }
     }
 

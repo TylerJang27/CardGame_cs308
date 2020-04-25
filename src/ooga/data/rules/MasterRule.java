@@ -84,7 +84,7 @@ public class MasterRule implements IMasterRule {
         boolean flag = true;
         try {
             for (IRule rule : myAutoRules) {
-                if (!rule.checkValidMove(move)) { //TODO: VERIFY THIS NULL WORKS
+                if (!rule.checkValidMove(move)) {
                     return false;
                 }
             }
