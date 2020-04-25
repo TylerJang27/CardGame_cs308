@@ -19,7 +19,7 @@ import ooga.view.menu.Dictionary;
 
 public class Dashboard {
     private static final String SCORE = "score";
-    private static final String INSTRUCTIONS = "%s insns";
+    private static final String INSTRUCTIONS = "%s_insns";
     private static final String INSTRUCTIONS_BUTTON = "insns";
     private static final String SAVE = "Save";
     private static final String SAVE_WINDOW_TITLE = "savefilechoosertitle";
@@ -46,6 +46,7 @@ public class Dashboard {
         myScoreDisplay.getStyleClass().add(SCORE);
 
         myInstructions = new Text();
+        System.out.println(String.format(INSTRUCTIONS, game.toLowerCase()));
         myInstructions.textProperty().bind(Dictionary.getInstance().get(INSTRUCTIONS.format(game.toLowerCase())));
         HBox textholder = new HBox();
         textholder.getChildren().add(myInstructions);
