@@ -71,9 +71,13 @@ public class SaveConfigurationFactory implements Factory {
         NodeList cellNodeList = cells.getChildNodes();
         for (int k = 0; k < cellNodeList.getLength(); k++) {
             Node cell = cellNodeList.item(k);
+
             System.out.println("Cell node name: " + cell.getNodeName() + "\nCell Text: " + cell.getTextContent());
-            String cellName = XMLHelper.getAttribute((Element)cell, RESOURCES.getString(NAME));
-            cellMap.put(cellName, cell.getTextContent());
+            if (!cell.getNodeName().equals(Factory.BLANK_TEXT)) {
+                String cellName = XMLHelper.getAttribute((Element) cell, RESOURCES.getString(NAME));
+                cellMap.put(cellName, cell.getTextContent());
+            }
+
         }
         return cellMap;
     }
