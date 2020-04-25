@@ -27,7 +27,7 @@ import ooga.view.View.ChangeValue;
 
 public class Menu {
 
-  private static final Insets MARGINS = new Insets(305,20,20,20);
+  private static final Insets MARGINS = new Insets(20,20,20,20);
 
   private static final String CHOICES = "ooga.resources.languages.games";
   private static final String COMMA_REGEX = ",";
@@ -42,6 +42,8 @@ public class Menu {
   private static final List<String> ROOT_CSS = List.of("menu");
   private static final String GAMES_FOLDER = "ooga.resources.languages.games.%s";
   private static final double GAMES_SPACING = 20.0;
+  public static final String TITLE = "title";
+  public static final String TITLEBORDER = "titleborder";
 
   private BorderPane myBorderPane;
   private StringProperty myGameProperty;
@@ -134,7 +136,7 @@ public class Menu {
 
   private void setCenter(String defaultLanguage) {
     FlowPane options = new FlowPane();
-    options.setAlignment(Pos.CENTER);
+    options.setAlignment(Pos.BASELINE_CENTER);
     options.setHgap(GAMES_SPACING);
     options.setVgap(GAMES_SPACING);
     System.out.println(options.getRowValignment());
@@ -154,9 +156,9 @@ public class Menu {
   private void setTopBorder(String appName) {
     StackPane gameNamePane = new StackPane();
     Text gameName = new Text(appName);
-    gameName.getStyleClass().add("title");
+    gameName.getStyleClass().add(TITLE);
     gameNamePane.getChildren().add(gameName);
-    gameNamePane.getStyleClass().add("titleborder");
+    gameNamePane.getStyleClass().add(TITLEBORDER);
     myBorderPane.setTop(gameNamePane);
   }
 

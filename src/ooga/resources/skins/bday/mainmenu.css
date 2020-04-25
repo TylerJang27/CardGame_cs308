@@ -18,12 +18,12 @@
 
 .titleborder{
     -fx-base: #000000;
-    -fx-padding: 20;
+    -fx-padding: 0;
 }
 
 .title{
     -fx-fill: #0dff1d;
-    -fx-font-size: 18pt;
+    -fx-font-size: 25pt;
     -font-weight: bolder;
     -fx-alignment: "center";
 }
@@ -94,4 +94,7 @@
 
 .cardskin{
     -fx-image: url(mememan.jpg);
+}
+.tab{
+    -fx-background-color: #E0FF16;
 }

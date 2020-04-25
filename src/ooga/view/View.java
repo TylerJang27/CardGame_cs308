@@ -9,7 +9,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.function.Consumer;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -50,8 +52,7 @@ public class View implements ExternalAPI {
     public static final String SKINS_PACKAGE = "/ooga/resources/skins/";
     public static final String MAINMENU_CSS = "/mainmenu.css";
     public static final int FIRST = 1;
-    private static final List<String> MENU_TAB_CSS = List.of("menu");
-    private static final List<String> GAME_CSS = List.of("gametable");
+    private static final List<String> GAME_CSS = List.of("tab");
 
     @FunctionalInterface
     public interface SaveGame{
@@ -80,6 +81,8 @@ public class View implements ExternalAPI {
     private SaveGame mySaveGame;
     private Map<Integer, String> myGameIdToGameName;
     private Set<Tab> myGameTabs;
+    private Stage myStage;
+    private Map<Tab,Double> myTabToRatio;
 
     private static final double DEFAULT_WIDTH = 650;
     private static final double DEFAULT_HEIGHT = 500;
@@ -97,7 +100,9 @@ public class View implements ExternalAPI {
      * @param style is updated to reflect user's language and theme preferences so they can be reloaded
      */
     public View(Controller.GiveMove giveMove, Restart restart, IStyle style, SaveGame gameSave, Consumer<String> gameLoad){
+        myStage = new Stage();
         myTheme = DEFAULT_THEME;
+        myTabToRatio = new HashMap<>();
         myLanguage = DEFAULT_LANGUAGE;
         myGameTabs = new HashSet<>();
         myGameIdToGameName = new HashMap<>();
@@ -134,10 +139,12 @@ public class View implements ExternalAPI {
 
         Tab newTab = new Tab();
         newTab.getStyleClass().addAll(GAME_CSS);
-        newTab.textProperty().bind(Dictionary.getInstance().get(myGameIdToGameName.get(gameID)));
+        newTab.textProperty().bind(Dictionary.getInstance().get(myGameIdToGameName.get(gameID).toLowerCase()));
         newTab.setContent(gameScreen.getNode());
         myGameTabs.add(newTab);
+        myTabToRatio.put(newTab,layout.getScreenRatio());
         myTabPane.getTabs().add(newTab);
+        myTabPane.getSelectionModel().select(newTab);
         //myStage.minHeightProperty().bind(Bindings.multiply(myGameScreen.getDisplayTable().getPane().widthProperty(),layout.getScreenRatio()));
         //myStage.minWidthProperty().bind(Bindings.divide(myGameScreen.getDisplayTable().getPane().heightProperty(),layout.getScreenRatio()));
 
@@ -304,7 +311,6 @@ public class View implements ExternalAPI {
     private void displayScene() {
         myScene = new Scene(myTabPane);
         myScene.getStylesheets().add(getClass().getResource(SKINS_PACKAGE+myTheme.toLowerCase()+MAINMENU_CSS).toExternalForm()); //
-        Stage myStage = new Stage();
         myStage.setScene(myScene);
         myStage.getIcons().add(new Image(APPLICATION_ICON));
         myStage.setTitle(APPLICATION_NAME);
@@ -314,9 +320,25 @@ public class View implements ExternalAPI {
     private void makeTabPane() {
         myTabPane = new TabPane();
         Tab menuTab = new Tab();
-        menuTab.getStyleClass().addAll(MENU_TAB_CSS);
+        menuTab.getStyleClass().addAll(GAME_CSS);
         menuTab.textProperty().bind(Dictionary.getInstance().get(MENU));
         menuTab.setContent(myMenu.getScene());
+        myTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> observable, Tab oldValue,
+                Tab newValue) {
+                if(myGameTabs.contains(newValue)){
+                    myStage.minHeightProperty().unbind();
+                    double ratio = myTabToRatio.get(newValue);
+                    myStage.setHeight(ratio * myStage.getWidth());
+                    myStage.minHeightProperty().bind(Bindings.multiply(ratio,myStage.widthProperty()));
+                } else{
+                    myStage.minHeightProperty().unbind();
+                    myStage.setHeight(myStage.getWidth());
+                    myStage.minHeightProperty().bind(myStage.widthProperty());
+                }
+            }
+        });
 
         myTabPane.getTabs().add(menuTab);
     }
@@ -324,7 +346,7 @@ public class View implements ExternalAPI {
     private EventHandler<MouseEvent> getHighScoreHandler() {
         return event -> {
             Tab highScoresTab = new Tab();
-            highScoresTab.getStyleClass().addAll(MENU_TAB_CSS);
+            highScoresTab.getStyleClass().addAll(GAME_CSS);
             highScoresTab.textProperty().bind(Dictionary.getInstance().get(HIGH_SCORES));
             highScoresTab.setContent(new HighScoresDisplay(myHighScoresManager).getNode());
             myTabPane.getTabs().add(highScoresTab);
