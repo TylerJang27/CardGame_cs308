@@ -34,7 +34,7 @@ Team Name: Solitaire Confinement (Team 52 Pickup)
 * Tyler
     * Debug save/load games                             DONE
     * Add extra win/lose state for rps
-    * Rewrite JUnits for scores
+    * Rewrite JUnits for scores                         DONE
     * Refactor factories (action/rule)
     * New game (Conquest)
     * Update XSD for High Scores

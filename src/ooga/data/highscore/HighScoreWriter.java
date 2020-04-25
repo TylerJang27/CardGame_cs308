@@ -16,6 +16,7 @@ import javax.xml.transform.TransformerException;
 public class HighScoreWriter implements Writer {
 
     private static final String DATA_TYPE = IHighScores.DATA_TYPE;
+    private static final String SCORE = IHighScores.SCORE;
 
     /**
      * Writes information from IHighScore implementation to filepath
@@ -48,7 +49,7 @@ public class HighScoreWriter implements Writer {
             try {
                 Element e = document.createElement(s);
                 for(Double score : scores.getScore(s)){
-                    Element singleScore = document.createElement("score");
+                    Element singleScore = document.createElement(SCORE);
                     singleScore.appendChild(document.createTextNode(""+score));
                     e.appendChild(singleScore);
                 }
