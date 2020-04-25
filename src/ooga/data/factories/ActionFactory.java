@@ -98,7 +98,11 @@ public class ActionFactory implements Factory {
         if (numCards.equals(RESOURCES.getString(ALL))) {
             return extractAllCells(curr);
         } else if (numCards.equalsIgnoreCase(RESOURCES.getString(HEAD))) {
-            return extractAllCells(curr.findHead());
+            ICell head = curr.findHead();
+            if (head.getDeck().size() == 0 || head.getDeck().peekBottom().isFixed()) {
+                return extractAllCells(findTheChild(head));
+            }
+            return extractAllCells(head);
         } else if (Offset.validOffsets.contains(numCards)) {
             return extractOffsetCells(curr, numCards);
         } else if (numCards.equalsIgnoreCase(RESOURCES.getString(TOP))) {
@@ -256,16 +260,27 @@ public class ActionFactory implements Factory {
     private static void removeEmptyCells(ICell curr) {
         if (curr.getDeck().size() == 0 && curr.getParent() != null) {
             if (curr.getAllChildren().size() == 2) {
-                ICell child = new Cell("");
-                for (Map.Entry<IOffset, ICell> children: curr.getAllChildren().entrySet()) {
-                    if (!children.getKey().equals(Offset.NONE)) {
-                        child = children.getValue();
-                    }
-                }
+                ICell child = findTheChild(curr);
                 curr.getParent().setCellAtOffset(curr.getOffsetFromParent(), child);
             }
             curr.getParent().removeCellAtOffset(curr.getOffsetFromParent());
         }
+    }
+
+    /**
+     * Extracts the child cell from an empty offset cell
+     *
+     * @param curr the cell to extract from
+     * @return     the ICell representing the cell
+     */
+    private static ICell findTheChild(ICell curr) {
+        ICell child = new Cell("");
+        for (Map.Entry<IOffset, ICell> children: curr.getAllChildren().entrySet()) {
+            if (!children.getKey().equals(Offset.NONE)) {
+                child = children.getValue();
+            }
+        }
+        return child;
     }
 
     /**
