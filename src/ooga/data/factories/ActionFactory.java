@@ -47,6 +47,7 @@ public class ActionFactory implements Factory {
     private static final String EXCEPT = PhaseFactory.EXCEPT;
     private static final String PRESERVE = PhaseFactory.PRESERVE;
     private static final String REVERSE = PhaseFactory.REVERSE;
+    private static final String D_ROOT = PhaseFactory.D_ROOT;
 
     private static final List<String> TRUE_CHECKS = MasterRuleFactory.TRUE_CHECKS;
 
@@ -107,6 +108,8 @@ public class ActionFactory implements Factory {
                 return extractAllCells(findTheChild(head));
             }
             return extractAllCells(head);
+        } else if (numCards.equalsIgnoreCase(RESOURCES.getString(D_ROOT))) {
+            return extractRootDeck(curr);
         } else if (Offset.validOffsets.contains(numCards)) {
             return extractOffsetCells(curr, numCards);
         } else if (numCards.equalsIgnoreCase(RESOURCES.getString(TOP))) {
@@ -137,6 +140,27 @@ public class ActionFactory implements Factory {
             removeEmptyCells(currCell);
             return new Deck("", cardList);
         });
+    }
+
+    /**
+     * Extracts the ICell to be moved based on a deck root condition.
+     *
+     * @param currCell the current cell
+     * @return the ICell representing all cells to be moved
+     */
+    private static ICell extractRootDeck(ICell currCell) {
+        ICell c = new Cell("");
+        System.out.println("extracting root:");
+        IDeck deck = currCell.getDeck();
+        for (int k = deck.size()-1; k >= 0; k --) {
+            if (!deck.peekCardAtIndex(k).isFixed()) {
+                c.addCard(Offset.NONE, deck.getCardAtIndex(k));
+            }
+            System.out.println(c.getDeck().size());
+        }
+        removeEmptyCells(currCell, true);
+        System.out.println(c);
+        return c;
     }
 
     /**
@@ -195,8 +219,6 @@ public class ActionFactory implements Factory {
         removeEmptyCells(currCell);
         return cellToMove;
     }
-
-
 
     /**
      * Extracts the ICell to be moved based on a bottom condition.
@@ -285,12 +307,14 @@ public class ActionFactory implements Factory {
     private static void removeEmptyCells(ICell curr, boolean attachTheChild) {
         if (curr.getDeck().size() == 0 && curr.getParent() != null) {
             ICell parent = curr.getParent();
-            parent.removeCellAtOffset(curr.getOffsetFromParent());
+            IOffset off = curr.getOffsetFromParent();
+            parent.removeCellAtOffset(off);
             System.out.println("deck size" + curr.getDeck().size());
             System.out.println(curr.getAllChildren().size());
             if (attachTheChild && curr.getAllChildren().size() == 2) {
                 ICell child = findTheChild(curr);
-                curr.getParent().setCellAtOffset(curr.getOffsetFromParent(), child);
+                parent.addCell(off, child);
+                //parent.setCellAtOffset(curr.getOffsetFromParent(), child);
             }
         }
     }
