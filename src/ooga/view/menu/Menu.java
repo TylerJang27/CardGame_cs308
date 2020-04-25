@@ -23,6 +23,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import ooga.view.View;
+import ooga.view.View.ChangeValue;
 
 public class Menu {
 
@@ -67,7 +68,57 @@ public class Menu {
     return myGame;
   }
 
+  public void addChosenHandler(ChangeListener<String> listener) {
+    myGameProperty.addListener(listener);
+  }
+
   private void setBottomBorder(ResourceBundle supportedLangs, ResourceBundle supportedSkins, String defaultTheme, String defaultLanguage, View.ChangeValue themeLambda, View.ChangeValue languageLambda,EventHandler<MouseEvent> highScoreHandler,Consumer<String> gameLoad) {
+    ComboBox<String> languages = getLanguagesComboBox(supportedLangs, defaultLanguage,
+        languageLambda);
+
+    ComboBox<String> skins = makeSkinsComboBox(supportedSkins, defaultTheme, themeLambda);
+    Button highScoresButton = makeHighScoresButton(highScoreHandler);
+    Button loadButton = makeLoadGameButton(gameLoad);
+
+    HBox dashboard = new HBox();
+    dashboard.getChildren().addAll(languages, skins,highScoresButton,loadButton);
+    dashboard.getStyleClass().addAll(DASHBOARD_CSS);
+
+    myBorderPane.setBottom(dashboard);
+  }
+
+  private Button makeLoadGameButton(Consumer<String> gameLoad) {
+    Button loadButton = new Button(LOAD_GAME);
+    loadButton.setOnMouseClicked(event -> {
+      FileChooser fileChooser = new FileChooser();
+      fileChooser.setTitle(LOAD_HEADER);
+      fileChooser.getExtensionFilters().add(new ExtensionFilter(
+          Dictionary.getInstance().get(XML_FILE).getValue(), XML_EXTENSION));
+      File file = fileChooser.showOpenDialog(new Stage());
+      gameLoad.accept(file.getPath());
+    });
+    return loadButton;
+  }
+
+  private Button makeHighScoresButton(EventHandler<MouseEvent> highScoreHandler) {
+    Button highScoresButton = new Button();
+    highScoresButton.textProperty().bind(Dictionary.getInstance().get(HIGH_SCORES));
+    highScoresButton.setOnMouseClicked(highScoreHandler);
+    return highScoresButton;
+  }
+
+  private ComboBox<String> makeSkinsComboBox(ResourceBundle supportedSkins, String defaultTheme,
+      ChangeValue themeLambda) {
+    ComboBox<String> skins = new ComboBox<>();
+    skins.getItems().addAll(supportedSkins.getString(SUPPORTED).split(COMMA_REGEX));
+    skins.setValue(defaultTheme);
+    skins.valueProperty().addListener(
+        (observable, oldValue, newValue) -> themeLambda.setValue(newValue));
+    return skins;
+  }
+
+  private ComboBox<String> getLanguagesComboBox(ResourceBundle supportedLangs,
+      String defaultLanguage, ChangeValue languageLambda) {
     ComboBox<String> languages = new ComboBox<>();
     languages.getItems().addAll(supportedLangs.getString(SUPPORTED).split(COMMA_REGEX));
     languages.setValue(defaultLanguage);
@@ -75,29 +126,7 @@ public class Menu {
       languageLambda.setValue(newValue);
       Dictionary.getInstance().setLanguage(newValue);
     });
-
-    ComboBox<String> skins = new ComboBox<>();
-    skins.getItems().addAll(supportedSkins.getString(SUPPORTED).split(COMMA_REGEX));
-    skins.setValue(defaultTheme);
-    skins.valueProperty().addListener(
-        (observable, oldValue, newValue) -> themeLambda.setValue(newValue));
-    Button highScoresButton = new Button();
-    highScoresButton.textProperty().bind(Dictionary.getInstance().get(HIGH_SCORES));
-    highScoresButton.setOnMouseClicked(highScoreHandler);
-    Button loadButton = new Button(LOAD_GAME);
-    loadButton.setOnMouseClicked(event -> {
-      FileChooser fileChooser = new FileChooser();
-      fileChooser.setTitle(LOAD_HEADER);
-      fileChooser.getExtensionFilters().add(new ExtensionFilter(Dictionary.getInstance().get(XML_FILE).getValue(), XML_EXTENSION));
-      File file = fileChooser.showOpenDialog(new Stage());
-      gameLoad.accept(file.getPath());
-    });
-
-    HBox dashboard = new HBox();
-    dashboard.getChildren().addAll(languages, skins,highScoresButton,loadButton);
-    dashboard.getStyleClass().addAll(DASHBOARD_CSS);
-
-    myBorderPane.setBottom(dashboard);
+    return languages;
   }
 
   private void setCenter(String defaultLanguage) {
@@ -126,10 +155,6 @@ public class Menu {
     gameNamePane.getChildren().add(gameName);
     gameNamePane.getStyleClass().add("titleborder");
     myBorderPane.setTop(gameNamePane);
-  }
-
-  public void addChosenHandler(ChangeListener<String> listener) {
-    myGameProperty.addListener(listener);
   }
 
   private void addOption(String key, FlowPane hbox){
