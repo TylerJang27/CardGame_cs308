@@ -7,10 +7,7 @@ import ooga.data.highscore.IHighScores;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,35 +25,43 @@ class HighScoreWriterTest {
      */
     @Test
     void writeScores() {
-        Map<String, Double> defaultScores = Map.of("solitaire", 0.0, "memory", 0.0);
-        /*IHighScores defaultHighScore = new HighScore(TEST_DIRECTORY + "default_score_orig.xml", defaultScores);
+        Map<String, List<Double>> defaultScores = Map.of("solitaire", new ArrayList<Double>(Arrays.asList(0.0)), "memory", new ArrayList<Double>(Arrays.asList(0.0)));
+
+        IHighScores defaultHighScore = new HighScore(TEST_DIRECTORY + "default_score_orig.xml", defaultScores);
         IHighScores readHighScore = HighScoreFactory.createScores(new File(TEST_DIRECTORY + "default_score_orig.xml"));
         for (String s: defaultHighScore.getSavedGames()) {
-            assertEquals(defaultHighScore.getScore(s), readHighScore.getScore(s));
+            for (int k = 0; k < defaultHighScore.getScore(s).size(); k++) {
+                Double defaultScore = new ArrayList<>(defaultHighScore.getScore(s)).get(k);
+                Double readScore = new ArrayList<>(readHighScore.getScore(s)).get(k);
+                assertEquals(defaultScore, readScore);
+            }
         }
 
         List<String> games = List.of("solitaire", "war", "rps", "memory", "pickup52");
-        List<Double> scores = List.of(0.0, 0.0, 12.0, 1.1, -3.6);
+        List<Double> scores = new ArrayList<>(Arrays.asList(0.0, 0.0, 12.0, 1.1, -3.6));
 
-        List<Map<String, Double>> scoreMaps = new ArrayList<>();
-        scoreMaps.add(Map.of(games.get(0), scores.get(0)));
+        List<Map<String, List<Double>>> scoreMaps = new ArrayList<>();
+        scoreMaps.add(Map.of(games.get(0), new ArrayList<>(Arrays.asList(scores.get(0)))));
 
         for (int k = 1; k < games.size(); k ++) {
-            HashMap<String, Double> scoreMap = new HashMap<>(scoreMaps.get(k - 1));
-            scoreMap.put(games.get(k), scores.get(k));
+            Map<String, List<Double>> scoreMap = new HashMap<>();
+            scoreMap.putAll(scoreMaps.get(k-1));
+            scoreMap.put(games.get(k), new ArrayList<>(Arrays.asList(scores.get(k))));
             scoreMaps.add(scoreMap);
         }
 
         String fileSave = TEST_DIRECTORY + "score.xml";
-        for (Map<String, Double> map: scoreMaps) {
+        for (Map<String, List<Double>> map: scoreMaps) {
             IHighScores expectedHighScore = new HighScore(TEST_DIRECTORY, map);
             HighScoreWriter.writeScores(fileSave, expectedHighScore);
             IHighScores actualHighScore = HighScoreFactory.createScores(new File(fileSave));
             for (String s: expectedHighScore.getSavedGames()) {
-                System.out.println("check baby check baby");
-                System.out.println(s);
-                assertEquals(expectedHighScore.getScore(s), actualHighScore.getScore(s));
+                for (int k = 0; k < expectedHighScore.getScore(s).size(); k++) {
+                    Double expected = new ArrayList<>(expectedHighScore.getScore(s)).get(k);
+                    Double actual = new ArrayList<>(actualHighScore.getScore(s)).get(k);
+                    assertEquals(expected, actual);
+                }
             }
-        }*/
+        }
     }
 }
