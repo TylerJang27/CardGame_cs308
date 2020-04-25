@@ -150,16 +150,13 @@ public class ActionFactory implements Factory {
      */
     private static ICell extractRootDeck(ICell currCell) {
         ICell c = new Cell("");
-        System.out.println("extracting root:");
         IDeck deck = currCell.getDeck();
         for (int k = deck.size()-1; k >= 0; k --) {
             if (!deck.peekCardAtIndex(k).isFixed()) {
                 c.addCard(Offset.NONE, deck.getCardAtIndex(k));
             }
-            System.out.println(c.getDeck().size());
         }
         removeEmptyCells(currCell, true);
-        System.out.println(c);
         return c;
     }
 
@@ -309,8 +306,6 @@ public class ActionFactory implements Factory {
             ICell parent = curr.getParent();
             IOffset off = curr.getOffsetFromParent();
             parent.removeCellAtOffset(off);
-            System.out.println("deck size" + curr.getDeck().size());
-            System.out.println(curr.getAllChildren().size());
             if (attachTheChild && curr.getAllChildren().size() == 2) {
                 ICell child = findTheChild(curr);
                 parent.addCell(off, child);
