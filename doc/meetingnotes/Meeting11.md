@@ -36,7 +36,6 @@ Team Name: Solitaire Confinement (Team 52 Pickup)
     * Rewrite JUnits for scores
     * Refactor factories
     * New game (Conquest)
-    * Upload XML Documentation
     * Update XSD for High Scores
     * Restart game--score
     * 
@@ -46,6 +45,7 @@ Team Name: Solitaire Confinement (Team 52 Pickup)
     * Refactor Controller
     * Refactor the data directory
     * Help with Cell refactor
+    * Upload XML Documentation
     * 
 
 ### Open Floor
