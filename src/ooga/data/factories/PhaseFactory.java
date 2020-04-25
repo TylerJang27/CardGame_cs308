@@ -59,6 +59,7 @@ public class PhaseFactory implements Factory {
     protected static final String DONOR_DESTINATION = "DonorDestination";
     protected static final String CONDITION = "Condition";
     protected static final String ROTATION = "Rotation";
+    protected static final String COLLAPSE = "Collapse";
 
     protected static final String R = "R";
     protected static final String M = "M";

@@ -17,6 +17,7 @@
         <xs:sequence>
             <xs:element name="destination" minOccurs="0"/>
             <xs:element name="num_cards" minOccurs="0"/>
+            <xs:element name="collapse" minOccurs="0"/>
             <xs:element name="shuffle" minOccurs="0"/>
             <xs:element name="rotation" minOccurs="0"/>
             <xs:element name="offset" minOccurs="0"/>
