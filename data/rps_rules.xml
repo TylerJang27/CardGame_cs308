@@ -252,7 +252,7 @@
                             <offset>south</offset>
                             <flip_up>*</flip_up>
                         </mover_dest>
-                        <next_phase phase="reset1">10.0</next_phase>
+                        <next_phase phase="win">10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="center">
@@ -276,7 +276,7 @@
                             <offset>south</offset>
                             <flip_up>*</flip_up>
                         </mover_dest>
-                        <next_phase phase="reset1">-10.0</next_phase>
+                        <next_phase phase="loss">-10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="center">
@@ -300,7 +300,7 @@
                             <offset>south</offset>
                             <flip_up>*</flip_up>
                         </mover_dest>
-                        <next_phase phase="reset1">10.0</next_phase>
+                        <next_phase phase="win">10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="center">
@@ -325,6 +325,32 @@
                             <flip_up>*</flip_up>
                         </mover_dest>
                         <next_phase phase="reset1">0.0</next_phase>
+                    </action>
+                </rule>
+            </rules>
+        </phase>
+        <phase name="win">
+            <phase_type>auto</phase_type>
+            <valid_donors><category></category></valid_donors>
+            <rules>
+                <rule category="">
+                    <validation>
+                    </validation>
+                    <action>
+                        <next_phase phase="reset1"/>
+                    </action>
+                </rule>
+            </rules>
+        </phase>
+        <phase name="loss">
+            <phase_type>auto</phase_type>
+            <valid_donors><category></category></valid_donors>
+            <rules>
+                <rule category="">
+                    <validation>
+                    </validation>
+                    <action>
+                        <next_phase phase="reset1"/>
                     </action>
                 </rule>
             </rules>
