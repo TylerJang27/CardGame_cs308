@@ -1,202 +1,205 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:group name="rules">
-        <xs:all>
-            <xs:element name="num_cards" minOccurs="0"/>
-            <xs:element name="value" minOccurs="0"/>
-            <xs:element name="color" minOccurs="0"/>
-            <xs:element name="suit" minOccurs="0"/>
-            <xs:element name="is_faceup" minOccurs="0"/>
-            <xs:element name="category" minOccurs="0"/>
-            <xs:element name="name" minOccurs="0"/>
-        </xs:all>
-    </xs:group>
+  <xs:group name="rules">
+    <xs:all>
+      <xs:element name="num_cards" minOccurs="0"/>
+      <xs:element name="value" minOccurs="0"/>
+      <xs:element name="color" minOccurs="0"/>
+      <xs:element name="suit" minOccurs="0"/>
+      <xs:element name="is_faceup" minOccurs="0"/>
+      <xs:element name="category" minOccurs="0"/>
+      <xs:element name="name" minOccurs="0"/>
+    </xs:all>
+  </xs:group>
 
-    <xs:group name="destination">
-        <xs:sequence>
-            <xs:element name="destination" minOccurs="0"/>
-            <xs:element name="num_cards" minOccurs="0"/>
-            <xs:element name="collapse" minOccurs="0"/>
-            <xs:element name="shuffle" minOccurs="0"/>
-            <xs:element name="rotation" minOccurs="0"/>
-            <xs:element name="offset" minOccurs="0"/>
-            <xs:element name="flip_up" minOccurs="0"/>
-            <xs:element name="except" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:group>
+  <xs:group name="destination">
+    <xs:sequence>
+      <xs:element name="destination" minOccurs="0"/>
+      <xs:element name="num_cards" minOccurs="0"/>
+      <xs:element name="collapse" minOccurs="0"/>
+      <xs:element name="shuffle" minOccurs="0"/>
+      <xs:element name="rotation" minOccurs="0"/>
+      <xs:element name="offset" minOccurs="0"/>
+      <xs:element name="flip_up" minOccurs="0"/>
+      <xs:element name="except" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:group>
 
-    <xs:group name="next_phase">
-        <xs:sequence>
-            <xs:element name="next_phase" minOccurs="0" maxOccurs="1">
-                <xs:complexType>
-                    <xs:simpleContent>
-                            <xs:extension base="xs:string">
-                                <xs:attribute name="phase" use="required"/>
-                            </xs:extension>
-                    </xs:simpleContent>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:group>
-
-    <xs:element name="data">
+  <xs:group name="next_phase">
+    <xs:sequence>
+      <xs:element name="next_phase" minOccurs="0" maxOccurs="1">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element name="settings">
-                    <xs:complexType>
-                        <xs:all>
-                            <xs:element name="players" type="xs:int"/>
-                            <xs:element name="layout" type="xs:string"/>
-                        </xs:all>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="deck">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="deck_path" type="xs:string" minOccurs="0"/>
-                            <xs:element name="deck_name" type="xs:string" minOccurs="0"/>
-                            <xs:element name="shuffle" type="xs:string" minOccurs="0"/>
-                            <xs:element name="card" minOccurs="0" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="name" type="xs:string"/>
-                                        <xs:element name="value" type="xs:int" minOccurs="0"/>
-                                        <xs:element name="color" type="xs:string" minOccurs="0"/>
-                                        <xs:element name="suit" type="xs:string" minOccurs="0"/>
-                                        <xs:element name="fixed" type="xs:string" minOccurs="0"/>
-                                    </xs:sequence>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="cell_groups">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="group" minOccurs="1" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="cell" minOccurs="1" maxOccurs="unbounded">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element name="fan" minOccurs="0" maxOccurs="1"/>
-                                                    <xs:element name="rotation" minOccurs="0" maxOccurs="1"/>
-                                                    <xs:element name="init_cards">
-                                                        <xs:complexType>
-                                                            <xs:sequence>
-                                                                <xs:element name="card" minOccurs="0" maxOccurs="unbounded"/>
-                                                            </xs:sequence>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                    <xs:any minOccurs="0" maxOccurs="1"/>
-                                                </xs:sequence>
-                                                <xs:attribute name="name" use="required"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                    <xs:attribute name="category" use="required"/>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="phases">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="phase" minOccurs="1" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="phase_type"/>
-                                        <xs:element name="valid_donors">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element name="category"  minOccurs="0" maxOccurs="unbounded"/>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="rules">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                    <xs:element name="rule" minOccurs="1" maxOccurs="unbounded">
-                                                        <xs:complexType>
-                                                            <xs:sequence>
-                                                                <xs:element name="validation" minOccurs="0" maxOccurs="unbounded">
-                                                                    <xs:complexType>
-                                                                        <xs:sequence>
-                                                                            <xs:element name="receiver" minOccurs="0" maxOccurs="unbounded">
-                                                                                <xs:complexType>
-                                                                                    <xs:group ref="rules"/>
-                                                                                </xs:complexType>
-                                                                            </xs:element>
-                                                                            <xs:element name="mover" minOccurs="0" maxOccurs="unbounded">
-                                                                                <xs:complexType>
-                                                                                    <xs:group ref="rules"/>
-                                                                                </xs:complexType>
-                                                                            </xs:element>
-                                                                            <xs:element name="donor" minOccurs="0" maxOccurs="unbounded">
-                                                                                <xs:complexType>
-                                                                                    <xs:group ref="rules"/>
-                                                                                </xs:complexType>
-                                                                            </xs:element>
-                                                                            <xs:element name="condition" minOccurs="0" maxOccurs="unbounded">
-                                                                                <xs:complexType>
-                                                                                    <xs:group ref="rules"/>
-                                                                                    <xs:attribute name="category" use="required"/>
-                                                                                </xs:complexType>
-                                                                            </xs:element>
-                                                                        </xs:sequence>
-                                                                    </xs:complexType>
-                                                                </xs:element>
-                                                                <xs:element name="action" minOccurs="0" maxOccurs="unbounded">
-                                                                    <xs:complexType>
-                                                                        <xs:sequence>
-                                                                            <xs:element name="receiver_dest" minOccurs="0">
-                                                                                <xs:complexType>
-                                                                                    <xs:group ref="destination"/>
-                                                                                </xs:complexType>
-                                                                            </xs:element>
-                                                                            <xs:element name="mover_dest" minOccurs="0">
-                                                                                <xs:complexType>
-                                                                                    <xs:group ref="destination"/>
-                                                                                </xs:complexType>
-                                                                            </xs:element>
-                                                                            <xs:element name="donor_dest" minOccurs="0">
-                                                                                <xs:complexType>
-                                                                                    <xs:group ref="destination"/>
-                                                                                </xs:complexType>
-                                                                            </xs:element>
-                                                                            <xs:group ref="next_phase"/>
-                                                                        </xs:sequence>
-                                                                    </xs:complexType>
-                                                                </xs:element>
-                                                                <xs:element name="option" minOccurs="0" maxOccurs="unbounded">
-                                                                    <xs:complexType>
-                                                                        <xs:all>
-                                                                            <xs:element name="action">
-                                                                                <xs:complexType>
-                                                                                    <xs:group ref="next_phase"/>
-                                                                                </xs:complexType>
-                                                                            </xs:element>
-                                                                        </xs:all>
-                                                                    </xs:complexType>
-                                                                </xs:element>
-                                                            </xs:sequence>
-                                                            <xs:attribute name="category" use="required"/>
-                                                        </xs:complexType>
-                                                    </xs:element>
-                                                </xs:sequence>
-                                            </xs:complexType>
-                                        </xs:element>
-                                    </xs:sequence>
-                                    <xs:attribute name="name" use="required"/>
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-            <xs:attribute name="type" type="xs:string" use="required"/>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="phase" use="required"/>
+            </xs:extension>
+          </xs:simpleContent>
         </xs:complexType>
-    </xs:element>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="settings">
+          <xs:complexType>
+            <xs:all>
+              <xs:element name="players" type="xs:int"/>
+              <xs:element name="layout" type="xs:string"/>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="deck">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="deck_path" type="xs:string" minOccurs="0"/>
+              <xs:element name="deck_name" type="xs:string" minOccurs="0"/>
+              <xs:element name="shuffle" type="xs:string" minOccurs="0"/>
+              <xs:element name="card" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="value" type="xs:int" minOccurs="0"/>
+                    <xs:element name="color" type="xs:string" minOccurs="0"/>
+                    <xs:element name="suit" type="xs:string" minOccurs="0"/>
+                    <xs:element name="fixed" type="xs:string" minOccurs="0"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="cell_groups">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="group" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="cell" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="fan" minOccurs="0" maxOccurs="1"/>
+                          <xs:element name="rotation" minOccurs="0" maxOccurs="1"/>
+                          <xs:element name="init_cards">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="card" minOccurs="0" maxOccurs="unbounded"/>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:any minOccurs="0" maxOccurs="1"/>
+                        </xs:sequence>
+                        <xs:attribute name="name" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="category" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="phases">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="phase" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="phase_type"/>
+                    <xs:element name="valid_donors">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="category" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="rules">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="rule" minOccurs="1" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="validation" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="receiver" minOccurs="0"
+                                        maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:group ref="rules"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="mover" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:group ref="rules"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="donor" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:group ref="rules"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="condition" minOccurs="0"
+                                        maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:group ref="rules"/>
+                                          <xs:attribute name="category" use="required"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="action" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="receiver_dest" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:group ref="destination"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="mover_dest" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:group ref="destination"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:element name="donor_dest" minOccurs="0">
+                                        <xs:complexType>
+                                          <xs:group ref="destination"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                      <xs:group ref="next_phase"/>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="option" minOccurs="0" maxOccurs="unbounded">
+                                  <xs:complexType>
+                                    <xs:all>
+                                      <xs:element name="action">
+                                        <xs:complexType>
+                                          <xs:group ref="next_phase"/>
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:all>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="category" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="type" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

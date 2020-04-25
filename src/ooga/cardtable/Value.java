@@ -42,7 +42,7 @@ public class Value implements IValue {
 
   @Override
   public String toStorageString() {
-    return name+sep+number+sep+symbol;
+    return name + sep + number + sep + symbol;
   }
 
   public static IValue fromStorageString(String input) {
@@ -62,7 +62,7 @@ public class Value implements IValue {
   }
 
   @Override
-  public String toString(){
+  public String toString() {
     return name;
   }
 }

@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data type="rule">
-        <rules>
-            <rule category="action">
-                <validation>
-                    <receiver>
-                        <num_cards>*</num_cards>
-                    </receiver>
-                    <mover>
-                        <value>-2</value>
-                        <color>=</color>
-                        <suit>=</suit>
-                        <num_cards>1</num_cards>
-                        <is_faceup>y</is_faceup>
-                    </mover>
-                </validation>
-                <action>
-                    <receiver_dest>
-                        <destination>r</destination>
-                        <num_cards>none</num_cards>
-                        <shuffle>n</shuffle>
-                        <rotation>0</rotation>
-                        <offset>south</offset>
-                    </receiver_dest>
-                    <mover_dest>
-                        <destination>r</destination>
-                        <num_cards>t</num_cards>
-                        <shuffle>n</shuffle>
-                        <rotation>0</rotation>
-                        <offset>south</offset>
-                        <flip_up>y</flip_up>
-                    </mover_dest>
-                    <!-- points included in the tag below-->
-                    <next_phase phase="next">10.0</next_phase>
-                </action>
-            </rule>
-        </rules>
+  <rules>
+    <rule category="action">
+      <validation>
+        <receiver>
+          <num_cards>*</num_cards>
+        </receiver>
+        <mover>
+          <value>-2</value>
+          <color>=</color>
+          <suit>=</suit>
+          <num_cards>1</num_cards>
+          <is_faceup>y</is_faceup>
+        </mover>
+      </validation>
+      <action>
+        <receiver_dest>
+          <destination>r</destination>
+          <num_cards>none</num_cards>
+          <shuffle>n</shuffle>
+          <rotation>0</rotation>
+          <offset>south</offset>
+        </receiver_dest>
+        <mover_dest>
+          <destination>r</destination>
+          <num_cards>t</num_cards>
+          <shuffle>n</shuffle>
+          <rotation>0</rotation>
+          <offset>south</offset>
+          <flip_up>y</flip_up>
+        </mover_dest>
+        <!-- points included in the tag below-->
+        <next_phase phase="next">10.0</next_phase>
+      </action>
+    </rule>
+  </rules>
 </data>

@@ -15,82 +15,86 @@ import javafx.stage.Stage;
 import ooga.view.menu.Dictionary;
 
 public class Dashboard {
-    private static final String SCORE = "score";
-    private static final String INSTRUCTIONS = "%s_insns";
-    private static final String INSTRUCTIONS_BUTTON = "insns";
-    private static final String SAVE = "Save";
-    private static final String SAVE_WINDOW_TITLE = "savefilechoosertitle";
-    private static final String XML_FILE = "XMLFile";
-    private static final String XML_EXTENSION = "*.xml";
-    private static final double INITIAL_SCORE = 0.0;
-    private static final List<String> DASHBOARD_CLASS = List.of("dashboard");
-    private static final String SPACE = " ";
 
-    private Pane myPane;
+  private static final String SCORE = "score";
+  private static final String INSTRUCTIONS = "%s_insns";
+  private static final String INSTRUCTIONS_BUTTON = "insns";
+  private static final String SAVE = "Save";
+  private static final String SAVE_WINDOW_TITLE = "savefilechoosertitle";
+  private static final String XML_FILE = "XMLFile";
+  private static final String XML_EXTENSION = "*.xml";
+  private static final double INITIAL_SCORE = 0.0;
+  private static final List<String> DASHBOARD_CLASS = List.of("dashboard");
+  private static final String SPACE = " ";
 
-    private String myScoreLabel;
-    private Text myScoreDisplay;
-    private Stage myPopUp;
+  private Pane myPane;
 
-    public Dashboard(Button restartButton, String scoreLabel, String game, Consumer<String> saveConsumer) {
-        HBox myBox = new HBox();
+  private String myScoreLabel;
+  private Text myScoreDisplay;
+  private Stage myPopUp;
 
-        myScoreLabel = scoreLabel;
-        initializeScoreDisplay();
+  public Dashboard(Button restartButton, String scoreLabel, String game,
+      Consumer<String> saveConsumer) {
+    HBox myBox = new HBox();
 
-        Pane messagePane = initializeInstructions(game);
-        Scene messageScene = new Scene(messagePane);
-        Button instructionsButton = makeMessageButton(messageScene);
-        Button saveButton = makeSaveButton(saveConsumer);
+    myScoreLabel = scoreLabel;
+    initializeScoreDisplay();
 
-        myBox.getStyleClass().addAll(DASHBOARD_CLASS);
-        myBox.getChildren().addAll(restartButton, instructionsButton, myScoreDisplay,saveButton);
+    Pane messagePane = initializeInstructions(game);
+    Scene messageScene = new Scene(messagePane);
+    Button instructionsButton = makeMessageButton(messageScene);
+    Button saveButton = makeSaveButton(saveConsumer);
 
-        myPane = new Pane(myBox);
-    }
-    public Node getNode() {
-        return myPane;
-    }
+    myBox.getStyleClass().addAll(DASHBOARD_CLASS);
+    myBox.getChildren().addAll(restartButton, instructionsButton, myScoreDisplay, saveButton);
 
-    private Button makeSaveButton(Consumer<String> saveConsumer) {
-        Button saveButton = new Button();
-        saveButton.textProperty().bind(Dictionary.getInstance().get(SAVE));
+    myPane = new Pane(myBox);
+  }
 
-        saveButton.setOnMouseClicked(click -> {
-                FileChooser fileChooser = new FileChooser();
-                fileChooser.titleProperty().bind(Dictionary.getInstance().get(SAVE_WINDOW_TITLE));
-                fileChooser.getExtensionFilters().add(new ExtensionFilter(Dictionary.getInstance().get(XML_FILE).getValue(),XML_EXTENSION));
-                File saveFile = fileChooser.showSaveDialog(new Stage());
-                saveConsumer.accept(saveFile.getPath());
-        });
-        return saveButton;
-    }
+  public Node getNode() {
+    return myPane;
+  }
 
-    private Pane initializeInstructions(String game) {
-        Text myInstructions = new Text();
-        myInstructions.textProperty().bind(
-            Dictionary.getInstance().get(String.format(INSTRUCTIONS,game.toLowerCase())));
-        Pane messagePane = new Pane();
-        messagePane.getChildren().add(myInstructions);
-        return messagePane;
-    }
+  private Button makeSaveButton(Consumer<String> saveConsumer) {
+    Button saveButton = new Button();
+    saveButton.textProperty().bind(Dictionary.getInstance().get(SAVE));
 
-    private Button makeMessageButton(Scene messageScene) {
-        myPopUp = new Stage();
-        myPopUp.setScene(messageScene);
-        Button instructionsButton = new Button();
-        instructionsButton.textProperty().bind(Dictionary.getInstance().get(INSTRUCTIONS_BUTTON));
-        instructionsButton.setOnAction(e -> myPopUp.show());
-        return instructionsButton;
-    }
+    saveButton.setOnMouseClicked(click -> {
+      FileChooser fileChooser = new FileChooser();
+      fileChooser.titleProperty().bind(Dictionary.getInstance().get(SAVE_WINDOW_TITLE));
+      fileChooser.getExtensionFilters().add(
+          new ExtensionFilter(Dictionary.getInstance().get(XML_FILE).getValue(), XML_EXTENSION));
+      File saveFile = fileChooser.showSaveDialog(new Stage());
+      saveConsumer.accept(saveFile.getPath());
+    });
+    return saveButton;
+  }
 
-    private void initializeScoreDisplay() {
-        myScoreDisplay = new Text();
-        myScoreDisplay.setText(myScoreLabel+SPACE+ INITIAL_SCORE);
-        myScoreDisplay.getStyleClass().add(SCORE);
-    }
+  private Pane initializeInstructions(String game) {
+    Text myInstructions = new Text();
+    myInstructions.textProperty().bind(
+        Dictionary.getInstance().get(String.format(INSTRUCTIONS, game.toLowerCase())));
+    Pane messagePane = new Pane();
+    messagePane.getChildren().add(myInstructions);
+    return messagePane;
+  }
 
-    public void updateScore(double newScore) {
-        myScoreDisplay.setText(myScoreLabel+SPACE+newScore);
-    }
+  private Button makeMessageButton(Scene messageScene) {
+    myPopUp = new Stage();
+    myPopUp.setScene(messageScene);
+    Button instructionsButton = new Button();
+    instructionsButton.textProperty().bind(Dictionary.getInstance().get(INSTRUCTIONS_BUTTON));
+    instructionsButton.setOnAction(e -> myPopUp.show());
+    return instructionsButton;
+  }
+
+  private void initializeScoreDisplay() {
+    myScoreDisplay = new Text();
+    myScoreDisplay.setText(myScoreLabel + SPACE + INITIAL_SCORE);
+    myScoreDisplay.getStyleClass().add(SCORE);
+  }
+
+  public void updateScore(double newScore) {
+    myScoreDisplay.setText(myScoreLabel + SPACE + newScore);
+  }
 }

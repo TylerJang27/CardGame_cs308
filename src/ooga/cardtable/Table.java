@@ -76,7 +76,7 @@ public class Table implements ITable {
     String phase = machine.getCurrentPhase().getMyName();
     Double score = currentPlayer.getScore();
     Map<String, String> cellBuilder = new HashMap<>();
-    for (Map.Entry<String, ICell> e: getCellData().entrySet()) {
+    for (Map.Entry<String, ICell> e : getCellData().entrySet()) {
       cellBuilder.put(e.getKey(), e.getValue().toStorageString());
     }
     return new SaveConfiguration(gameName, rulePath, phase, score, cellBuilder);

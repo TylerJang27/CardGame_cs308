@@ -14,12 +14,13 @@ import ooga.view.KeyPreservingStringProperty;
 import ooga.view.menu.Dictionary;
 
 public class HighScoresDisplay {
+
   private static final String INDEX = "Index";
   private static final String SCORES = "Scores";
 
   private Node myNode;
 
-  public HighScoresDisplay(HighScoresManager manager){
+  public HighScoresDisplay(HighScoresManager manager) {
     TableView<Double> view = new TableView<>();
     view.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     makeIndexColumn(view);
@@ -35,7 +36,7 @@ public class HighScoresDisplay {
     myNode = root;
   }
 
-  public Node getNode(){
+  public Node getNode() {
     return myNode;
   }
 
@@ -88,12 +89,12 @@ public class HighScoresDisplay {
       TableCell<Double, String> cell = new TableCell<>();
       cell.textProperty().bind(Bindings.createStringBinding(() -> {
         if (cell.isEmpty()) {
-          return null ;
+          return null;
         } else {
           return Integer.toString(cell.getIndex());
         }
       }, cell.emptyProperty(), cell.indexProperty()));
-      return cell ;
+      return cell;
     });
     view.getColumns().add(indexCol);
   }

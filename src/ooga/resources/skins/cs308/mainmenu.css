@@ -4,116 +4,117 @@
     Required path: skins/duke/mainmenu.css
 */
 
-.menu{
-    -fx-font-size: 2.1em;
-    -fx-font-family: "Gill Sans MT", verdana, sans-serif;
-    -fx-background-image: url("bluewaves.jpg");
-    -fx-background-size: stretch;
-    -fx-focus-color: #CCCCCC;
+.menu {
+  -fx-font-size: 2.1em;
+  -fx-font-family: "Gill Sans MT", verdana, sans-serif;
+  -fx-background-image: url("bluewaves.jpg");
+  -fx-background-size: stretch;
+  -fx-focus-color: #CCCCCC;
 }
 
-.border{
-    -fx-base: #000000;
+.border {
+  -fx-base: #000000;
 }
 
-.titleborder{
-    -fx-base: #000000;
-    -fx-padding: 20;
+.titleborder {
+  -fx-base: #000000;
+  -fx-padding: 20;
 }
 
-.title{
-    -fx-fill: #CCCCCC;
-    -fx-font-size: 30pt;
-    -font-weight: bolder;
-    -fx-alignment: "center";
+.title {
+  -fx-fill: #CCCCCC;
+  -fx-font-size: 30pt;
+  -font-weight: bolder;
+  -fx-alignment: "center";
 }
 
-.dashboard{
-    -fx-font-size: 10pt;
-    -fx-alignment: "center";
-    -fx-padding: 10;
-    -fx-spacing: 10;
-    -fx-fill: #FFFFFF;
-    -fx-font-family: Garamond, serif;
-    -fx-fill: #FFFFFF;
+.dashboard {
+  -fx-font-size: 10pt;
+  -fx-alignment: "center";
+  -fx-padding: 10;
+  -fx-spacing: 10;
+  -fx-fill: #FFFFFF;
+  -fx-font-family: Garamond, serif;
+  -fx-fill: #FFFFFF;
 }
 
-.options{
-    -fx-spacing: 25;
+.options {
+  -fx-spacing: 25;
 }
 
-.button{
-    -fx-background-color: linear-gradient(#C9C9C9, #DFDFDF);
+.button {
+  -fx-background-color: linear-gradient(#C9C9C9, #DFDFDF);
 
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(#0D334A, #040C23);
+  -fx-background-color: linear-gradient(#0D334A, #040C23);
 }
 
-.list-cell{
-    -fx-text-fill: #FFFFFF;
-    -fx-text-background-color: #000000;
-    -fx-background-color: #000000;
+.list-cell {
+  -fx-text-fill: #FFFFFF;
+  -fx-text-background-color: #000000;
+  -fx-background-color: #000000;
 }
 
-.list-cell:hover{
-    -fx-text-background-color: #C9C9C9;
-    -fx-background-color: #0D334A;
+.list-cell:hover {
+  -fx-text-background-color: #C9C9C9;
+  -fx-background-color: #0D334A;
 }
+
 /*
     This is a required file for using the Duke Theme
     Document: Duke Theme Game Table
     Required path: skins/duke/gametable.css
 */
 
-.gametable{
-    -fx-font-size: 12pt;
-    -fx-font-family: "Stencil";
-    -fx-base: #BBA1BB;
-    -fx-background-image: url("bluewaves.jpg");
-    -fx-background-size: stretch;
-    -fx-focus-color: #FFFFFF;
+.gametable {
+  -fx-font-size: 12pt;
+  -fx-font-family: "Stencil";
+  -fx-base: #BBA1BB;
+  -fx-background-image: url("bluewaves.jpg");
+  -fx-background-size: stretch;
+  -fx-focus-color: #FFFFFF;
 }
 
-.title{
-    -fx-fill: #FFFFFF;
-    -fx-alignment: "center";
+.title {
+  -fx-fill: #FFFFFF;
+  -fx-alignment: "center";
 }
 
-.header{
-    -fx-padding: 10;
-    -fx-alignment: "center";
+.header {
+  -fx-padding: 10;
+  -fx-alignment: "center";
 }
 
-.dashboard{
-    -fx-spacing: 20;
-    -fx-padding: 5;
-    -fx-font-family: "Arial Black";
-    -fx-font-size: 10pt;
-    -fx-alignment: "center";
+.dashboard {
+  -fx-spacing: 20;
+  -fx-padding: 5;
+  -fx-font-family: "Arial Black";
+  -fx-font-size: 10pt;
+  -fx-alignment: "center";
 }
 
-.score{
-    -fx-fill: #FFFFFF;
-    -fx-font-size: 10pt;
+.score {
+  -fx-fill: #FFFFFF;
+  -fx-font-size: 10pt;
 }
 
-.cardskin{
-    -fx-image: url(duvall.jpg);
+.cardskin {
+  -fx-image: url(duvall.jpg);
 }
 
-.button{
-    -fx-background-color: linear-gradient(#C9C9C9 , #DFDFDF );
+.button {
+  -fx-background-color: linear-gradient(#C9C9C9, #DFDFDF);
 
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(#7ba5b3 , #5e6367  );
+  -fx-background-color: linear-gradient(#7ba5b3, #5e6367);
 }
 
-.message{
-    -fx-text-fill: white;
-    -fx-padding: 10px;
-    -fx-font-family: "Arial Black";
+.message {
+  -fx-text-fill: white;
+  -fx-padding: 10px;
+  -fx-font-family: "Arial Black";
 }

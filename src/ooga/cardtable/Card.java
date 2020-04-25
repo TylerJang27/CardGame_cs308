@@ -54,13 +54,15 @@ public class Card implements ICard {
 
   @Override
   public String toStorageString() {
-    String ret = name+sep+faceup+sep+orientation+sep+isFixed+sep;
-    ret += getSuit().toStorageString()+sep+getValue().toStorageString();
+    String ret = name + sep + faceup + sep + orientation + sep + isFixed + sep;
+    ret += getSuit().toStorageString() + sep + getValue().toStorageString();
     return ret;
   }
 
   public static ICard fromStorageString(String input) {
-    if (input == null) return null;
+    if (input == null) {
+      return null;
+    }
     String[] info = input.split(Pattern.quote(sep));
     String nm = info[0];
     boolean fc = Boolean.parseBoolean(info[1]);
@@ -99,7 +101,8 @@ public class Card implements ICard {
     ISuit ret = null;
     for (Entry<IAttribute, Boolean> e : attributes.entrySet()) {
       //fixme also need to hide info here
-      if (e.getKey().getType().toLowerCase().contains("suit")) { // && e.getValue()) {//fixme monster
+      if (e.getKey().getType().toLowerCase()
+          .contains("suit")) { // && e.getValue()) {//fixme monster
         ret = (ISuit) e.getKey();
       }
     }
@@ -112,7 +115,8 @@ public class Card implements ICard {
     for (Entry<IAttribute, Boolean> e : attributes.entrySet()) {
       //System.out.println("Value check: "+e);
       // fixme need to hide info here
-      if (e.getKey().getType().toLowerCase().contains("value")){// && e.getValue()) {//fixme monster
+      if (e.getKey().getType().toLowerCase()
+          .contains("value")) {// && e.getValue()) {//fixme monster
         ret = (IValue) e.getKey();
       }
     }
@@ -149,7 +153,7 @@ public class Card implements ICard {
   @Override
   public ICard copy() {
     Map<IAttribute, Boolean> attrs = new HashMap<>();
-    for (Entry<IAttribute, Boolean> e: attributes.entrySet()) {
+    for (Entry<IAttribute, Boolean> e : attributes.entrySet()) {
       attrs.put(e.getKey(), e.getValue()); //fixme hide info
     }
     Card ret = new Card(name, attrs);
@@ -158,7 +162,7 @@ public class Card implements ICard {
     ret.setFixed(isFixed);
     assert getSuit().equals(ret.getSuit());
     assert getSuit().getColorName().equals(ret.getSuit().getColorName());
-    assert getValue().equals(ret.getValue()) && ret.getValue()!=null;
+    assert getValue().equals(ret.getValue()) && ret.getValue() != null;
     return ret;
   }
 

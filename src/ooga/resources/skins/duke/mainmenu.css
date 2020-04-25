@@ -4,110 +4,110 @@
     Required path: skins/duke/mainmenu.css
 */
 
-.menu{
-    -fx-font-size: 12pt;
-    -fx-font-family: "Stencil";
-    -fx-background-image: url("dukefans.gif");
-    -fx-background-size: stretch;
-    -fx-focus-color: #FFFFFF;
+.menu {
+  -fx-font-size: 12pt;
+  -fx-font-family: "Stencil";
+  -fx-background-image: url("dukefans.gif");
+  -fx-background-size: stretch;
+  -fx-focus-color: #FFFFFF;
 }
 
-.border{
-    -fx-base: #000000;
+.border {
+  -fx-base: #000000;
 }
 
-.titleborder{
-    -fx-base: #000000;
-    -fx-padding: 10;
+.titleborder {
+  -fx-base: #000000;
+  -fx-padding: 10;
 }
 
-.title{
-    -fx-fill: #FFFFFF;
-    -fx-font-size: 25pt;
-    -fx-alignment: "center";
+.title {
+  -fx-fill: #FFFFFF;
+  -fx-font-size: 25pt;
+  -fx-alignment: "center";
 }
 
-.dashboard{
-    -fx-font-size: 10pt;
-    -fx-alignment: "center";
-    -fx-padding: 10;
-    -fx-spacing: 10;
-    -fx-fill: #FFFFFF;
-    -fx-font-family: "Arial Black";
-    -fx-fill: #FFFFFF;
+.dashboard {
+  -fx-font-size: 10pt;
+  -fx-alignment: "center";
+  -fx-padding: 10;
+  -fx-spacing: 10;
+  -fx-fill: #FFFFFF;
+  -fx-font-family: "Arial Black";
+  -fx-fill: #FFFFFF;
 }
 
-.options{
-    -fx-spacing: 10;
+.options {
+  -fx-spacing: 10;
 }
 
-.button{
-    -fx-background-color: linear-gradient(#C9C9C9 , #DFDFDF );
-    -fx-padding: 5
-}
-
-.button:hover {
-    -fx-background-color: linear-gradient(#000FFF , #D8DBFF  );
-}
-
-.list-cell{
-    -fx-text-fill: #FFFFFF;
-    -fx-text-background-color: #000000;
-    -fx-background-color: #000000;
-}
-
-.list-cell:hover{
-    -fx-text-background-color: #D8DBFF;
-    -fx-background-color: #000FFF;
-}
-
-.gametable{
-    -fx-font-size: 12pt;
-    -fx-font-family: "Stencil";
-    -fx-base: #BBA1BB;
-    -fx-background-image: url("coachkcourt.jpg");
-    -fx-background-size: stretch;
-    -fx-focus-color: #FFFFFF;
-}
-
-.title{
-    -fx-fill: #FFFFFF;
-    -fx-alignment: "center";
-}
-
-.header{
-    -fx-padding: 10;
-    -fx-alignment: "center";
-}
-
-.dashboard{
-    -fx-spacing: 20;
-    -fx-padding: 5;
-    -fx-font-family: "Arial Black";
-    -fx-font-size: 10pt;
-    -fx-alignment: "center";
-}
-
-.score{
-    -fx-fill: #FFFFFF;
-    -fx-font-size: 10pt;
-}
-
-.cardskin{
-    -fx-image: url(duked.png);
-}
-
-.button{
-    -fx-background-color: linear-gradient(#C9C9C9 , #DFDFDF );
-
+.button {
+  -fx-background-color: linear-gradient(#C9C9C9, #DFDFDF);
+  -fx-padding: 5
 }
 
 .button:hover {
-    -fx-background-color: linear-gradient(#000FFF , #D8DBFF  );
+  -fx-background-color: linear-gradient(#000FFF, #D8DBFF);
 }
 
-.message{
-    -fx-text-fill: white;
-    -fx-padding: 10px;
-    -fx-font-family: "Arial Black";
+.list-cell {
+  -fx-text-fill: #FFFFFF;
+  -fx-text-background-color: #000000;
+  -fx-background-color: #000000;
+}
+
+.list-cell:hover {
+  -fx-text-background-color: #D8DBFF;
+  -fx-background-color: #000FFF;
+}
+
+.gametable {
+  -fx-font-size: 12pt;
+  -fx-font-family: "Stencil";
+  -fx-base: #BBA1BB;
+  -fx-background-image: url("coachkcourt.jpg");
+  -fx-background-size: stretch;
+  -fx-focus-color: #FFFFFF;
+}
+
+.title {
+  -fx-fill: #FFFFFF;
+  -fx-alignment: "center";
+}
+
+.header {
+  -fx-padding: 10;
+  -fx-alignment: "center";
+}
+
+.dashboard {
+  -fx-spacing: 20;
+  -fx-padding: 5;
+  -fx-font-family: "Arial Black";
+  -fx-font-size: 10pt;
+  -fx-alignment: "center";
+}
+
+.score {
+  -fx-fill: #FFFFFF;
+  -fx-font-size: 10pt;
+}
+
+.cardskin {
+  -fx-image: url(duked.png);
+}
+
+.button {
+  -fx-background-color: linear-gradient(#C9C9C9, #DFDFDF);
+
+}
+
+.button:hover {
+  -fx-background-color: linear-gradient(#000FFF, #D8DBFF);
+}
+
+.message {
+  -fx-text-fill: white;
+  -fx-padding: 10px;
+  -fx-font-family: "Arial Black";
 }

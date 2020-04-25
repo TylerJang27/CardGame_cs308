@@ -7,15 +7,17 @@ package ooga.data.style;
  */
 public interface ICoordinate {
 
-    /**
-     * Gives the X coordinate relative to the screen width
-     * @return the x coordinate
-     */
-    double getX();
+  /**
+   * Gives the X coordinate relative to the screen width
+   *
+   * @return the x coordinate
+   */
+  double getX();
 
-    /**
-     * Gives the Y coordinate relative to the screen width
-     * @return the y coordinate
-     */
-    double getY();
+  /**
+   * Gives the Y coordinate relative to the screen width
+   *
+   * @return the y coordinate
+   */
+  double getY();
 }

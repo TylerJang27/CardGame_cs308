@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <data type="style">
-    <cards>card_path</cards>
-    <table>CS308</table>
-    <difficulty>3</difficulty>
-    <language>english</language>
+  <cards>card_path</cards>
+  <table>CS308</table>
+  <difficulty>3</difficulty>
+  <language>english</language>
 </data>

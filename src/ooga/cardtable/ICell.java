@@ -58,7 +58,7 @@ public interface ICell extends Cellular {
 
   ICell extractDecks(Function<ICell, IDeck> deckGetter);
 
-    ICell findNamedCell(String nm);
+  ICell findNamedCell(String nm);
 
   ICell followNamespace(String nm);
 

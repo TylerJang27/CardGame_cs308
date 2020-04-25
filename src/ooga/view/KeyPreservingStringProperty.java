@@ -8,21 +8,23 @@ public class KeyPreservingStringProperty {
   private String myKey;
   private ReadOnlyProperty<String> myStringProperty;
 
-  public KeyPreservingStringProperty(String key){
+  public KeyPreservingStringProperty(String key) {
     myStringProperty = Dictionary.getInstance().get(key);
     myKey = key;
   }
 
-  public ReadOnlyProperty<String> valueProperty(){
+  public ReadOnlyProperty<String> valueProperty() {
     return myStringProperty;
   }
 
-  public String getKey(){
+  public String getKey() {
     return myKey;
   }
+
   @Override
-  public boolean equals(Object o){
-    return o instanceof KeyPreservingStringProperty && ((KeyPreservingStringProperty) o).getKey().equals(getKey());
+  public boolean equals(Object o) {
+    return o instanceof KeyPreservingStringProperty && ((KeyPreservingStringProperty) o).getKey()
+        .equals(getKey());
   }
 
 }

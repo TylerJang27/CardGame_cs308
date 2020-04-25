@@ -9,40 +9,41 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 public class Header {
-    private static final List<String> LABEL_CLASSES = List.of("message");
-    private static final List<String> PANE_CLASSES = List.of("header");
-    private static final double TRANSITION_TIME = 8;
-    private static final double INITIAL_OPACITY = 1;
-    private static final double FINAL_OPACITY = 0;
 
-    private Pane myPane;
-    private Label myLabel;
-    private FadeTransition myFader;
+  private static final List<String> LABEL_CLASSES = List.of("message");
+  private static final List<String> PANE_CLASSES = List.of("header");
+  private static final double TRANSITION_TIME = 8;
+  private static final double INITIAL_OPACITY = 1;
+  private static final double FINAL_OPACITY = 0;
 
-    public Header() {
-        myLabel = new Label();
-        myLabel.getStyleClass().addAll(LABEL_CLASSES);
+  private Pane myPane;
+  private Label myLabel;
+  private FadeTransition myFader;
 
-        myFader = createFade(myLabel);
+  public Header() {
+    myLabel = new Label();
+    myLabel.getStyleClass().addAll(LABEL_CLASSES);
 
-        myPane = new StackPane(myLabel);
-        myPane.getStyleClass().addAll(PANE_CLASSES);
-    }
+    myFader = createFade(myLabel);
 
-    public void playMessage(String text) {
-        myLabel.setText(text);
-        myFader.play();
-    }
+    myPane = new StackPane(myLabel);
+    myPane.getStyleClass().addAll(PANE_CLASSES);
+  }
 
-    public Pane getPane(){
-        return myPane;
-    }
+  public void playMessage(String text) {
+    myLabel.setText(text);
+    myFader.play();
+  }
 
-    private FadeTransition createFade(Node node) {
-        FadeTransition fade = new FadeTransition(Duration.seconds(TRANSITION_TIME), node);
-        fade.setFromValue(INITIAL_OPACITY);
-        fade.setToValue(FINAL_OPACITY);
+  public Pane getPane() {
+    return myPane;
+  }
 
-        return fade;
-    }
+  private FadeTransition createFade(Node node) {
+    FadeTransition fade = new FadeTransition(Duration.seconds(TRANSITION_TIME), node);
+    fade.setFromValue(INITIAL_OPACITY);
+    fade.setToValue(FINAL_OPACITY);
+
+    return fade;
+  }
 }

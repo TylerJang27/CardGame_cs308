@@ -27,7 +27,7 @@ import ooga.view.View.ChangeValue;
 
 public class Menu {
 
-  private static final Insets MARGINS = new Insets(20,20,20,20);
+  private static final Insets MARGINS = new Insets(20, 20, 20, 20);
 
   private static final String CHOICES = "ooga.resources.languages.games";
   private static final String COMMA_REGEX = ",";
@@ -37,7 +37,7 @@ public class Menu {
   private static final String LOAD_HEADER = "Load_Header";
   private static final String XML_FILE = "XMLFile";
   private static final String XML_EXTENSION = "*.xml";
-  private static final List<String> DASHBOARD_CSS = List.of("dashboard","border");
+  private static final List<String> DASHBOARD_CSS = List.of("dashboard", "border");
   private static final List<String> OPTIONS_CSS = List.of("options");
   private static final List<String> ROOT_CSS = List.of("menu");
   private static final String GAMES_FOLDER = "ooga.resources.languages.games.%s";
@@ -50,7 +50,10 @@ public class Menu {
 
   private String myGame;
 
-  public Menu(String appName, ResourceBundle supportedLangs, ResourceBundle supportedSkins, View.ChangeValue themeLambda, View.ChangeValue languageLambda, String defaultTheme, String defaultLanguage, double screenHeight, double screenWidth,EventHandler<MouseEvent> highScoresHandler, Consumer<String> gameLoad){
+  public Menu(String appName, ResourceBundle supportedLangs, ResourceBundle supportedSkins,
+      View.ChangeValue themeLambda, View.ChangeValue languageLambda, String defaultTheme,
+      String defaultLanguage, double screenHeight, double screenWidth,
+      EventHandler<MouseEvent> highScoresHandler, Consumer<String> gameLoad) {
 
     myGameProperty = new SimpleStringProperty();
     Dictionary.getInstance().addReference(CHOICES);
@@ -61,7 +64,8 @@ public class Menu {
 
     setTopBorder(appName);
     setCenter(defaultLanguage);
-    setBottomBorder(supportedLangs, supportedSkins, defaultTheme, defaultLanguage, themeLambda, languageLambda,highScoresHandler,gameLoad);
+    setBottomBorder(supportedLangs, supportedSkins, defaultTheme, defaultLanguage, themeLambda,
+        languageLambda, highScoresHandler, gameLoad);
   }
 
   public Pane getScene() {
@@ -76,7 +80,10 @@ public class Menu {
     myGameProperty.addListener(listener);
   }
 
-  private void setBottomBorder(ResourceBundle supportedLangs, ResourceBundle supportedSkins, String defaultTheme, String defaultLanguage, View.ChangeValue themeLambda, View.ChangeValue languageLambda,EventHandler<MouseEvent> highScoreHandler,Consumer<String> gameLoad) {
+  private void setBottomBorder(ResourceBundle supportedLangs, ResourceBundle supportedSkins,
+      String defaultTheme, String defaultLanguage, View.ChangeValue themeLambda,
+      View.ChangeValue languageLambda, EventHandler<MouseEvent> highScoreHandler,
+      Consumer<String> gameLoad) {
     ComboBox<String> languages = getLanguagesComboBox(supportedLangs, defaultLanguage,
         languageLambda);
 
@@ -85,7 +92,7 @@ public class Menu {
     Button loadButton = makeLoadGameButton(gameLoad);
 
     HBox dashboard = new HBox();
-    dashboard.getChildren().addAll(languages, skins,highScoresButton,loadButton);
+    dashboard.getChildren().addAll(languages, skins, highScoresButton, loadButton);
     dashboard.getStyleClass().addAll(DASHBOARD_CSS);
 
     myBorderPane.setBottom(dashboard);
@@ -147,9 +154,9 @@ public class Menu {
     options.prefWidthProperty().bind(myBorderPane.widthProperty());
     options.prefHeightProperty().bind(myBorderPane.heightProperty());
 
-    ResourceBundle games = ResourceBundle.getBundle(String.format(GAMES_FOLDER,defaultLanguage));
-    for(String game : games.keySet()){
-      addOption(game,options);
+    ResourceBundle games = ResourceBundle.getBundle(String.format(GAMES_FOLDER, defaultLanguage));
+    for (String game : games.keySet()) {
+      addOption(game, options);
     }
   }
 
@@ -162,7 +169,7 @@ public class Menu {
     myBorderPane.setTop(gameNamePane);
   }
 
-  private void addOption(String key, FlowPane hbox){
+  private void addOption(String key, FlowPane hbox) {
     Button option = new Button();
     option.textProperty().bind(Dictionary.getInstance().get(key));
     option.setMaxWidth(Double.MAX_VALUE);

@@ -14,5 +14,5 @@ public interface ICardAction { //TODO: UPDATE API CHANGES
    *
    * @param move an IMove to be processed into ICell movements.
    */
-    void execute(IMove move);
+  void execute(IMove move);
 }

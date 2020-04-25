@@ -4,11 +4,12 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import ooga.cardtable.Card;
+import ooga.cardtable.Cell;
 import ooga.cardtable.ICell;
 import ooga.cardtable.Offset;
 import ooga.cardtable.Suit;
 import ooga.cardtable.Value;
-import ooga.cardtable.*;//fixme can't import cell or card for some reason
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,10 +19,10 @@ public class CellTests {
   public void setup() {
     Cell a = new Cell("a");
     Cell b = new Cell("b");
-    Suit s = new Suit("Hearts", new int[] {255,0,0});
+    Suit s = new Suit("Hearts", new int[]{255, 0, 0});
     Value v = new Value("Ace", 1);
     Value v2 = new Value("Two", 2);
-    String name = s.getName()+""+v.getName();
+    String name = s.getName() + "" + v.getName();
     Card c1 = new Card(name, s, v);
     Card c2 = new Card(name, s, v);
     Card c3 = new Card(s, v2);
@@ -31,10 +32,10 @@ public class CellTests {
   public void simpleCellEquals() {
     Cell a = new Cell("a");
     Cell b = new Cell("b");
-    Suit s = new Suit("Hearts", new int[] {255,0,0});
+    Suit s = new Suit("Hearts", new int[]{255, 0, 0});
     Value v = new Value("Ace", 1);
     Value v2 = new Value("Two", 2);
-    String name = s.getName()+""+v.getName();
+    String name = s.getName() + "" + v.getName();
     Card c1 = new Card(name, s, v);
     Card c2 = new Card(name, s, v);
     Card c3 = new Card(s, v2);
@@ -42,17 +43,17 @@ public class CellTests {
     a.addCard(Offset.NONE, c1);
     assertNotEquals(a, b);
     b.addCard(Offset.NONE, c2);
-    assertEquals(a,b);
+    assertEquals(a, b);
     a.addCard(Offset.NONE, c3);
     b.addCard(Offset.NONE, c1);
-    assertNotEquals(a,b);
+    assertNotEquals(a, b);
   }
 
   @Test
   public void offsetCellEquals() {
     Cell a = new Cell("a");
     Cell b = new Cell("b");
-    Suit s = new Suit("Hearts", new int[] {255,0,0});
+    Suit s = new Suit("Hearts", new int[]{255, 0, 0});
     Value v = new Value("Ace", 1);
     Value v2 = new Value("Two", 2);
     Card c1 = new Card(s, v);
@@ -62,17 +63,17 @@ public class CellTests {
     a.addCard(Offset.SOUTH, c2);
     b.addCard(Offset.SOUTH, c2);
     b.addCard(Offset.SOUTH, c1);
-    assertEquals(a,b);
+    assertEquals(a, b);
     a.addCard(Offset.NORTH, c1);
-    assertNotEquals(a,b);
+    assertNotEquals(a, b);
     b.addCard(Offset.NORTH, c2);
-    assertEquals(a,b);
+    assertEquals(a, b);
     ICell as = a.getAllChildren().get(Offset.SOUTH);
     ICell bs = b.getAllChildren().get(Offset.SOUTH);
     as.addCard(Offset.SOUTH, c1);
-    assertNotEquals(a,b);
+    assertNotEquals(a, b);
     bs.addCard(Offset.SOUTH, c2);
-    assertEquals(a,b);
+    assertEquals(a, b);
   }
 
   @Test
@@ -80,7 +81,7 @@ public class CellTests {
     Cell a = new Cell("a");
     Cell b = new Cell("b");
     Cell c = new Cell("c");
-    Suit s1 = new Suit("Hearts", new int[] {255,0,0});
+    Suit s1 = new Suit("Hearts", new int[]{255, 0, 0});
     Value v1 = new Value("Ace", 1);
     Value v2 = new Value("Two", 2);
     Card c1 = new Card(s1, v1);
@@ -99,14 +100,14 @@ public class CellTests {
     System.out.println(a);
     System.out.println(b);
     System.out.println(c);
-    assertEquals(a,c);
+    assertEquals(a, c);
   }
 
   @Test
   public void addToNoneTest() {
     Cell a = new Cell("a");
     Cell b = new Cell("b");
-    Suit s1 = new Suit("Hearts", new int[] {255,0,0});
+    Suit s1 = new Suit("Hearts", new int[]{255, 0, 0});
     Value v1 = new Value("Ace", 1);
     Value v2 = new Value("Two", 2);
     Card c1 = new Card(s1, v1);
@@ -127,7 +128,7 @@ public class CellTests {
     System.out.println(a);
     System.out.println(c);
 
-    assertEquals(a,c);
+    assertEquals(a, c);
   }
 
   @Test
@@ -161,7 +162,7 @@ public class CellTests {
   public void stringConversionTest() {
     Cell a = new Cell("a");
     Cell b = new Cell("b");
-    Suit s1 = new Suit("Hearts", new int[] {255,0,0});
+    Suit s1 = new Suit("Hearts", new int[]{255, 0, 0});
     Value v1 = new Value("Ace", 1);
     Value v2 = new Value("Two", 2);
     Card c1 = new Card(s1, v1);
@@ -177,14 +178,14 @@ public class CellTests {
     System.out.println(b.toStorageString());
     a = (Cell) Cell.fromStorageString(b.toStorageString());
 
-    assertEquals(b,a);
+    assertEquals(b, a);
   }
 
   @Test
   public void stringConversionNoneTest() {
     Cell a = new Cell("a");
     Cell b = new Cell("b");
-    Suit s1 = new Suit("Hearts", new int[] {255,0,0});
+    Suit s1 = new Suit("Hearts", new int[]{255, 0, 0});
     Value v1 = new Value("Ace", 1);
     Value v2 = new Value("Two", 2);
     Card c1 = new Card(s1, v1);
@@ -202,14 +203,14 @@ public class CellTests {
     System.out.println(b);
     a = (Cell) Cell.fromStorageString(b.toStorageString());
 
-    assertEquals(b,a);
+    assertEquals(b, a);
   }
 
   @Test
   public void stringConversionFlatDeckTest() {
     Cell a = new Cell("a");
     Cell b = new Cell("b");
-    Suit s1 = new Suit("Hearts", new int[] {255,0,0});
+    Suit s1 = new Suit("Hearts", new int[]{255, 0, 0});
     Value v1 = new Value("Ace", 1);
     Value v2 = new Value("Two", 2);
     Card c1 = new Card(s1, v1);
@@ -227,14 +228,14 @@ public class CellTests {
     System.out.println(b);
     a = (Cell) Cell.fromStorageString(b.toStorageString());
 
-    assertEquals(b,a);
+    assertEquals(b, a);
   }
 
   @Test
   public void stringConversionStackedDeckTest() {
     Cell a = new Cell("a");
     Cell b = new Cell("b");
-    Suit s1 = new Suit("Hearts", new int[] {255,0,0});
+    Suit s1 = new Suit("Hearts", new int[]{255, 0, 0});
     Value v1 = new Value("Ace", 1);
     Value v2 = new Value("Two", 2);
     Card c1 = new Card(s1, v1);
@@ -255,6 +256,6 @@ public class CellTests {
     System.out.println(b);
     a = (Cell) Cell.fromStorageString(b.toStorageString());
 
-    assertEquals(b,a);
+    assertEquals(b, a);
   }
 }

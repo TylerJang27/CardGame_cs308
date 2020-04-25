@@ -43,7 +43,7 @@ public class Suit implements ISuit {
 
   @Override
   public String toStorageString() { //fixme switch to icolor
-    return name+sep+myColorName;
+    return name + sep + myColorName;
   }
 
   public static ISuit fromStorageString(String input) {
@@ -67,7 +67,7 @@ public class Suit implements ISuit {
   }
 
   @Override
-  public String toString(){
+  public String toString() {
     return name;
   }
 }

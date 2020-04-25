@@ -1,7 +1,5 @@
 package ooga.cardtable;
 
-import java.util.function.Function;
-
 public interface IDeck {
 
   void shuffle();

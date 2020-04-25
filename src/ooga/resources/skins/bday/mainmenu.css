@@ -4,97 +4,98 @@
     Required path: skins/duke/mainmenu.css
 */
 
-.menu{
-    -fx-font-size: 2.1em;
-    -fx-font-family: Jokerman;
-    -fx-background-image: url("minions.gif");
-    -fx-background-size: stretch;
-    -fx-focus-color: #CCCCCC;
+.menu {
+  -fx-font-size: 2.1em;
+  -fx-font-family: Jokerman;
+  -fx-background-image: url("minions.gif");
+  -fx-background-size: stretch;
+  -fx-focus-color: #CCCCCC;
 }
 
-.border{
-    -fx-base: #000000;
+.border {
+  -fx-base: #000000;
 }
 
-.titleborder{
-    -fx-base: #000000;
-    -fx-padding: 0;
+.titleborder {
+  -fx-base: #000000;
+  -fx-padding: 0;
 }
 
-.title{
-    -fx-fill: #0dff1d;
-    -fx-font-size: 25pt;
-    -font-weight: bolder;
-    -fx-alignment: "center";
+.title {
+  -fx-fill: #0dff1d;
+  -fx-font-size: 25pt;
+  -font-weight: bolder;
+  -fx-alignment: "center";
 }
 
-.dashboard{
-    -fx-font-size: 10pt;
-    -fx-alignment: "center";
-    -fx-padding: 10;
-    -fx-spacing: 10;
-    -fx-fill: #FFFFFF;
-    -fx-fill: #FFFFFF;
+.dashboard {
+  -fx-font-size: 10pt;
+  -fx-alignment: "center";
+  -fx-padding: 10;
+  -fx-spacing: 10;
+  -fx-fill: #FFFFFF;
+  -fx-fill: #FFFFFF;
 }
 
-.options{
-    -fx-spacing: 25;
+.options {
+  -fx-spacing: 25;
 }
 
-.button{
-    -fx-background-color: #fff30d;
+.button {
+  -fx-background-color: #fff30d;
 
 }
 
 .button:hover {
-    -fx-background-color: #ff0ddf;
+  -fx-background-color: #ff0ddf;
 }
 
-.list-cell{
-    -fx-text-fill: #FFFFFF;
-    -fx-text-background-color: #000000;
-    -fx-background-color: #000000;
+.list-cell {
+  -fx-text-fill: #FFFFFF;
+  -fx-text-background-color: #000000;
+  -fx-background-color: #000000;
 }
 
-.list-cell:hover{
-    -fx-text-background-color: #C9C9C9;
-    -fx-background-color: #0D334A;
+.list-cell:hover {
+  -fx-text-background-color: #C9C9C9;
+  -fx-background-color: #0D334A;
 }
 
-.gametable{
-    -fx-font-size: 12pt;
-    -fx-font-family: Jokerman;
-    -fx-base: #BBA1BB;
-    -fx-background-image: url("mememanbg.jpg");
-    -fx-background-size: stretch;
-    -fx-focus-color: #FFFFFF;
+.gametable {
+  -fx-font-size: 12pt;
+  -fx-font-family: Jokerman;
+  -fx-base: #BBA1BB;
+  -fx-background-image: url("mememanbg.jpg");
+  -fx-background-size: stretch;
+  -fx-focus-color: #FFFFFF;
 }
 
-.title{
-    -fx-fill: #FFFFFF;
-    -fx-alignment: "center";
+.title {
+  -fx-fill: #FFFFFF;
+  -fx-alignment: "center";
 }
 
-.header{
-    -fx-padding: 10;
-    -fx-alignment: "center";
+.header {
+  -fx-padding: 10;
+  -fx-alignment: "center";
 }
 
-.dashboard{
-    -fx-spacing: 20;
-    -fx-padding: 5;
-    -fx-font-size: 10pt;
-    -fx-alignment: "center";
+.dashboard {
+  -fx-spacing: 20;
+  -fx-padding: 5;
+  -fx-font-size: 10pt;
+  -fx-alignment: "center";
 }
 
-.score{
-    -fx-fill: #FFFFFF;
-    -fx-font-size: 10pt;
+.score {
+  -fx-fill: #FFFFFF;
+  -fx-font-size: 10pt;
 }
 
-.cardskin{
-    -fx-image: url(mememan.jpg);
+.cardskin {
+  -fx-image: url(mememan.jpg);
 }
-.tab{
-    -fx-background-color: #E0FF16;
+
+.tab {
+  -fx-background-color: #E0FF16;
 }

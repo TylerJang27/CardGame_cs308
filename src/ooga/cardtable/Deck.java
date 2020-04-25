@@ -19,6 +19,7 @@ public class Deck implements IDeck {
     myName = name;
     cards = d;
   }
+
   @Override
   public boolean isFixed() {
     if (cards.size() > 0) {
@@ -31,24 +32,28 @@ public class Deck implements IDeck {
 
   @Override
   public String toStorageString() {
-    String ret = getName()+"[";
-    for (ICard c: cards) {
-      ret += c.toStorageString()+"*";
+    String ret = getName() + "[";
+    for (ICard c : cards) {
+      ret += c.toStorageString() + "*";
     }
-    if (ret.length() > (""+getName()).length()+1) {
-      ret = ret.substring(0, ret.length()-1);
+    if (ret.length() > ("" + getName()).length() + 1) {
+      ret = ret.substring(0, ret.length() - 1);
     }
-    return ret+"]";
+    return ret + "]";
   }
 
   public static IDeck fromStorageString(String input) {
-    if (input == null) return null;
-    if (input.endsWith("[]")) return new Deck();
+    if (input == null) {
+      return null;
+    }
+    if (input.endsWith("[]")) {
+      return new Deck();
+    }
     String nm = input.split("\\[")[0];
     input = input.replaceFirst(Pattern.quote(nm), "");
-    input = input.substring(1, input.length()-1);
+    input = input.substring(1, input.length() - 1);
     List<ICard> newCards = new ArrayList<>();
-    for (String s: input.split("\\*")){
+    for (String s : input.split("\\*")) {
       newCards.add(Card.fromStorageString(s));
     }
     return new Deck(nm, newCards);
@@ -131,7 +136,7 @@ public class Deck implements IDeck {
 
   @Override
   public void addDeck(IDeck deck) { //fixme consider making an iterable?
-    for (int i = deck.size()-1; i >= 0; i--) {
+    for (int i = deck.size() - 1; i >= 0; i--) {
       //System.out.println(deck.peekCardAtIndex(i) + "is my card");
       addCard(deck.getCardAtIndex(i));
     }
@@ -161,7 +166,7 @@ public class Deck implements IDeck {
   @Override
   public IDeck copy() {
     List<ICard> c = new ArrayList<>();
-    for (ICard card: cards) {
+    for (ICard card : cards) {
       c.add(card.copy());
     }
     return new Deck(myName, c);

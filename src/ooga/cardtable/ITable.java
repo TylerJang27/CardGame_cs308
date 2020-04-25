@@ -7,13 +7,13 @@ import ooga.data.saveconfiguration.ISaveConfiguration;
 
 public interface ITable {
 
-    IPlayer getCurrentPlayer(); //TODO: ADD TO API CHANGES
+  IPlayer getCurrentPlayer(); //TODO: ADD TO API CHANGES
 
-    void setPhaseMachine(IPhaseMachine machine);
+  void setPhaseMachine(IPhaseMachine machine);
 
-    void restartGame(); //TODO: ADD TO API CHANGES
+  void restartGame(); //TODO: ADD TO API CHANGES
 
-    void setCellList(List<ICell> cellList);
+  void setCellList(List<ICell> cellList);
 
   /**
    * Updates the table based on the move. Returns true if move was valid, false otherwise
