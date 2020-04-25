@@ -256,15 +256,28 @@ public class ActionFactory implements Factory {
      * A helper method for extraction that removes the cell from its parent if it's empty, and if it's empty and has one child sets the child in place of itself.
      *
      * @param curr the current ICell implementation
+     * @param attachTheChild whether or not the child should be bound to the parent
      */
-    private static void removeEmptyCells(ICell curr) {
+    private static void removeEmptyCells(ICell curr, boolean attachTheChild) {
         if (curr.getDeck().size() == 0 && curr.getParent() != null) {
-            if (curr.getAllChildren().size() == 2) {
+            ICell parent = curr.getParent();
+            parent.removeCellAtOffset(curr.getOffsetFromParent());
+            System.out.println("deck size" + curr.getDeck().size());
+            System.out.println(curr.getAllChildren().size());
+            if (attachTheChild && curr.getAllChildren().size() == 2) {
                 ICell child = findTheChild(curr);
                 curr.getParent().setCellAtOffset(curr.getOffsetFromParent(), child);
             }
-            curr.getParent().removeCellAtOffset(curr.getOffsetFromParent());
         }
+    }
+
+    /**
+     * A helper method for extraction that removes the cell from its parent if it's empty, and if it's empty and has one child sets the child in place of itself.
+     *
+     * @param curr the current ICell implementation
+     */
+    private static void removeEmptyCells(ICell curr) {
+        removeEmptyCells(curr, false);
     }
 
     /**
