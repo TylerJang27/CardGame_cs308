@@ -2,7 +2,7 @@
 <data type="rule">
     <settings>
         <players>1</players>
-        <layout>data/solitaire_layout.xml</layout>
+        <layout>data/solitaire/solitaire_layout.xml</layout>
     </settings>
     <deck>
         <deck_name>pack52</deck_name>
@@ -587,15 +587,11 @@
                             <except>spade</except>
                             <except>diamond</except>
                         </donor_dest>
-                        <!-- points included in the tag below-->
                         <next_phase phase="check_eog">10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="suits">
                     <validation>
-                        <!-- put regex here -->
-                        <!-- value(Up/Down, #) color(=/!)
-                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
                             <num_cards/>
                         </receiver>
@@ -679,9 +675,6 @@
                 </rule>
                 <rule category="hand">
                     <validation>
-                        <!-- put regex here -->
-                        <!-- value(Up/Down, #) color(=/!)
-                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
                             <num_cards></num_cards>
                         </receiver>
@@ -723,31 +716,25 @@
                 <rule category="">
                     <validation>
                         <condition category="action">
-                            <!-- somehow check that all these are empty -->
                             <num_cards>1</num_cards>
                         </condition>
                         <condition category="hand">
-                            <!-- somehow check that all these are empty -->
                             <num_cards>0</num_cards>
                         </condition>
                         <condition category="deck">
-                            <!-- somehow check that all these are empty -->
                             <num_cards>0</num_cards>
                         </condition>
                     </validation>
                     <action>
-                        <!-- go to end of game -->
                         <next_phase phase="win">500.0</next_phase>
                     </action>
                 </rule>
                 <rule category="">
                     <validation>
                         <condition category="action">
-                            <!-- somehow check that all these are empty -->
                         </condition>
                     </validation>
                     <action>
-                        <!-- go to player turn -->
                         <next_phase phase = "play"></next_phase>
                     </action>
                 </rule>

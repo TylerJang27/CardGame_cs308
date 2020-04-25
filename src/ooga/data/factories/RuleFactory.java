@@ -275,10 +275,10 @@ public class RuleFactory implements Factory {
         String name = XMLHelper.getTextValue(e, RESOURCES.getString(NAME));
         if (!TRUE_CHECKS.contains(name)) {
             valueChecker = (IMove move) -> {
+                String currHeadName = currCell.apply(move).findHead().getName();
                 boolean isAGroup = cellGroupMap.containsKey(name);
-                boolean groupHasCell = cellGroupMap.get(name).isInGroup(currCell.apply(move).findHead().getName());
                 boolean cellNameValid = currCell.apply(move).findHead().getName().equalsIgnoreCase(name);
-                return (isAGroup && groupHasCell) || (cellNameValid);
+                return (isAGroup && cellGroupMap.get(name).isInGroup(currHeadName)) || (cellNameValid);
             };
             conditions.add(valueChecker);
         }

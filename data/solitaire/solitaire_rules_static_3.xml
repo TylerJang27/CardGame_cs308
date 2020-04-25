@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data type="rule">
     <settings>
-        <!-- should just be a file name so that we can process it properly and send to the front end -->
         <players>1</players>
     </settings>
     <deck>
-        <!-- should either be custom held here, or point to a file to retrieve from -->
         <deck_name>pack52</deck_name>
         <shuffle>y</shuffle>
         <card>
@@ -612,15 +610,11 @@
                             <except>spade</except>
                             <except>diamond</except>
                         </donor_dest>
-                        <!-- points included in the tag below-->
                         <next_phase phase="check_eog">10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="suits">
                     <validation>
-                        <!-- put regex here -->
-                        <!-- value(Up/Down, #) color(=/!)
-                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
                             <num_cards/>
                         </receiver>
@@ -671,9 +665,6 @@
                 </rule>
                 <rule category="deck">
                     <validation>
-                        <!-- put regex here -->
-                        <!-- value(Up/Down, #) color(=/!)
-                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
                             <num_cards>0</num_cards>
                         </receiver>
@@ -714,9 +705,6 @@
                 </rule>
                 <rule category="hand">
                     <validation>
-                        <!-- put regex here -->
-                        <!-- value(Up/Down, #) color(=/!)
-                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
                             <num_cards></num_cards>
                         </receiver>
@@ -765,31 +753,25 @@
                 <rule category="">
                     <validation>
                         <condition category="action">
-                            <!-- somehow check that all these are empty -->
                             <num_cards>1</num_cards>
                         </condition>
                         <condition category="hand">
-                            <!-- somehow check that all these are empty -->
                             <num_cards>0</num_cards>
                         </condition>
                         <condition category="deck">
-                            <!-- somehow check that all these are empty -->
                             <num_cards>0</num_cards>
                         </condition>
                     </validation>
                     <action>
-                        <!-- go to end of game -->
                         <next_phase phase="win">500.0</next_phase>
                     </action>
                 </rule>
                 <rule category="">
                     <validation>
                         <condition category="action">
-                            <!-- somehow check that all these are empty -->
                         </condition>
                     </validation>
                     <action>
-                        <!-- go to player turn -->
                         <next_phase phase = "play"></next_phase>
                     </action>
                 </rule>

@@ -2,7 +2,7 @@
 <data type="rule">
     <settings>
         <players>1</players>
-        <layout>data/war_layout.xml</layout>
+        <layout>data/war/war_layout.xml</layout>
     </settings>
     <deck>
         <deck_name>pack52</deck_name>
