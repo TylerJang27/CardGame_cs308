@@ -1,5 +1,7 @@
 package ooga.data.factories;
 
+import java.util.ArrayList;
+import java.util.List;
 import ooga.data.XMLException;
 import ooga.data.XMLHelper;
 import ooga.data.XMLValidator;
@@ -50,14 +52,20 @@ public class HighScoreFactory implements Factory {
                 Element root = XMLHelper.getRootAndCheck(dataFile, DATA_TYPE, INVALID_ERROR);
                 NodeList scoreNodes = root.getChildNodes();
 
-                Map<String, Double> scoreMap = new HashMap<>();
+                Map<String, List<Double>> scoreMap = new HashMap<>();
 
                 for (int k = 0; k < scoreNodes.getLength(); k ++) {
                     Node scoreNode = scoreNodes.item(k);
+                    List<Double> gameScoreList = new ArrayList<>();
                     try {
-                        scoreMap.put(scoreNode.getNodeName(), Double.parseDouble(scoreNode.getTextContent()));
+                        NodeList scores = scoreNode.getChildNodes();
+                        for(int i = 0; i < scores.getLength(); i++){
+                            Node score = scores.item(i);
+                            gameScoreList.add(Double.parseDouble(score.getTextContent()));
+                        }
+                        scoreMap.put(scoreNode.getNodeName(),gameScoreList);
                     } catch (NumberFormatException | DOMException e) {
-                        scoreMap.put(scoreNode.getNodeName(), 0.0);
+                        scoreMap.put(scoreNode.getNodeName(), new ArrayList<>());
                     }
                 }
 
