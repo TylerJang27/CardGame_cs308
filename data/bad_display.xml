@@ -2,7 +2,7 @@
 <data type="rule">
     <settings>
         <players>1</players>
-        <layout>data/war_layout.xml</layout>
+        <layout>data/solitaire_layout.xml</layout>
     </settings>
     <deck>
         <deck_name>pack52</deck_name>
@@ -23,34 +23,6 @@
         </card>
         <card>
             <name>D3</name>
-            <value>14</value>
-            <color>green</color>
-            <suit>c</suit>
-            <fixed>y</fixed>
-        </card>
-        <card>
-            <name>D4</name>
-            <value>14</value>
-            <color>green</color>
-            <suit>c</suit>
-            <fixed>y</fixed>
-        </card>
-        <card>
-            <name>D5</name>
-            <value>14</value>
-            <color>green</color>
-            <suit>c</suit>
-            <fixed>y</fixed>
-        </card>
-        <card>
-            <name>D6</name>
-            <value>14</value>
-            <color>green</color>
-            <suit>c</suit>
-            <fixed>y</fixed>
-        </card>
-        <card>
-            <name>D7</name>
             <value>14</value>
             <color>green</color>
             <suit>c</suit>
@@ -374,7 +346,7 @@
     </deck>
     <cell_groups>
         <group category="player">
-            <cell name="deck1">
+            <cell name="1">
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
@@ -407,7 +379,7 @@
                     <card>Rd,D</card>
                 </init_cards>
             </cell>
-            <cell name="deck2">
+            <cell name="2">
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
@@ -446,415 +418,205 @@
                 <fan>east</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>D3,U,none</card>
-                </init_cards>
-            </cell>
-        </group>
-        <group category="stage">
-            <cell name="stage1">
-                <fan>none</fan>
-                <rotation>0</rotation>
-                <init_cards>
-                    <card>D4,U,none</card>
-                </init_cards>
-            </cell>
-            <cell name="stage2">
-                <fan>none</fan>
-                <rotation>0</rotation>
-                <init_cards>
-                    <card>D5,U,none</card>
-                </init_cards>
-            </cell>
-        </group>
-        <group category="hold">
-            <cell name="hold1">
-                <fan>none</fan>
-                <rotation>0</rotation>
-                <init_cards>
-                    <card>D6,U,none</card>
-                </init_cards>
-            </cell>
-            <cell name="hold2">
-                <fan>none</fan>
-                <rotation>0</rotation>
-                <init_cards>
-                    <card>D7,U,none</card>
+                    <card>D3,U</card>
                 </init_cards>
             </cell>
         </group>
     </cell_groups>
     <phases>
-        <phase name="1decktostage">
+        <phase name="p1">
             <phase_type>manual</phase_type>
             <valid_donors>
-                <category>deck1</category>
-            </valid_donors>
-            <rules>
-                <rule category="stage1">
-                    <validation>
-                        <receiver></receiver>
-                        <mover></mover>
-                        <donor>
-                            <name>deck1</name>
-                        </donor>
-                    </validation>
-                    <action>
-                        <receiver_dest>
-                            <destination>r</destination>
-                            <num_cards>none</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>preserve</offset>
-                        </receiver_dest>
-                        <mover_dest>
-                            <destination>r</destination>
-                            <num_cards>t</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>preserve</offset>
-                            <flip_up>y</flip_up>
-                        </mover_dest>
-                        <donor_dest>
-                            <destination>d</destination>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>preserve</offset>
-                        </donor_dest>
-                        <!-- points included in the tag below-->
-                        <next_phase phase="2decktostage">0</next_phase>
-                    </action>
-                </rule>
-            </rules>
-        </phase>
-        <phase name="2decktostage">
-            <phase_type>manual</phase_type>
-            <valid_donors>
-                <category>deck2</category>
-            </valid_donors>
-            <rules>
-                <rule category="stage2">
-                    <validation>
-                        <receiver></receiver>
-                        <mover></mover>
-                        <donor>
-                            <name>deck2</name>
-                        </donor>
-                    </validation>
-                    <action>
-                        <receiver_dest>
-                            <destination>r</destination>
-                            <num_cards>none</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>none</offset>
-                        </receiver_dest>
-                        <mover_dest>
-                            <destination>r</destination>
-                            <num_cards>t</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>none</offset>
-                            <flip_up>y</flip_up>
-                        </mover_dest>
-                        <donor_dest>
-                            <destination>d</destination>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>preserve</offset>
-                        </donor_dest>
-                        <!-- points included in the tag below-->
-                        <next_phase phase="1stagetobattle">0</next_phase>
-                    </action>
-                </rule>
-            </rules>
-        </phase>
-        <phase name="1stagetobattle">
-            <phase_type>manual</phase_type>
-            <valid_donors>
-                <category>stage1</category>
+                <category>1</category>
             </valid_donors>
             <rules>
                 <rule category="battle">
                     <validation>
-                        <receiver></receiver>
+                        <receiver>
+                            <name>battle</name>
+                        </receiver>
                         <mover></mover>
                         <donor>
-                            <name>stage1</name>
+                            <name>1</name>
                         </donor>
                     </validation>
                     <action>
                         <receiver_dest>
                             <destination>r</destination>
-                            <num_cards>none</num_cards>
+                            <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
                             <offset>preserve</offset>
                         </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
-                            <num_cards>t</num_cards>
+                            <num_cards>1</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>east</offset>
+                            <offset>preserve</offset>
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
+                            <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
                             <offset>preserve</offset>
                         </donor_dest>
-                        <!-- points included in the tag below-->
-                        <next_phase phase="2stagetobattle">0</next_phase>
+                        <next_phase phase="p2"></next_phase>
                     </action>
                 </rule>
             </rules>
         </phase>
-        <phase name="2stagetobattle">
+        <phase name="p2">
             <phase_type>manual</phase_type>
             <valid_donors>
-                <category>stage2</category>
+                <category>2</category>
             </valid_donors>
             <rules>
                 <rule category="battle">
                     <validation>
-                        <receiver></receiver>
+                        <receiver>
+                            <name>battle</name>
+                        </receiver>
                         <mover>
                             <value>l</value>
                         </mover>
                         <donor>
-                            <name>stage2</name>
+                            <name>2</name>
                         </donor>
                     </validation>
                     <action>
                         <receiver_dest>
-                            <destination>hold1</destination>
+                            <destination>1</destination>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>none</offset>
+                            <offset>preserve</offset>
                         </receiver_dest>
                         <mover_dest>
-                            <destination>hold1</destination>
-                            <num_cards>t</num_cards>
+                            <destination>1</destination>
+                            <num_cards>1</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>none</offset>
+                            <offset>preserve</offset>
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
+                            <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
                             <offset>preserve</offset>
                         </donor_dest>
-                        <!-- points included in the tag below-->
-                        <next_phase phase="1decktostage">0</next_phase>
+                        <next_phase phase="check"></next_phase>
                     </action>
                 </rule>
                 <rule category="battle">
                     <validation>
-                        <receiver></receiver>
+                        <receiver>
+                            <name>battle</name>
+                        </receiver>
                         <mover>
                             <value>g</value>
                         </mover>
                         <donor>
-                            <name>stage2</name>
+                            <name>2</name>
                         </donor>
                     </validation>
                     <action>
                         <receiver_dest>
-                            <destination>hold2</destination>
+                            <destination>2</destination>
                             <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>none</offset>
+                            <offset>preserve</offset>
                         </receiver_dest>
                         <mover_dest>
-                            <destination>hold2</destination>
-                            <num_cards>t</num_cards>
+                            <destination>2</destination>
+                            <num_cards>1</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>none</offset>
+                            <offset>preserve</offset>
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
+                            <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
                             <offset>preserve</offset>
                         </donor_dest>
-                        <!-- points included in the tag below-->
-                        <next_phase phase="1decktostage">0</next_phase>
+                        <next_phase phase="check_eog"></next_phase>
                     </action>
                 </rule>
                 <rule category="battle">
                     <validation>
-                        <receiver></receiver>
+                        <receiver>
+                            <name>battle</name>
+                        </receiver>
                         <mover>
                             <value>0</value>
                         </mover>
                         <donor>
-                            <name>stage2</name>
+                            <name>2</name>
                         </donor>
                     </validation>
                     <action>
-                        <mover_dest>
+                        <receiver_dest>
                             <destination>r</destination>
-                            <num_cards>t</num_cards>
+                            <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
-                            <offset>east</offset>
+                            <offset>preserve</offset>
+                        </receiver_dest>
+                        <mover_dest>
+                            <destination>r</destination>
+                            <num_cards>1</num_cards>
+                            <shuffle>n</shuffle>
+                            <rotation>0</rotation>
+                            <offset>preserve</offset>
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
+                            <num_cards>*</num_cards>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
                             <offset>preserve</offset>
                         </donor_dest>
-                        <!-- points included in the tag below-->
-                        <next_phase phase="1decktostage">0</next_phase>
+                        <next_phase phase="check_eog"></next_phase>
                     </action>
                 </rule>
             </rules>
         </phase>
-        <phase name="check_eog1">
+        <phase name="check_eog">
             <phase_type>auto</phase_type>
             <valid_donors></valid_donors>
             <rules>
                 <rule category="">
                     <validation>
-                        <condition category="deck1">
-                            <num_cards>1</num_cards>
-                        </condition>
-                        <condition category="hold1">
+                        <condition category="1">
                             <num_cards>1</num_cards>
                         </condition>
                     </validation>
                     <action>
-                        <next_phase phase="win">2.0</next_phase>
+                        <next_phase phase="win">500.0</next_phase>
                     </action>
                 </rule>
                 <rule category="">
                     <validation>
-                        <condition category="deck1">
+                        <condition category="2">
                             <num_cards>1</num_cards>
                         </condition>
                     </validation>
                     <action>
-                        <next_phase phase="reload1">0</next_phase>
+                        <next_phase phase="win">500.0</next_phase>
                     </action>
                 </rule>
                 <rule category="">
                     <validation>
-                        <condition category="deck1"></condition>
+                        <condition category="player"></condition>
                     </validation>
                     <action>
-                        <next_phase phase="check_eog2">0</next_phase>
+                        <next_phase phase="p1"></next_phase>
                     </action>
-                </rule>
-            </rules>
-        </phase>
-        <phase name="check_eog2">
-            <phase_type>auto</phase_type>
-            <valid_donors></valid_donors>
-            <rules>
-                <rule category="">
-                    <validation>
-                        <condition category="deck2">
-                            <num_cards>1</num_cards>
-                        </condition>
-                        <condition category="hold2">
-                            <num_cards>1</num_cards>
-                        </condition>
-                    </validation>
-                    <action>
-                        <next_phase phase="win">1.0</next_phase>
-                    </action>
-                </rule>
-                <rule category="">
-                    <validation>
-                        <condition category="deck2">
-                            <num_cards>1</num_cards>
-                        </condition>
-                    </validation>
-                    <action>
-                        <next_phase phase="reload2">0</next_phase>
-                    </action>
-                </rule>
-                <rule category="">
-                    <validation>
-                        <condition category="deck2"></condition>
-                    </validation>
-                    <action>
-                        <next_phase phase="1decktostage">0</next_phase>
-                    </action>
-                </rule>
-            </rules>
-        </phase>
-        <phase name="reload1">
-            <phase_type>manual</phase_type>
-            <valid_donors>
-                <category>hold1</category>
-            </valid_donors>
-            <rules>
-                <rule category="deck1">
-                    <validation>
-                        <receiver>
-                            <name>deck1</name>
-                        </receiver>
-                        <mover></mover>
-                        <donor>
-                            <name>hold1</name>
-                        </donor>
-                    </validation>
-                    <action>
-                        <mover_dest>
-                            <destination>r</destination>
-                            <num_cards>*</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>none</offset>
-                            <flip_up>n</flip_up>
-                        </mover_dest>
-                        <next_phase phase="check_eog2">0.0</next_phase>
-                    </action>
-                </rule>
-            </rules>
-        </phase>
-        <phase name="reload2">
-            <phase_type>manual</phase_type>
-            <valid_donors>
-                <category>hold2</category>
-            </valid_donors>
-            <rules>
-                <rule category="deck2">
-                    <validation>
-                        <receiver>
-                            <name>deck2</name>
-                        </receiver>
-                        <mover></mover>
-                        <donor>
-                            <name>hold2</name>
-                        </donor>
-                    </validation>
-                    <action>
-                        <mover_dest>
-                            <destination>r</destination>
-                            <num_cards>*</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>none</offset>
-                            <flip_up>n</flip_up>
-                        </mover_dest>
-                        <next_phase phase="1decktostage">0.0</next_phase>
-                    </action>
-                </rule>
-            </rules>
-        </phase>
-        <phase name="win">
-            <phase_type>manual</phase_type>
-            <valid_donors/>
-            <rules>
-                <rule category="default">
-
                 </rule>
             </rules>
         </phase>
