@@ -38,7 +38,7 @@ public class DeckFactory implements Factory {
     private DeckFactory(){}
 
     /**
-     * Builds and returns an IDeck built from a rules XML. Requirements for rules XML can be found in ____.
+     * Builds and returns an IDeck built from a rules XML. Requirements for rules XML can be found in doc/XML_Documentation.md.
      *
      * @param root          the root of the filr from which an IDeck is built
      * @return              a fully constructed IDeck instance

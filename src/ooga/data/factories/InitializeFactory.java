@@ -38,7 +38,7 @@ public class InitializeFactory implements Factory {
     private InitializeFactory() {}
 
     /**
-     * Builds and return a Function of IDeck to ICell built from a rules XML. Requirements for rules XML can be found in ___.
+     * Builds and return a Function of IDeck to ICell built from a rules XML. Requirements for rules XML can be found in doc/XML_Documentation.md.
      *
      * @param settings  the Node from which the Function is built
      * @param offset    the offset used for all of the cards

@@ -15,9 +15,16 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 import java.util.ResourceBundle;
+import ooga.view.menu.Dictionary;
 
 public class Dashboard {
     private static final String SCORE = "score";
+    private static final String INSTRUCTIONS = "%s insns";
+    private static final String INSTRUCTIONS_BUTTON = "insns";
+    private static final String SAVE = "Save";
+    private static final String SAVE_WINDOW_TITLE = "savefilechoosertitle";
+    private static final String XML_FILE = "XMLFile";
+    private static final String XML_EXTENSION = "*.xml";
 
     private Pane myPane;
     private HBox myBox;
@@ -25,12 +32,10 @@ public class Dashboard {
     private double myScore;
     private String myScoreLabel;
     private Text myScoreDisplay;
-    private ResourceBundle myMessages;
     private Text myInstructions;
     private Stage myPopUp;
 
-    public Dashboard(Button restartButton, String scoreLabel, ResourceBundle messages, String game, Consumer<String> saveConsumer) {
-        myMessages = messages;
+    public Dashboard(Button restartButton, String scoreLabel, String game, Consumer<String> saveConsumer) {
         myPane = new Pane();
         myBox = new HBox();
 
@@ -41,6 +46,7 @@ public class Dashboard {
         myScoreDisplay.getStyleClass().add(SCORE);
 
         myInstructions = new Text();
+        myInstructions.textProperty().bind(Dictionary.getInstance().get(INSTRUCTIONS.format(game.toLowerCase())));
         HBox textholder = new HBox();
         textholder.getChildren().add(myInstructions);
         Pane messagePane = new Pane();
@@ -49,27 +55,21 @@ public class Dashboard {
         myPopUp = new Stage();
         myPopUp.setScene(messageScene);
 
-        Button instructionsButton = new Button(messages.getString("insns"));
-        instructionsButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                myInstructions.setText(messages.getString(game.toLowerCase()+"_insns"));
-                myPopUp.show();
-            }
-        });
-        //messages.getString(game+"_insns");
-        Button saveButton = new Button("Save");
-        saveButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
+        Button instructionsButton = new Button();
+        instructionsButton.textProperty().bind(Dictionary.getInstance().get(INSTRUCTIONS_BUTTON));
+        instructionsButton.setOnAction(e -> myPopUp.show());
+        Button saveButton = new Button();
+        saveButton.textProperty().bind(Dictionary.getInstance().get(SAVE));
+
+        saveButton.setOnMouseClicked(click -> {
                 FileChooser fileChooser = new FileChooser();
-                fileChooser.setTitle("Save File");
-                fileChooser.getExtensionFilters().add(new ExtensionFilter("XML File","*.xml"));
+                fileChooser.titleProperty().bind(Dictionary.getInstance().get(SAVE_WINDOW_TITLE));
+                fileChooser.getExtensionFilters().add(new ExtensionFilter(Dictionary.getInstance().get(XML_FILE).getValue(),XML_EXTENSION));
                 File saveFile = fileChooser.showSaveDialog(new Stage());
                 saveConsumer.accept(saveFile.getPath());
-            }
         });
 
-        myBox.getStyleClass().add("dashboard");
+        myBox.getStyleClass().add("dashboard"); //FIXME
         myBox.getChildren().addAll(restartButton, instructionsButton, myScoreDisplay,saveButton);
 
         myPane.getStyleClass().add("dashboard");

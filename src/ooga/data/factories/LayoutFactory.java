@@ -42,7 +42,7 @@ public class LayoutFactory implements Factory {
     //TODO: @ANDREW REFACTOR and add Error Handling
 
     /**
-     * Builds and returns an ILayout from a layout XML file. Requirements for layout XML can be found in ___.
+     * Builds and returns an ILayout from a layout XML file. Requirements for layout XML can be found in doc/XML_Documentation.md.
      *
      * @param dataFile the file from which to build an ILayout implementation
      * @return an ILayout implementation built from the layout XML

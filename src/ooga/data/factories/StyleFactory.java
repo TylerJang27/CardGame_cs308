@@ -39,7 +39,7 @@ public class StyleFactory implements Factory {
     private StyleFactory() {}
 
     /**
-     * Builds and returns an IStyle from a styling XML. Requirements for style XML can be found in ___.
+     * Builds and returns an IStyle from a styling XML. Requirements for style XML can be found in doc/XML_Documentation.md.
      *
      * @param dataFile file from which to read configuration
      * @return an IStyle with all of its configuration information stored
@@ -50,7 +50,7 @@ public class StyleFactory implements Factory {
     }
 
     /**
-     * Builds and returns an IStyle from a styling XML. Requirements for style XML can be found in ___.
+     * Builds and returns an IStyle from a styling XML. Requirements for style XML can be found in doc/XML_Documentation.md.
      *
      * @param dataFile    file from which to read configuration
      * @param destination String for the destination to save the file

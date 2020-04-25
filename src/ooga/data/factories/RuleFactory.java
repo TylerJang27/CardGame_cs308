@@ -44,7 +44,7 @@ public class RuleFactory implements Factory {
     private RuleFactory() {}
 
     /**
-     * The default method for building and returning a singular IRule from a rules XML. Requirements for rules XML can be found in ___.
+     * The default method for building and returning a singular IRule from a rules XML. Requirements for rules XML can be found in doc/XML_Documentation.md.
      *
      * @param e             the Element from which IRules are built
      * @param ruleName      the Name of the Rule being created
@@ -56,7 +56,7 @@ public class RuleFactory implements Factory {
     }
 
     /**
-     * Builds and returns a singular IRule from a rules XML. Requirements for rules XML can be found in ___.
+     * Builds and returns a singular IRule from a rules XML. Requirements for rules XML can be found in doc/XML_Documentation.md.
      *
      * @param e             the Element from which IRules are built
      * @param ruleName      the Name of the Rule being created
