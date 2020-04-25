@@ -1,10 +1,6 @@
 package ooga.view;
 
-import java.security.Key;
-import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
-import javafx.beans.property.ReadOnlyStringProperty;
-import javafx.beans.property.StringProperty;
 import ooga.view.menu.Dictionary;
 
 public class KeyPreservingStringProperty {
@@ -13,9 +9,7 @@ public class KeyPreservingStringProperty {
   private ReadOnlyProperty<String> myStringProperty;
 
   public KeyPreservingStringProperty(String key){
-    System.out.println("key is: " + key);
     myStringProperty = Dictionary.getInstance().get(key);
-    System.out.println("value is: " + myStringProperty);
     myKey = key;
   }
 
