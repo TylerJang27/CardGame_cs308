@@ -35,6 +35,7 @@ public class ActionFactory implements Factory {
     private static final String FLIP = PhaseFactory.FLIP;
     private static final String YES = PhaseFactory.YES;
     private static final String RANDOM = PhaseFactory.RANDOM;
+    private static final String COLLAPSE = PhaseFactory.COLLAPSE;
 
     private static final String M = PhaseFactory.M;
     private static final String D = PhaseFactory.D;
@@ -71,6 +72,7 @@ public class ActionFactory implements Factory {
                 Boolean excepted = extractExceptBehavior(e, currCell.apply(move));
                 if (!excepted) {
                     ICell updatedCurrCell = extractCellsToMove(e, currCell.apply(move));
+                    extractCollapse(e, updatedCurrCell);
                     ICell destination = extractDestinationBehavior(e, moverCell.apply(move), donorCell.apply(move), recipientCell.apply(move), cellGroupMap);
                     IOffset off = extractOffsetBehavior(e, updatedCurrCell);
                     extractRotationBehavior(e, updatedCurrCell);
@@ -250,6 +252,23 @@ public class ActionFactory implements Factory {
             cellToMove = currCell;
         }
         return cellToMove;
+    }
+
+    /**
+     * Extracts and applies the collapsing for the ICell being moved.
+     *
+     * @param e         the Element from which IRules are built
+     * @param currCell  the current cell
+     */
+    private static void extractCollapse(Element e, ICell currCell) {
+        String collapse = XMLHelper.getTextValue(e, RESOURCES.getString(COLLAPSE));
+        if (collapse.equalsIgnoreCase(RESOURCES.getString(YES))) {
+            for (Map.Entry<IOffset, ICell> entry: currCell.getAllChildren().entrySet()) {
+                if (!entry.getKey().equals(Offset.NONE)) {
+                    currCell.addCell(Offset.NONE, entry.getValue());
+                }
+            }
+        }
     }
 
     /**
