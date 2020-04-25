@@ -4,7 +4,7 @@
     Required path: skins/duke/mainmenu.css
 */
 
-.root{
+.menu{
     -fx-font-size: 12pt;
     -fx-font-family: "Stencil";
     -fx-background-image: url("dukefans.gif");
@@ -59,4 +59,55 @@
 .list-cell:hover{
     -fx-text-background-color: #D8DBFF;
     -fx-background-color: #000FFF;
+}
+
+.gametable{
+    -fx-font-size: 12pt;
+    -fx-font-family: "Stencil";
+    -fx-base: #BBA1BB;
+    -fx-background-image: url("coachkcourt.jpg");
+    -fx-background-size: stretch;
+    -fx-focus-color: #FFFFFF;
+}
+
+.title{
+    -fx-fill: #FFFFFF;
+    -fx-alignment: "center";
+}
+
+.header{
+    -fx-padding: 10;
+    -fx-alignment: "center";
+}
+
+.dashboard{
+    -fx-spacing: 20;
+    -fx-padding: 5;
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 10pt;
+    -fx-alignment: "center";
+}
+
+.score{
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 10pt;
+}
+
+.cardskin{
+    -fx-image: url(duked.png);
+}
+
+.button{
+    -fx-background-color: linear-gradient(#C9C9C9 , #DFDFDF );
+
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#000FFF , #D8DBFF  );
+}
+
+.message{
+    -fx-text-fill: white;
+    -fx-padding: 10px;
+    -fx-font-family: "Arial Black";
 }

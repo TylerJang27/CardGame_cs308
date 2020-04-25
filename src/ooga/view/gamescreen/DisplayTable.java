@@ -53,10 +53,8 @@ public class DisplayTable {
     String mySkinType;
 
     public DisplayTable(int gameID, GiveMove moveLambda, ILayout layout, double screenWidth, String skinType) {
-
         mySkinType = skinType;
         myPane = new Pane();
-
 
         myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.widthProperty());
         myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
