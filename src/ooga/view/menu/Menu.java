@@ -42,6 +42,8 @@ public class Menu {
   private static final List<String> ROOT_CSS = List.of("menu");
   private static final String GAMES_FOLDER = "ooga.resources.languages.games.%s";
   private static final double GAMES_SPACING = 20.0;
+  public static final String TITLE = "title";
+  public static final String TITLEBORDER = "titleborder";
 
   private BorderPane myBorderPane;
   private StringProperty myGameProperty;
@@ -154,9 +156,9 @@ public class Menu {
   private void setTopBorder(String appName) {
     StackPane gameNamePane = new StackPane();
     Text gameName = new Text(appName);
-    gameName.getStyleClass().add("title");
+    gameName.getStyleClass().add(TITLE);
     gameNamePane.getChildren().add(gameName);
-    gameNamePane.getStyleClass().add("titleborder");
+    gameNamePane.getStyleClass().add(TITLEBORDER);
     myBorderPane.setTop(gameNamePane);
   }
 
