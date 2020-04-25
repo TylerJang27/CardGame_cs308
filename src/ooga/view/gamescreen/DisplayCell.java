@@ -16,6 +16,7 @@ import ooga.cardtable.Offset;
 public class DisplayCell {
 
     private static final String DEFAULT_SKIN_TYPE = "classic";
+    private static Map<String, Image> cachedImages = new HashMap<>();
 
     private Map<Offset, DisplayCell> myDisplayChildren = new HashMap<>();
     private ICell myCell;
@@ -36,15 +37,15 @@ public class DisplayCell {
         myCell = cell;
 
         if(myCell.getDeck().peek() != null) {
-
+            System.out.println("an image!");
             if (myCell.getDeck().peek().isFaceUp()) {
                 try {
-                    myImageView = new ImageView(new Image("/ooga/resources/decks/standard/" + skinType + "/" + myCell.getDeck().peek().getName() + ".png"));
+                    myImageView = new ImageView(getImageFromString("/ooga/resources/decks/standard/" + skinType + "/" + myCell.getDeck().peek().getName() + ".png"));
                 } catch (Exception e) {
-                    myImageView = new ImageView(new Image("/ooga/resources/decks/standard/" + DEFAULT_SKIN_TYPE + "/" + myCell.getDeck().peek().getName() + ".png"));
+                    myImageView = new ImageView(getImageFromString("/ooga/resources/decks/standard/" + DEFAULT_SKIN_TYPE + "/" + myCell.getDeck().peek().getName() + ".png"));
                 }
             } else {
-                myImageView = new ImageView(new Image("/ooga/resources/decks/standard/"+skinType+"/faceDown.png"));
+                myImageView = new ImageView(getImageFromString("/ooga/resources/decks/standard/"+skinType+"/faceDown.png"));
                 myImageView.getStyleClass().add("cardskin");
             }
 
@@ -83,6 +84,16 @@ public class DisplayCell {
             DisplayCell childDisplayCell = new DisplayCell(myDragLambda, myClickLambda, childCell, skinType, childOffset, height, width, faceDownOffset, faceUpOffset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
         }
+    }
+
+    private Image getImageFromString(String file){
+        Image ret = DisplayCell.cachedImages.get(file);
+        if (ret != null) {
+            return ret;
+        }
+        ret = new Image(file);
+        DisplayCell.cachedImages.put(file, ret);
+        return ret;
     }
 
     public Map<Offset,DisplayCell> getAllChildren() {

@@ -23,13 +23,12 @@ public class Menu {
   private static final String CHOICES = "ooga.resources.languages.games";
 
   private BorderPane myBorderPane;
-  private Stage myStage;
   private StringProperty myGameProperty;
   private Scene myScene;
 
   private String myGame;
 
-  public Menu(String appName, ResourceBundle supportedLangs, ResourceBundle supportedSkins, View.ChangeValue themeLambda, View.ChangeValue languageLambda, String defaultTheme, String defaultLanguage, double screenHeight, double screenWidth){
+  public Menu(String appName, ResourceBundle supportedLangs, ResourceBundle supportedSkins, View.ChangeValue themeLambda, View.ChangeValue languageLambda, String defaultTheme, String defaultLanguage, double screenHeight, double screenWidth,EventHandler<MouseEvent> highScoresHandler){
 
     myGameProperty = new SimpleStringProperty();
     Dictionary.getInstance().addReference(CHOICES);
@@ -39,22 +38,18 @@ public class Menu {
 
     setTopBorder(appName);
     setCenter(defaultLanguage);
-    setBottomBorder(supportedLangs, supportedSkins, defaultTheme, defaultLanguage, themeLambda, languageLambda);
-
-    myScene = new Scene(myBorderPane,screenWidth,screenHeight);
-    myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+defaultTheme.toLowerCase()+"/mainmenu.css").toExternalForm()); //
-
+    setBottomBorder(supportedLangs, supportedSkins, defaultTheme, defaultLanguage, themeLambda, languageLambda,highScoresHandler);
   }
 
-  public Scene getScene() {
-    return myScene;
+  public Pane getScene() {
+    return myBorderPane;
   }
 
   public String getGame() {
     return myGame;
   }
 
-  private void setBottomBorder(ResourceBundle supportedLangs, ResourceBundle supportedSkins, String defaultTheme, String defaultLanguage, View.ChangeValue themeLambda, View.ChangeValue languageLambda) {
+  private void setBottomBorder(ResourceBundle supportedLangs, ResourceBundle supportedSkins, String defaultTheme, String defaultLanguage, View.ChangeValue themeLambda, View.ChangeValue languageLambda,EventHandler<MouseEvent> highScoreHandler) {
     ComboBox<String> languages = new ComboBox<>();
     languages.getItems().addAll(supportedLangs.getString("supported").split(","));
     languages.setValue(defaultLanguage);
@@ -75,13 +70,13 @@ public class Menu {
       public void changed(ObservableValue<? extends String> observable, String oldValue,
                           String newValue) {
         themeLambda.setValue(newValue);
-        myScene.getStylesheets().clear();
-        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+newValue.toLowerCase()+"/mainmenu.css").toExternalForm());
       }
     });
+    Button highScoresButton = new Button("high scores");
+    highScoresButton.setOnMouseClicked(highScoreHandler);
 
     HBox dashboard = new HBox();
-    dashboard.getChildren().addAll(languages, skins);
+    dashboard.getChildren().addAll(languages, skins,highScoresButton);
     dashboard.getStyleClass().add("border");
     dashboard.getStyleClass().add("dashboard");
 
