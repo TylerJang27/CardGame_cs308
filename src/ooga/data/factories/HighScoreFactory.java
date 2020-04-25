@@ -28,7 +28,7 @@ public class HighScoreFactory implements Factory {
     public static String SCORE_XSD = "src/ooga/data/factories/schemas/score_schema.xsd";
 
     /**
-     * Builds and returns an IHighScore from a scoring XML. Requirements for scoring XML can be found in ___.
+     * Builds and returns an IHighScore from a scoring XML. Requirements for scoring XML can be found in doc/XML_Documentation.md.
      *
      * @param dataFile    file from which to read configuration
      * @return an IHighScore with all of its configuration information stored
@@ -39,7 +39,7 @@ public class HighScoreFactory implements Factory {
     }
 
     /**
-     * Builds and returns an IHighScore from a scoring XML. Requirements for scoring XML can be found in ___.
+     * Builds and returns an IHighScore from a scoring XML. Requirements for scoring XML can be found in doc/XML_Documentation.md.
      *
      * @param dataFile    file from which to read configuration
      * @param destination String for the destination to save the file
@@ -57,7 +57,7 @@ public class HighScoreFactory implements Factory {
                 for (int k = 0; k < scoreNodes.getLength(); k ++) {
                     Node scoreNode = scoreNodes.item(k);
 
-                    if(! scoreNode.getNodeName().equals("#text")) {
+                    if(! scoreNode.getNodeName().equals(Factory.BLANK_TEXT)) {
                         List<Double> gameScoreList = new ArrayList<>();
                         try {
                             NodeList scores = scoreNode.getChildNodes();

@@ -30,7 +30,7 @@ public class PhaseMachineFactory implements Factory {
     public static final String START = "INIT_PHASE";
 
     /**
-     * Builds and returns an IPhaseMachine built from a rules XML. Requirements for rules XML can be found in _____.
+     * Builds and returns an IPhaseMachine built from a rules XML. Requirements for rules XML can be found in doc/XML_Documentation.md.
      *
      * @param dataFile the file from which to build an IPhaseMachine implementation
      * @return an IPhaseMachine implementation built and initialized based on the rules XML

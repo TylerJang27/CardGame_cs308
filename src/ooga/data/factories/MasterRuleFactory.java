@@ -48,7 +48,7 @@ public class MasterRuleFactory implements Factory {
     protected static final List<String> TRUE_CHECKS = List.of("", RESOURCES.getString(ALL));
 
     /**
-     * Builds and returns IMasterRules built for an IPhase from a rules XML. Requirements for rules XML can be found in ____.
+     * Builds and returns IMasterRules built for an IPhase from a rules XML. Requirements for rules XML can be found in doc/XML_Documentation.md.
      *
      * @param rules         the Node from which IMasterRules are built
      * @param cellGroupMap  the Map of String ICellGroup names to ICellGroups

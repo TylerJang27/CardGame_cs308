@@ -81,7 +81,7 @@ public class PhaseFactory implements Factory {
     protected static final String REVERSE = "Reverse";
 
     /**
-     * Builds and returns IPhases built from a rules XML. Requirements for rules can be found in ___.
+     * Builds and returns IPhases built from a rules XML. Requirements for rules can be found in doc/XML_Documentation.md.
      *
      * @param root          the root of the file from which IPhases are built
      * @param cellGroupMap  a Map of String cell group names to ICellGroup implementations

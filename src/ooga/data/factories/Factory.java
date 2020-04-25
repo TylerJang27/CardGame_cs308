@@ -17,6 +17,7 @@ public interface Factory {
     String MISSING_ERROR = "MissingAttribute";
     String CONTROL_ERROR = "ControlError";
     String UNKNOWN_ERROR = "UnknownError";
+    String BLANK_TEXT = "#text";
 
     /**
      * Retrieves the String value of the first tag relative to n with the label matched to tagRef in resources.

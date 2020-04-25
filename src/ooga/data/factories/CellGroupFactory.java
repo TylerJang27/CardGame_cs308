@@ -37,7 +37,7 @@ public class CellGroupFactory implements Factory {
     private static final String INIT_CARD = "InitCard";
 
     /**
-     * Builds and returns ICellGroups built from a rules XML. Requirements for rules XML can be found in ____.
+     * Builds and returns ICellGroups built from a rules XML. Requirements for rules XML can be found in doc/XML_Documentation.md.
      *
      * @param root the root of the file from which ICellGroups are built
      * @return a Map of String cell group names to ICellGroup implementations
