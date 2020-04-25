@@ -27,7 +27,7 @@ import ooga.view.View.ChangeValue;
 
 public class Menu {
 
-  private static final Insets MARGINS = new Insets(305,20,20,20);
+  private static final Insets MARGINS = new Insets(20,20,20,20);
 
   private static final String CHOICES = "ooga.resources.languages.games";
   private static final String COMMA_REGEX = ",";
@@ -134,7 +134,7 @@ public class Menu {
 
   private void setCenter(String defaultLanguage) {
     FlowPane options = new FlowPane();
-    options.setAlignment(Pos.CENTER);
+    options.setAlignment(Pos.BASELINE_CENTER);
     options.setHgap(GAMES_SPACING);
     options.setVgap(GAMES_SPACING);
     System.out.println(options.getRowValignment());
