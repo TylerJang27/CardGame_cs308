@@ -220,12 +220,6 @@
                             <offset>none</offset>
                             <flip_up>n</flip_up>
                         </mover_dest>
-                        <donor_dest>
-                            <destination>d</destination>
-                            <num_cards>*</num_cards>
-                            <shuffle>y</shuffle>
-                            <offset>preserve</offset>
-                        </donor_dest>
                         <next_phase phase="player"></next_phase>
                     </action>
                 </rule>
@@ -255,10 +249,10 @@
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>1</num_cards>
-                            <offset>east</offset>
+                            <offset>south</offset>
                             <flip_up>*</flip_up>
                         </mover_dest>
-                        <next_phase phase="reset1">10.0</next_phase>
+                        <next_phase phase="win">10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="center">
@@ -279,10 +273,10 @@
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>1</num_cards>
-                            <offset>east</offset>
+                            <offset>south</offset>
                             <flip_up>*</flip_up>
                         </mover_dest>
-                        <next_phase phase="reset1">-10.0</next_phase>
+                        <next_phase phase="loss">-10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="center">
@@ -303,10 +297,10 @@
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>1</num_cards>
-                            <offset>east</offset>
+                            <offset>south</offset>
                             <flip_up>*</flip_up>
                         </mover_dest>
-                        <next_phase phase="reset1">10.0</next_phase>
+                        <next_phase phase="win">10.0</next_phase>
                     </action>
                 </rule>
                 <rule category="center">
@@ -327,10 +321,36 @@
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>1</num_cards>
-                            <offset>east</offset>
+                            <offset>south</offset>
                             <flip_up>*</flip_up>
                         </mover_dest>
                         <next_phase phase="reset1">0.0</next_phase>
+                    </action>
+                </rule>
+            </rules>
+        </phase>
+        <phase name="win">
+            <phase_type>auto</phase_type>
+            <valid_donors><category></category></valid_donors>
+            <rules>
+                <rule category="">
+                    <validation>
+                    </validation>
+                    <action>
+                        <next_phase phase="reset1"/>
+                    </action>
+                </rule>
+            </rules>
+        </phase>
+        <phase name="loss">
+            <phase_type>auto</phase_type>
+            <valid_donors><category></category></valid_donors>
+            <rules>
+                <rule category="">
+                    <validation>
+                    </validation>
+                    <action>
+                        <next_phase phase="reset1"/>
                     </action>
                 </rule>
             </rules>

@@ -121,7 +121,8 @@ public class Controller extends Application {
         myView = new View(gm, (int gameID)->{
             myTables.get(gameID).restartGame();
             myCurrentCells = myTables.get(gameID).getCellData();
-            myView.setUpdatesToCellData(gameID,myCurrentCells); },
+            myView.setUpdatesToCellData(gameID,myCurrentCells);
+            myView.setScores(gameID, Map.of(1, myTables.get(gameID).getCurrentPlayer().getScore()));},
             myStyle, processGameSave,loadGame);
         for(String key : myScores.getSavedGames()){
             myView.updateHighScores(key,myScores.getScore(key));

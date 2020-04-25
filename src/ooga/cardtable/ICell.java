@@ -56,7 +56,9 @@ public interface ICell extends Cellular {
 
   ICell copy();
 
-    ICell extract(Function<ICell, ICard> cardGetter);
+  ICell extractCards(Function<ICell, ICard> cardGetter);
+
+  ICell extractDecks(Function<ICell, IDeck> deckGetter);
 
     ICell findNamedCell(String nm);
 

@@ -19,25 +19,27 @@ Team Name: Solitaire Confinement (Team 52 Pickup)
 * Sarah
     * 
 * Mariusz
-    * Themes for game tables (css)
-    * Changing themes/languages of pre-created games
-    * Save and Load buttons (check with Tyler) done
+    * Themes for game tables (css)                      
+    * Changing themes/languages of pre-created games    
+    * Save and Load buttons (check with Tyler)          DONE
     * Other assorted layouts (check for layouts)
     * JUnit Tests
+    * Player names for high score?
+    * Refactor/remove magic values
     * 
 * Maverick
-    * Memoization
+    * Memoization                                       DONE
     * More games
     * Cell refactor (and make CellHelper)
     * 
 * Tyler
-    * Debug save/load games
-    * Add extra win/lose state for rps
-    * Rewrite JUnits for scores
-    * Refactor factories
+    * Debug save/load games                             DONE
+    * Add extra win/lose state for rps                  DONE
+    * Rewrite JUnits for scores                         DONE
+    * Refactor factories (action/rule)
     * New game (Conquest)
-    * Update XSD for High Scores
-    * Restart game--score
+    * Update XSD for High Scores                        DONE   
+    * Restart game--score                               DONE
     * 
 * Andrew
     * War

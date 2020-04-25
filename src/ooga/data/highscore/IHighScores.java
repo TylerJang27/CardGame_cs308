@@ -11,6 +11,7 @@ import java.util.Set;
 public interface IHighScores { //TODO: ADD TO API CHANGES
 
     String DATA_TYPE = "score";
+    String SCORE = "score";
 
     /**
      * Gets the List of all saved games.

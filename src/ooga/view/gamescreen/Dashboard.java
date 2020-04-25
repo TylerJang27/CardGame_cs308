@@ -63,7 +63,7 @@ public class Dashboard {
         saveButton.setOnMouseClicked(click -> {
                 FileChooser fileChooser = new FileChooser();
                 fileChooser.titleProperty().bind(Dictionary.getInstance().get(SAVE_WINDOW_TITLE));
-                fileChooser.getExtensionFilters().add(new ExtensionFilter(Dictionary.getInstance().get(XML_FILE),"*.xml"));
+                fileChooser.getExtensionFilters().add(new ExtensionFilter(Dictionary.getInstance().get(XML_FILE).getValue(),"*.xml"));
                 File saveFile = fileChooser.showSaveDialog(new Stage());
                 saveConsumer.accept(saveFile.getPath());
         });
