@@ -3,7 +3,7 @@
     <game>Solitaire</game>
     <attributes>
         <players>1</players>
-        <screen_height>80</screen_height>
+        <screen_height>120</screen_height>
         <card_width>8</card_width>
         <card_height>10</card_height>
         <face_down_offset>2</face_down_offset>
