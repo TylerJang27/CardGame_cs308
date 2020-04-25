@@ -344,6 +344,9 @@ public class Cell implements ICell {
     /*if (!(other instanceof Cell)) {
       return false;
     }*/
+    if (other == this) {
+      return true;
+    }
     if (other == null) {
       return false;
     }

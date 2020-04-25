@@ -735,7 +735,7 @@
         </phase>
         <phase name="check_eog">
             <phase_type>auto</phase_type>
-            <valid_donors></valid_donors>
+            <valid_donors/>
             <rules>
                 <rule category="">
                     <validation>
