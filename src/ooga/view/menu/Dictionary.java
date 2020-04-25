@@ -53,7 +53,6 @@ public class Dictionary {
   }
 
   public ReadOnlyProperty<String> get(String key) {
-    System.out.println(key);
     return myDictionary.getOrDefault(key, null).getReadOnlyProperty();
   }
 }
