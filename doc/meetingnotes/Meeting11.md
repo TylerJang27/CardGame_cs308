@@ -44,12 +44,12 @@ Team Name: Solitaire Confinement (Team 52 Pickup)
     * 
 * Andrew
     * War                                               DONE
-    * JUnit Tests
+    * JUnit Tests                                       DONE
     * Refactor Controller
-    * Refactor the data directory
-    * Help with Cell refactor
-    * Upload XML Documentation
-    * 
+    * Refactor the data directory                       TYLER?
+    * Help with Cell refactor                           DONE
+    * Upload XML Documentation                          DONE
+    * Refactor LayoutFactory
 
 ### Open Floor
 * Commendation and Appreciation

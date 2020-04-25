@@ -22,7 +22,7 @@ import ooga.view.View.SaveGame;
 
 /**
  *
- * @author Andrew Krier, Tyler Jang
+ * @author Andrew Krier, Tyler Jang, Sarah Gregorich, Mariusz Derezinski-Choo
  */
 public class Controller extends Application {
 
@@ -39,6 +39,9 @@ public class Controller extends Application {
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_2.xml";  //almost win state
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_3.xml";  //xsd error
     //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_4.xml";  //runtime phase error
+
+    private static final String FILEPATH = "data/";
+    private static final String RULES_EXTENSION = "_rules.xml";
 
     private static final String WIN = "win";
     private static final String LOSS = "loss";
@@ -78,56 +81,62 @@ public class Controller extends Application {
      */
     @Override
     public void start(Stage mainStage) {
-        GiveMove gm = (move, gameID) -> {
-            try {
-                Double score = myTables.get(gameID).getCurrentPlayer().getScore();
-                lastState = myTables.get(gameID).update(move);
-                if (lastState.equals(GameState.WIN)) {
-                    myView.displayMessage(gameID,WIN);
-                    updateHighScores(myGameNames.get(gameID), score);
-                } else if (lastState.equals(GameState.INVALID)) {
-                    myView.displayMessage(gameID,INVALID);
-                } else if (lastState.equals(GameState.LOSS)) {
-                    myView.displayMessage(gameID,LOSS);
-                    updateHighScores(myGameNames.get(gameID), score);
-                }
-                myView.setScores(gameID,Map.of(1, score));
-                myCurrentCells = myTables.get(gameID).getCellData();
-                for (String i : myCurrentCells.keySet()) {
-                    if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
-                        myChangedCells.put(i, myCurrentCells.get(i));
-                        myPreviousCells.remove(i);
-                    }
-                }
-                processInvalidMove(move);
-                myView.setUpdatesToCellData(gameID,myChangedCells);
-                myPreviousCells = myCurrentCells;
-                myChangedCells.clear();
-            } catch (XMLException e) {
-                reportError(e);
-            }
-        };
+        GiveMove gm = (move, gameID) -> { processMove(move, gameID); };
 
         IStyle myStyle = extractStyle();
         myScores = extractScores();
 
-        SaveGame processGameSave = (gameID, fileName) -> {
-            saveGame(gameID, fileName);
-        };
-        Consumer<String> loadGame = (fileName) -> {
-            loadGame(fileName);
-        };
+        SaveGame processGameSave = (gameID, fileName) -> { saveGame(gameID, fileName); };
+        Consumer<String> loadGame = (fileName) -> { loadGame(fileName); };
 
-        myView = new View(gm, (int gameID)->{
-            myTables.get(gameID).restartGame();
-            myCurrentCells = myTables.get(gameID).getCellData();
-            myView.setUpdatesToCellData(gameID,myCurrentCells);
-            myView.setScores(gameID, Map.of(1, myTables.get(gameID).getCurrentPlayer().getScore()));},
-            myStyle, processGameSave,loadGame);
+        myView = new View(gm, (int gameID)->{ restartAndUpdateGame(gameID); }, myStyle, processGameSave,loadGame);
+
         for(String key : myScores.getSavedGames()){
             myView.updateHighScores(key,myScores.getScore(key));
         }
         initializeHandlers(myView);
+    }
+
+    private void restartAndUpdateGame(int gameID) {
+        myTables.get(gameID).restartGame();
+        myCurrentCells = myTables.get(gameID).getCellData();
+        myView.setUpdatesToCellData(gameID,myCurrentCells);
+        myView.setScores(gameID, Map.of(1, myTables.get(gameID).getCurrentPlayer().getScore()));
+    }
+
+    private void processMove(IMove move, int gameID) {
+        try {
+            Double score = getAndUpdateScoreForGame(move, gameID);
+            myView.setScores(gameID,Map.of(1, score));
+            myCurrentCells = myTables.get(gameID).getCellData();
+            for (String i : myCurrentCells.keySet()) {
+                if (!myPreviousCells.containsKey(i) || !myPreviousCells.get(i).equals(myCurrentCells.get(i))) {
+                    myChangedCells.put(i, myCurrentCells.get(i));
+                    myPreviousCells.remove(i);
+                }
+            }
+            processInvalidMove(move);
+            myView.setUpdatesToCellData(gameID,myChangedCells);
+            myPreviousCells = myCurrentCells;
+            myChangedCells.clear();
+        } catch (XMLException e) {
+            reportError(e);
+        }
+    }
+
+    private Double getAndUpdateScoreForGame(IMove move, int gameID) {
+        Double score = myTables.get(gameID).getCurrentPlayer().getScore();
+        lastState = myTables.get(gameID).update(move);
+        if (lastState.equals(GameState.WIN)) {
+            myView.displayMessage(gameID,WIN);
+            updateHighScores(myGameNames.get(gameID), score);
+        } else if (lastState.equals(GameState.INVALID)) {
+            myView.displayMessage(gameID,INVALID);
+        } else if (lastState.equals(GameState.LOSS)) {
+            myView.displayMessage(gameID,LOSS);
+            updateHighScores(myGameNames.get(gameID), score);
+        }
+        return score;
     }
 
     private IStyle extractStyle() {
@@ -188,7 +197,7 @@ public class Controller extends Application {
         saveData.writeConfiguration(destination);
     }
 
-    private void loadGame(String loadFile) { //TODO: PROCESS ON FRONTEND @MARIUSZ
+    private void loadGame(String loadFile) {
         try {
             System.out.println(loadFile);
             ISaveConfiguration load = SaveConfigurationFactory.createSave(new File(loadFile));
@@ -207,14 +216,12 @@ public class Controller extends Application {
         }
     }
 
-    //TODO: REPLACE WITH LOGIC REGARDING METHODS AT THE BOTTOM
     private void initializeHandlers(View v) {
         v.listenForGameChoice((a,b,gameName) -> startTable(gameName));
     }
 
     private void startTable(String gameName) {
-
-        String ruleFile = "data/" + gameName + "_rules.xml";
+        String ruleFile = FILEPATH + gameName + RULES_EXTENSION;
         try {
             myRuleFile = new File(ruleFile);
         } catch (Exception e) {
@@ -228,9 +235,7 @@ public class Controller extends Application {
             myRuleFiles.put(gameID,myRuleFile);
             myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
             ITable table = new Table(myCurrentPhaseMachine);
-
             attatchView(gameID, table);
-            //myView.setCellData(Map.copyOf(myTable.getCellData()));
         } catch (XMLException e) {
             reportError(e);
         }
@@ -245,56 +250,6 @@ public class Controller extends Application {
         myPreviousCells = myCellMap;
         myTables.put(gameID,table);
     }
-
-    private void newMove() {
-        IMove myCurrentMove = getMove();
-        try {
-            //FIXME
-            //myTable.update(myCurrentMove);
-        } catch (XMLException e) {
-            reportError(e);
-        }
-        //myView.setCellData(Map.copyOf(myTable.getCellData()));
-    }
-
-    private IMove getMove() {
-        return myView.getUserInput();
-    }
-
-    private void createEngine(String gameName) {
-
-    }
-
-    private void setHouseRules(String ruleName) {
-
-    }
-
-    private void setDifficulty(int difficulty) {
-
-    }
-
-    private boolean isMove() {
-        return myView.isUserInput();
-    }
-
-    private IGameState processMove(IMove move) {
-
-        return null;
-    }
-
-    private ICell getCell(String cellName) {
-        return null;
-    }
-
-    /**void setCellData(Map<String, ICell> cellData);
-     void setScores(Map<Integer, Double> playerScores);
-     void endGame(Map<Integer, Boolean> playerOutcomes, Map<Integer, Double> playerScores, Map<Integer, Integer> highScores);
-     void playerStatusUpdate(Map<Integer, Boolean> playerOutcomes, Map<Integer, Integer> playerScores);
-     boolean isUserInput();
-     IMove getUserInput();
-     void setStyle(Style style);
-     void setLayout(Layout layout);
-     **/
 
 }
 
