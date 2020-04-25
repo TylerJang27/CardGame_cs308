@@ -52,7 +52,6 @@ public class View implements ExternalAPI {
     public static final String SKINS_PACKAGE = "/ooga/resources/skins/";
     public static final String MAINMENU_CSS = "/mainmenu.css";
     public static final int FIRST = 1;
-    private static final List<String> MENU_TAB_CSS = List.of("menu");
     private static final List<String> GAME_CSS = List.of("tab");
 
     @FunctionalInterface
@@ -321,7 +320,7 @@ public class View implements ExternalAPI {
     private void makeTabPane() {
         myTabPane = new TabPane();
         Tab menuTab = new Tab();
-        menuTab.getStyleClass().addAll(MENU_TAB_CSS);
+        menuTab.getStyleClass().addAll(GAME_CSS);
         menuTab.textProperty().bind(Dictionary.getInstance().get(MENU));
         menuTab.setContent(myMenu.getScene());
         myTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
@@ -347,7 +346,7 @@ public class View implements ExternalAPI {
     private EventHandler<MouseEvent> getHighScoreHandler() {
         return event -> {
             Tab highScoresTab = new Tab();
-            highScoresTab.getStyleClass().addAll(MENU_TAB_CSS);
+            highScoresTab.getStyleClass().addAll(GAME_CSS);
             highScoresTab.textProperty().bind(Dictionary.getInstance().get(HIGH_SCORES));
             highScoresTab.setContent(new HighScoresDisplay(myHighScoresManager).getNode());
             myTabPane.getTabs().add(highScoresTab);
