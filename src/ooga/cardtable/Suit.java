@@ -11,7 +11,6 @@ public class Suit implements ISuit {
   private String myColorName;
   private static String sep = ";;";
 
-  //TODO: CAN WE CHANGE THIS TO AN ICOLOR
   public Suit(String nm, IColor color) {
     this(nm, color.getColors());
     myColor = color;

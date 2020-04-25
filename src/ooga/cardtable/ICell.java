@@ -8,8 +8,6 @@ import ooga.data.rules.Cellular;
 public interface ICell extends Cellular {
   //deal with unnecessary massive linked lists
 
-  //TODO: MAKE TOP CARD THE DEFAULT NAME OF THE CELL
-
   void setDraw(Function<IDeck, ICell> initializer); //TODO: ADD TO API CHANGES
 
   void initializeCards(IDeck mainDeck); //TODO: ADD TO API CHANGES
