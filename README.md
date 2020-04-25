@@ -59,12 +59,12 @@ Features implemented:
  - Loading of games from XML files
  - Pop-up instructions in your language for each game
  - Support for different languages
- - Extensible rules support with configuration detailed here: ___
+ - Extensible rules support with configuration detailed here: [Rules documentation](doc/XML_Documentation.md)
 
 ### Notes/Assumptions
 
 Assumptions or Simplifications:
- - XML Files must match the format specified in the .xsd files and must follow the specifications in the rule documentation.
+ - XML Files must match the format specified in the .xsd files and must follow the specifications in the [Rules documentation](doc/XML_Documentation.md).
  - If an critically invalid move or a control flow error occurs, a message will be displayed to the user.
  - Cells should not have empty decks whenever possible.
  - The user should be running a computer with at least 2 GB of RAM.
