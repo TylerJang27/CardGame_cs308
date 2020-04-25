@@ -36,7 +36,7 @@ public class PhaseFactory implements Factory {
     protected static final String CATEGORY = "Category";
     protected static final String RULES = "Rules";
     protected static final String RULE = "Rule";
-    protected static final String RECEIVE_RULE = "ReceiveRule";
+    protected static final String VALIDATION = "Validation";
     protected static final String RECEIVER = "Receiver";
     protected static final String MOVER = "Mover";
     protected static final String DIRECTION = "Direction";
@@ -46,7 +46,6 @@ public class PhaseFactory implements Factory {
     protected static final String NUMBER_CARDS = "NumberCards";
     protected static final String IS_FACEUP = "IsFaceup";
     protected static final String DONOR = "Donor";
-    protected static final String ALL_STAR = "*";
     protected static final String ACTION = "Action";
     protected static final String RECEIVER_DESTINATION = "ReceiverDestination";
     protected static final String DESTINATION = "Destination";
@@ -59,18 +58,22 @@ public class PhaseFactory implements Factory {
     protected static final String NEXT_PHASE = "NextPhase";
     protected static final String DONOR_DESTINATION = "DonorDestination";
     protected static final String CONDITION = "Condition";
+    protected static final String ROTATION = "Rotation";
+    protected static final String COLLAPSE = "Collapse";
 
     protected static final String R = "R";
     protected static final String M = "M";
     protected static final String D = "D";
     protected static final String C = "C";
-    protected static final String UP = "Up";
-    protected static final String DOWN = "Down";
     protected static final String NOT = "Not";
     protected static final String SAME = "Same";
     protected static final String YES = "Yes";
     protected static final String NO = "No";
+    protected static final String LESS_THAN = "Less";
+    protected static final String GREATER_THAN = "Greater";
+    protected static final String RANDOM = "Random";
 
+    protected static final String HEAD = "Head";
     protected static final String TOP = "Top";
     protected static final String BOTTOM = "Bottom";
     protected static final String EXCEPT = "Except";
@@ -78,7 +81,7 @@ public class PhaseFactory implements Factory {
     protected static final String REVERSE = "Reverse";
 
     /**
-     * Builds and returns IPhases built from a rules XML. Requirements for rules can be found in ___.
+     * Builds and returns IPhases built from a rules XML. Requirements for rules can be found in doc/XML_Documentation.md.
      *
      * @param root          the root of the file from which IPhases are built
      * @param cellGroupMap  a Map of String cell group names to ICellGroup implementations

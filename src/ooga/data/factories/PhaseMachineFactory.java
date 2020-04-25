@@ -25,12 +25,12 @@ public class PhaseMachineFactory implements Factory {
     private static final String RESOURCES = "ooga.resources";
     public static final String RESOURCE_PACKAGE = RESOURCES + "." + RULES + "_";
 
-    private static final String RULES_XSD = "src/ooga/data/factories/rules_schema.xsd";
+    private static final String RULES_XSD = "src/ooga/data/factories/schemas/rules_schema.xsd";
 
     public static final String START = "INIT_PHASE";
 
     /**
-     * Builds and returns an IPhaseMachine built from a rules XML. Requirements for rules XML can be found in _____.
+     * Builds and returns an IPhaseMachine built from a rules XML. Requirements for rules XML can be found in doc/XML_Documentation.md.
      *
      * @param dataFile the file from which to build an IPhaseMachine implementation
      * @return an IPhaseMachine implementation built and initialized based on the rules XML

@@ -1,5 +1,6 @@
 package ooga.data.style;
 
+import ooga.data.Writer;
 import ooga.data.XMLException;
 import ooga.data.XMLHelper;
 import ooga.data.factories.Factory;
@@ -24,7 +25,7 @@ import java.util.ResourceBundle;
  *
  * @author Andrew Krier, Tyler Jang
  */
-public class StyleWriter {
+public class StyleWriter implements Writer {
 
     private static String WORD = "word";
     private static String NUMBER = "number";
@@ -34,8 +35,6 @@ public class StyleWriter {
     private static final ResourceBundle WORD_RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + WORD);
     private static final ResourceBundle NUMBER_RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + NUMBER);
 
-    private static final String DATA = "data";
-    private static final String TYPE = "type";
     private static final String DATA_TYPE = StyleFactory.STYLE_TYPE;
 
     private static final String LANGUAGE = "Language";
@@ -54,23 +53,12 @@ public class StyleWriter {
      */
     public static void writeStyle(String filepath, IStyle style) {
         try {
-            DocumentBuilder documentBuilder = XMLHelper.getDocumentBuilder();
-            Document document = documentBuilder.newDocument();
-            Element root = document.createElement(DATA);
-            document.appendChild(root);
-
-            Attr attribute = document.createAttribute(TYPE);
-            attribute.setValue(DATA_TYPE);
-            root.setAttributeNode(attribute);
+            Element root = Writer.buildDocumentWithRoot(DATA_TYPE);
+            Document document = root.getOwnerDocument();
 
             addStyle(document, root, style);
 
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource domSource = new DOMSource(document);
-            StreamResult streamResult = new StreamResult(new File(filepath));
-
-            transformer.transform(domSource, streamResult);
+            Writer.writeOutput(document, filepath);
         } catch (TransformerException e) {
             throw new XMLException(e, Factory.UNKNOWN_ERROR);
         }

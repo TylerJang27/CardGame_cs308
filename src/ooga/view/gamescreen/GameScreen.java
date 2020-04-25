@@ -1,38 +1,41 @@
 package ooga.view.gamescreen;
 
-import javafx.scene.Scene;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.function.Consumer;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import ooga.cardtable.ICell;
-import ooga.data.rules.Layout;
-import ooga.view.View;
-
-import java.util.Map;
-import java.util.ResourceBundle;
+import ooga.controller.Controller.GiveMove;
+import ooga.data.style.Layout;
+import ooga.view.View.SaveGame;
+import ooga.view.menu.Dictionary;
 
 public class GameScreen {
+    private static final String SKIN_TYPE = "classic";
+    private static final String CARD_RESOURCE_BUNDLE = "ooga.resources.decks.supportedthemes";
+    private static final ResourceBundle DEFAULT_CARD_BUNDLE = ResourceBundle.getBundle(CARD_RESOURCE_BUNDLE);
 
     private DisplayTable myDisplayTable;
     private Dashboard myDashboard;
     private Header myHeader;
     private BorderPane myBorderPane;
 
-    private Scene myScene;
-
-    public GameScreen(View.TriggerMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, Button restartButton, String game, String scoreLabel, String language) {
-
-        // Current default is standard, can change
-        String skinType = "classic";
-        ResourceBundle cardskins = ResourceBundle.getBundle("ooga.resources.decks.supportedthemes");
-        for (String the : cardskins.getString("standard").split(",")) {
+    public GameScreen(int gameID, GiveMove moveLambda, Layout layout, double screenWidth, String theme, Button restartButton, String game, String scoreLabel, String language, SaveGame saveGame) {
+        String skinType = SKIN_TYPE;
+        for (String the : DEFAULT_CARD_BUNDLE.getString("standard").split(",")) {
             if (theme.toLowerCase().equals(the.toLowerCase())) {
                 skinType = theme;
                 break;
             }
         }
+        Consumer<String> dashboardSave = fileName -> {
+            saveGame.saveGame(gameID, fileName);
+        };
 
-        myDisplayTable = new DisplayTable(moveLambda, (Layout) layout, 650, skinType);
-        myDashboard = new Dashboard(backButton, restartButton, scoreLabel, ResourceBundle.getBundle("ooga.resources.languages.messages."+language), game);
+        myDisplayTable = new DisplayTable(gameID,moveLambda, layout, 650, skinType);
+        myDashboard = new Dashboard(restartButton, scoreLabel, game, dashboardSave);
         myHeader = new Header();
 
         myBorderPane = new BorderPane();
@@ -40,8 +43,8 @@ public class GameScreen {
         myBorderPane.setCenter(myDisplayTable.getPane());
         myBorderPane.setBottom(myDashboard.getPane());
 
-        myScene = new Scene(myBorderPane,650,500);
-        myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+theme.toLowerCase()+"/gametable.css").toExternalForm()); //
+        //myScene = new Scene(myBorderPane,650,500);
+        //myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+theme.toLowerCase()+"/gametable.css").toExternalForm()); //
 
     }
 
@@ -59,8 +62,8 @@ public class GameScreen {
         myDisplayTable.updateTheseCells(cellData);
     }
 
-    public Scene getScene() {
-        return myScene;
+    public Node getNode(){
+        return myBorderPane;
     }
 
     public DisplayTable getDisplayTable() {

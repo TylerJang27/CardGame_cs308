@@ -61,8 +61,11 @@ public class Phase implements IPhase {
      * @return the relevant IMasterRule or null
      */
     private IMasterRule identifyMove(IMove move) {
+        System.out.println("Phase: " + getMyName());
         for (IMasterRule r : myRules) {
+            System.out.println("Checking Rule:");
             if (r.checkValidMove(move)) {
+                System.out.println("Rule is true");
                 return r;
             }
         }
@@ -79,12 +82,11 @@ public class Phase implements IPhase {
     @Override
     public IPhaseArrow executeMove(IMove move, IPlayer player) {
         IMasterRule ruleToExecute = identifyMove(move);
-        if (ruleToExecute != null) {
-            if (!isAuto) {
-                myGameState = ruleToExecute.executeMove(move);
-                IPhaseArrow ab = ruleToExecute.executeAutoActions(player, move);
-                return ab; //TODO: ADD PLAYER HERE
-            }
+        if (ruleToExecute != null && !isAuto) {
+            myGameState = ruleToExecute.executeMove(move);
+            IPhaseArrow ab = ruleToExecute.executeAutoActions(player, move);
+            System.out.println("This is my phase: " + ab.getEndPhaseName());
+            return ab; //TODO: ADD PLAYER HERE
         }
         return null;
     }

@@ -18,7 +18,7 @@ import java.io.IOException;
  * XMLValidator taken from:
  * https://www.journaldev.com/895/how-to-validate-xml-against-xsd-in-java
  *
- * @author Tyler Jang
+ * @author Pankaj, Tyler Jang
  */
 public class XMLValidator {
 
@@ -36,7 +36,7 @@ public class XMLValidator {
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(new File(xmlPath)));
         } catch (IOException | SAXException e) {
-            //System.out.println("Exception: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
             return false;
         }
         return true;

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data type="layout">
     <game>Memory</game>
-    <attibutes>
+    <attributes>
         <players>1</players>
-        <screen_height>120</screen_height>
+        <screen_height>135</screen_height>
         <card_width>10</card_width>
         <card_height>14</card_height>
         <face_down_offset>2</face_down_offset>
         <face_up_offset>4</face_up_offset>
-    </attibutes>
+    </attributes>
     <cards>
         <card>AC</card>
         <card>AD</card>
@@ -46,6 +46,43 @@
         <card>9D</card>
         <card>9H</card>
         <card>9S</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
         <card>faceDown</card>
     </cards>
     <card_map>
@@ -53,6 +90,10 @@
         <extension>.png</extension>
     </card_map>
     <cells>
+        <cell name="remove">
+            <x_val>20</x_val>
+            <y_val>4</y_val>
+        </cell>
         <cell name="11">
             <x_val>20</x_val>
             <y_val>20</y_val>

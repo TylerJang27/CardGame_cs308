@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data type="layout">
+    <game>Memory</game>
+    <attributes>
+        <players>1</players>
+        <screen_height>100</screen_height>
+        <card_width>10</card_width>
+        <card_height>14</card_height>
+        <face_down_offset>14</face_down_offset>
+        <face_up_offset>14</face_up_offset>
+    </attributes>
+    <cards>
+        <card>rock</card>
+        <card>rock</card>
+        <card>paper</card>
+        <card>paper</card>
+        <card>scissors</card>
+        <card>scissors</card>
+        <card>rock</card>
+        <card>paper</card>
+        <card>scissors</card>
+        <card>rock</card>
+        <card>paper</card>
+        <card>scissors</card>
+        <card>rock</card>
+        <card>paper</card>
+        <card>scissors</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>D0</card>
+        <card>faceDown</card>
+    </cards>
+    <card_map>
+        <start>rps/</start>
+        <extension>.png</extension>
+    </card_map>
+    <cells>
+        <cell name="cpu">
+            <x_val>50</x_val>
+            <y_val>15</y_val>
+        </cell>
+        <cell name="center">
+            <x_val>50</x_val>
+            <y_val>33</y_val>
+        </cell>
+        <cell name="playerl">
+            <x_val>20</x_val>
+            <y_val>65</y_val>
+        </cell>
+        <cell name="playerc">
+            <x_val>50</x_val>
+            <y_val>65</y_val>
+        </cell>
+        <cell name="playerr">
+            <x_val>80</x_val>
+            <y_val>65</y_val>
+        </cell>
+    </cells>
+</data>

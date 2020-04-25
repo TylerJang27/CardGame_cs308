@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public class Deck implements IDeck {
 
@@ -26,6 +27,31 @@ public class Deck implements IDeck {
     } else {
       return false;
     }
+  }
+
+  @Override
+  public String toStorageString() {
+    String ret = getName()+"[";
+    for (ICard c: cards) {
+      ret += c.toStorageString()+"*";
+    }
+    if (ret.length() > (""+getName()).length()+1) {
+      ret = ret.substring(0, ret.length()-1);
+    }
+    return ret+"]";
+  }
+
+  public static IDeck fromStorageString(String input) {
+    if (input == null) return null;
+    if (input.endsWith("[]")) return new Deck();
+    String nm = input.split("\\[")[0];
+    input = input.replaceFirst(Pattern.quote(nm), "");
+    input = input.substring(1, input.length()-1);
+    List<ICard> newCards = new ArrayList<>();
+    for (String s: input.split("\\*")){
+      newCards.add(Card.fromStorageString(s));
+    }
+    return new Deck(nm, newCards);
   }
 
   @Override
@@ -144,11 +170,7 @@ public class Deck implements IDeck {
 
   @Override
   public boolean equals(Object other) {
-    if (!(other instanceof Deck)) {
-      return false;
-    }
-    Deck d = (Deck) other;
-    return cards.equals(d.cards);
+    return other instanceof Deck && cards.equals(((Deck) other).cards);
   }
 
   @Override

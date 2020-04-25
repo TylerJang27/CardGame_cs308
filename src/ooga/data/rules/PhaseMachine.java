@@ -72,8 +72,10 @@ public class PhaseMachine implements IPhaseMachine {
      */
     private void cycleAutomatic() {
         if (currentPhase.isAutomatic()) {
+            System.out.println("This is my phase (auto): " + currentPhase.getMyName());
             IPhaseArrow arrow = currentPhase.executeAutomaticActions(currentPlayer, lastMove);
             moveToNextPhase(arrow);
+            System.out.println("This is my phase (after arrow): " + currentPhase.getMyName());
         }
     }
 
@@ -280,5 +282,34 @@ public class PhaseMachine implements IPhaseMachine {
     @Override
     public ISettings getSettings() {
         return mySettings;
+    }
+
+    /**
+     * Sets the data in the cells from a load.
+     *
+     * @param cellMap the Map of String ICell names to ICells to load
+     */
+    @Override
+    public void setCellData(Map<String, ICell> cellMap) {
+        for (Map.Entry<String, ICell> e: currentPhase.getMyCellMap().entrySet()) {
+            for (int k = 0; k < Offset.values().length; k ++) {
+                IOffset off = Offset.values()[k];
+                e.getValue().removeCellAtOffset(off);
+                while (e.getValue().getDeck().size() > 0) {
+                    e.getValue().getDeck().getNextCard();
+                }
+            }
+            e.getValue().addCell(Offset.NONE, cellMap.get(e.getKey()));
+        }
+    }
+
+    /**
+     * Sets the phase from a load.
+     *
+     * @param phase the name of the phase to load in
+     */
+    @Override
+    public void setPhase(String phase) {
+        currentPhase = phases.get(phase);
     }
 }

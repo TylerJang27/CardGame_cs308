@@ -56,12 +56,16 @@ public interface ICell extends Cellular {
 
   ICell copy();
 
-    ICell copy(Function<ICell, ICard> cardGetter);
+  ICell extractCards(Function<ICell, ICard> cardGetter);
+
+  ICell extractDecks(Function<ICell, IDeck> deckGetter);
 
     ICell findNamedCell(String nm);
 
   ICell followNamespace(String nm);
 
   boolean isFixed(); //TODO: ADD TO API CHANGES
+
+  String toStorageString();
 
 }

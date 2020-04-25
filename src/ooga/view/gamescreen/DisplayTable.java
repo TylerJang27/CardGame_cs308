@@ -1,18 +1,25 @@
 package ooga.view.gamescreen;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.NumberBinding;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
-import ooga.cardtable.*;
-import ooga.data.rules.Layout;
+import ooga.cardtable.ICell;
+import ooga.cardtable.IMove;
+import ooga.cardtable.IOffset;
+import ooga.cardtable.Move;
+import ooga.cardtable.Offset;
+import ooga.controller.Controller.GiveMove;
 import ooga.data.style.ICoordinate;
-import ooga.view.View;
-
-import java.util.*;
+import ooga.data.style.Layout;
 
 public class DisplayTable {
+    private static final double DECIMAL_TO_PERCENT = 100;
 
     private Pane myPane;
 
@@ -24,12 +31,12 @@ public class DisplayTable {
 
     @FunctionalInterface
     interface MyDragInterface {
-        public void returnSelectedDisplayCell(DisplayCell selectedCell);
+        void returnSelectedDisplayCell(DisplayCell selectedCell);
     }
 
     @FunctionalInterface
     interface MyClickInterface {
-        public void returnSelectedDisplayCell(DisplayCell selectedCell);
+        void returnSelectedDisplayCell(DisplayCell selectedCell);
     }
 
     List<DisplayCell> myDisplayCellData = new ArrayList<>();
@@ -45,13 +52,13 @@ public class DisplayTable {
 
     String mySkinType;
 
-    public DisplayTable(View.TriggerMove moveLambda, Layout layout, double screenWidth, String skinType) {
+    public DisplayTable(int gameID, GiveMove moveLambda, Layout layout, double screenWidth, String skinType) {
 
         mySkinType = skinType;
         myPane = new Pane();
 
 
-        myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.heightProperty());
+        myCardHeight = Bindings.multiply(layout.getCardHeightRatio(),myPane.widthProperty());
         myCardWidth = Bindings.multiply(layout.getCardWidthRatio(),myPane.widthProperty());
         faceUpCardOffset = layout.getUpOffsetRatio()*screenWidth;
         faceDownCardOffset = layout.getDownOffsetRatio()*screenWidth;
@@ -59,21 +66,21 @@ public class DisplayTable {
         myCellNameToLocation = new HashMap<>();
         Map<String, ICoordinate> locations = layout.getCellLayout();
         for(String key : locations.keySet()){
-            NumberBinding x = Bindings.divide(Bindings.multiply(myPane.widthProperty(),locations.get(key).getX()),100);
-            NumberBinding y = Bindings.divide(Bindings.multiply(myPane.heightProperty(),locations.get(key).getY()),100);
+            NumberBinding x = Bindings.divide(Bindings.multiply(myPane.widthProperty(),locations.get(key).getX()),DECIMAL_TO_PERCENT);
+            NumberBinding y = Bindings.divide(Bindings.multiply(myPane.widthProperty(),locations.get(key).getY()),DECIMAL_TO_PERCENT);
             myCellNameToLocation.put(key,new Pair<>(x,y));
         }
 
         getDraggedCell = (DisplayCell selectedCell) -> {
             myMovedDisplayCell = selectedCell;
             if(checkMove()) {
-                moveLambda.giveIMove(myMove);
+                moveLambda.sendMove(myMove,gameID);
             }
         };
 
         getClickedCell = (DisplayCell selectedCell) -> {
             IMove clickMove = new Move(selectedCell.getCell(), selectedCell.getCell(), selectedCell.getCell());
-            moveLambda.giveIMove(clickMove);
+            moveLambda.sendMove(clickMove,gameID);
         };
 
     }
@@ -113,40 +120,39 @@ public class DisplayTable {
         return myPane;
     }
 
-    public Pane updateCells(Map<String,ICell> cellData) {
+    public void updateCells(Map<String,ICell> cellData) {
         myPane.getChildren().clear();
         myDisplayCellData.clear();
         List<DisplayCell> displayCellData = makeDisplayCells(cellData);
         drawDisplayCells(displayCellData);
-        return myPane;
     }
 
-    public Pane updateTheseCells(Map<String,ICell> cellData) {
+    public void updateTheseCells(Map<String,ICell> cellData) {
         clearTheseCells(cellData); // removes given cells + all children from pane and active list of display cells
         List<DisplayCell> displayCellData = makeDisplayCells(cellData); // converts cells to display cells
         drawDisplayCells(displayCellData); // draws display cells just created by adding them to pane and list of active cells
-        return myPane;
     }
 
     private void clearTheseCells(Map<String,ICell> cellData) {
-        List<DisplayCell> copyDisplayCellData = new ArrayList<>();
-        copyDisplayCellData.addAll(myDisplayCellData);
+        List<DisplayCell> copyDisplayCellData = new ArrayList<>(myDisplayCellData);
         for (ICell c : cellData.values()) { // for every cell that needs to change
             for (DisplayCell dc : copyDisplayCellData) { // find its current display cell
                 if (c.getName().equals(dc.getCell().getName())) {
                     clearDisplayCell(dc);
+                    break;
                 }
             }
         }
+        copyDisplayCellData.clear();
     }
 
     private void clearDisplayCell(DisplayCell dc) {
         myDisplayCellData.remove(dc);  // remove the display cell + all its children from the list of active display cells
-        if (dc.getImageView().equals(null)) {
-            System.out.println("I'm broken, help");
-            System.out.println(myDisplayCellData.size());
-            System.out.println(myPane.getChildren().size());
+        if (dc.getImageView()==null) {
+            // do nothing
+            //FIXME
         } else {
+            dc.getImageView().setImage(null);
             myPane.getChildren().remove(dc.getImageView()); // remove the display cell +  all its children from the screen
         }
         for (IOffset dir: dc.getCell().getAllChildren().keySet()) {
@@ -186,7 +192,7 @@ public class DisplayTable {
             if (dir == Offset.NONE) {
                 continue;
             }
-            drawDisplayCell(rootDispCell.getAllChildren().get((Offset) dir));
+            drawDisplayCell(rootDispCell.getAllChildren().get(dir));
         }
     }
 

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data type="layout">
+    <game>Solitaire</game>
+    <attributes>
+        <players>1</players>
+        <!-- all of these values are relative to
+             a screen width of a control 100 -->
+        <screen_height>80</screen_height>
+        <card_width>8</card_width>
+        <card_height>10</card_height>
+        <face_down_offset>2</face_down_offset>
+        <face_up_offset>4</face_up_offset>
+        <!-- cells are indexed by their centers -->
+        <!-- buffer should be ~3 -->
+    </attributes>
+    <!-- TODO: REFACTOR TO REDUCE DUPLICATION -->
+    <cards>
+        <card>D1</card>
+        <card>D2</card>
+        <card>D3</card>
+        <card>AC</card>
+        <card>2C</card>
+        <card>3C</card>
+        <card>4C</card>
+        <card>5C</card>
+        <card>6C</card>
+        <card>7C</card>
+        <card>8C</card>
+        <card>9C</card>
+        <card>0C</card>
+        <card>JC</card>
+        <card>QC</card>
+        <card>KC</card>
+        <card>AD</card>
+        <card>2D</card>
+        <card>3D</card>
+        <card>4D</card>
+        <card>5D</card>
+        <card>6D</card>
+        <card>7D</card>
+        <card>8D</card>
+        <card>9D</card>
+        <card>0D</card>
+        <card>JD</card>
+        <card>QD</card>
+        <card>KD</card>
+        <card>AH</card>
+        <card>2H</card>
+        <card>3H</card>
+        <card>4H</card>
+        <card>5H</card>
+        <card>6H</card>
+        <card>7H</card>
+        <card>8H</card>
+        <card>9H</card>
+        <card>0H</card>
+        <card>JH</card>
+        <card>QH</card>
+        <card>KH</card>
+        <card>AS</card>
+        <card>2S</card>
+        <card>3S</card>
+        <card>4S</card>
+        <card>5S</card>
+        <card>6S</card>
+        <card>7S</card>
+        <card>8S</card>
+        <card>9S</card>
+        <card>0S</card>
+        <card>JS</card>
+        <card>QS</card>
+        <card>KS</card>
+        <card>celloutline</card>
+        <card>faceDown</card>
+    </cards>
+    <card_map>
+        <start>solitaire/</start>
+        <extension>.png</extension>
+    </card_map>
+    <cells>
+        <cell name="deck1">
+            <x_val>50</x_val>
+            <y_val>56</y_val>
+        </cell>
+        <cell name="deck2">
+            <x_val>50</x_val>
+            <y_val>24</y_val>
+        </cell>
+        <cell name="court">
+            <x_val>50</x_val>
+            <y_val>40</y_val>
+        </cell>
+        <cell name="stage1">
+            <x_val>38</x_val>
+            <y_val>56</y_val>
+        </cell>
+        <cell name="stage2">
+            <x_val>62</x_val>
+            <y_val>24</y_val>
+        </cell>
+        <cell name="hold1">
+            <x_val>62</x_val>
+            <y_val>56</y_val>
+        </cell>
+        <cell name="hold2">
+            <x_val>38</x_val>
+            <y_val>24</y_val>
+        </cell>
+    </cells>
+</data>

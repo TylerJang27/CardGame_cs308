@@ -27,22 +27,22 @@ public class RuleFactory implements Factory {
     private static final String NAME = PhaseFactory.NAME;
     private static final String CATEGORY = PhaseFactory.CATEGORY;
     private static final String RULES = PhaseFactory.RULES;
-    private static final String DIRECTION = PhaseFactory.DIRECTION;
     private static final String VALUE = PhaseFactory.VALUE;
     private static final String COLOR = PhaseFactory.COLOR;
     private static final String SUIT = PhaseFactory.SUIT;
     private static final String NUMBER_CARDS = PhaseFactory.NUMBER_CARDS;
     private static final String IS_FACEUP = PhaseFactory.IS_FACEUP;
 
-    private static final String DOWN = PhaseFactory.DOWN;
     private static final String NOT = PhaseFactory.NOT;
     private static final String SAME = PhaseFactory.SAME;
     private static final String YES = PhaseFactory.YES;
+    private static final String GREATER_THAN = PhaseFactory.GREATER_THAN;
+    private static final String LESS_THAN = PhaseFactory.LESS_THAN;
 
     private static final List<String> TRUE_CHECKS = MasterRuleFactory.TRUE_CHECKS;
 
     /**
-     * The default method for building and returning a singular IRule from a rules XML. Requirements for rules XML can be found in ___.
+     * The default method for building and returning a singular IRule from a rules XML. Requirements for rules XML can be found in doc/XML_Documentation.md.
      *
      * @param e             the Element from which IRules are built
      * @param ruleName      the Name of the Rule being created
@@ -54,7 +54,7 @@ public class RuleFactory implements Factory {
     }
 
     /**
-     * Builds and returns a singular IRule from a rules XML. Requirements for rules XML can be found in ___.
+     * Builds and returns a singular IRule from a rules XML. Requirements for rules XML can be found in doc/XML_Documentation.md.
      *
      * @param e             the Element from which IRules are built
      * @param ruleName      the Name of the Rule being created
@@ -110,44 +110,6 @@ public class RuleFactory implements Factory {
     }
 
     /**
-     * Extracts the name of an ICell that must match the particular Rule and adds it as a Function to conditions.
-     *
-     * @param e             the Element from which to parse conditions
-     * @param cellGroupMap  the Map of String ICellGroup names to ICellGroups
-     * @param conditions    the List of Functions to which conditions should be added
-     * @param currCell      a Function to retrieve the current cell
-     */
-    private static void extractNameCondition(Element e, Map<String, ICellGroup> cellGroupMap, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> currCell) {
-        Function<IMove, Boolean> valueChecker;
-        String name = XMLHelper.getTextValue(e, RESOURCES.getString(NAME));
-        if (!TRUE_CHECKS.contains(name)) {
-            valueChecker = (IMove move) -> (cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(currCell.apply(move).findHead().getName())) || (currCell.apply(move).findHead().getName().equalsIgnoreCase(name));
-            conditions.add(valueChecker);
-        }
-    }
-
-    /**
-     * Extracts whether an ICell should be faceup and adds it as a Function to conditions.
-     *
-     * @param e             the Element from which to parse conditions
-     * @param conditions    the List of Functions to which conditions should be added
-     * @param currCell      a Function to retrieve the current cell
-     */
-    private static void extractFaceUpCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> currCell) {
-        Function<IMove, Boolean> valueChecker;
-        String faceUp = XMLHelper.getTextValue(e, RESOURCES.getString(IS_FACEUP));
-        if (!TRUE_CHECKS.contains(faceUp)) {
-            if (faceUp.equalsIgnoreCase(RESOURCES.getString(YES))) {
-                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().isFaceUp());
-
-            } else {
-                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peek().isFaceUp());
-            }
-            conditions.add(valueChecker);
-        }
-    }
-
-    /**
      * Extracts how many cards should be part of an IMove for this ICell and adds it as a Function to conditions.
      *
      * @param e             the Element from which to parse conditions
@@ -158,8 +120,75 @@ public class RuleFactory implements Factory {
         Function<IMove, Boolean> valueChecker;
         String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).strip();
         if (!TRUE_CHECKS.contains(numCards)) {
-            Integer value = Integer.parseInt(numCards);
-            valueChecker = (IMove move) -> currCell.apply(move).getTotalSize() == value;
+            try {
+                Integer value = Integer.parseInt(numCards);
+                valueChecker = (IMove move) -> currCell.apply(move).getTotalSize() == value;
+                conditions.add(valueChecker);
+            } catch (NumberFormatException ex) {
+            }
+        }
+    }
+
+    /**
+     * Extracts what value should be this part of an IMove for this ICell and adds it as a Function to conditions.
+     *
+     * @param e             the Element from which to parse conditions
+     * @param conditions    the List of Functions to which conditions should be added
+     * @param recipientCell a Function to retrieve the recipient cell
+     * @param currCell      a Function to retrieve the current cell
+     */
+    private static void extractValueCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
+        Function<IMove, Boolean> valueChecker;
+        String valueText = XMLHelper.getTextValue(e, RESOURCES.getString(VALUE));
+        if (!TRUE_CHECKS.contains(valueText)) {
+            if (valueText.equalsIgnoreCase(RESOURCES.getString(LESS_THAN))) {
+                valueChecker = (IMove move) -> {
+                    int currNumber = currCell.apply(move).getDeck().peek().getValue().getNumber();
+                    int recNumber = recipientCell.apply(move).getDeck().peek().getValue().getNumber();
+                    return currNumber < recNumber;
+                };
+                conditions.add(valueChecker);
+            } else if (valueText.equalsIgnoreCase(RESOURCES.getString(GREATER_THAN))) {
+                valueChecker = (IMove move) -> {
+                    int currNumber = currCell.apply(move).getDeck().peek().getValue().getNumber();
+                    int recNumber = recipientCell.apply(move).getDeck().peek().getValue().getNumber();
+                    return currNumber > recNumber;
+                };
+                conditions.add(valueChecker);
+            } else {
+                try {
+                    Integer value = Integer.parseInt(valueText);
+                    valueChecker = (IMove move) -> {
+                        int currNumber = currCell.apply(move).getDeck().peek().getValue().getNumber();
+                        int recNumber = recipientCell.apply(move).getDeck().peek().getValue().getNumber();
+                        return currNumber - value == recNumber;
+                    };
+                    conditions.add(valueChecker);
+                } catch (NumberFormatException ex) {
+                }
+            }
+        }
+    }
+
+    /**
+     * Extracts what color should be this part of an IMove for this ICell and adds it as a Function to conditions.
+     *
+     * @param e             the Element from which to parse conditions
+     * @param conditions    the List of Functions to which conditions should be added
+     * @param recipientCell a Function to retrieve the recipient cell
+     * @param currCell      a Function to retrieve the current cell
+     */
+    private static void extractColorCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
+        Function<IMove, Boolean> valueChecker;
+        String color = XMLHelper.getTextValue(e, RESOURCES.getString(COLOR));
+        if (!TRUE_CHECKS.contains(color)) {
+            if (color.equals(RESOURCES.getString(SAME))) {
+                valueChecker = (IMove move) -> currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName());
+            } else if (color.equals(RESOURCES.getString(NOT))) {
+                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName()));
+            } else {
+                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase()));
+            }
             conditions.add(valueChecker);
         }
     }
@@ -188,50 +217,40 @@ public class RuleFactory implements Factory {
     }
 
     /**
-     * Extracts what color should be this part of an IMove for this ICell and adds it as a Function to conditions.
+     * Extracts whether an ICell should be faceup and adds it as a Function to conditions.
      *
      * @param e             the Element from which to parse conditions
      * @param conditions    the List of Functions to which conditions should be added
-     * @param recipientCell a Function to retrieve the recipient cell
      * @param currCell      a Function to retrieve the current cell
      */
-    private static void extractColorCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
+    private static void extractFaceUpCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
-        String color = XMLHelper.getTextValue(e, RESOURCES.getString(COLOR));
-        if (!TRUE_CHECKS.contains(color)) {
-            if (color.equals(RESOURCES.getString(SAME))) {
-                valueChecker = (IMove move) -> currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName());
-            } else if (color.equals(RESOURCES.getString(NOT))) {
-                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName()));
+        String faceUp = XMLHelper.getTextValue(e, RESOURCES.getString(IS_FACEUP));
+        if (!TRUE_CHECKS.contains(faceUp)) {
+            if (faceUp.equalsIgnoreCase(RESOURCES.getString(YES))) {
+                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().isFaceUp());
             } else {
-                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase()));
+                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peek().isFaceUp());
             }
             conditions.add(valueChecker);
         }
     }
 
     /**
-     * Extracts what value should be this part of an IMove for this ICell and adds it as a Function to conditions.
+     * Extracts the name of an ICell that must match the particular Rule and adds it as a Function to conditions.
      *
      * @param e             the Element from which to parse conditions
+     * @param cellGroupMap  the Map of String ICellGroup names to ICellGroups
      * @param conditions    the List of Functions to which conditions should be added
-     * @param recipientCell a Function to retrieve the recipient cell
      * @param currCell      a Function to retrieve the current cell
      */
-    private static void extractValueCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
+    private static void extractNameCondition(Element e, Map<String, ICellGroup> cellGroupMap, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> currCell) {
         Function<IMove, Boolean> valueChecker;
-        String direction = XMLHelper.getTextValue(e, RESOURCES.getString(DIRECTION));
-        String valueText = XMLHelper.getTextValue(e, RESOURCES.getString(VALUE));
-        if (!TRUE_CHECKS.contains(valueText) && !TRUE_CHECKS.contains(direction)) {
-            Integer value;
-            if (direction.equals(RESOURCES.getString(DOWN))) {
-                value = -1 * Integer.parseInt(valueText);
-            } else {
-                value = Integer.parseInt(valueText);
-            }
-            valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().getValue().getNumber() - value ==
-                        recipientCell.apply(move).getDeck().peek().getValue().getNumber());
+        String name = XMLHelper.getTextValue(e, RESOURCES.getString(NAME));
+        if (!TRUE_CHECKS.contains(name)) {
+            valueChecker = (IMove move) -> (cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(currCell.apply(move).findHead().getName())) || (currCell.apply(move).findHead().getName().equalsIgnoreCase(name));
             conditions.add(valueChecker);
         }
     }
+
 }

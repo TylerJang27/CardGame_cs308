@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 public class StyleFactory implements Factory {
 
     public static String STYLE_TYPE = IStyle.DATA_TYPE;
-    public static String STYLE_XSD = "src/ooga/data/factories/style_schema.xsd";
+    public static String STYLE_XSD = "src/ooga/data/factories/schemas/style_schema.xsd";
 
     private static String WORD = "word";
     private static String NUMBER = "number";
@@ -37,7 +37,7 @@ public class StyleFactory implements Factory {
     private static final ResourceBundle NUMBER_RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + NUMBER);
 
     /**
-     * Builds and returns an IStyle from a styling XML. Requirements for style XML can be found in ___.
+     * Builds and returns an IStyle from a styling XML. Requirements for style XML can be found in doc/XML_Documentation.md.
      *
      * @param dataFile file from which to read configuration
      * @return an IStyle with all of its configuration information stored
@@ -48,7 +48,7 @@ public class StyleFactory implements Factory {
     }
 
     /**
-     * Builds and returns an IStyle from a styling XML. Requirements for style XML can be found in ___.
+     * Builds and returns an IStyle from a styling XML. Requirements for style XML can be found in doc/XML_Documentation.md.
      *
      * @param dataFile    file from which to read configuration
      * @param destination String for the destination to save the file

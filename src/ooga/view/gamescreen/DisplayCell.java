@@ -15,6 +15,17 @@ import ooga.cardtable.Offset;
 
 public class DisplayCell {
 
+    private static final String DEFAULT_SKIN_TYPE = "classic";
+    private static final String IMAGE_PACKAGE = "/ooga/resources/decks/standard/";
+    private static final String SLASH = "/";
+    private static final String PNG = ".png";
+    private static final String FACEDOWN = "faceDown";
+    private static final String CARDSKIN = "cardskin";
+    private static final String EMPTY_IMAGE = "/ooga/resources/em.jpg";
+    private static final int NO_OFFSET = 0;
+
+    private static Map<String, Image> cachedImages = new HashMap<>();
+
     private Map<Offset, DisplayCell> myDisplayChildren = new HashMap<>();
     private ICell myCell;
 
@@ -34,16 +45,19 @@ public class DisplayCell {
         myCell = cell;
 
         if(myCell.getDeck().peek() != null) {
-
             if (myCell.getDeck().peek().isFaceUp()) {
-                myImageView = new ImageView(new Image("/ooga/resources/decks/standard/"+skinType+"/"+myCell.getDeck().peek().getName()+".png"));
+                try {
+                    myImageView = new ImageView(getImageFromString( IMAGE_PACKAGE + skinType + SLASH + myCell.getDeck().peek().getName() + PNG));
+                } catch (Exception e) {
+                    myImageView = new ImageView(getImageFromString(IMAGE_PACKAGE + DEFAULT_SKIN_TYPE + SLASH + myCell.getDeck().peek().getName() + PNG));
+                }
             } else {
-                myImageView = new ImageView(new Image("/ooga/resources/decks/standard/"+skinType+"/faceDown.png"));
-                myImageView.getStyleClass().add("cardskin");
+                myImageView = new ImageView(getImageFromString(IMAGE_PACKAGE +skinType+SLASH+FACEDOWN+PNG));
+                myImageView.getStyleClass().add(CARDSKIN);
             }
 
         } else {
-            myImageView = new ImageView(new Image("/ooga/resources/em.jpg"));
+            myImageView = new ImageView(new Image(EMPTY_IMAGE));
         }
 
         myImageView.layoutXProperty().bind(Bindings.divide(myImageView.fitWidthProperty(),-2));
@@ -58,8 +72,8 @@ public class DisplayCell {
             enableClick(myImageView);
         }
 
-        faceDownOffsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -faceDownOffset), Offset.SOUTH, new Point2D(0,faceDownOffset), Offset.EAST, new Point2D(faceDownOffset, 0),Offset.WEST, new Point2D(-faceDownOffset,0), Offset.NORTHEAST, new Point2D(faceDownOffset,-faceDownOffset), Offset.SOUTHEAST, new Point2D(faceDownOffset,faceDownOffset), Offset.NORTHWEST, new Point2D(-faceDownOffset,-faceDownOffset), Offset.SOUTHWEST, new Point2D(-faceDownOffset,faceDownOffset));
-        faceUpOffsetDirToAmount = Map.of(Offset.NONE, new Point2D(0,0), Offset.NORTH, new Point2D(0, -faceUpOffset), Offset.SOUTH, new Point2D(0,faceUpOffset), Offset.EAST, new Point2D(faceUpOffset, 0),Offset.WEST, new Point2D(-faceUpOffset,0), Offset.NORTHEAST, new Point2D(faceUpOffset,-faceUpOffset), Offset.SOUTHEAST, new Point2D(faceUpOffset,faceUpOffset), Offset.NORTHWEST, new Point2D(-faceUpOffset,-faceUpOffset), Offset.SOUTHWEST, new Point2D(-faceUpOffset,faceUpOffset));
+        faceDownOffsetDirToAmount = Map.of(Offset.NONE, new Point2D(NO_OFFSET,NO_OFFSET), Offset.NORTH, new Point2D(NO_OFFSET, -faceDownOffset), Offset.SOUTH, new Point2D(NO_OFFSET,faceDownOffset), Offset.EAST, new Point2D(faceDownOffset, NO_OFFSET),Offset.WEST, new Point2D(-faceDownOffset,NO_OFFSET), Offset.NORTHEAST, new Point2D(faceDownOffset,-faceDownOffset), Offset.SOUTHEAST, new Point2D(faceDownOffset,faceDownOffset), Offset.NORTHWEST, new Point2D(-faceDownOffset,-faceDownOffset), Offset.SOUTHWEST, new Point2D(-faceDownOffset,faceDownOffset));
+        faceUpOffsetDirToAmount = Map.of(Offset.NONE, new Point2D(NO_OFFSET,NO_OFFSET), Offset.NORTH, new Point2D(NO_OFFSET, -faceUpOffset), Offset.SOUTH, new Point2D(NO_OFFSET,faceUpOffset), Offset.EAST, new Point2D(faceUpOffset, NO_OFFSET),Offset.WEST, new Point2D(-faceUpOffset,NO_OFFSET), Offset.NORTHEAST, new Point2D(faceUpOffset,-faceUpOffset), Offset.SOUTHEAST, new Point2D(faceUpOffset,faceUpOffset), Offset.NORTHWEST, new Point2D(-faceUpOffset,-faceUpOffset), Offset.SOUTHWEST, new Point2D(-faceUpOffset,faceUpOffset));
 
 
         for (IOffset dir: myCell.getAllChildren().keySet()) {
@@ -77,6 +91,16 @@ public class DisplayCell {
             DisplayCell childDisplayCell = new DisplayCell(myDragLambda, myClickLambda, childCell, skinType, childOffset, height, width, faceDownOffset, faceUpOffset);
             myDisplayChildren.put((Offset) dir, childDisplayCell);
         }
+    }
+
+    private Image getImageFromString(String file){
+        Image ret = DisplayCell.cachedImages.get(file);
+        if (ret != null) {
+            return ret;
+        }
+        ret = new Image(file);
+        DisplayCell.cachedImages.put(file, ret);
+        return ret;
     }
 
     public Map<Offset,DisplayCell> getAllChildren() {
