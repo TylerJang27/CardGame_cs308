@@ -72,6 +72,7 @@ public class PhaseFactory implements Factory {
     protected static final String GREATER_THAN = "Greater";
     protected static final String RANDOM = "Random";
 
+    protected static final String HEAD = "Head";
     protected static final String TOP = "Top";
     protected static final String BOTTOM = "Bottom";
     protected static final String EXCEPT = "Except";

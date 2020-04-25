@@ -40,6 +40,7 @@ public class ActionFactory implements Factory {
     private static final String D = PhaseFactory.D;
     private static final String NO = PhaseFactory.NO;
 
+    private static final String HEAD = PhaseFactory.HEAD;
     private static final String TOP = PhaseFactory.TOP;
     private static final String BOTTOM = PhaseFactory.BOTTOM;
     private static final String EXCEPT = PhaseFactory.EXCEPT;
@@ -96,6 +97,8 @@ public class ActionFactory implements Factory {
         String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).toUpperCase();
         if (numCards.equals(RESOURCES.getString(ALL))) {
             return extractAllCells(curr);
+        } else if (numCards.equalsIgnoreCase(RESOURCES.getString(HEAD))) {
+            return extractAllCells(curr.findHead());
         } else if (Offset.validOffsets.contains(numCards)) {
             return extractOffsetCells(curr, numCards);
         } else if (numCards.equalsIgnoreCase(RESOURCES.getString(TOP))) {
