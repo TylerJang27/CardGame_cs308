@@ -1,5 +1,6 @@
 package ooga.controller;
 
+import java.util.function.Consumer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import ooga.cardtable.*;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import ooga.view.View.SaveGame;
 
 /**
  *
@@ -108,11 +110,19 @@ public class Controller extends Application {
 
         IStyle myStyle = extractStyle();
         myScores = extractScores();
+
+        SaveGame processGameSave = (gameID, fileName) -> {
+            saveGame(gameID, fileName);
+        };
+        Consumer<String> loadGame = (fileName) -> {
+            loadGame(fileName);
+        };
+
         myView = new View(gm, (int gameID)->{
             myTables.get(gameID).restartGame();
             myCurrentCells = myTables.get(gameID).getCellData();
             myView.setUpdatesToCellData(gameID,myCurrentCells); },
-            myStyle);
+            myStyle, processGameSave,loadGame);
         for(String key : myScores.getSavedGames()){
             myView.updateHighScores(key,myScores.getScore(key));
         }
@@ -172,13 +182,14 @@ public class Controller extends Application {
         }
     }
 
-    private void saveGame(int gameID, String destination) { //TODO: PROCESS ON FRONTEND @MARIUSZ
+    private void saveGame(int gameID, String destination) {
         ISaveConfiguration saveData = myTables.get(gameID).getSaveData(myGameNames.get(gameID), myRuleFiles.get(gameID).getPath());
         saveData.writeConfiguration(destination);
     }
 
     private void loadGame(String loadFile) { //TODO: PROCESS ON FRONTEND @MARIUSZ
         try {
+            System.out.println(loadFile);
             ISaveConfiguration load = SaveConfigurationFactory.createSave(new File(loadFile));
             IPhaseMachine pm = PhaseMachineFactory.createPhaseMachine(new File(load.getRulePath()));
             pm.setCellData(load.getCellMap());
