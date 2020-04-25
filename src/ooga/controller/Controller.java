@@ -196,10 +196,11 @@ public class Controller extends Application {
             pm.setPhase(load.getCurrentPhase());
             ITable table = new Table(pm);
             table.getCurrentPlayer().setScore(load.getScore());
-            //currentGame = load.getGameName(); TODO: Big fixes
             myCurrentPhaseMachine = pm;
-            //myTable = table; TODO: FIX!!
-            //TODO: SHOULD THIS BE LOADED INTO THE VIEW IN TERMS OF THE CELL DATA AND SUCH?
+            int gameID = myView.createGame(load.getGameName());
+            myGameNames.put(gameID, load.getGameName());
+            myRuleFiles.put(gameID, new File(loadFile));
+            attatchView(gameID, table);
         } catch (XMLException e) {
             reportError(e);
         }
@@ -226,19 +227,22 @@ public class Controller extends Application {
             myRuleFiles.put(gameID,myRuleFile);
             myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
             ITable table = new Table(myCurrentPhaseMachine);
-            Map<String, ICell> myCellMap = table.getCellData();
-            File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
 
-            //fixme
-            myView.setLayout(gameID,LayoutFactory.createLayout(f));
-            myView.setCellData(gameID, myCellMap);
-            //myView.setHighScore(myScores.getScore(currentGame));  //TODO: MARIUSZ display it please
-            myPreviousCells = myCellMap;
-            myTables.put(gameID,table);
+            attatchView(gameID, table);
             //myView.setCellData(Map.copyOf(myTable.getCellData()));
         } catch (XMLException e) {
             reportError(e);
         }
+    }
+
+    private void attatchView(int gameID, ITable table) {
+        Map<String, ICell> myCellMap = table.getCellData();
+        File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
+
+        myView.setLayout(gameID, LayoutFactory.createLayout(f));
+        myView.setCellData(gameID, myCellMap);
+        myPreviousCells = myCellMap;
+        myTables.put(gameID,table);
     }
 
     private void newMove() {
