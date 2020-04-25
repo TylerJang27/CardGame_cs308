@@ -52,6 +52,8 @@ public class ActionFactory implements Factory {
 
     private static final String ALL = MasterRuleFactory.ALL;
 
+    private ActionFactory(){}
+
     /**
      * Builds and returns an IAction built for an IMasterRule from a rules XML. Requirements for rules XML can be found in ___.
      *

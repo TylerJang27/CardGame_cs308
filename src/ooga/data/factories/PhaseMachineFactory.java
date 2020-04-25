@@ -29,6 +29,8 @@ public class PhaseMachineFactory implements Factory {
 
     public static final String START = "INIT_PHASE";
 
+    private PhaseMachineFactory() {}
+
     /**
      * Builds and returns an IPhaseMachine built from a rules XML. Requirements for rules XML can be found in _____.
      *

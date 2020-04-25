@@ -18,6 +18,8 @@ public class HighScoreWriter implements Writer {
     private static final String DATA_TYPE = IHighScores.DATA_TYPE;
     private static final String SCORE = IHighScores.SCORE;
 
+    private HighScoreWriter() {}
+
     /**
      * Writes information from IHighScore implementation to filepath
      *

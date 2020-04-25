@@ -33,11 +33,15 @@ public class InitializeFactory implements Factory {
     private static final String UP = "Up";
     private static final String DOWN = "Down";
 
+    private static final int OFFSET_REGEX = 3;
+
+    private InitializeFactory() {}
+
     /**
      * Builds and return a Function of IDeck to ICell built from a rules XML. Requirements for rules XML can be found in ___.
      *
      * @param settings  the Node from which the Function is built
-     * @param offset    the offset used for all of the cards //TODO: UNLESS OTHERWISE SPECIFIED
+     * @param offset    the offset used for all of the cards
      * @param rotation  the rotation used for the cell
      * @return          a Function that, when applied, builds an ICell by pulling cards from the supplied IDeck.
      */
@@ -171,9 +175,9 @@ public class InitializeFactory implements Factory {
             if (Offset.validOffsets.contains(regexSplit[2].toLowerCase())) {
                 off = Offset.valueOf(regexSplit[2].toUpperCase());
             }
-            if (regexSplit.length > 3) {
+            if (regexSplit.length > OFFSET_REGEX) {
                 try {
-                    rotation = Double.parseDouble(regexSplit[3]);
+                    rotation = Double.parseDouble(regexSplit[OFFSET_REGEX]);
                 } catch (NumberFormatException e) {
                     rotation = null;
                 }

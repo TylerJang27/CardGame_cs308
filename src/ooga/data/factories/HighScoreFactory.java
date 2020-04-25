@@ -27,6 +27,8 @@ public class HighScoreFactory implements Factory {
     public static String DATA_TYPE = IHighScores.DATA_TYPE;
     public static String SCORE_XSD = "src/ooga/data/factories/schemas/score_schema.xsd";
 
+    private HighScoreFactory(){}
+
     /**
      * Builds and returns an IHighScore from a scoring XML. Requirements for scoring XML can be found in ___.
      *

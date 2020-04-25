@@ -36,6 +36,8 @@ public class StyleFactory implements Factory {
     private static final ResourceBundle WORD_RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + WORD);
     private static final ResourceBundle NUMBER_RESOURCES = ResourceBundle.getBundle(RESOURCE_PACKAGE + NUMBER);
 
+    private StyleFactory() {}
+
     /**
      * Builds and returns an IStyle from a styling XML. Requirements for style XML can be found in ___.
      *

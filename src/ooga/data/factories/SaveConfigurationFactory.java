@@ -34,9 +34,10 @@ public class SaveConfigurationFactory implements Factory {
     private static final String GAME = "Game";
     private static final String SCORE = "Score";
     private static final String FILE = "File";
-    private static final String CELL = "Cell";
     private static final String NAME = "Name";
     private static final String CELLS = "Cells";
+
+    private SaveConfigurationFactory() {}
 
     /**
      * Builds and returns an ISaveConfiguration from a saved XML.

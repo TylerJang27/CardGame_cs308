@@ -82,8 +82,4 @@ public class Table implements ITable {
     return new SaveConfiguration(gameName, rulePath, phase, score, cellBuilder);
   }
 
-  @Override
-  public void loadFromSaveData(ISaveConfiguration saveData) {
-    
-  }
 }

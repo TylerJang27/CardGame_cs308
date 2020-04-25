@@ -22,6 +22,8 @@ import java.io.IOException;
  */
 public class XMLValidator {
 
+    private XMLValidator() {}
+
     /**
      * Validates an XML File against an XSD Schema. Returns whether or not the file is valid.
      *

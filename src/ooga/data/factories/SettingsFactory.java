@@ -24,6 +24,8 @@ public class SettingsFactory implements Factory {
     private static final String LAYOUT = "Layout";
     private static final String DEFAULT_PLAYERS = "1";
 
+    private SettingsFactory() {}
+
     /**
      * Builds and returns an ISettings built from a rules XML. Requirements for rules XML can be found in ____.
      *

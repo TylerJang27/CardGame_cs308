@@ -80,6 +80,8 @@ public class PhaseFactory implements Factory {
     protected static final String PRESERVE = "Preserve";
     protected static final String REVERSE = "Reverse";
 
+    private PhaseFactory() {}
+
     /**
      * Builds and returns IPhases built from a rules XML. Requirements for rules can be found in ___.
      *

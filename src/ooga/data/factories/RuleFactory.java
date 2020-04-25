@@ -41,6 +41,8 @@ public class RuleFactory implements Factory {
 
     private static final List<String> TRUE_CHECKS = MasterRuleFactory.TRUE_CHECKS;
 
+    private RuleFactory() {}
+
     /**
      * The default method for building and returning a singular IRule from a rules XML. Requirements for rules XML can be found in ___.
      *
@@ -183,7 +185,11 @@ public class RuleFactory implements Factory {
         String color = XMLHelper.getTextValue(e, RESOURCES.getString(COLOR));
         if (!TRUE_CHECKS.contains(color)) {
             if (color.equals(RESOURCES.getString(SAME))) {
-                valueChecker = (IMove move) -> currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName());
+                valueChecker = (IMove move) -> {
+                    String currColor = currCell.apply(move).getDeck().peek().getSuit().getColorName();
+                    String recColor = recipientCell.apply(move).getDeck().peek().getSuit().getColorName();
+                    return currColor.equalsIgnoreCase(recColor);
+                };
             } else if (color.equals(RESOURCES.getString(NOT))) {
                 valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName()));
             } else {
