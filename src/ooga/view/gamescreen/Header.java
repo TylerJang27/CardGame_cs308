@@ -23,7 +23,7 @@ public class Header {
         myLabel = new Label();
         myLabel.getStyleClass().addAll(LABEL_CLASSES);
 
-        myFader = createFader(myLabel);
+        myFader = createFade(myLabel);
 
         myPane = new StackPane(myLabel);
         myPane.getStyleClass().addAll(PANE_CLASSES);
@@ -38,7 +38,7 @@ public class Header {
         return myPane;
     }
 
-    private FadeTransition createFader(Node node) {
+    private FadeTransition createFade(Node node) {
         FadeTransition fade = new FadeTransition(Duration.seconds(TRANSITION_TIME), node);
         fade.setFromValue(INITIAL_OPACITY);
         fade.setToValue(FINAL_OPACITY);
