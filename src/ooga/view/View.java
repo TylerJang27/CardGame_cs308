@@ -129,7 +129,7 @@ public class View implements ExternalAPI {
         myMenu = new Menu(APPLICATION_NAME, LANGUAGES, SKINS, getTheme, getLanguage, myTheme, myLanguage, DEFAULT_HEIGHT, DEFAULT_WIDTH,handler);
         Tab menuTab = new Tab("Menu",myMenu.getScene());
         myTabPane.getTabs().add(menuTab);
-        myScene = new Scene(myTabPane,DEFAULT_WIDTH,DEFAULT_HEIGHT);
+        myScene = new Scene(myTabPane);
         myScene.getStylesheets().add(getClass().getResource("/ooga/resources/skins/"+myTheme.toLowerCase()+"/mainmenu.css").toExternalForm()); //
         myStage = new Stage();
         myStage.setScene(myScene);
