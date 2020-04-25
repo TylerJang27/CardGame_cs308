@@ -2,7 +2,7 @@
 <data type="rule">
     <settings>
         <players>1</players>
-        <layout>data/memory_layout.xml</layout>
+        <layout>data/memory/memory_layout.xml</layout>
     </settings>
     <deck>
         <deck_name>reduced36</deck_name>

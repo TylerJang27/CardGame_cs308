@@ -32,13 +32,12 @@ public class Controller extends Application {
     private static final String DEFAULT_SCORE_FILE = "data/default_score.xml";
     private static final String BACKUP_SCORE_FILE = "data/default_score_orig.xml";
 
-
-    private static final String DEFAULT_RULE_FILE = "data/solitaire_rules.xml";           //default
-    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_1.xml";  //fixed cards, demo
-    //private static final String DEFAULT_RULE_FILE = "data/memory_rules.xml";       //memory debugging
-    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_2.xml";  //almost win state
-    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_3.xml";  //xsd error
-    //private static final String DEFAULT_RULE_FILE = "data/solitaire_rules_static_4.xml";  //runtime phase error
+    private static final String DEFAULT_RULE_FILE = "data/solitaire/solitaire_rules.xml";               //default
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire/solitaire_rules_static_1.xml";    //fixed cards, demo
+    //private static final String DEFAULT_RULE_FILE = "data/memory/memory_rules.xml";                   //memory debugging
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire/solitaire_rules_static_2.xml";    //almost win state
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire/solitaire_rules_static_3.xml";    //xsd error
+    //private static final String DEFAULT_RULE_FILE = "data/solitaire/solitaire_rules_static_4.xml";    //runtime phase error
 
     private static final String FILEPATH = "data/";
     private static final String RULES_EXTENSION = "_rules.xml";
@@ -209,8 +208,8 @@ public class Controller extends Application {
             myCurrentPhaseMachine = pm;
             int gameID = myView.createGame(load.getGameName());
             myGameNames.put(gameID, load.getGameName());
-            myRuleFiles.put(gameID, new File(loadFile));
-            attatchView(gameID, table);
+            myRuleFiles.put(gameID, new File(load.getRulePath()));
+            attachView(gameID, table);
         } catch (XMLException e) {
             reportError(e);
         }
@@ -221,7 +220,7 @@ public class Controller extends Application {
     }
 
     private void startTable(String gameName) {
-        String ruleFile = FILEPATH + gameName + RULES_EXTENSION;
+        String ruleFile = FILEPATH + gameName + "/" + gameName + RULES_EXTENSION;
         try {
             myRuleFile = new File(ruleFile);
         } catch (Exception e) {
@@ -235,13 +234,13 @@ public class Controller extends Application {
             myRuleFiles.put(gameID,myRuleFile);
             myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
             ITable table = new Table(myCurrentPhaseMachine);
-            attatchView(gameID, table);
+            attachView(gameID, table);
         } catch (XMLException e) {
             reportError(e);
         }
     }
 
-    private void attatchView(int gameID, ITable table) {
+    private void attachView(int gameID, ITable table) {
         Map<String, ICell> myCellMap = table.getCellData();
         File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
 
