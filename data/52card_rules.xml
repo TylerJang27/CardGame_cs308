@@ -766,7 +766,7 @@
     </group>
     <group category="done">
       <cell name="52">
-        <fan>east</fan>
+        <fan>none</fan>
         <rotation>0</rotation>
         <init_cards>
           <card>D1,U,none</card>
@@ -821,7 +821,7 @@
               <num_cards>1</num_cards>
               <shuffle>n</shuffle>
               <rotation>0</rotation>
-              <offset>east</offset>
+              <offset>none</offset>
               <flip_up>y</flip_up>
             </mover_dest>
             <donor_dest>
@@ -831,7 +831,7 @@
               <rotation>0</rotation>
               <offset>none</offset>
             </donor_dest>
-            <next_phase phase="check"></next_phase>
+            <next_phase phase="check">1</next_phase>
           </action>
         </rule>
         <rule category="all">
@@ -847,7 +847,7 @@
             <mover>
               <color>*</color>
               <suit>*</suit>
-              <num_cards>1</num_cards>
+              <num_cards>*</num_cards>
               <is_faceup>*</is_faceup>
               <name>*</name>
             </mover>
@@ -883,7 +883,7 @@
               <rotation>0</rotation>
               <offset>none</offset>
             </donor_dest>
-            <next_phase phase="check"></next_phase>
+            <next_phase phase="check">-1</next_phase>
           </action>
         </rule>
       </rules>
