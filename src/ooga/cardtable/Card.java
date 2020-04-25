@@ -1,7 +1,6 @@
 package ooga.cardtable;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
@@ -166,13 +165,13 @@ public class Card implements ICard {
 
   @Override
   public boolean equals(Object other) {
-    if (!(other instanceof Card)) {
-      return false;
-    }
-    Card c = (Card) other;
-    return  name.equals(c.name) && faceup == c.faceup && orientation == c.orientation &&
-        getSuit().equals(c.getSuit()) && getValue().equals((c.getValue()));
-        //attributes.keySet().equals(c.attributes.keySet()); //fixme add in generic attributes
+    return other instanceof Card &&
+        name.equals(((Card) other).name) &&
+        faceup == ((Card) other).faceup &&
+        orientation == ((Card) other).orientation &&
+        getSuit().equals(((Card) other).getSuit()) &&
+        getValue().equals(((Card) other).getValue());
+    //attributes.keySet().equals(c.attributes.keySet()); //fixme add in generic attributes
   }
 
   @Override

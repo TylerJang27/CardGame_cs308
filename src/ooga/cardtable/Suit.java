@@ -61,12 +61,10 @@ public class Suit implements ISuit {
 
   @Override
   public boolean equals(Object other) { //fixme switch to icolor
-    if (!(other instanceof Suit)) {
-      return false;
-    }
-    Suit s = (Suit) other;
     //return name.equals(s.name) && Arrays.equals(color, ((Suit) other).color);
-    return name.equals(s.name) && myColorName.equals(s.myColorName);
+    return other instanceof Suit &&
+        name.equals(((Suit) other).name) &&
+        myColorName.equals(((Suit) other).myColorName);
   }
 
   @Override
