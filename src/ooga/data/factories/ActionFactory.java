@@ -266,6 +266,7 @@ public class ActionFactory implements Factory {
             while (currCell.getAllChildren().size() > 1) {
                 for(Map.Entry<IOffset, ICell> entry: currCell.getAllChildren().entrySet()) {
                     if (!entry.getKey().equals(Offset.NONE)) {
+                        currCell.removeCellAtOffset(entry.getKey());
                         currCell.addCell(Offset.NONE, entry.getValue());
                     }
                 }
