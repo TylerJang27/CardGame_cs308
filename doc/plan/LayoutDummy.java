@@ -1,4 +1,4 @@
-import ooga.data.style.Coordinate;
+/*import ooga.data.style.Coordinate;
 import ooga.data.style.ICoordinate;
 import ooga.data.style.Layout;
 
@@ -11,7 +11,7 @@ import java.util.Map;
  * A dummy implementation of Layout, used to hard code Layout tests.
  *
  * @author Andrew Krier
- */
+ *//*
 public class LayoutDummy extends Layout {
 
     private static final int SCREEN_WIDTH = 100;
@@ -42,7 +42,7 @@ public class LayoutDummy extends Layout {
 
     public LayoutDummy(String xmlfile, String game, Map<String, ICoordinate> cellCoords, Map<String, Integer> numberSettings) {
         super(cellCoords, numberSettings, null);
-        /*
+
         gameName = game;
 
         cellLayout = cellCoords;
@@ -55,7 +55,7 @@ public class LayoutDummy extends Layout {
         downOffsetRatio = numberSettings.get(FACE_DOWN_OFFSET) / SCREEN_WIDTH;
         upOffsetRatio = numberSettings.get(FACE_UP_OFFSET) / SCREEN_WIDTH;
 
-         */
+
 
     }
 
@@ -64,7 +64,7 @@ public class LayoutDummy extends Layout {
      * with their respective names as their keys
      *
      * @return a map of of cell names to their coordinates, given as decimals relative to the screen size
-     */
+     *//*
     @Override
     public Map<String, ICoordinate> getCellLayout() {
         return Map.copyOf(cellLayout);
@@ -100,7 +100,7 @@ public class LayoutDummy extends Layout {
      * Gives screen width
      *
      * @return the double screen width
-     */
+     *//*
     @Override
     public double getScreenWidth() {
         return 0;
@@ -110,7 +110,7 @@ public class LayoutDummy extends Layout {
      * Gives screen height
      *
      * @return the double screen height
-     */
+     *//*
     @Override
     public double getScreenHeight() {
         return 0;
@@ -121,7 +121,7 @@ public class LayoutDummy extends Layout {
      * ratio = height / width
      *
      * @return
-     */
+     *//*
     @Override
     public double getCardRatio() {
         return 0;
