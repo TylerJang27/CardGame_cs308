@@ -35,6 +35,8 @@ public class DeckFactory implements Factory {
     private static final String SUIT = "Suit";
     private static final String FIXED = "Fixed";
 
+    private DeckFactory(){}
+
     /**
      * Builds and returns an IDeck built from a rules XML. Requirements for rules XML can be found in doc/XML_Documentation.md.
      *

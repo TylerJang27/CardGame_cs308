@@ -45,6 +45,8 @@ public class StyleWriter implements Writer {
     private static final String DIFFICULTY = "Difficulty";
     private static final String SOUND = "Sound";
 
+    private StyleWriter() {}
+
     /**
      * Writes information from IStyle implementation to filepath
      *

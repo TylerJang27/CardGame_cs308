@@ -36,7 +36,6 @@ public class Dictionary {
 
   private void updateWithResources(ResourceBundle bundle){
     for(String key : bundle.keySet()){
-      System.out.println(key);
       myDictionary.putIfAbsent(key,new ReadOnlyObjectWrapper<>());
       myDictionary.get(key).set(bundle.getString(key));
     }

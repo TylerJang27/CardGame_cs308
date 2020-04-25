@@ -1,4 +1,6 @@
-package ooga.data.style;
+import ooga.data.style.Coordinate;
+import ooga.data.style.ICoordinate;
+import ooga.data.style.Layout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
