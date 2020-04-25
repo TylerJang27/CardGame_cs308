@@ -42,8 +42,8 @@ Main class:
 Main.java has a main() method to create a Controller instance to launch the application.
 
 Data files needed: 
- - Rules for a game should be in data/ (of the form gamename_rules.xml)
- - Layouts for a game should be in data/ (of the form gamename_layout.xml)
+ - Rules for a game should be in data/ (of the form gamename/gamename_rules.xml)
+ - Layouts for a game should be in data/ (of the form gamename/gamename_layout.xml)
  - default_score_orig.xml and default_style_orig.xml should be in data/
  - layout_schema.xsd, rules_schema.xsd, save_schema.xsd, score_schema.xsd, and style_schema.xsd must be in src/oorga/data/factories/schemas
  - languages files for messages and game names must be in src/ooga/resources/languages/messages and src/ooga/resources/languages/games, respectively and must be specified in src/ooga/resources/languages/supportedlanguages.properties
@@ -71,9 +71,9 @@ Assumptions or Simplifications:
  - The rules that a game is based on should not change between the time of saving and the time of loading.
 
 Interesting data files:
- - data/solitaire_rules_static_2.xml holds a solitaire game near victory
- - data/solitaire_rules_static_3.xml throws an xsd error because the layout file is not specified
- - data/solitaire_rules_static_4.xml throws an xml error during runtime because an invalid phase name is specified
+ - data/solitaire/solitaire_rules_static_2.xml holds a solitaire game near victory
+ - data/solitaire/solitaire_rules_static_3.xml throws an xsd error because the layout file is not specified
+ - data/solitaire/solitaire_rules_static_4.xml throws an xml error during runtime because an invalid phase name is specified
 
 Known Bugs:
 - XML regex must be set specifically in order to produce the desired cell behavior. Cells must not be left empty.
