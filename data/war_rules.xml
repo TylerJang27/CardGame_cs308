@@ -443,7 +443,7 @@
         </group>
         <group category="battle">
             <cell name="court">
-                <fan>east</fan>
+                <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
                     <card>D3,U,none</card>
@@ -628,7 +628,8 @@
                     <action>
                         <receiver_dest>
                             <destination>hold1</destination>
-                            <num_cards>*</num_cards>
+                            <num_cards>h</num_cards>
+                            <collapse>y</collapse>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
                             <offset>none</offset>
@@ -663,7 +664,8 @@
                     <action>
                         <receiver_dest>
                             <destination>hold2</destination>
-                            <num_cards>*</num_cards>
+                            <num_cards>h</num_cards>
+                            <collapse>y</collapse>
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
                             <offset>none</offset>
