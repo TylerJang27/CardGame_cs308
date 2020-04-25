@@ -263,9 +263,11 @@ public class ActionFactory implements Factory {
     private static void extractCollapse(Element e, ICell currCell) {
         String collapse = XMLHelper.getTextValue(e, RESOURCES.getString(COLLAPSE));
         if (collapse.equalsIgnoreCase(RESOURCES.getString(YES))) {
-            for (Map.Entry<IOffset, ICell> entry: currCell.getAllChildren().entrySet()) {
-                if (!entry.getKey().equals(Offset.NONE)) {
-                    currCell.addCell(Offset.NONE, entry.getValue());
+            while (currCell.getAllChildren().size() > 1) {
+                for(Map.Entry<IOffset, ICell> entry: currCell.getAllChildren().entrySet()) {
+                    if (!entry.getKey().equals(Offset.NONE)) {
+                        currCell.addCell(Offset.NONE, entry.getValue());
+                    }
                 }
             }
         }
