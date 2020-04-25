@@ -55,11 +55,10 @@ public class Value implements IValue {
 
   @Override
   public boolean equals(Object other) {
-    if (!(other instanceof Value)) {
-      return false;
-    }
-    Value v = (Value) other;
-    return name.equals(v.name) && number == v.number && symbol == v.symbol;
+    return other instanceof Value &&
+        name.equals(((Value) other).name) &&
+        number == ((Value) other).number &&
+        symbol == ((Value) other).symbol;
   }
 
   @Override
