@@ -1,10 +1,16 @@
+//import ooga.cardtable.Card;
+//import ooga.cardtable.Cell;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import ooga.cardtable.ICell;
 import ooga.cardtable.Offset;
 import ooga.cardtable.Suit;
 import ooga.cardtable.Value;
-import org.junit.jupiter.api.*;
-import ooga.cardtable.*; //fixme this has to be wildcard for some reason, can't import card or cell
-import static org.junit.jupiter.api.Assertions.*;
+import ooga.cardtable.*;//fixme can't import cell or card for some reason
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class CellTests {
 
@@ -164,7 +170,7 @@ public class CellTests {
     b.addCard(Offset.NONE, c1);
     b.addCard(Offset.SOUTH, c2);
     ICell temp = b;
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 10; i++) {
       temp = temp.getAllChildren().get(Offset.SOUTH);
       temp.addCard(Offset.SOUTH, c2);
     }
@@ -173,6 +179,7 @@ public class CellTests {
 
     assertEquals(b,a);
   }
+
   @Test
   public void stringConversionNoneTest() {
     Cell a = new Cell("a");
@@ -186,9 +193,62 @@ public class CellTests {
     b.addCard(Offset.NONE, c1);
     b.addCard(Offset.SOUTH, c2);
     ICell temp = b;
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 10; i++) {
       temp = temp.getAllChildren().get(Offset.SOUTH);
       temp.addCard(Offset.SOUTH, c2);
+    }
+    b.getAllChildren().get(Offset.SOUTH).getDeck().getNextCard();
+    System.out.println(b.toStorageString());
+    System.out.println(b);
+    a = (Cell) Cell.fromStorageString(b.toStorageString());
+
+    assertEquals(b,a);
+  }
+
+  @Test
+  public void stringConversionFlatDeckTest() {
+    Cell a = new Cell("a");
+    Cell b = new Cell("b");
+    Suit s1 = new Suit("Hearts", new int[] {255,0,0});
+    Value v1 = new Value("Ace", 1);
+    Value v2 = new Value("Two", 2);
+    Card c1 = new Card(s1, v1);
+    Card c2 = new Card(s1, v2);
+
+    b.addCard(Offset.NONE, c1);
+    b.addCard(Offset.SOUTH, c2);
+    ICell temp = b;
+    for (int i = 0; i < 10; i++) {
+      //temp = temp.getAllChildren().get(Offset.SOUTH);
+      temp.addCard(Offset.SOUTH, c2);
+    }
+    b.getAllChildren().get(Offset.SOUTH).getDeck().getNextCard();
+    System.out.println(b.toStorageString());
+    System.out.println(b);
+    a = (Cell) Cell.fromStorageString(b.toStorageString());
+
+    assertEquals(b,a);
+  }
+
+  @Test
+  public void stringConversionStackedDeckTest() {
+    Cell a = new Cell("a");
+    Cell b = new Cell("b");
+    Suit s1 = new Suit("Hearts", new int[] {255,0,0});
+    Value v1 = new Value("Ace", 1);
+    Value v2 = new Value("Two", 2);
+    Card c1 = new Card(s1, v1);
+    Card c2 = new Card(s1, v2);
+
+    b.addCard(Offset.NONE, c1);
+    b.addCard(Offset.SOUTH, c2);
+    ICell temp = b;
+    for (int i = 0; i < 10; i++) {
+      temp = temp.getAllChildren().get(Offset.SOUTH);
+      for (int j = 0; j < 5; j++) {
+        temp.addCard(Offset.SOUTH, c2);
+        temp.addCard(Offset.SOUTH, c1);
+      }
     }
     b.getAllChildren().get(Offset.SOUTH).getDeck().getNextCard();
     System.out.println(b.toStorageString());

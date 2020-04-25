@@ -293,6 +293,9 @@ public class PhaseMachine implements IPhaseMachine {
             for (int k = 0; k < Offset.values().length; k ++) {
                 IOffset off = Offset.values()[k];
                 e.getValue().removeCellAtOffset(off);
+                while (e.getValue().getDeck().size() > 0) {
+                    e.getValue().getDeck().getNextCard();
+                }
             }
             e.getValue().addCell(Offset.NONE, cellMap.get(e.getKey()));
         }

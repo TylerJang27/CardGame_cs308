@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 
 public class Deck implements IDeck {
@@ -171,11 +170,7 @@ public class Deck implements IDeck {
 
   @Override
   public boolean equals(Object other) {
-    if (!(other instanceof Deck)) {
-      return false;
-    }
-    Deck d = (Deck) other;
-    return cards.equals(d.cards);
+    return other instanceof Deck && cards.equals(((Deck) other).cards);
   }
 
   @Override
