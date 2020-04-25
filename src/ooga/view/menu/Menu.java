@@ -31,9 +31,9 @@ public class Menu {
   private static final String CHOICES = "ooga.resources.languages.games";
   private static final String COMMA_REGEX = ",";
   private static final String SUPPORTED = "supported";
-  private static final String HIGH_SCORES = "High Scores";
-  private static final String LOAD_GAME = "Load Game";
-  private static final String LOAD_HEADER = "Load Header";
+  private static final String HIGH_SCORES = "High_Scores";
+  private static final String LOAD_GAME = "Load_Game";
+  private static final String LOAD_HEADER = "Load_Header";
   private static final String XML_FILE = "XMLFile";
   private static final String XML_EXTENSION = "*.xml";
   private static final List<String> DASHBOARD_CSS = List.of("dashboard","border");
@@ -113,7 +113,7 @@ public class Menu {
     options.prefWidthProperty().bind(myBorderPane.widthProperty());
     options.prefHeightProperty().bind(myBorderPane.heightProperty());
 
-    ResourceBundle games = ResourceBundle.getBundle(GAMES_FOLDER.format(defaultLanguage));
+    ResourceBundle games = ResourceBundle.getBundle(String.format(GAMES_FOLDER,defaultLanguage));
     for(String game : games.keySet()){
       addOption(game,options);
     }

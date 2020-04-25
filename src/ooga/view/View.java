@@ -28,6 +28,7 @@ import ooga.data.style.IStyle;
 import ooga.view.gamescreen.GameScreen;
 import ooga.view.highscores.HighScoresDisplay;
 import ooga.view.highscores.HighScoresManager;
+import ooga.view.menu.Dictionary;
 import ooga.view.menu.Menu;
 
 import java.util.ArrayList;
@@ -94,6 +95,8 @@ public class View implements ExternalAPI {
      * @param style is updated to reflect user's language and theme preferences so they can be reloaded
      */
     public View(Controller.GiveMove giveMove, Restart restart, IStyle style, SaveGame gameSave, Consumer<String> gameLoad){
+        Dictionary.getInstance().addReference("ooga.resources.languages.messages");
+
         mySaveGame = gameSave;
 
         myHighScoresManager = new HighScoresManager();

@@ -35,7 +35,6 @@ public class GameScreen {
         };
 
         myDisplayTable = new DisplayTable(gameID,moveLambda, layout, 650, skinType);
-        Dictionary.getInstance().addReference("ooga.resources.languages.messages");
         myDashboard = new Dashboard(restartButton, scoreLabel, game, dashboardSave);
         myHeader = new Header();
 
