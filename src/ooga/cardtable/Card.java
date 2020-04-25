@@ -165,7 +165,7 @@ public class Card implements ICard {
 
   @Override
   public boolean equals(Object other) {
-    return other instanceof Card &&
+    return other.getClass() == this.getClass() &&
         name.equals(((Card) other).name) &&
         faceup == ((Card) other).faceup &&
         orientation == ((Card) other).orientation &&
