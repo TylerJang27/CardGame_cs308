@@ -45,15 +45,18 @@ public class HighScoreWriter implements Writer {
      */
     private static void addScores(Document document, Element root, IHighScores scores) {
         for (String s: scores.getSavedGames()) {
-        }
-        for (String s: scores.getSavedGames()) {
             try {
+<<<<<<< HEAD
                 Element e = document.createElement(s);
                 for(Double score : scores.getScore(s)){
                     Element singleScore = document.createElement("score");
                     singleScore.appendChild(document.createTextNode(""+score));
                     e.appendChild(singleScore);
                 }
+=======
+                Element e = document.createElement(s.toLowerCase());
+                e.appendChild(document.createTextNode("" + scores.getScore(s)));
+>>>>>>> df863a180b09c59e5e09e247077ab129f7f801d8
                 root.appendChild(e);
             } catch (Exception e) {
             }

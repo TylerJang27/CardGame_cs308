@@ -78,11 +78,11 @@
         <extension>.png</extension>
     </card_map>
     <cells>
-        <cell name="1">
+        <cell name="deck1">
             <x_val>50</x_val>
             <y_val>56</y_val>
         </cell>
-        <cell name="2">
+        <cell name="deck2">
             <x_val>50</x_val>
             <y_val>24</y_val>
         </cell>
@@ -90,6 +90,21 @@
             <x_val>50</x_val>
             <y_val>40</y_val>
         </cell>
+        <cell name="stage1">
+            <x_val>38</x_val>
+            <y_val>56</y_val>
+        </cell>
+        <cell name="stage2">
+            <x_val>62</x_val>
+            <y_val>24</y_val>
+        </cell>
+        <cell name="hold1">
+            <x_val>62</x_val>
+            <y_val>56</y_val>
+        </cell>
+        <cell name="hold2">
+            <x_val>38</x_val>
+            <y_val>24</y_val>
+        </cell>
     </cells>
-
 </data>

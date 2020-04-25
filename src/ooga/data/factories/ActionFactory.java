@@ -96,7 +96,7 @@ public class ActionFactory implements Factory {
     private static ICell extractCellsToMove(Element e, Function<IMove, ICell> currCell, IMove move) {
         String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).toUpperCase();
         if (numCards.equals(RESOURCES.getString(ALL))) {
-            return currCell.apply(move);
+            return extractAllCells(currCell, move);
         } else if (Offset.validOffsets.contains(numCards)) {
             return extractOffsetCells(currCell, move, numCards);
         } else if (numCards.equalsIgnoreCase(RESOURCES.getString(TOP))) {
@@ -108,6 +108,26 @@ public class ActionFactory implements Factory {
         } else {
             return extractQuantityfromCell(currCell, move, numCards);
         }
+    }
+
+    /**
+     * Extracts the ICell to be moved based on an all condition.
+     *
+     * @param currCell a Function to retrieve the current cell
+     * @param move     the IMove from which to extract behavior
+     * @return the ICell representing all cells to be moved
+     */
+    private static ICell extractAllCells(Function<IMove, ICell> currCell, IMove move) {
+        return currCell.apply(move).extractDecks((ICell c) -> {
+            List<ICard> cardList = new ArrayList<>();
+            for (int k = c.getDeck().size()-1; k >= 0; k --) {
+                if (!c.getDeck().peekCardAtIndex(k).isFixed()) {
+                    cardList.add(c.getDeck().getCardAtIndex(k));
+                }
+            }
+            removeEmptyCells(currCell.apply(move));
+            return new Deck("", cardList);
+        });
     }
 
     /**
@@ -146,9 +166,7 @@ public class ActionFactory implements Factory {
     private static ICell extractOffsetCells(Function<IMove, ICell> currCell, IMove move, String offset) {
         ICell cellToMove;
         cellToMove = (currCell.apply(move).getPeak(Offset.valueOf(offset.toUpperCase())));
-        if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
-            currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
-        }
+        removeEmptyCells(currCell.apply(move));
         return cellToMove;
     }
 
@@ -161,18 +179,18 @@ public class ActionFactory implements Factory {
      */
     private static ICell extractTopFromCells(Function<IMove, ICell> currCell, IMove move) {
         ICell cellToMove;
-        cellToMove = currCell.apply(move).extract((ICell c) -> {
+        cellToMove = currCell.apply(move).extractCards((ICell c) -> {
             if (!c.getDeck().peek().isFixed()) {
                 ICard card = c.getDeck().getNextCard();
                 return card;
             }
             return null;
         });
-        if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
-            currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
-        }
+        removeEmptyCells(currCell.apply(move));
         return cellToMove;
     }
+
+
 
     /**
      * Extracts the ICell to be moved based on a bottom condition.
@@ -183,15 +201,13 @@ public class ActionFactory implements Factory {
      */
     private static ICell extractBottomFromCells(Function<IMove, ICell> currCell, IMove move) {
         ICell cellToMove;
-        cellToMove = currCell.apply(move).extract((ICell c) -> {
+        cellToMove = currCell.apply(move).extractCards((ICell c) -> {
             if (!c.getDeck().peek().isFixed()) {
                 return (c.getDeck().getBottomCard());
             }
             return null;
         });
-        if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
-            currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
-        }
+        removeEmptyCells(currCell.apply(move));
         return cellToMove;
     }
 
@@ -204,16 +220,14 @@ public class ActionFactory implements Factory {
      */
     private static ICell extractRandomFromCells(Function<IMove, ICell> currCell, IMove move) {
         ICell cellToMove;
-        cellToMove = currCell.apply(move).extract((ICell c) -> {
+        cellToMove = currCell.apply(move).extractCards((ICell c) -> {
             if (!c.getDeck().peek().isFixed()) {
                 ICard card = c.getDeck().getRandomCard();
                 return card;
             }
             return null;
         });
-        if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
-            currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
-        }
+        removeEmptyCells(currCell.apply(move));
         return cellToMove;
     }
 
@@ -232,13 +246,31 @@ public class ActionFactory implements Factory {
             for (int k = 0; k < cardQuantity; k++) {
                 cellToMove.addCard(Offset.NONE, currCell.apply(move).findLeaf().getDeck().getNextCard());
             }
-            if (currCell.apply(move).getDeck().size() == 0 && currCell.apply(move).getParent() != null) {
-                currCell.apply(move).getParent().removeCellAtOffset(currCell.apply(move).getOffsetFromParent());
-            }
+            removeEmptyCells(currCell.apply(move));
         } catch (Exception ex) {
             cellToMove = currCell.apply(move);
         }
         return cellToMove;
+    }
+
+    /**
+     * A helper method for extraction that removes the cell from its parent if it's empty, and if it's empty and has one child sets the child in place of itself.
+     *
+     * @param curr the current ICell implementation
+     */
+    private static void removeEmptyCells(ICell curr) {
+        if (curr.getDeck().size() == 0 && curr.getParent() != null) {
+            if (curr.getAllChildren().size() == 2) {
+                ICell child = new Cell("");
+                for (Map.Entry<IOffset, ICell> children: curr.getAllChildren().entrySet()) {
+                    if (!children.getKey().equals(Offset.NONE)) {
+                        child = children.getValue();
+                    }
+                }
+                curr.getParent().setCellAtOffset(curr.getOffsetFromParent(), child);
+            }
+            curr.getParent().removeCellAtOffset(curr.getOffsetFromParent());
+        }
     }
 
     /**
