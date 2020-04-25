@@ -187,7 +187,7 @@ public class Controller extends Application {
         saveData.writeConfiguration(destination);
     }
 
-    private void loadGame(String loadFile) { //TODO: PROCESS ON FRONTEND @MARIUSZ
+    private void loadGame(String loadFile) {
         try {
             System.out.println(loadFile);
             ISaveConfiguration load = SaveConfigurationFactory.createSave(new File(loadFile));
@@ -199,8 +199,8 @@ public class Controller extends Application {
             myCurrentPhaseMachine = pm;
             int gameID = myView.createGame(load.getGameName());
             myGameNames.put(gameID, load.getGameName());
-            myRuleFiles.put(gameID, new File(loadFile));
-            attatchView(gameID, table);
+            myRuleFiles.put(gameID, new File(load.getRulePath()));
+            attachView(gameID, table);
         } catch (XMLException e) {
             reportError(e);
         }
@@ -213,7 +213,7 @@ public class Controller extends Application {
 
     private void startTable(String gameName) {
 
-        String ruleFile = "data/" + gameName + "_rules.xml";
+        String ruleFile = "data/" + gameName + "/" + gameName + "_rules.xml";
         try {
             myRuleFile = new File(ruleFile);
         } catch (Exception e) {
@@ -228,14 +228,14 @@ public class Controller extends Application {
             myCurrentPhaseMachine = PhaseMachineFactory.createPhaseMachine(myRuleFile);
             ITable table = new Table(myCurrentPhaseMachine);
 
-            attatchView(gameID, table);
+            attachView(gameID, table);
             //myView.setCellData(Map.copyOf(myTable.getCellData()));
         } catch (XMLException e) {
             reportError(e);
         }
     }
 
-    private void attatchView(int gameID, ITable table) {
+    private void attachView(int gameID, ITable table) {
         Map<String, ICell> myCellMap = table.getCellData();
         File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
 
