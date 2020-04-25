@@ -60,10 +60,10 @@ public class SaveConfigurationWriter implements Writer {
      * @param save     the ISaveConfiguration implementation from which to parse data
      */
     private static void addSaves(Document document, Element root, ISaveConfiguration save) {
-        appendNodeAndText(document, root, RESOURCES.getString(PHASE), save.getCurrentPhase());
-        appendNodeAndText(document, root, RESOURCES.getString(GAME), save.getGameName());
-        appendNodeAndText(document, root, RESOURCES.getString(FILE), save.getRulePath());
-        appendNodeAndText(document, root, RESOURCES.getString(SCORE), "" + save.getScore());
+        appendNodeAndText(document, root, PHASE, save.getCurrentPhase());
+        appendNodeAndText(document, root, GAME, save.getGameName());
+        appendNodeAndText(document, root, FILE, save.getRulePath());
+        appendNodeAndText(document, root, SCORE, "" + save.getScore());
 
         root.appendChild(buildCells(document, save));
     }
@@ -81,7 +81,7 @@ public class SaveConfigurationWriter implements Writer {
             Element cell = document.createElement(RESOURCES.getString(CELL));
             Attr a = document.createAttribute(RESOURCES.getString(NAME));
             a.setValue(e.getKey());
-            cell.appendChild(a);
+            cell.setAttributeNode(a);
             cell.setTextContent(e.getValue().toStorageString());
             cells.appendChild(cell);
         }

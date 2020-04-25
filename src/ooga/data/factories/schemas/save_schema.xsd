@@ -4,10 +4,10 @@
         <xs:complexType>
             <xs:all>
                 <xs:element name="phase" type="xs:string"/>
-                <xs:element name="game" type="xs:int"/>
-                <xs:element name="score" type="xs:string"/>
-                <xs:element name="file" type="xs:int"/>
-                <xs:element name="cell">
+                <xs:element name="game" type="xs:string"/>
+                <xs:element name="score" type="xs:double"/>
+                <xs:element name="file" type="xs:string"/>
+                <xs:element name="cells">
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="cell" minOccurs="1" maxOccurs="unbounded">
