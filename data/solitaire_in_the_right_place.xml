@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<data type="save">
+    <phase>play</phase>
+    <game>solitaire</game>
+    <file>data/solitaire_rules.xml</file>
+    <score>450.0</score>
+    <cells>
+        <cell name="deck">
+            deck$pack52[6C~~false~~0.0~~false~~c;;black~~6c%%6%%6*7H~~false~~0.0~~false~~h;;red~~7h%%7%%7*4D~~false~~0.0~~false~~d;;red~~4d%%4%%4*4C~~false~~0.0~~false~~c;;black~~4c%%4%%4*5S~~false~~0.0~~false~~s;;black~~5s%%5%%5]$
+        </cell>
+        <cell name="spade">
+            spade$null[3S~~true~~0.0~~false~~s;;black~~3s%%3%%3*DS~~true~~0.0~~true~~s;;black~~0s%%0%%0]$
+        </cell>
+        <cell name="heart">heart$null[3H~~true~~0.0~~false~~h;;red~~3h%%3%%3*DH~~true~~0.0~~true~~h;;red~~0h%%0%%0]$
+        </cell>
+        <cell name="1">
+            1$null[D1~~true~~0.0~~true~~c;;green~~14c%%14%%1]${south:1,south$null[KH~~true~~0.0~~false~~h;;red~~13h%%13%%1]${south:1,south,south$null[QS~~true~~0.0~~false~~s;;black~~12s%%12%%1]${south:1,south,south,south$null[JD~~true~~0.0~~false~~d;;red~~11d%%11%%1]${south:1,south,south,south,south$null[0S~~true~~0.0~~false~~s;;black~~10s%%10%%1]${south:1,south,south,south,south,south$null[9D~~true~~0.0~~false~~d;;red~~9d%%9%%9]${south:1,south,south,south,south,south,south$null[8S~~true~~0.0~~false~~s;;black~~8s%%8%%8]${south:1,south,south,south,south,south,south,south$null[7D~~true~~0.0~~false~~d;;red~~7d%%7%%7]${south:1,south,south,south,south,south,south,south,south$null[6S~~true~~0.0~~false~~s;;black~~6s%%6%%6]${south:1,south,south,south,south,south,south,south,south,south$null[5H~~true~~0.0~~false~~h;;red~~5h%%5%%5]${south:1,south,south,south,south,south,south,south,south,south,south$null[4S~~true~~0.0~~false~~s;;black~~4s%%4%%4]${south:1,south,south,south,south,south,south,south,south,south,south,south$null[3D~~true~~0.0~~false~~d;;red~~3d%%3%%3]${south:1,south,south,south,south,south,south,south,south,south,south,south,south$null[2C~~true~~0.0~~false~~c;;black~~2c%%2%%2]$}}}}}}}}}}}}
+        </cell>
+        <cell name="2">
+            2$null[D2~~true~~0.0~~true~~c;;green~~14c%%14%%1]${south:2,south$null[KC~~true~~0.0~~false~~c;;black~~13c%%13%%1]${south:2,south,south$null[QD~~true~~0.0~~false~~d;;red~~12d%%12%%1]${south:2,south,south,south$null[JC~~true~~0.0~~false~~c;;black~~11c%%11%%1]${south:2,south,south,south,south$null[0D~~true~~0.0~~false~~d;;red~~10d%%10%%1]${south:2,south,south,south,south,south$null[9S~~true~~0.0~~false~~s;;black~~9s%%9%%9]${south:2,south,south,south,south,south,south$null[8H~~true~~0.0~~false~~h;;red~~8h%%8%%8]${south:2,south,south,south,south,south,south,south$null[7S~~true~~0.0~~false~~s;;black~~7s%%7%%7]$}}}}}}}
+        </cell>
+        <cell name="diamond">diamond$null[DD~~true~~0.0~~true~~d;;red~~0d%%0%%0]$</cell>
+        <cell name="3">
+            3$null[D3~~true~~0.0~~true~~c;;green~~14c%%14%%1]${south:3,south$null[8C~~true~~0.0~~false~~c;;black~~8c%%8%%8]$}
+        </cell>
+        <cell name="4">
+            4$null[D4~~true~~0.0~~true~~c;;green~~14c%%14%%1]${south:4,south$null[6D~~false~~0.0~~false~~d;;red~~6d%%6%%6]${south:4,south,south$null[KD~~false~~0.0~~false~~d;;red~~13d%%13%%1]${south:4,south,south,south$null[JH~~true~~0.0~~false~~h;;red~~11h%%11%%1]${south:4,south,south,south,south$null[0C~~true~~0.0~~false~~c;;black~~10c%%10%%1]$}}}}
+        </cell>
+        <cell name="5">
+            5$null[D5~~true~~0.0~~true~~c;;green~~14c%%14%%1]${south:5,south$null[KS~~true~~0.0~~false~~s;;black~~13s%%13%%1]${south:5,south,south$null[QH~~true~~0.0~~false~~h;;red~~12h%%12%%1]${south:5,south,south,south$null[JS~~true~~0.0~~false~~s;;black~~11s%%11%%1]$}}}
+        </cell>
+        <cell name="6">
+            6$null[D6~~true~~0.0~~true~~c;;green~~14c%%14%%1]${south:6,south$null[AC~~false~~0.0~~false~~c;;black~~1c%%1%%1]${south:6,south,south$null[6H~~false~~0.0~~false~~h;;red~~6h%%6%%6]${south:6,south,south,south$null[9H~~false~~0.0~~false~~h;;red~~9h%%9%%9]${south:6,south,south,south,south$null[9C~~false~~0.0~~false~~c;;black~~9c%%9%%9]${south:6,south,south,south,south,south$null[5C~~true~~0.0~~false~~c;;black~~5c%%5%%5]${south:6,south,south,south,south,south,south$null[4H~~true~~0.0~~false~~h;;red~~4h%%4%%4]${south:6,south,south,south,south,south,south,south$null[3C~~true~~0.0~~false~~c;;black~~3c%%3%%3]$}}}}}}}
+        </cell>
+        <cell name="7">
+            7$null[D7~~true~~0.0~~true~~c;;green~~14c%%14%%1]${south:7,south$null[5D~~false~~0.0~~false~~d;;red~~5d%%5%%5]${south:7,south,south$null[0H~~false~~0.0~~false~~h;;red~~10h%%10%%1]${south:7,south,south,south$null[8D~~true~~0.0~~false~~d;;red~~8d%%8%%8]${south:7,south,south,south,south$null[7C~~true~~0.0~~false~~c;;black~~7c%%7%%7]$}}}}
+        </cell>
+        <cell name="club">club$null[DC~~true~~0.0~~true~~c;;black~~0c%%0%%0]$</cell>
+        <cell name="hand">hand$null[QC~~true~~0.0~~false~~c;;black~~12c%%12%%1]$</cell>
+    </cells>
+</data>
