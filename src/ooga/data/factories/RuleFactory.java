@@ -181,21 +181,29 @@ public class RuleFactory implements Factory {
      * @param currCell      a Function to retrieve the current cell
      */
     private static void extractColorCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
-        Function<IMove, Boolean> valueChecker;
+        Function<IMove, Boolean> colorChecker;
         String color = XMLHelper.getTextValue(e, RESOURCES.getString(COLOR));
         if (!TRUE_CHECKS.contains(color)) {
             if (color.equals(RESOURCES.getString(SAME))) {
-                valueChecker = (IMove move) -> {
+                colorChecker = (IMove move) -> {
                     String currColor = currCell.apply(move).getDeck().peek().getSuit().getColorName();
                     String recColor = recipientCell.apply(move).getDeck().peek().getSuit().getColorName();
                     return currColor.equalsIgnoreCase(recColor);
                 };
             } else if (color.equals(RESOURCES.getString(NOT))) {
-                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getColorName()));
+                colorChecker = (IMove move) -> {
+                    String currColor = currCell.apply(move).getDeck().peek().getSuit().getColorName();
+                    String recColor = recipientCell.apply(move).getDeck().peek().getSuit().getColorName();
+                    return !(currColor.equalsIgnoreCase(recColor));
+                };
             } else {
-                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().getSuit().getColorName().equalsIgnoreCase(color.toUpperCase()));
+                colorChecker = (IMove move) -> {
+                    String currColor = currCell.apply(move).getDeck().peek().getSuit().getColorName();
+                    String recColor = recipientCell.apply(move).getDeck().peek().getSuit().getColorName();
+                    return currColor.equalsIgnoreCase(recColor);
+                };
             }
-            conditions.add(valueChecker);
+            conditions.add(colorChecker);
         }
     }
 
@@ -208,17 +216,29 @@ public class RuleFactory implements Factory {
      * @param currCell      a Function to retrieve the current cell
      */
     private static void extractSuitCondition(Element e, List<Function<IMove, Boolean>> conditions, Function<IMove, ICell> recipientCell, Function<IMove, ICell> currCell) {
-        Function<IMove, Boolean> valueChecker;
+        Function<IMove, Boolean> suitChecker;
         String suit = XMLHelper.getTextValue(e, RESOURCES.getString(SUIT));
         if (!TRUE_CHECKS.contains(suit)) {
             if (suit.equals(RESOURCES.getString(SAME))) {
-                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName()));
+                suitChecker = (IMove move) -> {
+                    String currSuit = currCell.apply(move).getDeck().peek().getSuit().getName();
+                    String recSuit = recipientCell.apply(move).getDeck().peek().getSuit().getName();
+                    return currSuit.equalsIgnoreCase(recSuit);
+                };
             } else if (suit.equals(RESOURCES.getString(NOT))) {
-                valueChecker = (IMove move) -> !(currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(recipientCell.apply(move).getDeck().peek().getSuit().getName()));
+                suitChecker = (IMove move) -> {
+                    String currSuit = currCell.apply(move).getDeck().peek().getSuit().getName();
+                    String recSuit = recipientCell.apply(move).getDeck().peek().getSuit().getName();
+                    return !(currSuit.equalsIgnoreCase(recSuit));
+                };
             } else {
-                valueChecker = (IMove move) -> (currCell.apply(move).getDeck().peek().getSuit().getName().equalsIgnoreCase(suit.toUpperCase()));
+                suitChecker = (IMove move) -> {
+                    String currSuit = currCell.apply(move).getDeck().peek().getSuit().getName();
+                    String recSuit = recipientCell.apply(move).getDeck().peek().getSuit().getName();
+                    return currSuit.equalsIgnoreCase(recSuit);
+                };
             }
-            conditions.add(valueChecker);
+            conditions.add(suitChecker);
         }
     }
 
@@ -254,7 +274,12 @@ public class RuleFactory implements Factory {
         Function<IMove, Boolean> valueChecker;
         String name = XMLHelper.getTextValue(e, RESOURCES.getString(NAME));
         if (!TRUE_CHECKS.contains(name)) {
-            valueChecker = (IMove move) -> (cellGroupMap.containsKey(name) && cellGroupMap.get(name).isInGroup(currCell.apply(move).findHead().getName())) || (currCell.apply(move).findHead().getName().equalsIgnoreCase(name));
+            valueChecker = (IMove move) -> {
+                boolean isAGroup = cellGroupMap.containsKey(name);
+                boolean groupHasCell = cellGroupMap.get(name).isInGroup(currCell.apply(move).findHead().getName());
+                boolean cellNameValid = currCell.apply(move).findHead().getName().equalsIgnoreCase(name);
+                return (isAGroup && groupHasCell) || (cellNameValid);
+            };
             conditions.add(valueChecker);
         }
     }
