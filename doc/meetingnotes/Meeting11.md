@@ -25,6 +25,7 @@ Team Name: Solitaire Confinement (Team 52 Pickup)
     * Other assorted layouts (check for layouts)
     * JUnit Tests
     * Player names for high score?
+    * Refactor/remove magic values
     * 
 * Maverick
     * Memoization
@@ -37,7 +38,7 @@ Team Name: Solitaire Confinement (Team 52 Pickup)
     * Rewrite JUnits for scores                         DONE
     * Refactor factories (action/rule)
     * New game (Conquest)
-    * Update XSD for High Scores
+    * Update XSD for High Scores                        DONE   
     * Restart game--score
     * 
 * Andrew
