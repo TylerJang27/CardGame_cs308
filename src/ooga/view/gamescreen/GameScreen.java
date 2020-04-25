@@ -1,5 +1,6 @@
 package ooga.view.gamescreen;
 
+import java.util.function.Consumer;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,6 +12,7 @@ import ooga.view.View;
 
 import java.util.Map;
 import java.util.ResourceBundle;
+import ooga.view.View.SaveGame;
 
 public class GameScreen {
 
@@ -19,7 +21,7 @@ public class GameScreen {
     private Header myHeader;
     private BorderPane myBorderPane;
 
-    public GameScreen(int gameID, GiveMove moveLambda, Layout layout, double screenWidth, String theme, Button backButton, Button restartButton, String game, String scoreLabel, String language) {
+    public GameScreen(int gameID, GiveMove moveLambda, Layout layout, double screenWidth, String theme, Button restartButton, String game, String scoreLabel, String language, SaveGame saveGame) {
 
         // Current default is standard, can change
         String skinType = "classic";
@@ -30,9 +32,12 @@ public class GameScreen {
                 break;
             }
         }
+        Consumer<String> dashboardSave = fileName -> {
+            saveGame.saveGame(gameID, fileName);
+        };
 
         myDisplayTable = new DisplayTable(gameID,moveLambda, (Layout) layout, 650, skinType);
-        myDashboard = new Dashboard(backButton, restartButton, scoreLabel, ResourceBundle.getBundle("ooga.resources.languages.messages."+language), game);
+        myDashboard = new Dashboard(restartButton, scoreLabel, ResourceBundle.getBundle("ooga.resources.languages.messages."+language), game, dashboardSave);
         myHeader = new Header();
 
         myBorderPane = new BorderPane();
