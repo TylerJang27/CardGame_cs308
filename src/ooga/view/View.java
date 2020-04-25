@@ -49,8 +49,9 @@ public class View implements ExternalAPI {
     public static final String HIGH_SCORES = "High_Scores";
     public static final String SKINS_PACKAGE = "/ooga/resources/skins/";
     public static final String MAINMENU_CSS = "/mainmenu.css";
-    public static final String GAMETABLE_CSS = "/gametable.css";
     public static final int FIRST = 1;
+    private static final List<String> MENU_TAB_CSS = List.of("menu");
+    private static final List<String> GAME_CSS = List.of("gametable");
 
     @FunctionalInterface
     public interface SaveGame{
@@ -132,6 +133,7 @@ public class View implements ExternalAPI {
         myGameIdToGame.put(gameID,gameScreen);
 
         Tab newTab = new Tab();
+        newTab.getStyleClass().addAll(GAME_CSS);
         newTab.textProperty().bind(Dictionary.getInstance().get(myGameIdToGameName.get(gameID)));
         newTab.setContent(gameScreen.getNode());
         myGameTabs.add(newTab);
@@ -312,23 +314,17 @@ public class View implements ExternalAPI {
     private void makeTabPane() {
         myTabPane = new TabPane();
         Tab menuTab = new Tab();
+        menuTab.getStyleClass().addAll(MENU_TAB_CSS);
         menuTab.textProperty().bind(Dictionary.getInstance().get(MENU));
         menuTab.setContent(myMenu.getScene());
 
         myTabPane.getTabs().add(menuTab);
-        myTabPane.getSelectionModel().selectedItemProperty().addListener(
-            (observable, oldValue, newValue) -> {
-                if (myGameTabs.contains(newValue)) {
-                    setGameCSS();
-                } else {
-                    setMenuCSS();
-                }
-            });
     }
 
     private EventHandler<MouseEvent> getHighScoreHandler() {
         return event -> {
             Tab highScoresTab = new Tab();
+            highScoresTab.getStyleClass().addAll(MENU_TAB_CSS);
             highScoresTab.textProperty().bind(Dictionary.getInstance().get(HIGH_SCORES));
             highScoresTab.setContent(new HighScoresDisplay(myHighScoresManager).getNode());
             myTabPane.getTabs().add(highScoresTab);
@@ -360,15 +356,6 @@ public class View implements ExternalAPI {
             myScene.getStylesheets().add(getClass().getResource(
                 SKINS_PACKAGE +theme.toLowerCase()+ MAINMENU_CSS).toExternalForm());
         };
-    }
-
-    private void setGameCSS(){
-        myScene.getStylesheets().clear();
-        myScene.getStylesheets().add(getClass().getResource(SKINS_PACKAGE+myTheme.toLowerCase()+ GAMETABLE_CSS).toExternalForm());
-    }
-    private void setMenuCSS(){
-        myScene.getStylesheets().clear();
-        myScene.getStylesheets().add(getClass().getResource(SKINS_PACKAGE+myTheme.toLowerCase()+MAINMENU_CSS).toExternalForm());
     }
 
     public int createGame(String gameName){

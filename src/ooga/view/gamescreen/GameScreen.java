@@ -1,5 +1,6 @@
 package ooga.view.gamescreen;
 
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
@@ -19,6 +20,8 @@ public class GameScreen {
     private static final String COMMA_REGEX = ",";
     private static final String STANDARD = "standard";
     private static final double SCREEN_WIDTH = 650.0;
+    private static final List<String> GAME_CSS = List.of("gametable");
+
 
     private DisplayTable myDisplayTable;
     private Dashboard myDashboard;
@@ -40,6 +43,7 @@ public class GameScreen {
         myHeader = new Header();
 
         myBorderPane = new BorderPane();
+        myBorderPane.getStyleClass().addAll(GAME_CSS);
         myBorderPane.setTop(myHeader.getPane());
         myBorderPane.setCenter(myDisplayTable.getPane());
         myBorderPane.setBottom(myDashboard.getNode());

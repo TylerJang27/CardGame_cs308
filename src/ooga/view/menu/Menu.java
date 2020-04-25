@@ -39,6 +39,7 @@ public class Menu {
   private static final String XML_EXTENSION = "*.xml";
   private static final List<String> DASHBOARD_CSS = List.of("dashboard","border");
   private static final List<String> OPTIONS_CSS = List.of("options");
+  private static final List<String> ROOT_CSS = List.of("menu");
   private static final String GAMES_FOLDER = "ooga.resources.languages.games.%s";
   private static final double GAMES_SPACING = 20.0;
 
@@ -54,6 +55,7 @@ public class Menu {
     Dictionary.getInstance().setLanguage(defaultLanguage);
 
     myBorderPane = new BorderPane();
+    myBorderPane.getStyleClass().addAll(ROOT_CSS);
 
     setTopBorder(appName);
     setCenter(defaultLanguage);
@@ -85,6 +87,7 @@ public class Menu {
     dashboard.getStyleClass().addAll(DASHBOARD_CSS);
 
     myBorderPane.setBottom(dashboard);
+    System.out.println(dashboard.getStyleClass());
   }
 
   private Button makeLoadGameButton(Consumer<String> gameLoad) {
