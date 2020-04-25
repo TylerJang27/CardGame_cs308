@@ -148,6 +148,7 @@ public class Controller extends Application {
                 myView.displayMessage(gameID, LOSS);
                 updateHighScores(myGameNames.get(gameID), score);
             }
+            score = myTables.get(gameID).getCurrentPlayer().getScore();
         } catch (Exception e) {
             reportError(e);
         }

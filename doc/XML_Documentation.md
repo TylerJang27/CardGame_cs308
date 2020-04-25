@@ -256,6 +256,7 @@
                             * 't' = the top card from all its children, maintains cell hierarchy
                             * 'b' = same as top, but for bottom of each child
                             * 'r' = a random card from the deck of the cell
+                            * 'd' = the deck at the root of the current cell, collapsing its children 
                             * Postive integer = takes that many cards off the top of the leaf
                         * **collapse** (*optional*)
                             * 'y' = collapses the cells into a single deck

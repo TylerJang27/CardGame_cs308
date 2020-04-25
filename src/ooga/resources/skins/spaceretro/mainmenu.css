@@ -4,7 +4,7 @@
     Required path: skins/spaceretro/mainmenu.css
 */
 
-.root{
+.menu{
     -fx-font-size: 12pt;
     -fx-font-family: "Arial Black";
     -fx-base: #BBA1BB;
@@ -61,3 +61,60 @@
     -fx-text-background-color: #613754;
     -fx-background-color: #613754;
 }
+
+/*
+    This is a required file for using the SpaceRetro Theme
+    Document: SpaceRetro Theme Game Table
+    Required path: skins/spaceretro/gametable.css
+*/
+
+.gametable{
+    -fx-font-size: 12pt;
+    -fx-font-family: "Arial Black";
+    -fx-base: #BBA1BB;
+    -fx-background-image: url("galaxy.jpg");
+    -fx-background-size: stretch;
+    -fx-focus-color: #FFFFFF;
+}
+
+.title{
+    -fx-fill: #FFFFFF;
+    -fx-alignment: "center";
+}
+
+.header{
+    -fx-padding: 10;
+    -fx-alignment: "center";
+}
+
+.dashboard{
+    -fx-spacing: 20;
+    -fx-padding: 5;
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 10pt;
+    -fx-alignment: "center";
+}
+
+.score{
+    -fx-fill: #FFFFFF;
+    -fx-font-size: 10pt;
+}
+
+.cardskin{
+    -fx-image: url(starry.png);
+}
+
+.button{
+    -fx-background-color: linear-gradient(#E4E4E4, #D5D5D5);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#9000C4, #E084E0);
+}
+
+.message{
+    -fx-text-fill: white;
+    -fx-padding: 10px;
+    -fx-font-family: "Arial Black";
+}
+
