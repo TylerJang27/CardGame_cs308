@@ -62,7 +62,7 @@ public class Suit implements ISuit {
   @Override
   public boolean equals(Object other) { //fixme switch to icolor
     //return name.equals(s.name) && Arrays.equals(color, ((Suit) other).color);
-    return other instanceof Suit &&
+    return other.getClass() == this.getClass() &&
         name.equals(((Suit) other).name) &&
         myColorName.equals(((Suit) other).myColorName);
   }

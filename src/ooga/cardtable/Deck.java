@@ -170,7 +170,7 @@ public class Deck implements IDeck {
 
   @Override
   public boolean equals(Object other) {
-    return other instanceof Deck && cards.equals(((Deck) other).cards);
+    return other.getClass() == this.getClass() && cards.equals(((Deck) other).cards);
   }
 
   @Override

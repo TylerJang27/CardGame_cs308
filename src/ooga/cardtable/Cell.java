@@ -49,23 +49,21 @@ public class Cell implements ICell {
   private static String getFirstBraces(String input) {
     int start = 0;
     while (input.charAt(start) != '{') {
-      if (++start >= input.length()) {
+      start++;
+      if (start >= input.length()) {
         return null;
       }
     }
     int end = start;
     int counter = 1;
     while (counter > 0) {
-      if (++end >= input.length()) {
+      end++;
+      if (end >= input.length()) {
         return null;
       }
       char c = input.charAt(end);
-      if (c == '{') {
-        counter++;
-      }
-      if (c == '}') {
-        counter--;
-      }
+      counter += c == '{' ? 1 : 0;
+      counter += c == '}' ? -1 : 0;
     }
     return input.substring(start, end + 1);
   }
@@ -138,7 +136,7 @@ public class Cell implements ICell {
       if (!visited.contains(e.getValue())) {
         visited.add(e.getValue());
         total += e.getValue().getDeck().size();
-        total += e.getValue().getTotalSize(visited); //TODO: MAKE SURE THIS DOESN'T INFINITE RECURSE
+        total += e.getValue().getTotalSize(visited);
       }
     }
     return total;
@@ -195,7 +193,7 @@ public class Cell implements ICell {
   }
 
   @Override
-  public Map<IOffset, ICell> getAllChildren() { //fixme do a proper copy?
+  public Map<IOffset, ICell> getAllChildren() {
     Map<IOffset, ICell> ret = new HashMap<>(children);
     ret.put(Offset.NONE, new Cell(name, deck));
     return ret;
@@ -302,7 +300,7 @@ public class Cell implements ICell {
       if (!tracker.contains(e.getValue())) {
         tracker.add(e.getValue());
         e.getValue().getAllCellsHelper(tracker);
-      }//TODO: MAKE SURE THIS DOESN'T INFINITE RECURSE
+      }
     }
   }
 
@@ -398,7 +396,6 @@ public class Cell implements ICell {
   @Override
   public ICell extractDecks(Function<ICell, IDeck> deckGetter) {
     ICell ret = new Cell(name);
-    //ret.getDeck().addDeck(new Deck());
     ret.getDeck().addDeck(deckGetter.apply(this));
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE) {

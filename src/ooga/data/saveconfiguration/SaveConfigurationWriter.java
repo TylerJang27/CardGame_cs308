@@ -33,6 +33,8 @@ public class SaveConfigurationWriter implements Writer {
     private static final String NAME = "Name";
     private static final String CELLS = "Cells";
 
+    private SaveConfigurationWriter() {}
+
     /**
      * Writes information from ISaveConfiguration implementation to filepath
      *

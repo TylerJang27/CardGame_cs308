@@ -31,6 +31,8 @@ public class XMLHelper {
     public static final String XML_END = ".xml";
     public static String TYPE = "type";
 
+    private XMLHelper() {}
+
     /**
      * Gets the root element of an XML file. This will reset the reading process, such that the XML hierarchy can be built.
      *

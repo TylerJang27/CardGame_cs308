@@ -37,6 +37,8 @@ public class LayoutFactory implements Factory {
     private static final ResourceBundle coordResources = ResourceBundle.getBundle(RESOURCE_COORD_PACKAGE);
     private static final ResourceBundle mapResources = ResourceBundle.getBundle(RESOURCE_MAP_PACKAGE);
 
+    private LayoutFactory() {}
+
     //TODO: @ANDREW REFACTOR and add Error Handling
 
     /**

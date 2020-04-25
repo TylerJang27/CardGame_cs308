@@ -34,9 +34,10 @@ public class SaveConfigurationFactory implements Factory {
     private static final String GAME = "Game";
     private static final String SCORE = "Score";
     private static final String FILE = "File";
-    private static final String CELL = "Cell";
     private static final String NAME = "Name";
     private static final String CELLS = "Cells";
+
+    private SaveConfigurationFactory() {}
 
     /**
      * Builds and returns an ISaveConfiguration from a saved XML.
@@ -71,10 +72,13 @@ public class SaveConfigurationFactory implements Factory {
         NodeList cellNodeList = cells.getChildNodes();
         for (int k = 0; k < cellNodeList.getLength(); k++) {
             Node cell = cellNodeList.item(k);
+
+            System.out.println("Cell node name: " + cell.getNodeName() + "\nCell Text: " + cell.getTextContent());
             if (!cell.getNodeName().equals(Factory.BLANK_TEXT)) {
                 String cellName = XMLHelper.getAttribute((Element) cell, RESOURCES.getString(NAME));
                 cellMap.put(cellName, cell.getTextContent());
             }
+
         }
         return cellMap;
     }
