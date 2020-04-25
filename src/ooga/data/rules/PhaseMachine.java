@@ -72,10 +72,8 @@ public class PhaseMachine implements IPhaseMachine {
      */
     private void cycleAutomatic() {
         if (currentPhase.isAutomatic()) {
-            System.out.println("This is my phase (auto): " + currentPhase.getMyName());
             IPhaseArrow arrow = currentPhase.executeAutomaticActions(currentPlayer, lastMove);
             moveToNextPhase(arrow);
-            System.out.println("This is my phase (after arrow): " + currentPhase.getMyName());
         }
     }
 
@@ -295,6 +293,9 @@ public class PhaseMachine implements IPhaseMachine {
             for (int k = 0; k < Offset.values().length; k ++) {
                 IOffset off = Offset.values()[k];
                 e.getValue().removeCellAtOffset(off);
+                while (e.getValue().getDeck().size() > 0) {
+                    e.getValue().getDeck().getNextCard();
+                }
             }
             e.getValue().addCell(Offset.NONE, cellMap.get(e.getKey()));
         }

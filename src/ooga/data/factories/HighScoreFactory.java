@@ -27,6 +27,8 @@ public class HighScoreFactory implements Factory {
     public static String DATA_TYPE = IHighScores.DATA_TYPE;
     public static String SCORE_XSD = "src/ooga/data/factories/schemas/score_schema.xsd";
 
+    private HighScoreFactory(){}
+
     /**
      * Builds and returns an IHighScore from a scoring XML. Requirements for scoring XML can be found in doc/XML_Documentation.md.
      *
@@ -52,25 +54,7 @@ public class HighScoreFactory implements Factory {
                 Element root = XMLHelper.getRootAndCheck(dataFile, DATA_TYPE, INVALID_ERROR);
                 NodeList scoreNodes = root.getChildNodes();
 
-                Map<String, List<Double>> scoreMap = new HashMap<>();
-
-                for (int k = 0; k < scoreNodes.getLength(); k ++) {
-                    Node scoreNode = scoreNodes.item(k);
-
-                    if(! scoreNode.getNodeName().equals("#text")) {
-                        List<Double> gameScoreList = new ArrayList<>();
-                        try {
-                            NodeList scores = scoreNode.getChildNodes();
-                            for (int i = 0; i < scores.getLength(); i++) {
-                                Node score = scores.item(i);
-                                gameScoreList.add(Double.parseDouble(score.getTextContent()));
-                            }
-                            scoreMap.put(scoreNode.getNodeName(), gameScoreList);
-                        } catch (NumberFormatException | DOMException e) {
-                            scoreMap.put(scoreNode.getNodeName(), new ArrayList<>());
-                        }
-                    }
-                }
+                Map<String, List<Double>> scoreMap = getScoreMap(scoreNodes);
 
                 return new HighScore(destination, scoreMap);
             } catch (Exception e) {
@@ -79,5 +63,34 @@ public class HighScoreFactory implements Factory {
         } else {
             throw new XMLException((Factory.INVALID_ERROR));
         }
+    }
+
+    /**
+     * Retrieves a map of the scores, pulled from the XML file
+     *
+     * @param scoreNodes the NodeList of scores to parse
+     * @return a Map of String game names to Lists of Double high scores
+     */
+    private static Map<String, List<Double>> getScoreMap(NodeList scoreNodes) {
+        Map<String, List<Double>> scoreMap = new HashMap<>();
+
+        for (int k = 0; k < scoreNodes.getLength(); k ++) {
+            Node scoreNode = scoreNodes.item(k);
+
+            if(! scoreNode.getNodeName().equals(Factory.BLANK_TEXT)) {
+                List<Double> gameScoreList = new ArrayList<>();
+                try {
+                    NodeList scores = scoreNode.getChildNodes();
+                    for (int i = 0; i < scores.getLength(); i++) {
+                        Node score = scores.item(i);
+                        gameScoreList.add(Double.parseDouble(score.getTextContent()));
+                    }
+                    scoreMap.put(scoreNode.getNodeName(), gameScoreList);
+                } catch (NumberFormatException | DOMException e) {
+                    scoreMap.put(scoreNode.getNodeName(), new ArrayList<>());
+                }
+            }
+        }
+        return scoreMap;
     }
 }

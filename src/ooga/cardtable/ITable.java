@@ -30,6 +30,4 @@ public interface ITable {
   ISaveConfiguration getSaveData(String gameName, String rulePath);
   //TODO: ADD TO API CHANGES
 
-    void loadFromSaveData(ISaveConfiguration saveData);
-
 }

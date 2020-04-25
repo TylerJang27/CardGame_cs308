@@ -11,6 +11,7 @@ import javafx.beans.property.ReadOnlyProperty;
 public class Dictionary {
   private static final Dictionary INSTANCE = new Dictionary();
   private static final String DEFAULT_LANGUAGE = "English";
+  private static final String BUNDLE_FORMAT = "%s.%s";
 
   private Map<String, ReadOnlyObjectWrapper<String>> myDictionary;
   private Collection<String> myResourcePaths;
@@ -28,7 +29,8 @@ public class Dictionary {
 
   public void addReference(String path){
     myResourcePaths.add(path);
-    ResourceBundle newBundle = ResourceBundle.getBundle(path+"."+myLanguage);
+    System.out.println(String.format(BUNDLE_FORMAT,path,myLanguage));
+    ResourceBundle newBundle = ResourceBundle.getBundle(String.format(BUNDLE_FORMAT,path,myLanguage));
     updateWithResources(newBundle);
   }
 
@@ -42,14 +44,12 @@ public class Dictionary {
   public void setLanguage(String language){
     myLanguage = language;
     for(String path : myResourcePaths){
-      ResourceBundle bundle = ResourceBundle.getBundle(path+ "." + myLanguage);
+      ResourceBundle bundle = ResourceBundle.getBundle(String.format(BUNDLE_FORMAT,path,myLanguage));
       updateWithResources(bundle);
     }
   }
 
   public ReadOnlyProperty<String> get(String key){
-    System.out.println(myDictionary);
-    System.out.println(key);
     return myDictionary.getOrDefault(key,null).getReadOnlyProperty();
   }
 }

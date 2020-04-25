@@ -68,6 +68,7 @@ Assumptions or Simplifications:
  - If an critically invalid move or a control flow error occurs, a message will be displayed to the user.
  - Cells should not have empty decks whenever possible.
  - The user should be running a computer with at least 2 GB of RAM.
+ - The rules that a game is based on should not change between the time of saving and the time of loading.
 
 Interesting data files:
  - data/solitaire_rules_static_2.xml holds a solitaire game near victory

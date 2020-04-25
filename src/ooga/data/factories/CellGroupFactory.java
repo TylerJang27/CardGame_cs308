@@ -36,6 +36,8 @@ public class CellGroupFactory implements Factory {
     private static final String ROTATION = "Rotation";
     private static final String INIT_CARD = "InitCard";
 
+    private CellGroupFactory(){}
+
     /**
      * Builds and returns ICellGroups built from a rules XML. Requirements for rules XML can be found in doc/XML_Documentation.md.
      *
