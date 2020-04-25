@@ -387,36 +387,54 @@ public class ActionFactory implements Factory {
         String flip = XMLHelper.getTextValue(e, RESOURCES.getString(FLIP));
         if (Offset.validOffsets.contains(flip.toLowerCase()) && currCell.getAllChildren().containsKey(Offset.valueOf(flip.toUpperCase()))) {
             ICard cardToFlip = currCell.getPeak(Offset.valueOf(flip.toUpperCase())).getDeck().peek();
-            if (cardToFlip != null && !cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
-                cardToFlip.flip();
-            }
+            checkAndFlipUp(cardToFlip);
         } else if (flip.equals(RESOURCES.getString(YES))) {
             for (ICell c : currCell.getAllCells()) {
-                for (int k = 0; k < c.getDeck().size(); k++) {
-                    ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
-                    if (!cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
-                        cardToFlip.flip();
-                    }
-                }
+                applyToDeck(c, (ICard card) -> checkAndFlipUp(card));
             }
         } else if (flip.equals(RESOURCES.getString(ALL))) {
             for (ICell c : currCell.findHead().getAllCells()) {
-                for (int k = 0; k < c.getDeck().size(); k++) {
-                    ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
-                    if (!cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
-                        cardToFlip.flip();
-                    }
-                }
+                applyToDeck(c, (ICard card) -> checkAndFlipUp(card));
             }
         } else if (flip.equals(RESOURCES.getString(NO))) {
             for (ICell c : currCell.getAllCells()) {
-                for (int k = 0; k < c.getDeck().size(); k++) {
-                    ICard cardToFlip = c.getDeck().peekCardAtIndex(k);
-                    if (cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
-                        cardToFlip.flip();
-                    }
-                }
+                applyToDeck(c, (ICard card) -> checkAndFlipDown(card));
             }
+        }
+    }
+
+    /**
+     * Applies a behavior to an entire deck based on a Consumer.
+     *
+     * @param c             the cell whose deck to loop through
+     * @param cardConsumer  the Consumer to apply for each card
+     */
+    private static void applyToDeck(ICell c, Consumer<ICard> cardConsumer) {
+        for (int k = 0; k < c.getDeck().size(); k++) {
+            ICard card = c.getDeck().peekCardAtIndex(k);
+            cardConsumer.accept(card);
+        }
+    }
+
+    /**
+     * Checks that a card is valid and not fixed and flips it up.
+     *
+     * @param cardToFlip the card to flip up
+     */
+    private static void checkAndFlipDown(ICard cardToFlip) {
+        if (cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
+            cardToFlip.flip();
+        }
+    }
+
+    /**
+     * Checks that a card is valid and not fixed and flips it down.
+     *
+     * @param cardToFlip the card to flip down
+     */
+    private static void checkAndFlipUp(ICard cardToFlip) {
+        if (cardToFlip != null && !cardToFlip.isFaceUp() && !cardToFlip.isFixed()) {
+            cardToFlip.flip();
         }
     }
 
