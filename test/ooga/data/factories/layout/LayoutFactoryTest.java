@@ -1,12 +1,18 @@
 package ooga.data.factories.layout;
 
-import static org.junit.jupiter.api.Assertions.*;
+import ooga.data.style.Coordinate;
+import ooga.data.style.ICoordinate;
+import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 class LayoutFactoryTest {
 
     @Test
     void createLayout() {
-        Map<String, ICoordinates> cellCoords = new HashMap<>();
+        Map<String, ICoordinate> cellCoords = new HashMap<>();
         Map<String, Integer> numberSettings = new HashMap<>();
         Map<String, String> cardImages = new HashMap();
         cellCoords.put("cpu", new Coordinate(50, 15));
