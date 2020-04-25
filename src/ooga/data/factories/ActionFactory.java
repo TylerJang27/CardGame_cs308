@@ -96,7 +96,18 @@ public class ActionFactory implements Factory {
     private static ICell extractCellsToMove(Element e, Function<IMove, ICell> currCell, IMove move) {
         String numCards = XMLHelper.getTextValue(e, RESOURCES.getString(NUMBER_CARDS)).toUpperCase();
         if (numCards.equals(RESOURCES.getString(ALL))) {
-            return currCell.apply(move).copy((ICard c)->!c.isFixed());
+            return currCell.apply(move).extractDecks((ICell c) -> {
+                List<ICard> cardList = new ArrayList<>();
+                for (int k = c.getDeck().size()-1; k >= 0; k --) {
+                    if (!c.getDeck().peekCardAtIndex(k).isFixed()) {
+                        cardList.add(c.getDeck().getCardAtIndex(k));
+                    }
+                }
+                if (c.getDeck().size() == 0 && c.getParent() != null) {
+                    c.getParent().removeCellAtOffset(c.getOffsetFromParent());
+                }
+                return new Deck("", cardList);
+            });
         } else if (Offset.validOffsets.contains(numCards)) {
             return extractOffsetCells(currCell, move, numCards);
         } else if (numCards.equalsIgnoreCase(RESOURCES.getString(TOP))) {
@@ -161,7 +172,7 @@ public class ActionFactory implements Factory {
      */
     private static ICell extractTopFromCells(Function<IMove, ICell> currCell, IMove move) {
         ICell cellToMove;
-        cellToMove = currCell.apply(move).extract((ICell c) -> {
+        cellToMove = currCell.apply(move).extractCards((ICell c) -> {
             if (!c.getDeck().peek().isFixed()) {
                 ICard card = c.getDeck().getNextCard();
                 return card;
@@ -183,7 +194,7 @@ public class ActionFactory implements Factory {
      */
     private static ICell extractBottomFromCells(Function<IMove, ICell> currCell, IMove move) {
         ICell cellToMove;
-        cellToMove = currCell.apply(move).extract((ICell c) -> {
+        cellToMove = currCell.apply(move).extractCards((ICell c) -> {
             if (!c.getDeck().peek().isFixed()) {
                 return (c.getDeck().getBottomCard());
             }
@@ -204,7 +215,7 @@ public class ActionFactory implements Factory {
      */
     private static ICell extractRandomFromCells(Function<IMove, ICell> currCell, IMove move) {
         ICell cellToMove;
-        cellToMove = currCell.apply(move).extract((ICell c) -> {
+        cellToMove = currCell.apply(move).extractCards((ICell c) -> {
             if (!c.getDeck().peek().isFixed()) {
                 ICard card = c.getDeck().getRandomCard();
                 return card;

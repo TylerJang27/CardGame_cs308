@@ -401,21 +401,7 @@ public class Cell implements ICell {
 
   @Override
   public ICell copy() {
-    return this.copy((ICard c)->true);
-    /*IDeck d = getDeck().copy();
-    ICell ret = new Cell(name, d);
-    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
-      if (e.getKey() != Offset.NONE) {
-        ret.setCellAtOffset(e.getKey(), e.getValue().copy());
-      }
-    }
-    return ret;*/
-  }
-
-
-  @Override
-  public ICell copy(Function<ICard, Boolean> cardFunction) {
-    IDeck d = getDeck().copy(cardFunction);
+    IDeck d = getDeck().copy();
     ICell ret = new Cell(name, d);
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE) {
@@ -426,13 +412,26 @@ public class Cell implements ICell {
   }
 
   @Override
-  public ICell extract(Function<ICell, ICard> cardGetter) {
+  public ICell extractCards(Function<ICell, ICard> cardGetter) {
     ICell ret = new Cell(name);
     //ret.getDeck().addDeck(new Deck());
     ret.getDeck().addCard(cardGetter.apply(this));
     for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
       if (e.getKey() != Offset.NONE) {
-        ret.setCellAtOffset(e.getKey(), e.getValue().extract(cardGetter));
+        ret.setCellAtOffset(e.getKey(), e.getValue().extractCards(cardGetter));
+      }
+    }
+    return ret;
+  }
+
+  @Override
+  public ICell extractDecks(Function<ICell, IDeck> deckGetter) {
+    ICell ret = new Cell(name);
+    //ret.getDeck().addDeck(new Deck());
+    ret.getDeck().addDeck(deckGetter.apply(this));
+    for (Entry<IOffset, ICell> e : getAllChildren().entrySet()) {
+      if (e.getKey() != Offset.NONE) {
+        ret.setCellAtOffset(e.getKey(), e.getValue().extractDecks(deckGetter));
       }
     }
     return ret;

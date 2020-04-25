@@ -646,9 +646,6 @@
                 </rule>
                 <rule category="deck">
                     <validation>
-                        <!-- put regex here -->
-                        <!-- value(Up/Down, #) color(=/!)
-                             suit(=/!/C/D/H/S) # of cards(One/Multiple) -->
                         <receiver>
                             <num_cards>0</num_cards>
                         </receiver>
@@ -669,13 +666,6 @@
                         </donor>
                     </validation>
                     <action>
-                        <!--receiver_dest>
-                            <destination>r</destination>
-                            <num_cards>*</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>none</offset>
-                        </receiver_dest-->
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>*</num_cards>
@@ -713,13 +703,6 @@
                         </donor>
                     </validation>
                     <action>
-                        <receiver_dest>
-                            <destination>r</destination>
-                            <num_cards>*</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>0</offset>
-                        </receiver_dest>
                         <mover_dest>
                             <destination>r</destination>
                             <num_cards>t</num_cards>
