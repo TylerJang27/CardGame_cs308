@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data type="layout">
-    <game>Solitaire</game>
+    <game>Test</game>
     <attributes>
         <players>1</players>
         <screen_height>120</screen_height>
@@ -81,27 +81,15 @@
         <extension>.png</extension>
     </card_map>
     <cells>
-        <cell name="deck">
-            <x_val>11</x_val>
-            <y_val>10</y_val>
-        </cell>
-        <cell name="hand">
-            <x_val>24</x_val>
-            <y_val>10</y_val>
-        </cell>
-        <cell name="club">
-            <x_val>50</x_val>
-            <y_val>10</y_val>
-        </cell>
-        <cell name="diamond">
+        <cell name="a">
             <x_val>63</x_val>
             <y_val>10</y_val>
         </cell>
-        <cell name="heart">
+        <cell name="b">
             <x_val>76</x_val>
             <y_val>10</y_val>
         </cell>
-        <cell name="spade">
+        <cell name="c">
             <x_val>89</x_val>
             <y_val>10</y_val>
         </cell>
@@ -115,22 +103,6 @@
         </cell>
         <cell name="3">
             <x_val>37</x_val>
-            <y_val>27</y_val>
-        </cell>
-        <cell name="4">
-            <x_val>50</x_val>
-            <y_val>27</y_val>
-        </cell>
-        <cell name="5">
-            <x_val>63</x_val>
-            <y_val>27</y_val>
-        </cell>
-        <cell name="6">
-            <x_val>76</x_val>
-            <y_val>27</y_val>
-        </cell>
-        <cell name="7">
-            <x_val>89</x_val>
             <y_val>27</y_val>
         </cell>
     </cells>

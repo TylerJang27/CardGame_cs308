@@ -2,7 +2,7 @@
 <data type="rule">
     <settings>
         <players>1</players>
-        <layout>data/solitaire/solitaire_layout.xml</layout>
+        <layout>data/test/test_layout.xml</layout>
     </settings>
     <deck>
         <deck_name>pack52</deck_name>
@@ -401,7 +401,7 @@
         </card>
     </deck>
     <cell_groups>
-        <group category="action">
+        <group category="numbers">
             <cell name="1">
                 <fan>south</fan>
                 <rotation>0</rotation>
@@ -429,101 +429,30 @@
                     <card>AS,U</card>
                 </init_cards>
             </cell>
-            <cell name="4">
-                <fan>south</fan>
-                <rotation>0</rotation>
-                <init_cards>
-                    <card>D4,U,none</card>
-                    <card>0S,D</card>
-                    <card>JH,D</card>
-                    <card>QC,D</card>
-                    <card>4S,U</card>
-                </init_cards>
-            </cell>
-            <cell name="5">
-                <fan>south</fan>
-                <rotation>0</rotation>
-                <init_cards>
-                    <card>D5,U,none</card>
-                    <card>7H,D</card>
-                    <card>7S,D</card>
-                    <card>8H,D</card>
-                    <card>8C,D</card>
-                    <card>9H,U</card>
-                </init_cards>
-            </cell>
-            <cell name="6">
-                <fan>south</fan>
-                <rotation>0</rotation>
-                <init_cards>
-                    <card>D6,U,none</card>
-                    <card>AD,D</card>
-                    <card>KC,D</card>
-                    <card>KS,D</card>
-                    <card>0D,D</card>
-                    <card>2D,D</card>
-                    <card>2C,U</card>
-                </init_cards>
-            </cell>
-            <cell name="7">
-                <fan>south</fan>
-                <rotation>0</rotation>
-                <init_cards>
-                    <card>D7,U,none</card>
-                    <card>6H,D</card>
-                    <card>JS,D</card>
-                    <card>JC,D</card>
-                    <card>2H,D</card>
-                    <card>5H,D</card>
-                    <card>6D,D</card>
-                    <card>2C,U</card>
-                </init_cards>
-            </cell>
         </group>
-        <group category="suits">
-            <cell name="club">
+        <group category="letters">
+            <cell name="a">
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>DC,U</card>
+                    <card>KS,U</card>
                 </init_cards>
             </cell>
-            <cell name="diamond">
+            <cell name="b">
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>DD,U</card>
+                    <card>AC,U</card>
+                    <card>QS,U,south</card>
+                    <card>JS,U,south</card>
                 </init_cards>
             </cell>
-            <cell name="heart">
+            <cell name="c">
                 <fan>none</fan>
                 <rotation>0</rotation>
                 <init_cards>
-                    <card>DH,U</card>
+                    <card>**,U</card>
                 </init_cards>
-            </cell>
-            <cell name="spade">
-                <fan>none</fan>
-                <rotation>0</rotation>
-                <init_cards>
-                    <card>DS,U</card>
-                </init_cards>
-            </cell>
-        </group>
-        <group category="deck">
-            <cell name="deck">
-                <fan>none</fan>
-                <rotation>0</rotation>
-                <init_cards>
-                    <card>**,D</card>
-                </init_cards>
-            </cell>
-        </group>
-        <group category="hand">
-            <cell name="hand">
-                <fan>none</fan>
-                <rotation>0</rotation>
-                <init_cards/>
             </cell>
         </group>
     </cell_groups>
@@ -531,31 +460,21 @@
         <phase name="play">
             <phase_type>manual</phase_type>
             <valid_donors>
-                <category>action</category>
-                <category>deck</category>
-                <category>hand</category>
-                <category>suits</category>
+                <category>numbers</category>
+                <category>letters</category>
             </valid_donors>
             <rules>
-                <rule category="action">
+                <rule category="letters">
                     <validation>
                         <receiver>
                             <num_cards>*</num_cards>
                         </receiver>
                         <mover>
-                            <value>-1</value>
-                            <color>!</color>
-                            <suit>*</suit>
                             <num_cards>*</num_cards>
-                            <is_faceup>y</is_faceup>
+                            <name>letters</name>
                         </mover>
                         <donor>
-                            <value>*</value>
-                            <color>*</color>
-                            <suit>*</suit>
                             <num_cards>*</num_cards>
-                            <is_faceup>*</is_faceup>
-                            <name>*</name>
                         </donor>
                     </validation>
                     <action>
@@ -572,7 +491,6 @@
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
                             <offset>south</offset>
-                            <flip_up>y</flip_up>
                         </mover_dest>
                         <donor_dest>
                             <destination>d</destination>
@@ -580,186 +498,26 @@
                             <shuffle>n</shuffle>
                             <rotation>0</rotation>
                             <offset>preserve</offset>
-                            <flip_up>south</flip_up>
-                            <except>hand</except>
-                            <except>club</except>
-                            <except>heart</except>
-                            <except>spade</except>
-                            <except>diamond</except>
                         </donor_dest>
-                        <next_phase phase="check_eog">10.0</next_phase>
-                    </action>
-                </rule>
-                <rule category="suits">
-                    <validation>
-                        <receiver>
-                            <num_cards/>
-                        </receiver>
-                        <mover>
-                            <value>1</value>
-                            <color>*</color>
-                            <suit>=</suit>
-                            <num_cards>*</num_cards>
-                            <is_faceup>y</is_faceup>
-                            <name>*</name>
-                        </mover>
-                        <donor>
-                            <value>*</value>
-                            <color>*</color>
-                            <suit>*</suit>
-                            <num_cards>*</num_cards>
-                            <is_faceup>*</is_faceup>
-                            <name>*</name>
-                        </donor>
-                    </validation>
-                    <action>
-                        <receiver_dest>
-                            <destination>r</destination>
-                            <num_cards>*</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>0</offset>
-                        </receiver_dest>
-                        <mover_dest>
-                            <destination>r</destination>
-                            <num_cards>1</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>0</offset>
-                            <flip_up>y</flip_up>
-                        </mover_dest>
-                        <donor_dest>
-                            <destination>d</destination>
-                            <num_cards>south</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>preserve</offset>
-                            <flip_up>south</flip_up>
-                            <except>hand</except>
-                        </donor_dest>
-                        <next_phase phase = "check_eog">20.0</next_phase>
-                    </action>
-                </rule>
-                <rule category="deck">
-                    <validation>
-                        <receiver>
-                            <num_cards>0</num_cards>
-                        </receiver>
-                        <mover>
-                            <value>*</value>
-                            <color>*</color>
-                            <suit>*</suit>
-                            <num_cards>*</num_cards>
-                            <is_faceup>y</is_faceup>
-                        </mover>
-                        <donor>
-                            <value>*</value>
-                            <color>*</color>
-                            <suit>*</suit>
-                            <num_cards>*</num_cards>
-                            <is_faceup>*</is_faceup>
-                            <name>hand</name>
-                        </donor>
-                    </validation>
-                    <action>
-                        <receiver_dest>
-                            <destination>r</destination>
-                            <num_cards>*</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>none</offset>
-                        </receiver_dest>
-                        <mover_dest>
-                            <destination>r</destination>
-                            <num_cards>*</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>none</offset>
-                            <flip_up>n</flip_up>
-                        </mover_dest>
-                        <next_phase phase="check_eog">-10.0</next_phase>
-                    </action>
-                </rule>
-                <rule category="hand">
-                    <validation>
-                        <receiver>
-                            <num_cards></num_cards>
-                        </receiver>
-                        <mover>
-                            <value>*</value>
-                            <color>*</color>
-                            <suit>*</suit>
-                            <num_cards>*</num_cards>
-                            <is_faceup>n</is_faceup>
-                            <name>deck</name>
-                        </mover>
-                        <donor>
-                            <value>*</value>
-                            <color>*</color>
-                            <suit>*</suit>
-                            <num_cards>*</num_cards>
-                            <is_faceup>*</is_faceup>
-                            <name>deck</name>
-                        </donor>
-                    </validation>
-                    <action>
-                        <receiver_dest>
-                            <destination>r</destination>
-                            <num_cards>*</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>0</offset>
-                        </receiver_dest>
-                        <mover_dest>
-                            <destination>r</destination>
-                            <num_cards>t</num_cards>
-                            <shuffle>n</shuffle>
-                            <rotation>0</rotation>
-                            <offset>0</offset>
-                            <flip_up>none</flip_up>
-                        </mover_dest>
-                        <next_phase phase = "check_eog">0.0</next_phase>
-                    </action>
-                </rule>
-            </rules>
-        </phase>
-        <phase name="check_eog">
-            <phase_type>auto</phase_type>
-            <valid_donors></valid_donors>
-            <rules>
-                <rule category="">
-                    <validation>
-                        <condition category="action">
-                            <num_cards>1</num_cards>
-                        </condition>
-                        <condition category="hand">
-                            <num_cards>0</num_cards>
-                        </condition>
-                        <condition category="deck">
-                            <num_cards>0</num_cards>
-                        </condition>
-                    </validation>
-                    <action>
-                        <next_phase phase="win">500.0</next_phase>
-                    </action>
-                </rule>
-                <rule category="">
-                    <validation>
-                        <condition category="action">
-                        </condition>
-                    </validation>
-                    <action>
-                        <next_phase phase = "play"></next_phase>
+                        <next_phase phase="win">10.0</next_phase>
                     </action>
                 </rule>
             </rules>
         </phase>
         <phase name="win">
-            <phase_type>manual</phase_type>
-            <valid_donors/>
+            <phase_type>auto</phase_type>
+            <valid_donors>
+                <category></category>
+            </valid_donors>
             <rules>
-                <rule category="default">
-
+                <rule category="">
+                    <validation>
+                        <receiver>
+                        </receiver>
+                    </validation>
+                    <action>
+                        <next_phase phase="play"></next_phase>
+                    </action>
                 </rule>
             </rules>
         </phase>
