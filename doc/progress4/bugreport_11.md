@@ -51,6 +51,8 @@ Once all of these cases are identified, the line can be removed and the tests ca
 
 ## Additional Analysis on Related Methods
 
+The following are a number of methods that may require testing to fully diagnose this bug and its reach:
+
 - ```processMove()```, process a move from the frontend but sending to backend and update the View
 	- ```getAndUpdateScoreForGame()```
 	- update the View using the backend updates
