@@ -203,6 +203,12 @@ public class Controller extends Application {
     }
   }
 
+  /**
+   * Reports an error to the View if it exists, for it to handle internally in terms of parsing the message and generating a popup.
+   * Splits the exception message by its comma formatting, and creates the tags for it to format as needed.
+   *
+   * @param e the Exception to report
+   */
   private void reportError(Exception e) {
     e.printStackTrace();
 
@@ -224,7 +230,7 @@ public class Controller extends Application {
 
   private void loadGame(String loadFile) {
     try {
-      System.out.println(loadFile);
+      //System.out.println(loadFile);
       ISaveConfiguration load = SaveConfigurationFactory.createSave(new File(loadFile));
       IPhaseMachine pm = PhaseMachineFactory.createPhaseMachine(new File(load.getRulePath()));
       pm.setCellData(load.getCellMap());
