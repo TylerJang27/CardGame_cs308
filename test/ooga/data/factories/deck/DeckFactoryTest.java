@@ -36,19 +36,7 @@ class DeckFactoryTest {
    */
   @Test
   void createDeck() {
-    List<String> names = List.of("A", "2", "3", "4", "5", "6", "7", "8", "9", "0", "J", "Q", "K");
-    List<String> vals = List
-        .of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13");
-    List<String> colors = List.of("black", "red", "red", "black");
-    List<String> suits = List.of("c", "d", "h", "s");
-    List<ICard> cards = new ArrayList<>();
-    for (int k = 0; k < suits.size(); k++) {
-      for (int j = 0; j < names.size(); j++) {
-        IValue val = new Value(vals.get(j) + suits.get(k), Integer.parseInt(vals.get(j)));
-        ISuit suit = new Suit(suits.get(k), new Color(colors.get(k)));
-        cards.add(new Card(names.get(j) + suits.get(k).toUpperCase(), suit, val));
-      }
-    }
+    List<ICard> cards = buildDeckCards();
     String deckName = "pack52";
     IDeck expected1 = new Deck(deckName, cards);
     IDeck expected2 = new Deck("", cards);
@@ -69,5 +57,27 @@ class DeckFactoryTest {
     assertEquals(expected1.getName(), actualDeck1.getName());
     assertEquals(expected1, actualDeck2);
     assertNotEquals(expected3, actualDeck1);
+  }
+
+  /**
+   * A helper method for use across testing that builds a full deck of 52 cards.
+   *
+   * @return a List of ICards containing the standard 52 deck.
+   */
+  private static List<ICard> buildDeckCards() {
+    List<String> names = List.of("A", "2", "3", "4", "5", "6", "7", "8", "9", "0", "J", "Q", "K");
+    List<String> vals = List
+        .of("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13");
+    List<String> colors = List.of("black", "red", "red", "black");
+    List<String> suits = List.of("c", "d", "h", "s");
+    List<ICard> cards = new ArrayList<>();
+    for (int k = 0; k < suits.size(); k++) {
+      for (int j = 0; j < names.size(); j++) {
+        IValue val = new Value(vals.get(j) + suits.get(k), Integer.parseInt(vals.get(j)));
+        ISuit suit = new Suit(suits.get(k), new Color(colors.get(k)));
+        cards.add(new Card(names.get(j) + suits.get(k).toUpperCase(), suit, val));
+      }
+    }
+    return cards;
   }
 }
