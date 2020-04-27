@@ -17,6 +17,8 @@ Finish it up.
 
 ### [DESIGN.md](https://www2.cs.duke.edu/courses/compsci308/spring20/assign/documentation/readme.php#DESIGN)
 
+THIS IS DUE BEFORE OUR DEMO ON TUESDAY!
+
 - All names
 - All roles
 - Project's design goals
@@ -27,9 +29,13 @@ Finish it up.
 
 ### API_CHANGES.md
 
+THIS IS DUE BEFORE OUR DEMO ON TUESDAY!
+
 Changes to API
 
 ### Example Games
+
+I THINK THIS IS STILL REQUIRED:
 
 For each of the three games (two different games, one as a mod), create a 1-2 minute video of playing the game with voice over.
 
@@ -40,6 +46,8 @@ Each person must make a smaller individual game variation for the Analysis.
 We should probably add 1-2 more styling themes.
 
 ### [Analysis](https://www2.cs.duke.edu/courses/compsci308/spring20/assign/04_final/part6.php)
+
+PROFESSOR DUVALL NOTED THAT THIS IS NOT REQUIRED UNLESS YOU HAVE A C OR WORSE GRADE ESTIMATE.
 
 - Documentation
 - [Team Project Report](https://docs.google.com/forms/d/e/1FAIpQLSeIdx4Mv9p8JrRcdvnA-35rN0PKvFAise88b5Am_n2Cyer6qA/viewform)
@@ -87,9 +95,6 @@ Team
 - One thing each person learned from creating positive team culture
 - Revisit Team contract
 - One thing each person learned about communication and problem-solving
-
-
-
 
 ### Bug Fixes
 
