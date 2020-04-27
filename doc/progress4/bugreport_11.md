@@ -17,12 +17,13 @@ in addition to the proper popup being displayed, a stack trace is printed to the
 Provide detailed steps for reproducing the issue.
 
  1. Freshly pull the program from master.
- 2. Delete the data/default_style.xml file if it exists (this file is created locally based on user changes to 
- data/default_style_orig.xml).
+ 2. Delete the ```data/default_style.xml``` file if it exists (this file is created locally based on user changes to 
+ ```data/default_style_orig.xml```).
  3. Launch the program and observe the stack trace.
 
 ## Failure Logs
 
+```
 ooga.data.XMLException: InvalidFile
 	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:77)
 	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:52)
@@ -37,10 +38,11 @@ ooga.data.XMLException: InvalidFile
 	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
 	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174)
 	at java.base/java.lang.Thread.run(Thread.java:830)
+```
 
 ## Hypothesis for Fixing the Bug
 
-This bug occurs as a result of the reportError() method in Controller. An e.printStackTrace() line was left in the original code
+This bug occurs as a result of the ```reportError()``` method in Controller. An ```e.printStackTrace()``` line was left in the original code
 in master, causing the stack trace to be printed even when the error is displayed correctly to the frontend.
 
 More testing will be needed to determine all the cases in which this method is called based on different invalid cases.
@@ -49,29 +51,29 @@ Once all of these cases are identified, the line can be removed and the tests ca
 
 ## Additional Analysis on Related Methods
 
-- processMove(), process a move from the frontend but sending to backend and update the View
-	- getAndUpdateScoreForGame()
+- ```processMove()```, process a move from the frontend but sending to backend and update the View
+	- ```getAndUpdateScoreForGame()```
 	- update the View using the backend updates
 
-- getAndUpdateScoreForGame(), update the table based on a move
+- ```getAndUpdateScoreForGame()```, update the table based on a move
 	- process an IMove based on the phase machine
 	- update high scores
 
-- updateHighScores(), sets the scores and updates the frontends HighScore information based on the current game
-	- *the setScore() method may need to be surrounded by try catch if the IHighScore implementation does not have the correct file path*
+- ```updateHighScores()```, sets the scores and updates the frontend's HighScore information based on the current game
+	- *the ```setScore()``` method call may need to be surrounded by try catch if the IHighScore implementation does not have the correct file path*
 	- the view's high scores are updated
 
-- extractScores(), read from a file containing high score information and create an IStyle implementation
+- ```extractScores()```, read from a file containing high score information and create an IStyle implementation
 	- tests for HighScoreFactory have already been generated
 
-- extractStyle(), read from a file containing style information and create an IStyle implementation
+- ```extractStyle()```, read from a file containing style information and create an IStyle implementation
 	- tests for StyleFactory have already been generated
 
-- loadGame(), load a game from a XML save data
+- ```loadGame()```, load a game from a XML save data
 	- an ISaveConfiguration instance is loaded
 	- an ISaveConfiguration instance is applied
 
-- startTable(), starts a new table based on a game name
+- ```startTable()```, starts a new table based on a game name
 	- *redundancies can be refactored*
 	- starts a new table based on a game name
 	- loads rules based on PhaseMachineFactory
