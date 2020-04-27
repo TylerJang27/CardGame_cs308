@@ -1,3 +1,5 @@
+# Bug Report 11
+
 ## Description
 
 An exception's stack trace is printed upon reporting an error to the frontend. 
@@ -89,31 +91,424 @@ package contains no other classes.
 
 ### start()
 
-Result: 
+Result when file has already been created:
+```PASS```
+
+Result when file has not been created: 
+```java
+PASS 1/1
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:77)
+	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:52)
+	at ooga.controller.Controller.extractStyle(Controller.java:178)
+	at ooga.controller.Controller.start(Controller.java:94)
+	...
+```
+
+### processMove()
+
+Result when file has already been created:
+```java
+java.lang.NullPointerException
+	at ooga.data.rules.PhaseMachine.replaceMoveCells(PhaseMachine.java:154)
+	at ooga.data.rules.PhaseMachine.update(PhaseMachine.java:204)
+	at ooga.cardtable.Table.update(Table.java:55)
+	at ooga.controller.Controller.getAndUpdateScoreForGame(Controller.java:157)
+	at ooga.controller.Controller.processMove(Controller.java:116)
+	at ooga.controller.ControllerTest.lambda$processMove$1(ControllerTest.java:121)
+	...
+
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IllegalStateException> but was: <java.lang.NullPointerException>
+
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:2920)
+	at ooga.controller.ControllerTest.processMove(ControllerTest.java:121)
+	...
+Caused by: java.lang.NullPointerException
+	at ooga.controller.Controller.reportError(Controller.java:215)
+	at ooga.controller.Controller.getAndUpdateScoreForGame(Controller.java:169)
+	at ooga.controller.Controller.processMove(Controller.java:116)
+	at ooga.controller.ControllerTest.lambda$processMove$1(ControllerTest.java:121)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	...
+```
+
+Result when file has not been created:
 ```java
 ooga.data.XMLException: InvalidFile
 	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:77)
 	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:52)
 	at ooga.controller.Controller.extractStyle(Controller.java:178)
 	at ooga.controller.Controller.start(Controller.java:94)
-	at javafx.graphics/com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$9(LauncherImpl.java:846)
-	at javafx.graphics/com.sun.javafx.application.PlatformImpl.lambda$runAndWait$12(PlatformImpl.java:455)
-	at javafx.graphics/com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:428)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:391)
-	at javafx.graphics/com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:427)
-	at javafx.graphics/com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:96)
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
-	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174)
-	at java.base/java.lang.Thread.run(Thread.java:830)
+	...
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.HighScoreFactory.createScores(HighScoreFactory.java:68)
+	at ooga.data.factories.HighScoreFactory.createScores(HighScoreFactory.java:42)
+	at ooga.controller.Controller.extractScores(Controller.java:189)
+	at ooga.controller.Controller.start(Controller.java:95)
+	...
+java.lang.NullPointerException
+	at ooga.data.rules.PhaseMachine.replaceMoveCells(PhaseMachine.java:154)
+	at ooga.data.rules.PhaseMachine.update(PhaseMachine.java:204)
+	at ooga.cardtable.Table.update(Table.java:55)
+	at ooga.controller.Controller.getAndUpdateScoreForGame(Controller.java:157)
+	at ooga.controller.Controller.processMove(Controller.java:116)
+	at ooga.controller.ControllerTest.lambda$processMove$1(ControllerTest.java:121)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	...
+
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IllegalStateException> but was: <java.lang.NullPointerException>
+
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:2920)
+	at ooga.controller.ControllerTest.processMove(ControllerTest.java:121)
+	...
+Caused by: java.lang.NullPointerException
+	at ooga.controller.Controller.reportError(Controller.java:215)
+	at ooga.controller.Controller.getAndUpdateScoreForGame(Controller.java:169)
+	at ooga.controller.Controller.processMove(Controller.java:116)
+	...
 ```
 
+### getAndUpdateScoreForGame()
 
+Result when file has already been created:
+
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+
+```java
+PASS 1/1
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.HighScoreFactory.createScores(HighScoreFactory.java:68)
+	at ooga.data.factories.HighScoreFactory.createScores(HighScoreFactory.java:42)
+	at ooga.controller.Controller.extractScores(Controller.java:189)
+	at ooga.controller.Controller.start(Controller.java:95)
+	...
+```
+
+### extractStyle()
+
+Result when file has already been created:
+
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+
+```java
+PASS 1/1
+```
+
+### extractScores()
+
+Result when file has already been created:
+
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+
+```java
+PASS 1/1
+```
+
+### updateHighScores()
+
+Result when file has already been created:
+
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+
+```java
+PASS 1/1
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:77)
+	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:52)
+	at ooga.controller.Controller.extractStyle(Controller.java:178)
+	at ooga.controller.Controller.start(Controller.java:94)
+	...
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.HighScoreFactory.createScores(HighScoreFactory.java:68)
+	at ooga.data.factories.HighScoreFactory.createScores(HighScoreFactory.java:42)
+	at ooga.controller.Controller.extractScores(Controller.java:189)
+	at ooga.controller.Controller.start(Controller.java:95)
+	....
+```
+
+### reportError()
+
+Result when file has already been created:
+
+```java
+FAIL 1/1
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IllegalStateException> but was: <java.util.MissingResourceException>
+
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:2920)
+	at ooga.controller.ControllerTest.reportError(ControllerTest.java:232)
+	...
+Caused by: java.util.MissingResourceException: Can't find resource for bundle java.util.PropertyResourceBundle, key bad error message
+	at java.base/java.util.ResourceBundle.getObject(ResourceBundle.java:564)
+	at java.base/java.util.ResourceBundle.getString(ResourceBundle.java:521)
+	at ooga.view.View.translateAndFormat(View.java:202)
+	at ooga.view.View.reportError(View.java:273)
+	at ooga.controller.Controller.reportError(Controller.java:221)
+	at ooga.controller.ControllerTest.lambda$reportError$7(ControllerTest.java:232)
+	...
+```
+
+Result when file has not been created:
+
+```java
+FAIL 1/1
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:77)
+	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:52)
+	at ooga.controller.Controller.extractStyle(Controller.java:178)
+	at ooga.controller.Controller.start(Controller.java:94)
+	...
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.HighScoreFactory.createScores(HighScoreFactory.java:68)
+	at ooga.data.factories.HighScoreFactory.createScores(HighScoreFactory.java:42)
+	at ooga.controller.Controller.extractScores(Controller.java:189)
+	...
+
+
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown ==> expected: <java.lang.IllegalStateException> but was: <java.util.MissingResourceException>
+
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:65)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:2920)
+	at ooga.controller.ControllerTest.reportError(ControllerTest.java:232)
+	...
+Caused by: java.util.MissingResourceException: Can't find resource for bundle java.util.PropertyResourceBundle, key bad error message
+	at java.base/java.util.ResourceBundle.getObject(ResourceBundle.java:564)
+	at java.base/java.util.ResourceBundle.getString(ResourceBundle.java:521)
+	at ooga.view.View.translateAndFormat(View.java:202)
+	at ooga.view.View.reportError(View.java:273)
+	at ooga.controller.Controller.reportError(Controller.java:221)
+	at ooga.controller.ControllerTest.lambda$reportError$7(ControllerTest.java:232)
+	...
+```
+
+### loadGame()
+
+Result when file has already been created:
+
+```java
+PASS
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.SaveConfigurationFactory.createSave(SaveConfigurationFactory.java:66)
+	at ooga.controller.Controller.loadGame(Controller.java:233)
+	at ooga.controller.ControllerTest.lambda$loadGame$8(ControllerTest.java:248)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:2920)
+	at ooga.controller.ControllerTest.loadGame(ControllerTest.java:248)
+	...
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.SaveConfigurationFactory.createSave(SaveConfigurationFactory.java:66)
+	at ooga.controller.Controller.loadGame(Controller.java:233)
+	at ooga.controller.ControllerTest.lambda$loadGame$10(ControllerTest.java:250)
+	...
+```
+
+Result when file has not been created:
+
+```java
+PASS 1/1
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:77)
+	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:52)
+	at ooga.controller.Controller.extractStyle(Controller.java:178)
+	at ooga.controller.Controller.start(Controller.java:94)
+	...
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.HighScoreFactory.createScores(HighScoreFactory.java:68)
+	at ooga.data.factories.HighScoreFactory.createScores(HighScoreFactory.java:42)
+	at ooga.controller.Controller.extractScores(Controller.java:189)
+	at ooga.controller.Controller.start(Controller.java:95)
+	...
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.SaveConfigurationFactory.createSave(SaveConfigurationFactory.java:66)
+	at ooga.controller.Controller.loadGame(Controller.java:233)
+	at ooga.controller.ControllerTest.lambda$loadGame$8(ControllerTest.java:248)
+	...
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.SaveConfigurationFactory.createSave(SaveConfigurationFactory.java:66)
+	at ooga.controller.Controller.loadGame(Controller.java:233)
+	at ooga.controller.ControllerTest.lambda$loadGame$10(ControllerTest.java:250)
+	...
+```
+
+### startTable()
+
+Result when file has already been created:
+
+```java
+PASS 1/1
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.PhaseMachineFactory.createPhaseMachine(PhaseMachineFactory.java:64)
+	at ooga.controller.Controller.startTable(Controller.java:266)
+	at ooga.controller.ControllerTest.lambda$startTable$12(ControllerTest.java:268)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:2920)
+	at ooga.controller.ControllerTest.startTable(ControllerTest.java:268)
+```
+
+Result when file has not been created:
+
+```java
+PASS 1/1
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:77)
+	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:52)
+	at ooga.controller.Controller.extractStyle(Controller.java:178)
+	at ooga.controller.Controller.start(Controller.java:94)
+	...
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.HighScoreFactory.createScores(HighScoreFactory.java:68)
+	at ooga.data.factories.HighScoreFactory.createScores(HighScoreFactory.java:42)
+	at ooga.controller.Controller.extractScores(Controller.java:189)
+	at ooga.controller.Controller.start(Controller.java:95)
+	...
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.PhaseMachineFactory.createPhaseMachine(PhaseMachineFactory.java:64)
+	at ooga.controller.Controller.startTable(Controller.java:266)
+	at ooga.controller.ControllerTest.lambda$startTable$12(ControllerTest.java:268)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:55)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:37)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:2920)
+	at ooga.controller.ControllerTest.startTable(ControllerTest.java:268)
+	...
+```
 
 ## Changes to Resolve the Bug
 
-
+1. the e.printStackTrace() in reportError() of Controller was removed.
+2. attachView() was reordered in Controller (see notes in ControllerTest.processMove()).
+3. added an additional default case and try-catch in reportError() of Controller if the message does not adhere to the expected format.
 
 ## Final Tests and Results
 
+### start()
 
+Result when file has already been created:
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+```java
+PASS 1/1
+```
+
+### processMove()
+
+Result when file has already been created:
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+```java
+PASS 1/1
+```
+
+### getAndUpdateScoreForGame()
+
+Result when file has already been created:
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+```java
+PASS 1/1
+```
+
+### extractStyle()
+
+Result when file has already been created:
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+```java
+PASS 1/1
+```
+
+### extractScores()
+
+Result when file has already been created:
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+```java
+PASS 1/1
+```
+
+### updateHighScores()
+
+Result when file has already been created:
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+```java
+PASS 1/1
+```
+
+### reportError()
+
+Result when file has already been created:
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+```java
+PASS 1/1
+```
+
+### loadGame()
+
+Result when file has already been created:
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+```java
+PASS 1/1
+```
+
+### startTable()
+
+Result when file has already been created:
+```java
+PASS 1/1
+```
+
+Result when file has not been created:
+```java
+PASS 1/1
+```
 

@@ -1,10 +1,7 @@
 package ooga.controller;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -15,11 +12,7 @@ import ooga.cardtable.IMove;
 import ooga.cardtable.ITable;
 import ooga.cardtable.Table;
 import ooga.data.XMLException;
-import ooga.data.factories.HighScoreFactory;
-import ooga.data.factories.LayoutFactory;
-import ooga.data.factories.PhaseMachineFactory;
-import ooga.data.factories.SaveConfigurationFactory;
-import ooga.data.factories.StyleFactory;
+import ooga.data.factories.*;
 import ooga.data.highscore.IHighScores;
 import ooga.data.rules.IPhaseMachine;
 import ooga.data.saveconfiguration.ISaveConfiguration;
@@ -210,15 +203,17 @@ public class Controller extends Application {
    * @param e the Exception to report
    */
   protected void reportError(Exception e) {
-    e.printStackTrace();
-
-    String[] messages = e.getMessage().split(",");
-    List<String> tags = new ArrayList<>();
-    for (int k = 1; k < messages.length; k++) {
-      tags.add(messages[k]);
-    }
-    if (myView != null) {
-      myView.reportError(messages[0], tags);
+    try {
+      String[] messages = e.getMessage().split(",");
+      List<String> tags = new ArrayList<>();
+      for (int k = 1; k < messages.length; k++) {
+        tags.add(messages[k]);
+      }
+      if (myView != null) {
+        myView.reportError(messages[0], tags);
+      }
+    } catch (MissingResourceException | NullPointerException ex) {
+      myView.reportError(Factory.UNKNOWN_ERROR, new ArrayList<>());
     }
   }
 
@@ -230,7 +225,6 @@ public class Controller extends Application {
 
   protected void loadGame(String loadFile) {
     try {
-      //System.out.println(loadFile);
       ISaveConfiguration load = SaveConfigurationFactory.createSave(new File(loadFile));
       IPhaseMachine pm = PhaseMachineFactory.createPhaseMachine(new File(load.getRulePath()));
       pm.setCellData(load.getCellMap());
@@ -273,13 +267,14 @@ public class Controller extends Application {
   }
 
   private void attachView(int gameID, ITable table) {
+    myTables.put(gameID, table);
+
     Map<String, ICell> myCellMap = table.getCellData();
     File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
 
     myView.setLayout(gameID, LayoutFactory.createLayout(f));
     myView.setCellData(gameID, myCellMap);
     myPreviousCells = myCellMap;
-    myTables.put(gameID, table);
   }
 
 }
