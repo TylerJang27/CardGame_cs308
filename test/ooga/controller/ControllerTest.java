@@ -1,10 +1,7 @@
 package ooga.controller;
 
-import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
-import javafx.stage.Stage;
 import ooga.cardtable.*;
 import ooga.data.XMLException;
 import ooga.data.factories.HighScoreFactory;
@@ -20,7 +17,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.util.WaitForAsyncUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -44,8 +40,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Tyler Jang
  */
 class ControllerTest extends ApplicationTest {
-
-    private Stage myStage;
 
     @BeforeAll
     public static void setUpClass() {
