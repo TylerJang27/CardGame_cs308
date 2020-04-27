@@ -46,3 +46,45 @@ in master, causing the stack trace to be printed even when the error is displaye
 More testing will be needed to determine all the cases in which this method is called based on different invalid cases.
 
 Once all of these cases are identified, the line can be removed and the tests can be run again to ensure that no stack trace is printed.
+
+## Additional Analysis on Related Methods
+
+- processMove(), process a move from the frontend but sending to backend and update the View
+	- getAndUpdateScoreForGame()
+	- update the View using the backend updates
+
+- getAndUpdateScoreForGame(), update the table based on a move
+	- process an IMove based on the phase machine
+	- update high scores
+
+- updateHighScores(), sets the scores and updates the frontends HighScore information based on the current game
+	- *the setScore() method may need to be surrounded by try catch if the IHighScore implementation does not have the correct file path*
+	- the view's high scores are updated
+
+- extractScores(), read from a file containing high score information and create an IStyle implementation
+	- tests for HighScoreFactory have already been generated
+
+- extractStyle(), read from a file containing style information and create an IStyle implementation
+	- tests for StyleFactory have already been generated
+
+- loadGame(), load a game from a XML save data
+	- an ISaveConfiguration instance is loaded
+	- an ISaveConfiguration instance is applied
+
+- startTable(), starts a new table based on a game name
+	- *redundancies can be refactored*
+	- starts a new table based on a game name
+	- loads rules based on PhaseMachineFactory
+	
+## Initial Tests and Results (test/ControllerTest.java)
+
+
+
+## Changes to Resolve the Bug
+
+
+
+## Final Tests and Results
+
+
+
