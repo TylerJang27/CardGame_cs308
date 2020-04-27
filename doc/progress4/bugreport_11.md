@@ -80,13 +80,32 @@ The following are a number of methods that may require testing to fully diagnose
 	- starts a new table based on a game name
 	- loads rules based on PhaseMachineFactory
 	
-## Initial Tests and Results (test/ControllerTest.java)
+## Initial Tests and Results (test/ooga/controller/ControllerTest.java)
 
 I made the above tests protected in order to have access to them for testing.
 Based on [assorted counsel](https://softwareengineering.stackexchange.com/questions/100959/how-do-you-unit-test-private-methods),
 I believed that this was a good compromise with minimal consequences as Controller has no children and its
 package contains no other classes.
 
+### start()
+
+Result: 
+```java
+ooga.data.XMLException: InvalidFile
+	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:77)
+	at ooga.data.factories.StyleFactory.createStyle(StyleFactory.java:52)
+	at ooga.controller.Controller.extractStyle(Controller.java:178)
+	at ooga.controller.Controller.start(Controller.java:94)
+	at javafx.graphics/com.sun.javafx.application.LauncherImpl.lambda$launchApplication1$9(LauncherImpl.java:846)
+	at javafx.graphics/com.sun.javafx.application.PlatformImpl.lambda$runAndWait$12(PlatformImpl.java:455)
+	at javafx.graphics/com.sun.javafx.application.PlatformImpl.lambda$runLater$10(PlatformImpl.java:428)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:391)
+	at javafx.graphics/com.sun.javafx.application.PlatformImpl.lambda$runLater$11(PlatformImpl.java:427)
+	at javafx.graphics/com.sun.glass.ui.InvokeLaterDispatcher$Future.run(InvokeLaterDispatcher.java:96)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:174)
+	at java.base/java.lang.Thread.run(Thread.java:830)
+```
 
 
 
