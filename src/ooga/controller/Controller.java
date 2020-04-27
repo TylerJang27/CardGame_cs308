@@ -111,7 +111,7 @@ public class Controller extends Application {
     initializeHandlers(myView);
   }
 
-  private void processMove(IMove move, int gameID) {
+  protected void processMove(IMove move, int gameID) {
     try {
       Double score = getAndUpdateScoreForGame(move, gameID);
       myView.setScores(gameID, Map.of(1, score));
@@ -151,7 +151,7 @@ public class Controller extends Application {
     myView.setScores(gameID, Map.of(1, myTables.get(gameID).getCurrentPlayer().getScore()));
   }
 
-  private Double getAndUpdateScoreForGame(IMove move, int gameID) {
+  protected Double getAndUpdateScoreForGame(IMove move, int gameID) {
     Double score = myTables.get(gameID).getCurrentPlayer().getScore();
     try {
       lastState = myTables.get(gameID).update(move);
@@ -171,7 +171,7 @@ public class Controller extends Application {
     return score;
   }
 
-  private IStyle extractStyle() {
+  protected IStyle extractStyle() {
     File myStyleFile;
     try {
       myStyleFile = new File(DEFAULT_STYLE_FILE);
@@ -183,7 +183,7 @@ public class Controller extends Application {
     }
   }
 
-  private IHighScores extractScores() {
+  protected IHighScores extractScores() {
     try {
       myScoresFile = new File(DEFAULT_SCORE_FILE);
       return HighScoreFactory.createScores(myScoresFile);
@@ -194,7 +194,7 @@ public class Controller extends Application {
     }
   }
 
-  private void updateHighScores(String currentGame, Double score) {
+  protected void updateHighScores(String currentGame, Double score) {
     myScores.setScore(currentGame, score);
     try {
       myView.updateHighScores(currentGame, myScores.getScore(currentGame));
@@ -209,7 +209,7 @@ public class Controller extends Application {
    *
    * @param e the Exception to report
    */
-  private void reportError(Exception e) {
+  protected void reportError(Exception e) {
     e.printStackTrace();
 
     String[] messages = e.getMessage().split(",");
@@ -228,7 +228,7 @@ public class Controller extends Application {
     saveData.writeConfiguration(destination);
   }
 
-  private void loadGame(String loadFile) {
+  protected void loadGame(String loadFile) {
     try {
       //System.out.println(loadFile);
       ISaveConfiguration load = SaveConfigurationFactory.createSave(new File(loadFile));
@@ -251,7 +251,7 @@ public class Controller extends Application {
     v.listenForGameChoice((a, b, gameName) -> startTable(gameName));
   }
 
-  private void startTable(String gameName) {
+  protected void startTable(String gameName) {
     String ruleFile = FILEPATH + gameName + "/" + gameName + RULES_EXTENSION;
     try {
       myRuleFile = new File(ruleFile);

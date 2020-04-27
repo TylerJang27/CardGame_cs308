@@ -82,6 +82,12 @@ The following are a number of methods that may require testing to fully diagnose
 	
 ## Initial Tests and Results (test/ControllerTest.java)
 
+I made the above tests protected in order to have access to them for testing.
+Based on [assorted counsel](https://softwareengineering.stackexchange.com/questions/100959/how-do-you-unit-test-private-methods),
+I believed that this was a good compromise with minimal consequences as Controller has no children and its
+package contains no other classes.
+
+
 
 
 ## Changes to Resolve the Bug
