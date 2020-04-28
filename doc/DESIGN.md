@@ -64,7 +64,7 @@ To add additional games (game names must be lowercase and contain more than just
 
 1. Add a directory to the data/ directory matching the title of your game.
 2. Add two files to the directory created, matching the title_rules.xml and title_layout.xml (each of which must adhere to the formatting specified in [src/ooga/data/factories/schemas/layout_schema.xsd] and [src/ooga/data/factories/schemas/rules_schema.xsd]).
-    - These rules and layout files must match the specification in [XML_Documentation.md].
+    - These rules and layout files must match the specification in [XML_Documentation.md](XML_Documentation.md).
 3. Add instructions for the game to src/ooga/resources/languages/messages/ for each of the languages with the key formatting title_insns.
 4. Add the game and its translations to src/ooga/resources/languages/games/ for each of the languages with the key formatting title.
 
@@ -72,8 +72,8 @@ To add additional games (game names must be lowercase and contain more than just
 
 To add additional rules regex to enable different types of rule conditions or different types of action behavior, the following must be done:
 
-1. Modify the [XML_Documentation.md] file to include the regex you are trying to add.
-2. Modify the [src/ooga/data/factories/schemas/layout_schema.xsd] and [src/ooga/data/factories/schemas/rules_schema.xsd] files to ensure that these changes can be validated.
+1. Modify the [XML_Documentation.md](XML_Documentation.md) file to include the regex you are trying to add.
+2. Modify the [layout_schema.xsd](../src/ooga/data/factories/schemas/layout_schema.xsd) and [rules_schema.xsd](../src/ooga/data/factories/schemas/rules_schema.xsd) files to ensure that these changes can be validated.
 3. Implement the appropriate condition in src/ooga/data/factories/ActionFactory.java, src/ooga/data/factories/MasterRuleFactory.java, and src/ooga/data/factories/RuleFactory.java, as necessary.
 
 
