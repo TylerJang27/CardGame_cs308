@@ -30,7 +30,7 @@ public class Dictionary {
 
   public void addReference(String path) {
     myResourcePaths.add(path);
-    System.out.println(String.format(BUNDLE_FORMAT, path, myLanguage));
+    //System.out.println(String.format(BUNDLE_FORMAT, path, myLanguage));
     ResourceBundle newBundle = ResourceBundle
         .getBundle(String.format(BUNDLE_FORMAT, path, myLanguage));
     updateWithResources(newBundle);

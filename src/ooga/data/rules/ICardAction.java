@@ -7,7 +7,7 @@ import ooga.cardtable.IMove;
  *
  * @author Tyler Jang
  */
-public interface ICardAction { //TODO: UPDATE API CHANGES
+public interface ICardAction {
 
   /**
    * Executes the ICardAction, moving the ICells based on move.

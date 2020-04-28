@@ -87,5 +87,5 @@ public interface ILayout {
    *
    * @return
    */
-  Map<String, String> getCardImagePaths(); // TODO: UPDATE API
+  Map<String, String> getCardImagePaths();
 }

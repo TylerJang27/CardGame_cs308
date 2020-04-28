@@ -21,7 +21,7 @@ public interface IPhaseMachine {
   /**
    * Restarts the game, reinitializing the cells, cards, and players
    */
-  void restartGame(); //TODO: ADD TO API CHANGES
+  void restartGame();
 
   /**
    * Gives a map of phase names to phases
@@ -30,7 +30,7 @@ public interface IPhaseMachine {
    */
   Map<String, IPhase> getPhases();
 
-  //void addPhase(IPhase phase); //TODO: REMOVE IN API CHANGES
+  //void addPhase(IPhase phase);
 
   /**
    * Gives a list of phase names
@@ -104,26 +104,26 @@ public interface IPhaseMachine {
    * @param cell the ICell to validate
    * @return whether or not the ICell is a valid donor
    */
-  boolean isValidDonor(ICell cell); //TODO: ADD TO API CHANGES
+  boolean isValidDonor(ICell cell);
 
   /**
    * Returns the ISettings for the current game.
    *
    * @return the settings for the game
    */
-  ISettings getSettings(); //TODO: ADD TO API CHANGES
+  ISettings getSettings();
 
   /**
    * Sets the data in the cells from a load.
    *
    * @param cellMap the Map of String ICell names to ICells to load
    */
-  void setCellData(Map<String, ICell> cellMap); //TODO: ADD TO API CHANGES
+  void setCellData(Map<String, ICell> cellMap);
 
   /**
    * Sets the phase from a load.
    *
    * @param phase the name of the phase to load in
    */
-  void setPhase(String phase); //TODO: ADD TO API CHANGES
+  void setPhase(String phase);
 }

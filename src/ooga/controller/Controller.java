@@ -1,10 +1,7 @@
 package ooga.controller;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -15,11 +12,7 @@ import ooga.cardtable.IMove;
 import ooga.cardtable.ITable;
 import ooga.cardtable.Table;
 import ooga.data.XMLException;
-import ooga.data.factories.HighScoreFactory;
-import ooga.data.factories.LayoutFactory;
-import ooga.data.factories.PhaseMachineFactory;
-import ooga.data.factories.SaveConfigurationFactory;
-import ooga.data.factories.StyleFactory;
+import ooga.data.factories.*;
 import ooga.data.highscore.IHighScores;
 import ooga.data.rules.IPhaseMachine;
 import ooga.data.saveconfiguration.ISaveConfiguration;
@@ -111,7 +104,7 @@ public class Controller extends Application {
     initializeHandlers(myView);
   }
 
-  private void processMove(IMove move, int gameID) {
+  protected void processMove(IMove move, int gameID) {
     try {
       Double score = getAndUpdateScoreForGame(move, gameID);
       myView.setScores(gameID, Map.of(1, score));
@@ -151,7 +144,7 @@ public class Controller extends Application {
     myView.setScores(gameID, Map.of(1, myTables.get(gameID).getCurrentPlayer().getScore()));
   }
 
-  private Double getAndUpdateScoreForGame(IMove move, int gameID) {
+  protected Double getAndUpdateScoreForGame(IMove move, int gameID) {
     Double score = myTables.get(gameID).getCurrentPlayer().getScore();
     try {
       lastState = myTables.get(gameID).update(move);
@@ -171,7 +164,7 @@ public class Controller extends Application {
     return score;
   }
 
-  private IStyle extractStyle() {
+  protected IStyle extractStyle() {
     File myStyleFile;
     try {
       myStyleFile = new File(DEFAULT_STYLE_FILE);
@@ -183,7 +176,7 @@ public class Controller extends Application {
     }
   }
 
-  private IHighScores extractScores() {
+  protected IHighScores extractScores() {
     try {
       myScoresFile = new File(DEFAULT_SCORE_FILE);
       return HighScoreFactory.createScores(myScoresFile);
@@ -194,7 +187,7 @@ public class Controller extends Application {
     }
   }
 
-  private void updateHighScores(String currentGame, Double score) {
+  protected void updateHighScores(String currentGame, Double score) {
     myScores.setScore(currentGame, score);
     try {
       myView.updateHighScores(currentGame, myScores.getScore(currentGame));
@@ -203,16 +196,24 @@ public class Controller extends Application {
     }
   }
 
-  private void reportError(Exception e) {
-    e.printStackTrace();
-
-    String[] messages = e.getMessage().split(",");
-    List<String> tags = new ArrayList<>();
-    for (int k = 1; k < messages.length; k++) {
-      tags.add(messages[k]);
-    }
-    if (myView != null) {
-      myView.reportError(messages[0], tags);
+  /**
+   * Reports an error to the View if it exists, for it to handle internally in terms of parsing the message and generating a popup.
+   * Splits the exception message by its comma formatting, and creates the tags for it to format as needed.
+   *
+   * @param e the Exception to report
+   */
+  protected void reportError(Exception e) {
+    try {
+      String[] messages = e.getMessage().split(",");
+      List<String> tags = new ArrayList<>();
+      for (int k = 1; k < messages.length; k++) {
+        tags.add(messages[k]);
+      }
+      if (myView != null) {
+        myView.reportError(messages[0], tags);
+      }
+    } catch (MissingResourceException | NullPointerException ex) {
+      myView.reportError(Factory.UNKNOWN_ERROR, new ArrayList<>());
     }
   }
 
@@ -222,9 +223,8 @@ public class Controller extends Application {
     saveData.writeConfiguration(destination);
   }
 
-  private void loadGame(String loadFile) {
+  protected void loadGame(String loadFile) {
     try {
-      System.out.println(loadFile);
       ISaveConfiguration load = SaveConfigurationFactory.createSave(new File(loadFile));
       IPhaseMachine pm = PhaseMachineFactory.createPhaseMachine(new File(load.getRulePath()));
       pm.setCellData(load.getCellMap());
@@ -245,7 +245,7 @@ public class Controller extends Application {
     v.listenForGameChoice((a, b, gameName) -> startTable(gameName));
   }
 
-  private void startTable(String gameName) {
+  protected void startTable(String gameName) {
     String ruleFile = FILEPATH + gameName + "/" + gameName + RULES_EXTENSION;
     try {
       myRuleFile = new File(ruleFile);
@@ -267,13 +267,14 @@ public class Controller extends Application {
   }
 
   private void attachView(int gameID, ITable table) {
+    myTables.put(gameID, table);
+
     Map<String, ICell> myCellMap = table.getCellData();
     File f = new File(myCurrentPhaseMachine.getSettings().getLayout());
 
     myView.setLayout(gameID, LayoutFactory.createLayout(f));
     myView.setCellData(gameID, myCellMap);
     myPreviousCells = myCellMap;
-    myTables.put(gameID, table);
   }
 
 }

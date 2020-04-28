@@ -8,9 +8,9 @@ import ooga.data.rules.Cellular;
 public interface ICell extends Cellular {
   //deal with unnecessary massive linked lists
 
-  void setDraw(Function<IDeck, ICell> initializer); //TODO: ADD TO API CHANGES
+  void setDraw(Function<IDeck, ICell> initializer);
 
-  void initializeCards(IDeck mainDeck); //TODO: ADD TO API CHANGES
+  void initializeCards(IDeck mainDeck);
 
   IDeck getDeck();
 
@@ -28,21 +28,21 @@ public interface ICell extends Cellular {
 
   void setCellAtOffset(IOffset offset, ICell cell);
 
-  int getTotalSize(); //TODO: ADD TO API CHANGES
+  int getTotalSize();
 
-  int getTotalSize(List<ICell> visited); //TODO: ADD TO API CHANGES
+  int getTotalSize(List<ICell> visited);
 
-  List<ICell> getAllCells(); //TODO: ADD TO API CHANGES
+  List<ICell> getAllCells();
 
-  void getAllCellsHelper(List<ICell> tracker); //TODO: ADD TO API CHANGES
+  void getAllCellsHelper(List<ICell> tracker);
 
-  ICell getPeak(IOffset offset); //TODO: ADD TO API CHANGES
+  ICell getPeak(IOffset offset);
 
   ICell getParent();
 
   IOffset getOffsetFromParent();
 
-  void updateParentage(); //TODO: ADD TO API CHANGES
+  void updateParentage();
 
   boolean hasOffsetChildren();
 
@@ -62,7 +62,7 @@ public interface ICell extends Cellular {
 
   ICell followNamespace(String nm);
 
-  boolean isFixed(); //TODO: ADD TO API CHANGES
+  boolean isFixed();
 
   String toStorageString();
 

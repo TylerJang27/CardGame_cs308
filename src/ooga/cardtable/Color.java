@@ -2,7 +2,6 @@ package ooga.cardtable;
 
 import java.lang.reflect.Field;
 
-//TODO: ADD DOCUMENTATION
 public class Color implements IColor {
 
   String myName;

@@ -34,6 +34,9 @@ Backend
 [XSD Formatting](https://www.w3schools.com/xml/schema_intro.asp)
 [XML Validation in Java](https://www.journaldev.com/895/how-to-validate-xml-against-xsd-in-java)
 [XML Reading in Java](https://coursework.cs.duke.edu/compsci308_2020spring/spike_simulation/blob/master/src/xml/XMLParser.java)
+[TestFX in Java](https://coursework.cs.duke.edu/compsci308_2020spring/example_testing/-/blob/master/test/util/DukeApplicationTest.java)
+[More TestFX in Java](https://medium.com/@mglover/java-fx-testing-with-testfx-c3858b571320)
+[Error Printing in Java](https://stackoverflow.com/questions/1119385/junit-test-for-system-out-println)
 
 ### Running the Program
 

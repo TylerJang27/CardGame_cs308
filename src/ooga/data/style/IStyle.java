@@ -93,7 +93,6 @@ public interface IStyle {
    * @param path String filepath to skin
    */
   void setTheme(String path);
-  //TODO: ADD TO API CHANGES
 
   /**
    * Saves the settings to an XML file.

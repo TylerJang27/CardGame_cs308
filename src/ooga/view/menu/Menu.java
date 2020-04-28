@@ -96,7 +96,7 @@ public class Menu {
     dashboard.getStyleClass().addAll(DASHBOARD_CSS);
 
     myBorderPane.setBottom(dashboard);
-    System.out.println(dashboard.getStyleClass());
+    //System.out.println(dashboard.getStyleClass());
   }
 
   private Button makeLoadGameButton(Consumer<String> gameLoad) {
@@ -146,7 +146,7 @@ public class Menu {
     options.setAlignment(Pos.BASELINE_CENTER);
     options.setHgap(GAMES_SPACING);
     options.setVgap(GAMES_SPACING);
-    System.out.println(options.getRowValignment());
+    //System.out.println(options.getRowValignment());
     options.getStyleClass().addAll(OPTIONS_CSS);
     myBorderPane.setCenter(options);
     options.setPadding(MARGINS);
