@@ -4,8 +4,6 @@ import java.util.Map;
 import ooga.cardtable.ICell;
 import ooga.cardtable.IDeck;
 
-//TODO: ADD TO API CHANGES
-
 /**
  * This interface stores groups of related cells. Gets information on a group of thematically linked
  * cells. Includes the group name itself and the cells contained within the group.

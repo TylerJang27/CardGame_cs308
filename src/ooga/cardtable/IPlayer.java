@@ -12,5 +12,5 @@ public interface IPlayer {
 
   double getScore();
 
-  void setScore(double d); //TODO: ADD TO API CHANGES
+  void setScore(double d);
 }

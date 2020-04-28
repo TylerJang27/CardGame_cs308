@@ -16,12 +16,12 @@ public interface IRule {
    * @param move the IMove to validate
    * @return whether or not the move is valid for this IRule
    */
-  boolean checkValidMove(IMove move); //TODO: ADD TO API CHANGES
+  boolean checkValidMove(IMove move);
 
   /**
    * Retrieves the name of the IRule.
    *
    * @return the IRule's name
    */
-  String getName(); //TODO: ADD TO API CHANGES
+  String getName();
 }

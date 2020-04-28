@@ -22,8 +22,6 @@ public interface IPhase {
    */
   boolean isAutomatic();
 
-  //IMasterRule identifyMove(IMove move);
-
   /**
    * Executes the given move, checking its logic against available IMasterRules and processing its
    * changes.
@@ -32,7 +30,7 @@ public interface IPhase {
    * @param player the player to add points to
    * @return an IPhaseArrow representing the necessary phase update
    */
-  IPhaseArrow executeMove(IMove move, IPlayer player); //TODO: UPDATE API CHANGES
+  IPhaseArrow executeMove(IMove move, IPlayer player);
 
   /**
    * Retrieves the list of available rules for an IPhase.
@@ -48,21 +46,21 @@ public interface IPhase {
    * @param move   the previous IMove
    * @return the IPhaseArrow referring to the appropriate phase change.
    */
-  IPhaseArrow executeAutomaticActions(IPlayer player, IMove move); //TODO: UPDATE API CHANGES
+  IPhaseArrow executeAutomaticActions(IPlayer player, IMove move);
 
   /**
    * Retrieves the ICell Map stored by this IPhase.
    *
    * @return the Map of String ICell names to ICells
    */
-  Map<String, ICell> getMyCellMap(); //TODO: UPDATE API CHANGES
+  Map<String, ICell> getMyCellMap();
 
   /**
    * Retrieves the ICellGroup Map stored by this IPhase.
    *
    * @return the Map of String ICellGroup names to ICellGroups
    */
-  Map<String, ICellGroup> getMyCellGroupMap(); //TODO: UPDATE API CHANGES
+  Map<String, ICellGroup> getMyCellGroupMap();
 
   //Map<IMasterRule, List<ICardAction>> getConditionalActions();
 
@@ -75,7 +73,7 @@ public interface IPhase {
    *
    * @return the IPhase's name
    */
-  String getMyName(); //TODO: UPDATE API CHANGES
+  String getMyName();
 
   //String getNextPhaseName(IMove move);
 
@@ -92,5 +90,5 @@ public interface IPhase {
    * @param cell the ICell to validate
    * @return whether or not cell is a valid donor
    */
-  boolean isValidDonor(ICell cell); //TODO: ADD TO API CHANGES
+  boolean isValidDonor(ICell cell);
 }

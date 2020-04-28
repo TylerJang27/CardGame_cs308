@@ -9,7 +9,7 @@ import java.util.Set;
  *
  * @author Tyler Jang
  */
-public interface IHighScores { //TODO: ADD TO API CHANGES
+public interface IHighScores {
 
   String DATA_TYPE = "score";
   String SCORE = "score";

@@ -7,11 +7,11 @@ import ooga.data.saveconfiguration.ISaveConfiguration;
 
 public interface ITable {
 
-  IPlayer getCurrentPlayer(); //TODO: ADD TO API CHANGES
+  IPlayer getCurrentPlayer();
 
   void setPhaseMachine(IPhaseMachine machine);
 
-  void restartGame(); //TODO: ADD TO API CHANGES
+  void restartGame();
 
   void setCellList(List<ICell> cellList);
 
@@ -28,6 +28,5 @@ public interface ITable {
   Map<String, ICell> getCellData();
 
   ISaveConfiguration getSaveData(String gameName, String rulePath);
-  //TODO: ADD TO API CHANGES
 
 }

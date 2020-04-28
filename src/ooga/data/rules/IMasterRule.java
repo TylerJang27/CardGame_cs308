@@ -22,7 +22,7 @@ public interface IMasterRule extends IRule {
    * @param move the IMove to be processed
    * @return the new IGameState
    */
-  IGameState executeMove(IMove move); //TODO: ADD TO API CHANGES
+  IGameState executeMove(IMove move);
 
   /**
    * Executes the automatic actions associated with the IMasterRule.
@@ -31,7 +31,7 @@ public interface IMasterRule extends IRule {
    * @param move   the IMove to be processed
    * @return an IPhaseArrow containing the current phase and the new phase to be updated to
    */
-  IPhaseArrow executeAutoActions(IPlayer player, IMove move); //TODO: ADD TO API CHANGES
+  IPhaseArrow executeAutoActions(IPlayer player, IMove move);
 
   /**
    * Validates the auto rules based on a move.
@@ -39,7 +39,7 @@ public interface IMasterRule extends IRule {
    * @param move the IMove to validate
    * @return whether or not control changes should be processed accordingly
    */
-  boolean checkAutoRules(IMove move); //TODO: ADD TO API CHANGES
+  boolean checkAutoRules(IMove move);
 
   //boolean checkValidTransfer(ICell don, ICell rec);
 

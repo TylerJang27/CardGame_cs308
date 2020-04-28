@@ -4,7 +4,7 @@ public interface IDeck {
 
   void shuffle();
 
-  void reverse(); //TODO: ADD TO API CHANGES
+  void reverse();
 
   int size();
 
@@ -28,13 +28,13 @@ public interface IDeck {
 
   void addDeck(IDeck deck);
 
-  String getName(); //TODO: ADD TO API CHANGES
+  String getName();
 
-  ICard getCardByName(String name); //TODO: ADD TO API CHANGES
+  ICard getCardByName(String name);
 
   IDeck copy();
 
-  boolean isFixed(); //TODO: ADD TO API CHANGES
+  boolean isFixed();
 
   String toStorageString();
 }
