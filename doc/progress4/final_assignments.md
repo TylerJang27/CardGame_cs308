@@ -49,12 +49,11 @@ We should probably add 1-2 more styling themes.
 
 PROFESSOR DUVALL NOTED THAT THIS IS NOT REQUIRED UNLESS YOU HAVE A C OR WORSE GRADE ESTIMATE.
 
-- Documentation
+- Documentation (individually in analysis_NETID and then merge request to master but don't accept)
 - [Team Project Report](https://docs.google.com/forms/d/e/1FAIpQLSeIdx4Mv9p8JrRcdvnA-35rN0PKvFAise88b5Am_n2Cyer6qA/viewform)
-- Game per person (see Example Games)
-- Design Review (04_final/ANALYSIS.md)
-- Code Masterpiece
-
+- Game per person (see Example Games) (in your portfolio in analysis_NETID)
+- Design Review (04_final/ANALYSIS.md) (in your portfolio in analysis_NETID)
+- Code Masterpiece (in your portfolio in analysis_NETID)
 
 ### Live Demo
 
