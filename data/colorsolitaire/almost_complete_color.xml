@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<data type="save">
+  <phase>play</phase>
+  <game>colorsolitaire</game>
+  <file>data\colorsolitaire\colorsolitaire_rules.xml</file>
+  <score>1450.0</score>
+  <cells>
+    <cell name="deck">deck$null[]$</cell>
+    <cell name="spade">
+      spade$null[QS~~true~~0.0~~false~~s;;black~~12s%%12%%1*DS~~true~~0.0~~true~~s;;black~~0s%%0%%0]$
+    </cell>
+    <cell name="heart">
+      heart$null[QH~~true~~0.0~~false~~h;;red~~12h%%12%%1*DH~~true~~0.0~~true~~h;;red~~0h%%0%%0]$
+    </cell>
+    <cell name="1">
+      1$null[D1~~true~~0.0~~true~~c;;green~~14c%%14%%1]${south:1,south$null[KC~~true~~0.0~~false~~c;;black~~13c%%13%%1]$}
+    </cell>
+    <cell name="2">
+      2$null[D2~~true~~0.0~~true~~c;;green~~14c%%14%%1]${south:2,south$null[KD~~true~~0.0~~false~~d;;red~~13d%%13%%1]$}
+    </cell>
+    <cell name="diamond">
+      diamond$null[QD~~true~~0.0~~false~~d;;red~~12d%%12%%1*DD~~true~~0.0~~true~~d;;red~~0d%%0%%0]$
+    </cell>
+    <cell name="3">
+      3$null[D3~~true~~0.0~~true~~c;;green~~14c%%14%%1]${south:3,south$null[KH~~true~~0.0~~false~~h;;red~~13h%%13%%1]$}
+    </cell>
+    <cell name="4">
+      4$null[D4~~true~~0.0~~true~~c;;green~~14c%%14%%1]${south:4,south$null[KS~~true~~0.0~~false~~s;;black~~13s%%13%%1]$}
+    </cell>
+    <cell name="5">5$null[D5~~true~~0.0~~true~~c;;green~~14c%%14%%1]$</cell>
+    <cell name="6">6$null[D6~~true~~0.0~~true~~c;;green~~14c%%14%%1]$</cell>
+    <cell name="7">7$null[D7~~true~~0.0~~true~~c;;green~~14c%%14%%1]$</cell>
+    <cell name="club">
+      club$null[QC~~true~~0.0~~false~~c;;black~~12c%%12%%1*DC~~true~~0.0~~true~~c;;black~~0c%%0%%0]$
+    </cell>
+    <cell name="hand">hand$null[]$</cell>
+  </cells>
+</data>

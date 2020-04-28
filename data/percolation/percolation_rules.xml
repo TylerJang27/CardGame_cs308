@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data type="rule">
+  <settings>
+    <players>1</players>
+    <layout>data/percolation/percolation_layout.xml</layout>
+  </settings>
+  <deck>
+    <deck_name>maindeck</deck_name>
+    <shuffle>n</shuffle>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>AS</name><value>1</value><color>black</color><suit>s</suit></card>
+    <card><name>KH</name><value>2</value><color>red</color><suit>h</suit></card>
+  </deck>
+  <cell_groups>
+    <group category="all">
+      <cell name="0"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="1"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="2"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="3"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="4"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="5"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="6"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="7"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="8"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="9"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="10"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="11"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="12"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="13"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="14"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="15"><fan>none</fan><rotation>0</rotation><init_cards><card>AS,U</card></init_cards></cell>
+      <cell name="update"><fan>none</fan><rotation>0</rotation><init_cards><card>KH,U</card></init_cards></cell>
+    </group>
+  </cell_groups>
+  <phases>
+    <phase name="play">
+      <phase_type>manual</phase_type>
+      <valid_donors>
+        <category>all</category>
+      </valid_donors>
+      <rules>
+        <rule category="all">
+          <validation>
+            <receiver>
+              <value>*</value>
+              <color>*</color>
+              <suit>*</suit>
+              <num_cards>*</num_cards>
+              <is_faceup>*</is_faceup>
+              <name>*</name>
+            </receiver>
+            <mover>
+              <color>black</color>
+              <suit>*</suit>
+              <num_cards>*</num_cards>
+              <is_faceup>y</is_faceup>
+              <name>*</name>
+            </mover>
+            <donor>
+              <value>*</value>
+              <color>*</color>
+              <suit>*</suit>
+              <num_cards>*</num_cards>
+              <is_faceup>*</is_faceup>
+              <name>*</name>
+            </donor>
+          </validation>
+          <action>
+            <receiver_dest>
+              <destination>r</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+            </receiver_dest>
+            <mover_dest>
+              <destination>d</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+              <flip_up>n</flip_up>
+            </mover_dest>
+            <donor_dest>
+              <destination>d</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+            </donor_dest>
+            <next_phase phase="play">1</next_phase>
+          </action>
+        </rule>
+        <rule category="all">
+          <validation>
+            <receiver>
+              <value>*</value>
+              <color>*</color>
+              <suit>*</suit>
+              <num_cards>*</num_cards>
+              <is_faceup>*</is_faceup>
+              <name>*</name>
+            </receiver>
+            <mover>
+              <color>black</color>
+              <suit>*</suit>
+              <num_cards>*</num_cards>
+              <is_faceup>n</is_faceup>
+              <name>*</name>
+            </mover>
+            <donor>
+              <value>*</value>
+              <color>*</color>
+              <suit>*</suit>
+              <num_cards>*</num_cards>
+              <is_faceup>*</is_faceup>
+              <name>*</name>
+            </donor>
+          </validation>
+          <action>
+            <receiver_dest>
+              <destination>r</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+            </receiver_dest>
+            <mover_dest>
+              <destination>d</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+              <flip_up>y</flip_up>
+            </mover_dest>
+            <donor_dest>
+              <destination>d</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+            </donor_dest>
+            <next_phase phase="play">1</next_phase>
+          </action>
+        </rule>
+        <rule category="all">
+          <validation>
+            <receiver>
+              <value>*</value>
+              <color>*</color>
+              <suit>*</suit>
+              <num_cards>*</num_cards>
+              <is_faceup>*</is_faceup>
+              <name>*</name>
+            </receiver>
+            <mover>
+              <color>*</color>
+              <suit>*</suit>
+              <num_cards>*</num_cards>
+              <is_faceup>*</is_faceup>
+              <name>*</name>
+            </mover>
+            <donor>
+              <value>*</value>
+              <color>*</color>
+              <suit>*</suit>
+              <num_cards>*</num_cards>
+              <is_faceup>*</is_faceup>
+              <name>*</name>
+            </donor>
+          </validation>
+          <action>
+            <receiver_dest>
+              <destination>r</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+            </receiver_dest>
+            <mover_dest>
+              <destination>d</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+            </mover_dest>
+            <donor_dest>
+              <destination>d</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+            </donor_dest>
+            <next_phase phase="step0">1</next_phase>
+          </action>
+        </rule>
+      </rules>
+    </phase>
+    <phase name="step0">
+      <phase_type>auto</phase_type>
+      <valid_donors/>
+      <rules>
+        <rule category="">
+          <validation>
+            <condition category="1">
+              <is_faceup>y</is_faceup>
+            </condition>
+          </validation>
+          <action>
+            <receiver_dest>
+              <destination>r</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+              <flip_up>n</flip_up>
+            </receiver_dest>
+            <mover_dest>
+              <destination>r</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+              <flip_up>n</flip_up>
+            </mover_dest>
+            <donor_dest>
+              <destination>d</destination>
+              <num_cards>none</num_cards>
+              <shuffle>n</shuffle>
+              <rotation>0</rotation>
+              <offset>none</offset>
+              <flip_up>n</flip_up>
+            </donor_dest>
+            <next_phase phase="play"></next_phase>
+          </action>
+        </rule>
+        <rule category="">
+          <validation>
+            <condition category="4">
+              <is_faceup>y</is_faceup>
+            </condition>
+          </validation>
+          <action>
+            <next_phase phase="play"></next_phase>
+          </action>
+        </rule>
+        <rule category="">
+          <validation>
+            <condition category="action">
+            </condition>
+          </validation>
+          <action>
+            <next_phase phase = "play"></next_phase>
+          </action>
+        </rule>
+      </rules>
+    </phase>
+
+    <phase name="win">
+      <phase_type>manual</phase_type>
+      <valid_donors/>
+      <rules>
+        <rule category="default">
+
+        </rule>
+      </rules>
+    </phase>
+  </phases>
+</data>

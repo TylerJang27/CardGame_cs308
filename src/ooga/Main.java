@@ -30,7 +30,7 @@ public class Main {
   }
 
   private static void testLayoutXML() {
-    File f = new File("data/solitaire_layout.xml");
+    File f = new File("data/colorsolitaire_layout.xml");
     //ILayout layout = LayoutFactory.getLayout(f);
 
   }
